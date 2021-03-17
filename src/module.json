@@ -1,0 +1,29 @@
+{
+    "name": "pf2e-persistent-damage",
+    "title": "PF2E Persistent Damage",
+    "description": "Small little module to keep track of persistent damage",
+    "author": "Supe",
+    "version": "0.1.0",
+    "minimumCoreVersion": "0.7.9",
+    "minimumSystemVersion": "1.11.15.4470",
+    "type": "module",
+    "systems": ["pf2e"],
+    "esmodules": ["./index.js"],
+    "styles": ["./styles/styles.css"],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
+        }
+    ],
+    "packs": [
+        {
+            "name": "pf2e-persistent-damage-macros",
+            "label": "PF2E Persistent Damage Macros",
+            "system": "pf2e",
+            "path": "packs/pf2e-pd-macros.db",
+            "entity": "Macro"
+        }
+    ]
+}

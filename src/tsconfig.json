@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "module": "commonjs",
+        "lib": ["esnext", "dom"],
+        "noEmit": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "baseUrl": ".",
+        "removeComments": false,
+        "resolveJsonModule": true,
+        "types": [
+            "jquery",
+            "foundry-pc-types"
+        ],
+        "typeRoots": ["node_modules/@types", "node_modules/handlebars"]
+    }
+}
