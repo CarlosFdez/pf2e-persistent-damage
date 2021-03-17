@@ -8,6 +8,7 @@ const types = {
     'Electricity': "systems/pf2e/icons/spells/chain-lightning.jpg",
     'Mental': "systems/pf2e/icons/spells/modify-memory.jpg",
     'Poison': "systems/pf2e/icons/spells/acidic-burst.jpg",
+    "Piercing": "systems/pf2e/icons/spells/savor-the-sting.jpg"
 };
 
 Hooks.on("init", () => {

@@ -43,6 +43,12 @@ task("compile:packs", async () => {
     const folders = await getFolders("src/packs");
     const tasks = folders.map(folder => {
         return src(path.join("src/packs/", folder, "/*.json"))
+            .pipe(through.obj((file, enc, cb) => {
+                const contents = file.contents.toString("utf8");
+                const minimized = JSON.stringify(JSON.parse(contents));
+                file.contents = Buffer.from(minimized, enc);
+                cb(null, file);
+            }))
             .pipe(concat(folder))
             .pipe(dest("dist/packs/"));
     });
