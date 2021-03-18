@@ -91,7 +91,7 @@ class PersistentDamagePF2E {
      * @returns
      */
     addPersistentDamage(token: Token | Token[], type: keyof typeof types, value: string): void {
-        console.log(`Apply condition ${type} ${value}`);
+        //console.log(`Apply condition ${type} ${value}`);
 
         const tokens = Array.isArray(token) ? token : [token];
         if (tokens.length == 0) {
@@ -114,7 +114,7 @@ class PersistentDamagePF2E {
      * @returns
      */
     static async removePersistentDamage(token, itemID, type: keyof typeof types) {
-        console.log(`Remove condition`);
+        //console.log(`Remove condition`);
         const tokens = Array.isArray(token) ? token : [token];
         if (tokens.length == 0) {
             ui.notifications.warn("No token provided.");
@@ -136,7 +136,7 @@ class PersistentDamagePF2E {
      * @returns
      */
     static async dealPersistentDamage(token, itemID, type: keyof typeof types) {
-        console.log(`Deal ${type} damage`);
+        //console.log(`Deal ${type} damage`);
         const tokens = Array.isArray(token) ? token : [token];
         if (tokens.length == 0) {
             ui.notifications.warn("No token provided.");
@@ -206,9 +206,7 @@ class PersistentDamagePF2E {
                 }      
                 if (autoResolve) {
                     if (resultNum >= 15) {   
-                        console.log(`Removing persistent ${type} damage`)
-                        console.log(entry._id)
-                        this.removePersistentDamage(token,entry._id,type)
+                      this.removePersistentDamage(token,entry._id,type)
                     }
                 }
             }
