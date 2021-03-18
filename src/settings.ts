@@ -20,7 +20,7 @@ export function registerSettings() {
         type: Boolean,
         default: true,
         onChange: value =>  location.reload()
-    });        
+    });
     game.settings.register(MODULE_NAME, "auto-resolve", {
         name : "Auto resolve?",
         hint : "Automatically remove upon successful flat check?",
@@ -39,7 +39,25 @@ export function registerSettings() {
         type: Boolean,
         default: true,
         onChange: value =>  location.reload()
-    });  
+    });
     */
 
+}
+
+export function getSettings() {
+    return {
+        get autoRoll(): boolean {
+            return game.settings.get(MODULE_NAME, "auto-roll");
+        },
+
+        get autoResolve(): boolean {
+            return game.settings.get(MODULE_NAME, "auto-resolve");
+        },
+
+        get autoDamage(): boolean {
+            // Not yet implemented
+            // return game.settings.get(MODULE_NAME, "auto-damage");
+            return false;
+        }
+    }
 }
