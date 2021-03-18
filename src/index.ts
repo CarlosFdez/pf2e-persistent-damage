@@ -1,3 +1,4 @@
+const MODULE_NAME = "pf2e-persistent-damage";
 import { registerSettings } from "./settings.js";
 
 const types = {
@@ -101,6 +102,49 @@ class PersistentDamagePF2E {
         const effect = createEffect(type, value);
         for (const token of tokens) {
             token.actor.createOwnedItem(effect);
+            token.refresh()
+        }
+    }
+
+    /**
+     * Removes persistent damage effects to one or more tokens
+     * @param token
+     * @param type
+     * @param value
+     * @returns
+     */
+    static async removePersistentDamage(token, itemID, type: keyof typeof types) {
+        console.log(`Remove condition`);
+        const tokens = Array.isArray(token) ? token : [token];
+        if (tokens.length == 0) {
+            ui.notifications.warn("No token provided.");
+            return;
+        }
+        for (const token of tokens) {
+        //this isn't quite working yet
+            var typeImage=types[type]
+            token.actor.deleteOwnedItem(itemID);
+            token.toggleEffect(typeImage, {active: false})
+        }
+    }
+
+    /**
+     * Deals persistent damage effects to one or more tokens
+     * @param token
+     * @param type
+     * @param value
+     * @returns
+     */
+    static async dealPersistentDamage(token, itemID, type: keyof typeof types) {
+        console.log(`Deal ${type} damage`);
+        const tokens = Array.isArray(token) ? token : [token];
+        if (tokens.length == 0) {
+            ui.notifications.warn("No token provided.");
+            return;
+        }
+        for (const token of tokens) {
+            //do the calculateDamage stuff in here
+            console.log("not yet implemented")
         }
     }
 
@@ -109,7 +153,12 @@ class PersistentDamagePF2E {
      * for each one.
      * @param token one or more tokens to apply persistent damage to
      */
-    processPersistentDamage(token: Token | Token[]): void {
+    static processPersistentDamage(token: Token | Token[]): void {
+        const autoResolve = game.settings.get(MODULE_NAME, "auto-resolve")
+        /** NOT YET IMPLEMENTED 
+        const autoDamage = game.settings.get(MODULE_NAME, "auto-damage")
+        */
+        const autoDamage = false;
         const tokens = Array.isArray(token) ? token : [token];
         for (const token of tokens) {
             const actor = token.actor;
@@ -151,6 +200,17 @@ class PersistentDamagePF2E {
                     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
                     roll
                 });
+                if (autoDamage) {
+                    // add the code to damage the player here.
+                    // we should check for resistence to this damage type before dealing the damage
+                }      
+                if (autoResolve) {
+                    if (resultNum >= 15) {   
+                        console.log(`Removing persistent ${type} damage`)
+                        console.log(entry._id)
+                        this.removePersistentDamage(token,entry._id,type)
+                    }
+                }
             }
         }
     }
@@ -179,3 +239,33 @@ function createEffect(type: keyof typeof types, value: string) {
         img: types[type]
     };
 }
+
+/**
+ * Apply damage on turn end
+ */
+Hooks.on("preUpdateCombat", async (combat, update) => {
+    const autoRoll = game.settings.get(MODULE_NAME, "auto-roll")
+    if (autoRoll){
+        var lastCombatantToken=canvas.tokens.get(combat.current.tokenId);
+        PersistentDamagePF2E.processPersistentDamage(lastCombatantToken)
+    }
+});
+
+/**
+ * Wrapper function for processPersistentDamage
+ * @param token one or more tokens to process
+ * @param whether to auto-resolve or not
+ */
+export function automatePersistentDamage(token)
+{
+    PersistentDamagePF2E.processPersistentDamage(token)
+}
+
+/**
+ * Add function to allow calling from macro
+ */
+Hooks.on('ready', () => {
+    game['pf2epersistentdamage'] = {
+        automatePersistentDamage: automatePersistentDamage
+    };
+});
