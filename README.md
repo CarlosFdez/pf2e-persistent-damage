@@ -25,6 +25,11 @@ Use to inspect selected tokens for all persistent damage effects and create chat
 
 ![image](https://user-images.githubusercontent.com/1286721/111531253-a4f05980-873a-11eb-83b6-51a8939003f6.png)
 
+## Incompatibilities
+Modules known to cause issues running alongside this one.
+
+* Status Icon Counters - removed effects will leave icons behind if you're running this
+
 ## How to Build
 It is recommended to use VSCode for the project, but anything else that can handle typescript will work. Node 14 or higher is required.
 
