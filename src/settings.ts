@@ -4,6 +4,15 @@ function getVersion() {
     return game.modules.get(MODULE_NAME).data.version;
 }
 
+export enum RollHideMode {
+    Never = 1,
+    Normal = 2,
+    Always = 3
+}
+
+/**
+ * Initializes settings. Must be called only once.
+ */
 export function registerSettings() {
     // Special non-config flag to handle migrations
     game.settings.register(MODULE_NAME, "migration", {
@@ -12,36 +21,50 @@ export function registerSettings() {
         scope: 'world',
         type: Object
     });
+
     game.settings.register(MODULE_NAME, "auto-roll", {
-        name : "Auto roll at end of turn?",
-        hint : "This must be set to true to allow auto-resolve and/or auto apply damage (not yet implemented) at end of turn. Otherwise, you must run the macro 'Process Persistent Damage'.",
-        scope : 'world',
-        config : true,
+        name: game.i18n.localize("SETTINGS.AutoRoll.name"),
+        hint: game.i18n.localize("SETTINGS.AutoRoll.hint"),
+        scope: 'world',
+        config: true,
         type: Boolean,
-        default: true,
-        onChange: value =>  location.reload()
+        default: true
     });
+
     game.settings.register(MODULE_NAME, "auto-resolve", {
-        name : "Auto resolve?",
-        hint : "Automatically remove upon successful flat check?",
-        scope : 'world',
-        config : true,
+        name: game.i18n.localize("SETTINGS.AutoResolve.name"),
+        hint: game.i18n.localize("SETTINGS.AutoResolve.hint"),
+        scope: 'world',
+        config: true,
         type: Boolean,
-        default: true,
-        onChange: value =>  location.reload()
+        default: true
     });
+
+    game.settings.register(MODULE_NAME, "hide-rolls", {
+        name: game.i18n.localize("SETTINGS.HideRolls.name"),
+        hint: game.i18n.localize("SETTINGS.HideRolls.hint"),
+        scope: "world",
+        config: true,
+        type: Number,
+        choices: {
+            1: game.i18n.localize("SETTINGS.HideRolls.option1"),
+            2: game.i18n.localize("SETTINGS.HideRolls.option2"),
+            3: game.i18n.localize("SETTINGS.HideRolls.option3")
+        },
+        default: 1
+    });
+
     /* NOT YET IMPLEMENTED
     game.settings.register(MODULE_NAME, "auto-damage", {
-        name : "Auto apply damage?",
-        hint : "Automatically apply persistent damage at end of turn?",
-        scope : 'world',
-        config : true,
+        name: "Auto apply damage?",
+        hint: "Automatically apply persistent damage at end of turn?",
+        scope: 'world',
+        config: true,
         type: Boolean,
         default: true,
         onChange: value =>  location.reload()
     });
     */
-
 }
 
 export function getSettings() {
@@ -58,6 +81,10 @@ export function getSettings() {
             // Not yet implemented
             // return game.settings.get(MODULE_NAME, "auto-damage");
             return false;
+        },
+
+        get rollHideMode(): RollHideMode {
+            return game.settings.get(MODULE_NAME, "hide-rolls");
         }
     }
 }

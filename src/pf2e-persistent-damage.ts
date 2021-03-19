@@ -1,4 +1,4 @@
-import { getSettings } from "./settings.js";
+import { getSettings, RollHideMode } from "./settings.js";
 
 const types = {
     "Bleeding": "systems/pf2e/icons/spells/blade-barrier.jpg",
@@ -138,7 +138,7 @@ export class PF2EPersistentDamage {
      * @param token one or more tokens to apply persistent damage to
      */
     processPersistentDamage(token: Token | Token[]): void {
-        const { autoResolve, autoDamage } = getSettings();
+        const { autoResolve, autoDamage, rollHideMode } = getSettings();
 
         const tokens = Array.isArray(token) ? token : [token];
         for (const token of tokens) {
@@ -178,6 +178,11 @@ export class PF2EPersistentDamage {
                             </div>
                         </div>`
                     ,
+                    rollMode: (rollHideMode === RollHideMode.Never)
+                        ? "roll"
+                        : (rollHideMode === RollHideMode.Always)
+                        ? "blindroll"
+                        : undefined,
                     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
                     roll
                 });

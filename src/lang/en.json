@@ -1,3 +1,19 @@
 {
-
+    "SETTINGS": {
+        "AutoRoll": {
+            "name": "Auto roll at end of turn?",
+            "hint": "If set to true, the persistent damage will be rolled after the token's turn. Otherwise, you must run the macro 'Process Persistent Damage'."
+        },
+        "AutoResolve": {
+            "name": "Auto resolve?",
+            "hint": "Automatically remove upon successful flat check?"
+        },
+        "HideRolls": {
+            "name": "Hide Persistent Damage Rolls?",
+            "hint": "Should persistent rolls be always shown or always hidden? If hidden, players cannot see their own damage results.",
+            "option1": "Always Show",
+            "option2": "Normal - based on roll mode",
+            "option3": "Always Hide"
+        }
+    }
 }
