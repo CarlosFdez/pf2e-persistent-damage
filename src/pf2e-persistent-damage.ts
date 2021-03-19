@@ -37,29 +37,14 @@ export class PF2EPersistentDamage {
                 // Usability, select damage when type is selected
                 html.find("label").on("click", () => {
                     // Doesn't work without the delay, might be a radio button thing
-                    setTimeout(() => html.find('input').focus(), 0);
+                    setTimeout(() => html.find('input').trigger("focus"), 0);
                 });
 
                 // Replace the apply button
                 html.find(".dialog-button.yes").off().on("click", () => {
                     const type = html.find('[name="Type"]:checked').val() as keyof typeof types;
                     const value = html.find('[name="Damage"]').val() as string;
-
-                    // test for errors
-                    const errors = [];
-                    if (!type) errors.push("Missing damage type");
-                    if (!value) errors.push("Missing damage value");
-                    if (errors.length > 0) {
-                        ui.notifications.error("Persistent Damage Errors: " + errors.join("; "));
-                    }
-
-                    try {
-                        // Test if the roll is valid
-                        new Roll(value).roll();
-                        this.addPersistentDamage(canvas.tokens.controlled, type, value);
-                    } catch (err) {
-                        ui.notifications.error(err);
-                    }
+                    this.addPersistentDamage(canvas.tokens.controlled, type, value);
                 });
             },
         } as DialogData, {
@@ -75,7 +60,23 @@ export class PF2EPersistentDamage {
      * @returns
      */
     addPersistentDamage(token: Token | Token[], type: keyof typeof types, value: string): void {
-        //console.log(`Apply condition ${type} ${value}`);
+        // test for errors
+        const errors = [];
+        if (!type) errors.push("Missing damage type");
+        if (!value) errors.push("Missing damage value");
+
+        if (errors.length > 0) {
+            ui.notifications.error("Persistent Damage Errors: " + errors.join("; "));
+            return;
+        }
+
+        try {
+            // Test if the roll is valid
+            new Roll(value).roll();
+        } catch (err) {
+            ui.notifications.error(err);
+            return;
+        }
 
         const tokens = Array.isArray(token) ? token : [token];
         if (tokens.length == 0) {
