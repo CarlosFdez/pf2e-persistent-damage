@@ -1,10 +1,18 @@
 import { PF2EPersistentDamage } from "./pf2e-persistent-damage.js";
 import { getSettings, registerSettings } from "./settings.js";
+import { overrideItemSheet } from "./persistent-effect.js";
 
 Hooks.on("init", () => {
     registerSettings();
+    loadTemplates(["modules/pf2e-persistent-damage/templates/persistent-details.html"]);
+
     window.PF2EPersistentDamage = new PF2EPersistentDamage();
 });
+
+Hooks.on("ready", () => {
+    overrideItemSheet();
+    console.log("PF2E Persistent | Registered Sheet");
+})
 
 Hooks.on("renderChatMessage", async (message, html: JQuery<HTMLElement>) => {
     html.find(".token-link").on("click", (evt) => {

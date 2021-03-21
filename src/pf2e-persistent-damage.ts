@@ -1,15 +1,5 @@
+import { createPersistentEffect, getPersistentData, types } from "./persistent-effect.js";
 import { getSettings, RollHideMode } from "./settings.js";
-
-const types = {
-    "Bleeding": "systems/pf2e/icons/spells/blade-barrier.jpg",
-    'Fire': "systems/pf2e/icons/spells/flaming-sphere.jpg",
-    'Acid': "systems/pf2e/icons/spells/blister.jpg",
-    'Cold': "systems/pf2e/icons/spells/chilling-spray.jpg",
-    'Electricity': "systems/pf2e/icons/spells/chain-lightning.jpg",
-    'Mental': "systems/pf2e/icons/spells/modify-memory.jpg",
-    'Poison': "systems/pf2e/icons/spells/acidic-burst.jpg",
-    "Piercing": "systems/pf2e/icons/spells/savor-the-sting.jpg"
-};
 
 export class PF2EPersistentDamage {
     async showDialog() {
@@ -20,7 +10,8 @@ export class PF2EPersistentDamage {
         new Dialog({
             title: "Add Persistent Damage",
             content: await renderTemplate("modules/pf2e-persistent-damage/templates/persistent-damage-dialog.html", {
-                types: typeList
+                types: typeList,
+                damageTypes: CONFIG.PF2E.damageTypes
             }),
             buttons: {
                 yes: {
@@ -59,7 +50,7 @@ export class PF2EPersistentDamage {
      * @param value
      * @returns
      */
-    addPersistentDamage(token: Token | Token[], type: keyof typeof types, value: string): void {
+    addPersistentDamage(token: Token | Token[], type: keyof typeof types, value: string, dc: number=15): void {
         // test for errors
         const errors = [];
         if (!type) errors.push("Missing damage type");
@@ -84,7 +75,7 @@ export class PF2EPersistentDamage {
             return;
         }
 
-        const effect = createEffect(type, value);
+        const effect = createPersistentEffect(type, value, dc);
         for (const token of tokens) {
             token.actor.createOwnedItem(effect);
             token.refresh()
@@ -105,9 +96,9 @@ export class PF2EPersistentDamage {
             ui.notifications.warn("No token provided.");
             return;
         }
+
         for (const token of tokens) {
-        //this isn't quite working yet
-            var typeImage=types[type]
+            var typeImage = types[type];
             token.actor.deleteOwnedItem(itemID);
             token.toggleEffect(typeImage, {active: false})
         }
@@ -150,12 +141,15 @@ export class PF2EPersistentDamage {
             }
 
             for (const entry of persistentDamageElements) {
-                const { type, value } = entry.data.flags.persistent;
+                const data = getPersistentData(entry.data);
+                const { damageType, value } = data;
+                const dc = data.dc ?? 15;
+                const typeName = CONFIG.PF2E.damageTypes[damageType];
                 const roll = new Roll(value).roll();
 
                 const inlineCheck = TextEditor.enrichHTML("[[1d20]]");
                 const resultNum = Number($(inlineCheck).text());
-                const flatCheck = resultNum < 15
+                const flatCheck = resultNum < dc
                     ? `<span class="flat-check-failure">Failure</span>`
                     : `<span class="flat-check-success">Success</span>`;
 
@@ -174,8 +168,8 @@ export class PF2EPersistentDamage {
                                 </h3>
                             </header>
                             <div class="card-content">
-                                <p>Persistent ${value} - Damage (${type})</p>
-                                <p>D20 Check ${inlineCheck} - ${flatCheck}</p>
+                                <p>Persistent ${typeName} [${value}] - Damage</p>
+                                <p>DC ${dc} Check ${inlineCheck} - ${flatCheck}</p>
                             </div>
                         </div>`
                     ,
@@ -196,34 +190,10 @@ export class PF2EPersistentDamage {
                 }
 
                 // Auto-remove the condition if enabled and it passes the DC
-                if (autoResolve && resultNum >= 15) {
-                    this.removePersistentDamage(token, entry._id, type);
+                if (autoResolve && resultNum >= dc) {
+                    this.removePersistentDamage(token, entry._id, damageType);
                 }
             }
         }
     }
-}
-
-function createEffect(type: keyof typeof types, value: string) {
-    return {
-        name: `Persistent ${type} [${value}]`,
-        type: "effect",
-        data: {
-            description: {
-                value: `<p>[[/r ${value}]]</p> persistent ${type} damage</p><p>Roll DC 15 Flat Check, [[/r 1d20]]</p>`
-            },
-            duration: {
-                expiry: "turn-end",
-                unit: "unlimited",
-                value: -1,
-            },
-            rules: [
-                { key: "PF2E.RuleElement.TokenEffectIcon" }
-            ]
-        },
-        flags: {
-            persistent: { type, value }
-        },
-        img: types[type]
-    };
 }

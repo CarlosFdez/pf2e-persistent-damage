@@ -1,15 +1,13 @@
 import { task, src, dest, parallel, series, watch } from "gulp";
 import * as concat from "gulp-concat";
 import * as ts from "gulp-typescript";
-import * as uglify from "gulp-uglify";
+import * as sourcemaps from "gulp-sourcemaps";
 import * as del from "del";
 import * as path from "path";
-import { PassThrough } from "stream";
 import * as fs from "fs/promises";
 import * as through from "through2";
 
 const project = ts.createProject("tsconfig.json")
-
 
 task("clean", () => {
   return del("dist");
@@ -17,7 +15,9 @@ task("clean", () => {
 
 task("compile:ts", () => {
   return src("src/**/*.ts")
+    .pipe(sourcemaps.init())
     .pipe(project())
+    .pipe(sourcemaps.write())
     .pipe(dest("dist/"))
 });
 

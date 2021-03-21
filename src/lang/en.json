@@ -1,5 +1,5 @@
 {
-    "SETTINGS": {
+    "PF2E-PD.SETTINGS": {
         "AutoRoll": {
             "name": "Auto roll at end of turn?",
             "hint": "If set to true, the persistent damage will be rolled after the token's turn. Otherwise, you must run the macro 'Process Persistent Damage'."
@@ -15,5 +15,10 @@
             "option2": "Normal - based on roll mode",
             "option3": "Always Hide"
         }
-    }
+    },
+
+    "PF2E-PD.Migrating": "Applying migration for PF2E Persistent Damage",
+    "PF2E-PD.Migrated": "Applied PF2E Persistent Damage migration up to version {version}",
+    "PF2E-PD.PersistentDamageLabel": "Formula",
+    "PF2E-PD.PersistentDCLabel": "DC"
 }

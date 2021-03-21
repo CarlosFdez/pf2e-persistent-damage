@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        "target": "es2017",
-        "module": "commonjs",
+        "target": "es2019",
+        "module": "es6",
         "lib": ["esnext", "dom"],
         "noEmit": true,
         "noImplicitThis": true,

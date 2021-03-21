@@ -1,4 +1,4 @@
-const MODULE_NAME = "pf2e-persistent-damage";
+export const MODULE_NAME = "pf2e-persistent-damage";
 
 function getVersion() {
     return game.modules.get(MODULE_NAME).data.version;
@@ -17,14 +17,14 @@ export function registerSettings() {
     // Special non-config flag to handle migrations
     game.settings.register(MODULE_NAME, "migration", {
         config: false,
-        default: { status: false, version: getVersion() },
+        default: { version: getVersion() },
         scope: 'world',
         type: Object
     });
 
     game.settings.register(MODULE_NAME, "auto-roll", {
-        name: game.i18n.localize("SETTINGS.AutoRoll.name"),
-        hint: game.i18n.localize("SETTINGS.AutoRoll.hint"),
+        name: game.i18n.localize("PF2E-PD.SETTINGS.AutoRoll.name"),
+        hint: game.i18n.localize("PF2E-PD.SETTINGS.AutoRoll.hint"),
         scope: 'world',
         config: true,
         type: Boolean,
@@ -32,8 +32,8 @@ export function registerSettings() {
     });
 
     game.settings.register(MODULE_NAME, "auto-resolve", {
-        name: game.i18n.localize("SETTINGS.AutoResolve.name"),
-        hint: game.i18n.localize("SETTINGS.AutoResolve.hint"),
+        name: game.i18n.localize("PF2E-PD.SETTINGS.AutoResolve.name"),
+        hint: game.i18n.localize("PF2E-PD.SETTINGS.AutoResolve.hint"),
         scope: 'world',
         config: true,
         type: Boolean,
@@ -41,15 +41,15 @@ export function registerSettings() {
     });
 
     game.settings.register(MODULE_NAME, "hide-rolls", {
-        name: game.i18n.localize("SETTINGS.HideRolls.name"),
-        hint: game.i18n.localize("SETTINGS.HideRolls.hint"),
+        name: game.i18n.localize("PF2E-PD.SETTINGS.HideRolls.name"),
+        hint: game.i18n.localize("PF2E-PD.SETTINGS.HideRolls.hint"),
         scope: "world",
         config: true,
         type: Number,
         choices: {
-            1: game.i18n.localize("SETTINGS.HideRolls.option1"),
-            2: game.i18n.localize("SETTINGS.HideRolls.option2"),
-            3: game.i18n.localize("SETTINGS.HideRolls.option3")
+            1: game.i18n.localize("PF2E-PD.SETTINGS.HideRolls.option1"),
+            2: game.i18n.localize("PF2E-PD.SETTINGS.HideRolls.option2"),
+            3: game.i18n.localize("PF2E-PD.SETTINGS.HideRolls.option3")
         },
         default: 1
     });

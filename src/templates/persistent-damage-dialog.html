@@ -5,7 +5,7 @@
             {{#each types}}
                 <div>
                     <input type="radio" name="Type" id="{{this.type}}" value="{{this.type}}">
-                    <label for="{{this.type}}"><img src="{{this.img}}">{{this.type}}</label>
+                    <label for="{{this.type}}"><img src="{{this.img}}">{{lookup ../damageTypes this.type}}</label>
                 </div>
             {{/each}}
         </div>
