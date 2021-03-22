@@ -3,7 +3,7 @@
 
 Small module to keep track of persistent damage for pathfinder 2E using the effects system. Accessed via macros in the compendium, and if certain settings are enabled, they will be automatically calculated and/or removed when the actor's turn has finished.
 
-Derived from the condition setter macro from mothringer.
+Derived from the condition setter macro from mothringer. If you're feeling generous, you can send something through [Paypal](https://paypal.me/carlosfernandez1779?locale.x=en_US) if you want.
 
 ## How to Install
 
@@ -21,9 +21,9 @@ Use to add persistent damage effects to selected tokens. These effects can be re
 ![image](https://user-images.githubusercontent.com/1286721/111531022-62c71800-873a-11eb-8a15-06d017b8d4a6.png)
 
 ### Process Persistent Damage
-Use to inspect selected tokens for all persistent damage effects and create chat messages for them. On each chat message, clicking on the actor name will select the token, allowing the chat damage buttons to work for that token.
+Use to inspect selected tokens for all persistent damage effects and create chat messages for them. On each chat message, clicking on the crosshair button will select the token, making it easier to use the chat damage buttons to apply damage.
 
-![image](https://user-images.githubusercontent.com/1286721/111531253-a4f05980-873a-11eb-83b6-51a8939003f6.png)
+![image](https://user-images.githubusercontent.com/1286721/111949776-b24d7100-8ab7-11eb-86d1-3270c4f138dc.png)
 
 ## Incompatibilities
 Modules known to cause issues running alongside this one.
