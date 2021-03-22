@@ -1,0 +1,20 @@
+<div class="pf2e-pd-card">
+    <div class="card-content">
+        <div>
+            <p>Persistent {{typeName}} damage</p>
+            <p>
+                DC {{data.dc}} {{{inlineCheck}}} -
+                {{#if success}}
+                    <span class="flat-check-success">Success</span>
+                {{else}}
+                    <span class="flat-check-failure">Failure</span>
+                {{/if}}
+            </p>
+        </div>
+        <div class="side-buttons">
+            <button class="token-link" data-token-id="{{token.id}}" title="{{ localize 'PF2E-PD.Button.SelectTarget' }}">
+                <i class="fa fa-crosshairs"></i>
+            </button>
+        </div>
+    </div>
+</div>

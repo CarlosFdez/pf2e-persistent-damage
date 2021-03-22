@@ -130,9 +130,10 @@ export class PF2EPersistentDamage {
      * for each one.
      * @param token one or more tokens to apply persistent damage to
      */
-    processPersistentDamage(token: Token | Token[]): void {
+    async processPersistentDamage(token: Token | Token[]): Promise<ChatMessage[]> {
         const { autoResolve, autoDamage, rollHideMode } = getSettings();
 
+        const messages = [];
         const tokens = Array.isArray(token) ? token : [token];
         for (const token of tokens) {
             const actor = token.actor;
@@ -149,31 +150,23 @@ export class PF2EPersistentDamage {
                 const roll = new Roll(value).roll();
 
                 const inlineCheck = TextEditor.enrichHTML("[[1d20]]");
-                const resultNum = Number($(inlineCheck).text());
-                const flatCheck = resultNum < dc
-                    ? `<span class="flat-check-failure">Failure</span>`
-                    : `<span class="flat-check-success">Success</span>`;
+                const success = Number($(inlineCheck).text()) >= dc;
 
-                ChatMessage.create({
+                const templateName = "modules/pf2e-persistent-damage/templates/card-header.html";
+
+                const message = await ChatMessage.create({
                     speaker: {
                         actor: actor?._id,
                         token,
                         alias: token?.name || actor?.name
                     },
-                    flavor: `
-                        <div class="pf2e-pd-card">
-                            <header class="card-header flexrow">
-                                <img src="${token.data.img}" width="36" height="36"/>
-                                <h3 class="item-name token-link" data-token-id="${token.id}"'>
-                                    ${token.name}
-                                </h3>
-                            </header>
-                            <div class="card-content">
-                                <p>Persistent ${typeName} [${value}] - Damage</p>
-                                <p>DC ${dc} Check ${inlineCheck} - ${flatCheck}</p>
-                            </div>
-                        </div>`
-                    ,
+                    flavor: await renderTemplate(templateName, {
+                        token,
+                        data,
+                        inlineCheck,
+                        typeName,
+                        success
+                    }),
                     rollMode: (rollHideMode === RollHideMode.Never)
                         ? "roll"
                         : (rollHideMode === RollHideMode.Always)
@@ -191,10 +184,14 @@ export class PF2EPersistentDamage {
                 }
 
                 // Auto-remove the condition if enabled and it passes the DC
-                if (autoResolve && resultNum >= dc) {
+                if (autoResolve && success) {
                     this.removePersistentDamage(token, entry._id, damageType);
                 }
+
+                messages.push(message);
             }
         }
+
+        return messages;
     }
 }

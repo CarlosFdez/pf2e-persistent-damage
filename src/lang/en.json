@@ -17,6 +17,8 @@
         }
     },
 
+    "PF2E-PD.Button.SelectTarget": "Click to select the afflicted token.",
+
     "PF2E-PD.Migrating": "Applying migration for PF2E Persistent Damage",
     "PF2E-PD.Migrated": "Applied PF2E Persistent Damage migration up to version {version}",
     "PF2E-PD.PersistentDamageLabel": "Formula",

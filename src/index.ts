@@ -16,7 +16,8 @@ Hooks.on("ready", () => {
 
 Hooks.on("renderChatMessage", async (message, html: JQuery<HTMLElement>) => {
     html.find(".token-link").on("click", (evt) => {
-        const tokenId = evt.target.dataset.tokenId;
+        const target = evt.target.closest(".token-link") as HTMLElement;
+        const tokenId = target?.dataset.tokenId;
         if (!tokenId) return;
 
         const token = canvas.tokens.get(tokenId);
