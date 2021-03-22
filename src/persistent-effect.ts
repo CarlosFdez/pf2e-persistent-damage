@@ -39,13 +39,17 @@ export function getPersistentData(itemData: { flags: any }): PersistentData {
  */
 Hooks.on("preUpdateOwnedItem", (actor: Actor, item: Item.Data, update) => {
     if (update?.flags?.persistent) {
-        const flags = mergeObject(
-            { ...item.flags?.persistent },
-            update.flags.persistent,);
+        const persistent = getPersistentData({
+            flags: {
+                persistent: mergeObject(
+                    { ...item.flags?.persistent },
+                    update.flags.persistent)
+            }
+        });
 
-        update.flags.persistent = getPersistentData({ flags });
-        update.name = createTitle(flags);
-        update.description = createDescription(flags);
+        update.flags.persistent = persistent;
+        update.name = createTitle(persistent);
+        update.description = createDescription(persistent);
     }
 })
 
