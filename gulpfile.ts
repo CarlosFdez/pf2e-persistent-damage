@@ -2,6 +2,7 @@ import { task, src, dest, parallel, series, watch } from "gulp";
 import * as concat from "gulp-concat";
 import * as ts from "gulp-typescript";
 import * as sourcemaps from "gulp-sourcemaps";
+import * as sass from "gulp-sass";
 import * as del from "del";
 import * as path from "path";
 import * as fs from "fs/promises";
@@ -23,6 +24,7 @@ task("compile:ts", () => {
 
 task("compile:sass", () => {
   return src("src/styles/**/*.scss")
+    .pipe(sass.sync().on("error", sass.logError))
     .pipe(dest("dist/styles"))
 });
 
@@ -73,6 +75,7 @@ task("copy", async () => {
 task("build", series("clean", parallel("compile", "copy")));
 task("watch", series("clean", () => {
   watch("src/**/*.ts", { ignoreInitial: false }, task("compile:ts"));
+  watch("src/**/*.scss", { ignoreInitial: false }, task("compile:sass"));
   watch("src/packs/**/*.json", { ignoreInitial: false }, task("compile:packs"));
   watch("src/**/*", { ignoreInitial: false }, task("copy"));
 }));

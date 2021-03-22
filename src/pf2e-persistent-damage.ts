@@ -26,20 +26,21 @@ export class PF2EPersistentDamage {
             default: "yes",
             render: (html: JQuery<HTMLElement>) => {
                 // Usability, select damage when type is selected
-                html.find("label").on("click", () => {
+                html.find(".types label").on("click", () => {
                     // Doesn't work without the delay, might be a radio button thing
-                    setTimeout(() => html.find('input').trigger("focus"), 0);
+                    setTimeout(() => html.find('input[name=Damage]').trigger("focus"), 0);
                 });
 
                 // Replace the apply button
                 html.find(".dialog-button.yes").off().on("click", () => {
                     const type = html.find('[name="Type"]:checked').val() as keyof typeof types;
                     const value = html.find('[name="Damage"]').val() as string;
-                    this.addPersistentDamage(canvas.tokens.controlled, type, value);
+                    const dc = Number(html.find("[name=DC]").val()) || 15;
+                    this.addPersistentDamage(canvas.tokens.controlled, type, value, isNaN(dc) ? 15 : dc);
                 });
             },
         } as DialogData, {
-            id: 'pf2-template-creator'
+            id: 'pf2e-persistent-dialog'
         }).render(true);
     }
 
