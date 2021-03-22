@@ -20,6 +20,10 @@ Use to add persistent damage effects to selected tokens. These effects can be re
 
 ![image](https://user-images.githubusercontent.com/1286721/111531022-62c71800-873a-11eb-8a15-06d017b8d4a6.png)
 
+Once added, persistent damage value can be edited via the effect:
+
+![image](https://user-images.githubusercontent.com/1286721/111926202-400e6980-8a82-11eb-903d-6ee8fac8f921.png)
+
 ### Process Persistent Damage
 Use to inspect selected tokens for all persistent damage effects and create chat messages for them. On each chat message, clicking on the crosshair button will select the token, making it easier to use the chat damage buttons to apply damage.
 
