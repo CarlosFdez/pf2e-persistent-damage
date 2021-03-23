@@ -2,12 +2,22 @@ import { createPersistentEffect, getPersistentData, types } from "./persistent-e
 import { getSettings, RollHideMode } from "./settings.js";
 
 export class PF2EPersistentDamage {
+    /**
+     * Shows a dialog that can be used to add persistent damage effects to selected tokens.
+     */
     async showDialog() {
         const typeList = Object.entries(types).map(([type, img]) => {
             return { type, img };
         });
 
-        new Dialog({
+        const applyDamage = (html: JQuery<HTMLElement>) => {
+            const type = html.find("[name=Type]:checked").val() as keyof typeof types;
+            const value = html.find("[name=Damage]").val() as string;
+            const dc = Number(html.find("[name=DC]").val()) || 15;
+            this.addPersistentDamage(canvas.tokens.controlled, type, value, isNaN(dc) ? 15 : dc);
+        }
+
+        return new Dialog({
             title: "Add Persistent Damage",
             content: await renderTemplate("modules/pf2e-persistent-damage/templates/persistent-damage-dialog.html", {
                 types: typeList,
@@ -16,7 +26,8 @@ export class PF2EPersistentDamage {
             buttons: {
                 yes: {
                     icon: "<i class='fas fa-check'></i>",
-                    label: "Apply"
+                    label: "Apply",
+                    callback: applyDamage
                 },
                 no: {
                     icon: "<i class='fas fa-times'></i>",
@@ -31,14 +42,9 @@ export class PF2EPersistentDamage {
                     setTimeout(() => html.find('input[name=Damage]').trigger("focus"), 0);
                 });
 
-                // Replace the apply button
-                html.find(".dialog-button.yes").off().on("click", () => {
-                    const type = html.find('[name="Type"]:checked').val() as keyof typeof types;
-                    const value = html.find('[name="Damage"]').val() as string;
-                    const dc = Number(html.find("[name=DC]").val()) || 15;
-                    this.addPersistentDamage(canvas.tokens.controlled, type, value, isNaN(dc) ? 15 : dc);
-                });
-            },
+                // Replace the apply button so that it doesn't
+                html.find(".dialog-button.yes").off().on("click", () => applyDamage(html));
+            }
         } as DialogData, {
             id: 'pf2e-persistent-dialog'
         }).render(true);
