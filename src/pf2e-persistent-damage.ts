@@ -1,27 +1,38 @@
-import { createPersistentEffect, getPersistentData, types } from "./persistent-effect.js";
+import { createPersistentEffect, DamageType, getPersistentData, typeImages } from "./persistent-effect.js";
 import { getSettings, RollHideMode } from "./settings.js";
+
+interface PersistentDamageType {
+    damageType: string;
+    name: string;
+    img: string;
+}
+
+function getTypeData(damageType: DamageType): PersistentDamageType {
+    return {
+        damageType,
+        name: CONFIG.PF2E.damageTypes[damageType],
+        img: typeImages[damageType]
+    }
+}
 
 export class PF2EPersistentDamage {
     /**
      * Shows a dialog that can be used to add persistent damage effects to selected tokens.
      */
     async showDialog() {
-        const typeList = Object.entries(types).map(([type, img]) => {
-            return { type, img };
-        });
-
         const applyDamage = (html: JQuery<HTMLElement>) => {
-            const type = html.find("[name=Type]:checked").val() as keyof typeof types;
+            const type = html.find("[name=Type]:checked").val() as DamageType;
             const value = html.find("[name=Damage]").val() as string;
             const dc = Number(html.find("[name=DC]").val()) || 15;
             this.addPersistentDamage(canvas.tokens.controlled, type, value, isNaN(dc) ? 15 : dc);
         }
 
+        const types = Object.keys(typeImages).map(getTypeData);
+
         return new Dialog({
             title: "Add Persistent Damage",
             content: await renderTemplate("modules/pf2e-persistent-damage/templates/persistent-damage-dialog.html", {
-                types: typeList,
-                damageTypes: CONFIG.PF2E.damageTypes
+                types
             }),
             buttons: {
                 yes: {
@@ -57,7 +68,7 @@ export class PF2EPersistentDamage {
      * @param value
      * @returns
      */
-    addPersistentDamage(token: Token | Token[], type: keyof typeof types, value: string, dc: number=15): void {
+    addPersistentDamage(token: Token | Token[], type: DamageType, value: string, dc: number=15): void {
         // test for errors
         const errors = [];
         if (!type) errors.push("Missing damage type");
@@ -96,7 +107,7 @@ export class PF2EPersistentDamage {
      * @param value
      * @returns
      */
-    async removePersistentDamage(token, itemID, type: keyof typeof types) {
+    async removePersistentDamage(token, itemID, type: DamageType) {
         //console.log(`Remove condition`);
         const tokens = Array.isArray(token) ? token : [token];
         if (tokens.length == 0) {
@@ -105,7 +116,7 @@ export class PF2EPersistentDamage {
         }
 
         for (const token of tokens) {
-            var typeImage = types[type];
+            var typeImage = typeImages[type];
             token.actor.deleteOwnedItem(itemID);
             token.toggleEffect(typeImage, {active: false})
         }
@@ -118,7 +129,7 @@ export class PF2EPersistentDamage {
      * @param value
      * @returns
      */
-    async dealPersistentDamage(token, itemID, type: keyof typeof types) {
+    async dealPersistentDamage(token, itemID, type: DamageType) {
         //console.log(`Deal ${type} damage`);
         const tokens = Array.isArray(token) ? token : [token];
         if (tokens.length == 0) {

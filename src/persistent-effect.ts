@@ -1,16 +1,28 @@
-export const types = {
+export const typeImages = {
     "bleed": "systems/pf2e/icons/spells/blade-barrier.jpg",
+    "piercing": "systems/pf2e/icons/spells/savor-the-sting.jpg",
+    "bludgeoning": "systems/pf2e/icons/equipment/weapons/bola.jpg",
+    "slashing": "systems/pf2e/icons/equipment/weapons/cutlass.png",
     'fire': "systems/pf2e/icons/spells/flaming-sphere.jpg",
     'acid': "systems/pf2e/icons/spells/blister.jpg",
     'cold': "systems/pf2e/icons/spells/chilling-spray.jpg",
     'electricity': "systems/pf2e/icons/spells/chain-lightning.jpg",
+    "sonic": "systems/pf2e/icons/spells/cry-of-destruction.jpg",
+    "force": "systems/pf2e/icons/spells/magic-missile.jpg",
     'mental': "systems/pf2e/icons/spells/modify-memory.jpg",
     'poison': "systems/pf2e/icons/spells/acidic-burst.jpg",
-    "piercing": "systems/pf2e/icons/spells/savor-the-sting.jpg"
+    "lawful": "systems/pf2e/icons/equipment/adventuring-gear/merchant-scale.jpg",
+    "chaotic": "systems/pf2e/icons/spells/dinosaur-form.jpg",
+    "good": "systems/pf2e/icons/spells/angelic-wings.jpg",
+    "evil": "systems/pf2e/icons/spells/daemonic-pact.jpg",
+    "positive": "systems/pf2e/icons/spells/moment-of-renewal.jpg",
+    "negative": "systems/pf2e/icons/spells/grim-tendrils.jpg",
 };
 
+export type DamageType = keyof typeof typeImages;
+
 export interface PersistentData {
-    damageType: keyof typeof types;
+    damageType: DamageType;
     value: string;
     dc: number;
 }
@@ -94,7 +106,7 @@ function createDescription(data: PersistentData) {
 * @param value
 * @returns
 */
-export function createPersistentEffect(damageType: keyof typeof types, value: string, dc: number = 15) {
+export function createPersistentEffect(damageType: DamageType, value: string, dc: number = 15) {
     const persistent: PersistentData = { damageType, value, dc };
     return {
        name: createTitle(persistent),
@@ -113,6 +125,6 @@ export function createPersistentEffect(damageType: keyof typeof types, value: st
            ]
        },
        flags: { persistent },
-       img: types[damageType]
+       img: typeImages[damageType]
    };
 }
