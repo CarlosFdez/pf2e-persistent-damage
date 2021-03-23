@@ -18,7 +18,7 @@ The module comes with a compendium with two macros, Add Persistent Damage and Pr
 ### Add Persistent Damage
 Use to add persistent damage effects to selected tokens. These effects can be removed either in the sheet or via right clicking in the "effects panel". Make sure the effects panel is enabled in the left toolbar to see it.
 
-![image](https://user-images.githubusercontent.com/1286721/111531022-62c71800-873a-11eb-8a15-06d017b8d4a6.png)
+![image](https://user-images.githubusercontent.com/1286721/111926228-5f0cfb80-8a82-11eb-8efb-852f5aef5e07.png)
 
 Once added, persistent damage value can be edited via the effect:
 
