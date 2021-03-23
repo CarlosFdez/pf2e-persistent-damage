@@ -142,10 +142,11 @@
 
     button.token-link {
         left: auto;
-        justify-content: right;
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
+        width: 24px;
+        height: 24px;
+        font-size: 13px;
+        line-height: 1px;
+        padding: 0;
         i {
             margin: 0;
         }

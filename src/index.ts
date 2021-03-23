@@ -14,7 +14,8 @@ Hooks.on("ready", () => {
     console.log("PF2E Persistent | Registered Sheet");
 })
 
-Hooks.on("renderChatMessage", async (message, html: JQuery<HTMLElement>) => {
+Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElement>) => {
+    // Enable the bullseye button
     html.find(".token-link").on("click", (evt) => {
         const target = evt.target.closest(".token-link") as HTMLElement;
         const tokenId = target?.dataset.tokenId;

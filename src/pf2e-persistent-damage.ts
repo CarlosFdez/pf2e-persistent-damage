@@ -177,6 +177,9 @@ export class PF2EPersistentDamage {
                         token,
                         alias: token?.name || actor?.name
                     },
+                    flags: {
+                        persistent: data
+                    },
                     flavor: await renderTemplate(templateName, {
                         token,
                         data,
