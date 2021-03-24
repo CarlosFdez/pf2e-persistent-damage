@@ -1,5 +1,5 @@
-import { createPersistentEffect, DamageType, getPersistentData, typeImages } from "./persistent-effect.js";
-import { getSettings, RollHideMode } from "./settings.js";
+import { createPersistentEffect, DamageType, getPersistentData, PersistentData, typeImages } from "./persistent-effect.js";
+import { AutoRecoverMode, getSettings, RollHideMode } from "./settings.js";
 
 interface PersistentDamageType {
     damageType: string;
@@ -15,7 +15,7 @@ function getTypeData(damageType: DamageType): PersistentDamageType {
     }
 }
 
-export class PF2EPersistentDamage {
+export class PersistentDamagePF2e {
     /**
      * Shows a dialog that can be used to add persistent damage effects to selected tokens.
      */
@@ -24,7 +24,9 @@ export class PF2EPersistentDamage {
             const type = html.find("[name=Type]:checked").val() as DamageType;
             const value = html.find("[name=Damage]").val() as string;
             const dc = Number(html.find("[name=DC]").val()) || 15;
-            this.addPersistentDamage(canvas.tokens.controlled, type, value, isNaN(dc) ? 15 : dc);
+            if (canvas.ready) {
+                this.addPersistentDamage(canvas.tokens.controlled, type, value, isNaN(dc) ? 15 : dc);
+            }
         }
 
         const types = Object.keys(typeImages).map(getTypeData);
@@ -56,7 +58,7 @@ export class PF2EPersistentDamage {
                 // Replace the apply button so that it doesn't
                 html.find(".dialog-button.yes").off().on("click", () => applyDamage(html));
             }
-        } as DialogData, {
+        }, {
             id: 'pf2e-persistent-dialog'
         }).render(true);
     }
@@ -101,25 +103,15 @@ export class PF2EPersistentDamage {
     }
 
     /**
-     * Removes persistent damage effects to one or more tokens
-     * @param token
+     * Removes persistent damage effects of a certain type from an actor
+     * @param actor
      * @param type
      * @param value
      * @returns
      */
-    async removePersistentDamage(token, itemID, type: DamageType) {
-        //console.log(`Remove condition`);
-        const tokens = Array.isArray(token) ? token : [token];
-        if (tokens.length == 0) {
-            ui.notifications.warn("No token provided.");
-            return;
-        }
-
-        for (const token of tokens) {
-            var typeImage = typeImages[type];
-            token.actor.deleteOwnedItem(itemID);
-            token.toggleEffect(typeImage, {active: false})
-        }
+    async removePersistentDamage(actor: Actor, type: DamageType) {
+        const effects = actor.items.filter(i => i.data.flags.persistent?.damageType === type);
+        actor?.deleteOwnedItem(effects.map(i => i._id));
     }
 
     /**
@@ -136,10 +128,40 @@ export class PF2EPersistentDamage {
             ui.notifications.warn("No token provided.");
             return;
         }
-        for (const token of tokens) {
+        for (const _token of tokens) {
             //do the calculateDamage stuff in here
             console.log("not yet implemented")
         }
+    }
+
+    /**
+     * Creates a new message to perform a recover check for the given token
+     * @param token
+     * @param itemId
+     * @returns
+     */
+    async rollRecoveryCheck(actor: Actor, itemId: string) {
+        const effect = actor?.getOwnedItem(itemId);
+        const data = effect?.data.flags.persistent as PersistentData;
+        if (!data) return;
+
+        const roll = new Roll("1d20").evaluate();
+        const success = roll.total >= data.dc;
+        const message = await roll.toMessage({
+            speaker: ChatMessage.getSpeaker({ actor }),
+            flavor: await renderTemplate("modules/pf2e-persistent-damage/templates/chat/recover-persistent-card.html", {
+                data,
+                typeName: CONFIG.PF2E.damageTypes[data.damageType],
+                success
+            })
+        });
+
+        // Auto-remove the condition if enabled and it passes the DC
+        if (success && getSettings().autoResolve) {
+            actor.deleteOwnedItem(itemId);;
+        }
+
+        return message;
     }
 
     /**
@@ -148,7 +170,7 @@ export class PF2EPersistentDamage {
      * @param token one or more tokens to apply persistent damage to
      */
     async processPersistentDamage(token: Token | Token[]): Promise<ChatMessage[]> {
-        const { autoResolve, autoDamage, rollHideMode } = getSettings();
+        const { autoResolve, autoRecoverMode: autoCheckMode, autoDamage, rollHideMode } = getSettings();
 
         const messages = [];
         const tokens = Array.isArray(token) ? token : [token];
@@ -159,33 +181,35 @@ export class PF2EPersistentDamage {
                 continue;
             }
 
-            for (const entry of persistentDamageElements) {
-                const data = getPersistentData(entry.data);
-                const { damageType, value } = data;
-                const dc = data.dc ?? 15;
+            const isPlayer = actor.hasPlayerOwner;
+            const autoCheck = (autoCheckMode === AutoRecoverMode.Always) || (autoCheckMode === AutoRecoverMode.NPCOnly && !isPlayer);
+
+            for (const effect of persistentDamageElements) {
+                const data = getPersistentData(effect.data);
+                const { damageType, value, dc } = data;
                 const typeName = CONFIG.PF2E.damageTypes[damageType];
                 const roll = new Roll(value).roll();
 
-                const inlineCheck = TextEditor.enrichHTML("[[1d20]]");
-                const success = Number($(inlineCheck).text()) >= dc;
+                const inlineCheck = autoCheck && TextEditor.enrichHTML("[[1d20]]");
+                const success = autoCheck && Number($(inlineCheck).text()) >= dc;
 
-                const templateName = "modules/pf2e-persistent-damage/templates/card-header.html";
+                const templateName = "modules/pf2e-persistent-damage/templates/chat/persistent-card.html";
 
                 const message = await ChatMessage.create({
-                    speaker: {
-                        actor: actor?._id,
-                        token,
-                        alias: token?.name || actor?.name
-                    },
+                    speaker: ChatMessage.getSpeaker({actor, token}),
                     flags: {
                         persistent: data
                     },
                     flavor: await renderTemplate(templateName, {
+                        actor,
                         token,
+                        effect,
                         data,
                         inlineCheck,
                         typeName,
-                        success
+                        autoCheck,
+                        success,
+                        tokenId: `${token.scene._id}.${token.id}`
                     }),
                     rollMode: (rollHideMode === RollHideMode.Never)
                         ? "roll"
@@ -204,8 +228,8 @@ export class PF2EPersistentDamage {
                 }
 
                 // Auto-remove the condition if enabled and it passes the DC
-                if (autoResolve && success) {
-                    this.removePersistentDamage(token, entry._id, damageType);
+                if (autoCheck && autoResolve && success) {
+                    token.actor.deleteOwnedItem(effect._id);
                 }
 
                 messages.push(message);

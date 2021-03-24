@@ -1,8 +1,15 @@
 {
     "PF2E-PD.SETTINGS": {
-        "AutoRoll": {
-            "name": "Auto roll at end of turn?",
+        "AutoProcess": {
+            "name": "Auto process at end of turn?",
             "hint": "If set to true, the persistent damage will be rolled after the token's turn. Otherwise, you must run the macro 'Process Persistent Damage'."
+        },
+        "AutoRecover": {
+            "name": "Auto D20 Recovery Check?",
+            "hint": "Should the D20 flat check for removal be done as part of the message, or separately?",
+            "option1": "Always Auto Recover",
+            "option2": "NPCs only",
+            "option3": "Never"
         },
         "AutoResolve": {
             "name": "Auto resolve?",

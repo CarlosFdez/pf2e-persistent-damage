@@ -1,7 +1,13 @@
 export const MODULE_NAME = "pf2e-persistent-damage";
 
-function getVersion() {
-    return game.modules.get(MODULE_NAME).data.version;
+function getVersion(): string {
+    return game.modules.get(MODULE_NAME).data["version"];
+}
+
+export enum AutoRecoverMode {
+    Always = 1,
+    NPCOnly = 2,
+    Never = 3
 }
 
 export enum RollHideMode {
@@ -23,13 +29,27 @@ export function registerSettings() {
     });
 
     game.settings.register(MODULE_NAME, "auto-roll", {
-        name: game.i18n.localize("PF2E-PD.SETTINGS.AutoRoll.name"),
-        hint: game.i18n.localize("PF2E-PD.SETTINGS.AutoRoll.hint"),
+        name: game.i18n.localize("PF2E-PD.SETTINGS.AutoProcess.name"),
+        hint: game.i18n.localize("PF2E-PD.SETTINGS.AutoProcess.hint"),
         scope: 'world',
         config: true,
         type: Boolean,
         default: true
     });
+
+    game.settings.register(MODULE_NAME, "auto-recover", {
+        name: game.i18n.localize("PF2E-PD.SETTINGS.AutoRecover.name"),
+        hint: game.i18n.localize("PF2E-PD.SETTINGS.AutoRecover.hint"),
+        scope: 'world',
+        config: true,
+        type: Number,
+        choices: {
+            [AutoRecoverMode.Always]: game.i18n.localize("PF2E-PD.SETTINGS.AutoRecover.option1"),
+            [AutoRecoverMode.NPCOnly]: game.i18n.localize("PF2E-PD.SETTINGS.AutoRecover.option2"),
+            [AutoRecoverMode.Never]: game.i18n.localize("PF2E-PD.SETTINGS.AutoRecover.option3")
+        },
+        default: AutoRecoverMode.NPCOnly
+    })
 
     game.settings.register(MODULE_NAME, "auto-resolve", {
         name: game.i18n.localize("PF2E-PD.SETTINGS.AutoResolve.name"),
@@ -69,12 +89,16 @@ export function registerSettings() {
 
 export function getSettings() {
     return {
-        get autoRoll(): boolean {
-            return game.settings.get(MODULE_NAME, "auto-roll");
+        get autoRoll() {
+            return game.settings.get(MODULE_NAME, "auto-roll") as boolean;
         },
 
-        get autoResolve(): boolean {
-            return game.settings.get(MODULE_NAME, "auto-resolve");
+        get autoRecoverMode() {
+            return game.settings.get(MODULE_NAME, "auto-recover") as AutoRecoverMode;
+        },
+
+        get autoResolve() {
+            return game.settings.get(MODULE_NAME, "auto-resolve") as boolean;
         },
 
         get autoDamage(): boolean {
@@ -83,8 +107,8 @@ export function getSettings() {
             return false;
         },
 
-        get rollHideMode(): RollHideMode {
-            return game.settings.get(MODULE_NAME, "hide-rolls");
+        get rollHideMode() {
+            return game.settings.get(MODULE_NAME, "hide-rolls") as RollHideMode;
         }
     }
 }

@@ -8,7 +8,7 @@ import * as path from "path";
 import * as fs from "fs/promises";
 import * as through from "through2";
 
-const project = ts.createProject("tsconfig.json")
+const project = ts.createProject("src/tsconfig.json")
 
 task("clean", () => {
   return del("dist");

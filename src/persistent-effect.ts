@@ -51,11 +51,11 @@ export function getPersistentData(itemData: { flags: any }): PersistentData {
  */
 Hooks.on("preUpdateOwnedItem", (actor: Actor, item: Item.Data, update) => {
     if (update?.flags?.persistent) {
+        // Merge the persistent flags. This also "migrates" the flags.
+        const previous = item.flags?.persistent as PersistentData;
         const persistent = getPersistentData({
             flags: {
-                persistent: mergeObject(
-                    { ...item.flags?.persistent },
-                    update.flags.persistent)
+                persistent: mergeObject({ ...previous }, update.flags.persistent)
             }
         });
 

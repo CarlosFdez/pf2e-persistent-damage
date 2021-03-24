@@ -2,20 +2,14 @@
     "compilerOptions": {
         "target": "es2019",
         "module": "es6",
-        "lib": ["esnext", "dom"],
-        "noEmit": true,
+        "moduleResolution": "node",
+        "lib": ["DOM", "ES6", "ES2017", "ES2018", "ES2019"],
         "noImplicitThis": true,
         "noUnusedLocals": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true,
         "sourceMap": true,
-        "baseUrl": ".",
         "removeComments": false,
         "resolveJsonModule": true,
-        "types": [
-            "jquery",
-            "foundry-pc-types"
-        ],
+        "types": ["@league-of-foundry-developers/foundry-vtt-types"],
         "typeRoots": ["node_modules/@types", "node_modules/handlebars"]
     }
 }

@@ -1,4 +1,4 @@
-import { PF2EPersistentDamage } from "./pf2e-persistent-damage.js";
+import { PersistentDamagePF2e } from "./pf2e-persistent-damage.js";
 import { getSettings, registerSettings } from "./settings.js";
 import { overrideItemSheet } from "./persistent-effect.js";
 
@@ -6,7 +6,7 @@ Hooks.on("init", () => {
     registerSettings();
     loadTemplates(["modules/pf2e-persistent-damage/templates/persistent-details.html"]);
 
-    window.PF2EPersistentDamage = new PF2EPersistentDamage();
+    window.PF2EPersistentDamage = new PersistentDamagePF2e();
 });
 
 Hooks.on("ready", () => {
@@ -15,14 +15,45 @@ Hooks.on("ready", () => {
 })
 
 Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElement>) => {
+    if (message.data.flags.persistent) {
+        html.find("button[data-action=check][data-check=flat]").off().on("click", (evt) => {
+            evt.preventDefault();
+
+            const card = html.find(".chat-card");
+            const effectId = card.attr("data-effect-id");
+
+            // Get the Actor from a synthetic Token
+            let actor: Actor | null;
+            const tokenKey = card.attr('data-token-id');
+            if (tokenKey && canvas.ready) {
+                const [sceneId, tokenId] = tokenKey.split('.');
+                let token: Token | undefined;
+                if (sceneId === canvas.scene?._id) token = canvas.tokens.get(tokenId);
+                else {
+                    const scene = game.scenes.get(sceneId);
+                    if (!scene) return;
+                    const tokenData = scene.data.tokens.find((t) => t._id === tokenId);
+                    if (tokenData) token = new Token(tokenData);
+                }
+                if (!token) return;
+                const ActorPF2e = CONFIG.Actor.entityClass as typeof Actor;
+                actor = ActorPF2e.fromToken(token);
+            } else actor = game.actors.get(card.attr('data-actor-id'));
+
+            PF2EPersistentDamage.rollRecoveryCheck(actor, effectId)
+        });
+    }
+
     // Enable the bullseye button
     html.find(".token-link").on("click", (evt) => {
         const target = evt.target.closest(".token-link") as HTMLElement;
         const tokenId = target?.dataset.tokenId;
         if (!tokenId) return;
 
-        const token = canvas.tokens.get(tokenId);
-        token?.control({ multiSelect: false, releaseOthers: true });
+        if (canvas.ready) {
+            const token = canvas.tokens.get(tokenId);
+            token?.control({ releaseOthers: true });
+        }
     });
 });
 
@@ -31,7 +62,7 @@ Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElem
  */
 Hooks.on("preUpdateCombat", async (combat, update) => {
     const { autoRoll } = getSettings();
-    if (autoRoll) {
+    if (autoRoll && canvas.ready) {
         const lastCombatantToken = canvas.tokens.get(combat.current.tokenId);
         window.PF2EPersistentDamage.processPersistentDamage(lastCombatantToken)
     }
