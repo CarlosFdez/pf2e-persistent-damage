@@ -68,3 +68,23 @@ Hooks.on("preUpdateCombat", async (combat, update) => {
     }
 });
 
+/**
+ * If persistent damage is clicked, use this module instead.
+ */
+Hooks.on("renderTokenHUD", (app, html: JQuery, tokenData: Token.Data) => {
+    setTimeout(() => {
+        html.find("div.status-effects img[data-effect=persistentDamage]").off().on("click", (evt) => {
+            if (evt.button !== 0 || !canvas.ready) {
+                return;
+            }
+
+            evt.preventDefault();
+            evt.stopPropagation();
+
+            const token = canvas.tokens.get(tokenData._id);
+            if (token) {
+                PF2EPersistentDamage.showDialog({ actor: token.actor });
+            }
+        });
+    }, 0);
+});

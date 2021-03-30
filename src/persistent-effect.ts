@@ -63,7 +63,7 @@ Hooks.on("preUpdateOwnedItem", (actor: Actor, item: Item.Data, update) => {
         update.name = createTitle(persistent);
         update.description = createDescription(persistent);
     }
-})
+});
 
 /**
  * Overrides the item sheet so that all sheets for persistent damage effects

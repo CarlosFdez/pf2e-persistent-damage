@@ -18,33 +18,37 @@ function getTypeData(damageType: DamageType): PersistentDamageType {
 export class PersistentDamagePF2e {
     /**
      * Shows a dialog that can be used to add persistent damage effects to selected tokens.
+     * If actor is given, the dialog will add a single effect to that actor.
+     * If not given, it can be used to add effects to selected tokens.
      */
-    async showDialog() {
+    async showDialog({ actor }: { actor?: Actor } = {}) {
         const applyDamage = (html: JQuery<HTMLElement>) => {
             const type = html.find("[name=Type]:checked").val() as DamageType;
             const value = html.find("[name=Damage]").val() as string;
             const dc = Number(html.find("[name=DC]").val()) || 15;
             if (canvas.ready) {
-                this.addPersistentDamage(canvas.tokens.controlled, type, value, isNaN(dc) ? 15 : dc);
+                const actors = actor ?? canvas.tokens.controlled?.map(t => t.actor);
+                this.addPersistentDamage(actors, type, value, isNaN(dc) ? 15 : dc);
             }
         }
 
+        const yesMessage = game.i18n.localize(actor ? "PF2E-PD.Dialog.Apply" : "PF2E-PD.Dialog.Add");
         const types = Object.keys(typeImages).map(getTypeData);
 
         return new Dialog({
-            title: "Add Persistent Damage",
+            title: game.i18n.localize("PF2E-PD.Dialog.Title"),
             content: await renderTemplate("modules/pf2e-persistent-damage/templates/persistent-damage-dialog.html", {
                 types
             }),
             buttons: {
                 yes: {
                     icon: "<i class='fas fa-check'></i>",
-                    label: "Apply",
+                    label: yesMessage,
                     callback: applyDamage
                 },
                 no: {
                     icon: "<i class='fas fa-times'></i>",
-                    label: "Close",
+                    label: game.i18n.localize("PF2E-PD.Dialog.Close"),
                 },
             },
             default: "yes",
@@ -55,8 +59,10 @@ export class PersistentDamagePF2e {
                     setTimeout(() => html.find('input[name=Damage]').trigger("focus"), 0);
                 });
 
-                // Replace the apply button so that it doesn't
-                html.find(".dialog-button.yes").off().on("click", () => applyDamage(html));
+                // Replace the apply button so that it doesn't close, but only if there's no actor
+                if (!actor) {
+                    html.find(".dialog-button.yes").off().on("click", () => applyDamage(html));
+                }
             }
         }, {
             id: 'pf2e-persistent-dialog'
@@ -65,12 +71,12 @@ export class PersistentDamagePF2e {
 
     /**
      * Adds persistent damage effects to one or more tokens
-     * @param token
+     * @param actor
      * @param type
      * @param value
      * @returns
      */
-    addPersistentDamage(token: Token | Token[], type: DamageType, value: string, dc: number=15): void {
+    addPersistentDamage(actor: Actor | Actor[], type: DamageType, value: string, dc: number=15): void {
         // test for errors
         const errors = [];
         if (!type) errors.push("Missing damage type");
@@ -89,16 +95,15 @@ export class PersistentDamagePF2e {
             return;
         }
 
-        const tokens = Array.isArray(token) ? token : [token];
-        if (tokens.length == 0) {
-            ui.notifications.warn("No token currently active.");
+        const actors = Array.isArray(actor) ? actor : [actor];
+        if (actors.length == 0) {
+            ui.notifications.warn("No actors given to add persistent damage to.");
             return;
         }
 
         const effect = createPersistentEffect(type, value, dc);
-        for (const token of tokens) {
-            token.actor.createOwnedItem(effect);
-            token.refresh()
+        for (const actor of actors) {
+            actor.createOwnedItem(effect);
         }
     }
 
@@ -111,7 +116,7 @@ export class PersistentDamagePF2e {
      */
     async removePersistentDamage(actor: Actor, type: DamageType) {
         const effects = actor.items.filter(i => i.data.flags.persistent?.damageType === type);
-        actor?.deleteOwnedItem(effects.map(i => i._id));
+        await actor?.deleteOwnedItem(effects.map(i => i._id));
     }
 
     /**

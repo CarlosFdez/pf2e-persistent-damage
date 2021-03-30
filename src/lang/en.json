@@ -24,6 +24,13 @@
         }
     },
 
+    "PF2E-PD.Dialog": {
+        "Title": "Add Persistent Damage",
+        "Apply": "Apply",
+        "Add": "Add",
+        "Close": "Close"
+    },
+
     "PF2E-PD.Button.SelectTarget": "Click to select the afflicted token.",
 
     "PF2E-PD.Migrating": "Applying migration for PF2E Persistent Damage",
