@@ -15,6 +15,12 @@ function getTypeData(damageType: DamageType): PersistentDamageType {
     }
 }
 
+function getRollAverage(formula: string) {
+    const maxRoll = new Roll(formula).evaluate({ maximize: true });
+    const minRoll = new Roll(formula).evaluate({ minimize: true });
+    return ((maxRoll.total - minRoll.total) / 2) + minRoll.total;
+}
+
 export class PersistentDamagePF2e {
     /**
      * Shows a dialog that can be used to add persistent damage effects to selected tokens.
@@ -30,12 +36,14 @@ export class PersistentDamagePF2e {
                 const actors = actor ?? canvas.tokens.controlled?.map(t => t.actor);
                 this.addPersistentDamage(actors, type, value, isNaN(dc) ? 15 : dc);
             }
+
+            return false;
         }
 
         const yesMessage = game.i18n.localize(actor ? "PF2E-PD.Dialog.Apply" : "PF2E-PD.Dialog.Add");
         const types = Object.keys(typeImages).map(getTypeData);
 
-        return new Dialog({
+        const dialog = new Dialog({
             title: game.i18n.localize("PF2E-PD.Dialog.Title"),
             content: await renderTemplate("modules/pf2e-persistent-damage/templates/persistent-damage-dialog.html", {
                 types
@@ -66,22 +74,25 @@ export class PersistentDamagePF2e {
             }
         }, {
             id: 'pf2e-persistent-dialog'
-        }).render(true);
+        });
+
+        dialog.render(true);
+        return dialog;
     }
 
     /**
      * Adds persistent damage effects to one or more tokens
-     * @param actor
-     * @param type
-     * @param value
+     * @param actor One or more actors to add the persistent damage to
+     * @param type the damage type
+     * @param formula The formula of the roll.
+     * @param dc DC for the flat check to remove it
      * @returns
      */
-    addPersistentDamage(actor: Actor | Actor[], type: DamageType, value: string, dc: number=15): void {
-        // test for errors
+    async addPersistentDamage(actor: Actor | Actor[], type: DamageType, formula: string, dc: number=15) {
+        // Test for invalid parameters
         const errors = [];
         if (!type) errors.push("Missing damage type");
-        if (!value) errors.push("Missing damage value");
-
+        if (!formula) errors.push("Missing damage value");
         if (errors.length > 0) {
             ui.notifications.error("Persistent Damage Errors: " + errors.join("; "));
             return;
@@ -89,7 +100,7 @@ export class PersistentDamagePF2e {
 
         try {
             // Test if the roll is valid
-            new Roll(value).roll();
+            new Roll(formula).roll();
         } catch (err) {
             ui.notifications.error(err);
             return;
@@ -97,13 +108,27 @@ export class PersistentDamagePF2e {
 
         const actors = Array.isArray(actor) ? actor : [actor];
         if (actors.length == 0) {
-            ui.notifications.warn("No actors given to add persistent damage to.");
+            ui.notifications.warn(game.i18n.localize("PF2E-PD.Notification.MissingActor"));
             return;
         }
 
-        const effect = createPersistentEffect(type, value, dc);
+        const effect = createPersistentEffect(type, formula, dc);
         for (const actor of actors) {
-            actor.createOwnedItem(effect);
+            const existing = PF2EPersistentDamage.getPersistentDamage(actor, type);
+            const existingAverage = existing && getRollAverage(existing.data.flags.persistent?.value);
+            const newAverage = getRollAverage(formula);
+            if (!existing || newAverage >= existingAverage) {
+                // Overwrite if greater or equal
+                // If equal, it may have been a DC tweak, such as with certain monster abilities
+                if (existing) await this.removePersistentDamage(actor, type);
+                await actor.createOwnedItem(effect);
+
+                if (existing) {
+                    ui.notifications.info(game.i18n.localize("PF2E-PD.Notification.Overwritten"));
+                }
+            } else if (existing) {
+                ui.notifications.info(game.i18n.localize("PF2E-PD.Notification.NotOverwritten"));
+            }
         }
     }
 
@@ -117,6 +142,10 @@ export class PersistentDamagePF2e {
     async removePersistentDamage(actor: Actor, type: DamageType) {
         const effects = actor.items.filter(i => i.data.flags.persistent?.damageType === type);
         await actor?.deleteOwnedItem(effects.map(i => i._id));
+    }
+
+    getPersistentDamage(actor: Actor, type: DamageType) {
+        return actor.items.find(i => i.data.flags.persistent?.damageType === type);
     }
 
     /**
