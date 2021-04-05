@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "gulp build",
-    "watch": "gulp watch"
+    "build:dev": "gulp watch",
+    "lint": "eslint ./src --ext .ts",
+    "lint:fix": "eslint ./src --ext .ts --fix"
   },
   "author": "",
   "license": "ISC",
@@ -22,7 +24,14 @@
     "@types/gulp-uglify": "^3.0.6",
     "@types/jquery": "^3.5.5",
     "@types/through2": "^2.0.36",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
     "del": "^6.0.0",
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^4.1.0",
@@ -30,6 +39,7 @@
     "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-uglify": "^3.0.2",
     "handlebars": "^4.7.7",
+    "prettier": "^2.2.1",
     "through2": "^4.0.2",
     "ts-node": "^9.1.1"
   }
