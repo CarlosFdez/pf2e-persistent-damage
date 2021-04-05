@@ -6,25 +6,14 @@ import {
     typeImages,
 } from "./persistent-effect.js";
 import { AutoRecoverMode, getSettings, RollHideMode } from "./settings.js";
+import { getRollAverage } from "./utils.js";
 
-interface PersistentDamageType {
-    damageType: string;
-    name: string;
-    img: string;
-}
-
-function getTypeData(damageType: DamageType): PersistentDamageType {
+function getTypeData(damageType: DamageType) {
     return {
         damageType,
         name: CONFIG.PF2E.damageTypes[damageType],
         img: typeImages[damageType],
     };
-}
-
-function getRollAverage(formula: string) {
-    const maxRoll = new Roll(formula).evaluate({ maximize: true });
-    const minRoll = new Roll(formula).evaluate({ minimize: true });
-    return (maxRoll.total - minRoll.total) / 2 + minRoll.total;
 }
 
 export class PersistentDamagePF2e {
@@ -151,13 +140,8 @@ export class PersistentDamagePF2e {
 
         const effect = createPersistentEffect(type, formula, dc);
         for (const actor of actors) {
-            const existing = PF2EPersistentDamage.getPersistentDamage(
-                actor,
-                type
-            );
-            const existingAverage =
-                existing &&
-                getRollAverage(existing.data.flags.persistent?.value);
+            const existing = PF2EPersistentDamage.getPersistentDamage(actor, type);
+            const existingAverage = getRollAverage(existing?.data.flags.persistent?.value);
             const newAverage = getRollAverage(formula);
             if (!existing || newAverage >= existingAverage) {
                 // Overwrite if greater or equal

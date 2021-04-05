@@ -1,4 +1,4 @@
-import { PersistentDamagePF2e } from "../pf2e-persistent-damage.js";
+import { PersistentDamagePF2e } from "../module/pf2e-persistent-damage.js";
 
 declare global {
     interface String {

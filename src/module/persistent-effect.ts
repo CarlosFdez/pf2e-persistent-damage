@@ -32,7 +32,7 @@ export interface PersistentData {
 
 /**
  * All possible persistent data types that may exist due to old versions.
- * This needs to be nudged into a "not" old version.
+ * These properties are nudged into new ones.
  */
 interface PersistentDataOld extends PersistentData {
     type?: Capitalize<DamageType> | "bleeding";

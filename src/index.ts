@@ -1,6 +1,6 @@
-import { PersistentDamagePF2e } from "./pf2e-persistent-damage.js";
-import { getSettings, registerSettings } from "./settings.js";
-import { overrideItemSheet } from "./persistent-effect.js";
+import { PersistentDamagePF2e } from "./module/pf2e-persistent-damage.js";
+import { getSettings, registerSettings } from "./module/settings.js";
+import { overrideItemSheet } from "./module/persistent-effect.js";
 
 Hooks.on("init", () => {
     registerSettings();

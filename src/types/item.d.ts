@@ -1,4 +1,4 @@
-import { PersistentData } from "../persistent-effect.js";
+import { PersistentData } from "../module/persistent-effect.js";
 
 interface EffectDataDetails {
     level: {
