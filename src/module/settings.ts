@@ -44,15 +44,9 @@ export function registerSettings() {
         config: true,
         type: Number,
         choices: {
-            [AutoRecoverMode.Always]: game.i18n.localize(
-                "PF2E-PD.SETTINGS.AutoRecover.option1"
-            ),
-            [AutoRecoverMode.NPCOnly]: game.i18n.localize(
-                "PF2E-PD.SETTINGS.AutoRecover.option2"
-            ),
-            [AutoRecoverMode.Never]: game.i18n.localize(
-                "PF2E-PD.SETTINGS.AutoRecover.option3"
-            ),
+            [AutoRecoverMode.Always]: game.i18n.localize("PF2E-PD.SETTINGS.AutoRecover.option1"),
+            [AutoRecoverMode.NPCOnly]: game.i18n.localize("PF2E-PD.SETTINGS.AutoRecover.option2"),
+            [AutoRecoverMode.Never]: game.i18n.localize("PF2E-PD.SETTINGS.AutoRecover.option3"),
         },
         default: AutoRecoverMode.NPCOnly,
     });
@@ -100,10 +94,7 @@ export function getSettings() {
         },
 
         get autoRecoverMode() {
-            return game.settings.get(
-                MODULE_NAME,
-                "auto-recover"
-            ) as AutoRecoverMode;
+            return game.settings.get(MODULE_NAME, "auto-recover") as AutoRecoverMode;
         },
 
         get autoResolve() {

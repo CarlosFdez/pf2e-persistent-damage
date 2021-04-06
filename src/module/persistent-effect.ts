@@ -1,3 +1,5 @@
+import { EffectData } from "../types/item";
+
 export const typeImages = {
     bleed: "systems/pf2e/icons/spells/blade-barrier.jpg",
     piercing: "systems/pf2e/icons/spells/savor-the-sting.jpg",
@@ -68,10 +70,7 @@ Hooks.on("preUpdateOwnedItem", (actor: Actor, item: Item.Data, update) => {
         const previous = item.flags?.persistent as PersistentData;
         const persistent = getPersistentData({
             flags: {
-                persistent: mergeObject(
-                    { ...previous },
-                    update.flags.persistent
-                ),
+                persistent: mergeObject({ ...previous }, update.flags.persistent),
             },
         });
 
@@ -88,7 +87,7 @@ Hooks.on("preUpdateOwnedItem", (actor: Actor, item: Item.Data, update) => {
 export function overrideItemSheet() {
     // unfortunately....pf2e does not override the item default sheet
     const baseSheet: new () => ItemSheet = Items.registeredSheets.find(
-        (s) => s.name === "ItemSheetPF2e"
+        (s) => s.name === "ItemSheetPF2e",
     );
 
     const original = baseSheet.prototype.getData;
@@ -120,7 +119,7 @@ function createDescription(data: PersistentData) {
 }
 
 /**
- * Creates the persistent effect.
+ * Creates the persistent effect data that can be used to create an item.
  * @param damageType
  * @param value
  * @returns
@@ -128,8 +127,8 @@ function createDescription(data: PersistentData) {
 export function createPersistentEffect(
     damageType: DamageType,
     value: string,
-    dc = 15
-) {
+    dc = 15,
+): Partial<EffectData> {
     const persistent: PersistentData = { damageType, value, dc };
     return {
         name: createTitle(persistent),
@@ -141,7 +140,8 @@ export function createPersistentEffect(
             duration: {
                 expiry: "turn-end",
                 unit: "unlimited",
-                value: -1,
+                value: 0,
+                sustained: false,
             },
             rules: [{ key: "PF2E.RuleElement.TokenEffectIcon" }],
         },

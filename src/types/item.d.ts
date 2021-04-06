@@ -1,11 +1,36 @@
 import { PersistentData } from "../module/persistent-effect.js";
 
-interface EffectDataDetails {
-    level: {
+export interface PF2RuleElementData {
+    key: string;
+    data?: any;
+    selector?: string;
+    value?: unknown;
+    scope?: string;
+}
+
+export interface ItemDescriptionData {
+    description: {
+        value: string;
+    };
+    source?: {
+        value: string;
+    };
+    options?: {
+        value: string[];
+    };
+    usage?: {
+        value: string;
+    };
+    rules: PF2RuleElementData[];
+    slug?: string | null;
+}
+
+interface EffectDataDetails extends ItemDescriptionData {
+    level?: {
         value: number;
     };
-    expired: boolean;
-    remaining: string;
+    expired?: boolean;
+    remaining?: string;
     duration: {
         value: 0;
         unit: string;
