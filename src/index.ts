@@ -1,6 +1,7 @@
 import { PersistentDamagePF2e } from "./module/pf2e-persistent-damage.js";
 import { getSettings, registerSettings } from "./module/settings.js";
 import { overrideItemSheet } from "./module/persistent-effect.js";
+import { setupCustomRules } from "./module/custom-rules.js";
 
 Hooks.on("init", () => {
     registerSettings();
@@ -11,6 +12,7 @@ Hooks.on("init", () => {
 
 Hooks.on("ready", () => {
     overrideItemSheet();
+    setupCustomRules();
     console.log("PF2E Persistent | Registered Sheet");
 });
 
