@@ -1,3 +1,5 @@
+import { ItemDataPF2e } from "../../types/item";
+
 export interface Bracket {
     start?: number;
     end?: number;
@@ -14,7 +16,6 @@ export type RuleValue = string | number | BracketedValue;
 export type PF2RuleElementSynthetics = Record<string, unknown>;
 
 type CreatureData = Actor.Data;
-type ItemDataPF2e = Item.Data;
 
 /**
  * Rule Elements allow you to modify actorData and tokenData values when present on items. They can be configured

@@ -1,8 +1,8 @@
-import { PF2RuleElement } from "../module/rule-element";
-import { PF2RuleElementData } from "./item";
+import { PF2RuleElement } from "../module/elements/rule-element";
+import { ItemDataPF2e, PF2RuleElementData } from "./item";
 
 interface RuleElements {
-    custom: Record<string, (ruleData: PF2RuleElementData, item: Item.Data) => PF2RuleElement>;
+    custom: Record<string, (ruleData: PF2RuleElementData, item: ItemDataPF2e) => PF2RuleElement>;
 }
 
 declare global {

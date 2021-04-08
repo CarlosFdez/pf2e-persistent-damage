@@ -1,4 +1,4 @@
-import { PF2RuleElement, PF2RuleElementSynthetics } from "../rule-element.js";
+import { PF2RuleElement, PF2RuleElementSynthetics } from "./rule-element.js";
 
 // {
 //     "key": "PF2E.RuleElement.Healing",

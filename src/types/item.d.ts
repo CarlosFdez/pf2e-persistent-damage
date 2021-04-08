@@ -47,6 +47,9 @@ export interface EffectData extends Item.Data<EffectDataDetails> {
     type: "effect";
 }
 
+// A union of all possible item data's...this module though only cares about effects
+export type ItemDataPF2e = EffectData;
+
 declare global {
     namespace Item {
         interface Data {
