@@ -162,13 +162,7 @@ export abstract class PF2RuleElement {
      * @param defaultValue if no value is found, use that one
      * @return the evaluated value
      */
-    resolveValue(
-        valueData: RuleValue,
-        ruleData: any,
-        item: any,
-        actorData: any,
-        defaultValue = 0,
-    ) {
+    resolveValue(valueData: RuleValue, ruleData: any, item: any, actorData: any, defaultValue = 0) {
         let value = defaultValue;
         if (typeof valueData === "object") {
             let bracket = getProperty(actorData, "data.details.level.value");

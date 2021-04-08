@@ -1,3 +1,4 @@
+import { EffectData, ItemDataPF2e } from "../types/item.js";
 import {
     createPersistentEffect,
     DamageType,
@@ -88,15 +89,20 @@ export class PersistentDamagePF2e {
     /**
      * Adds persistent damage effects to one or more tokens
      * @param actor One or more actors to add the persistent damage to
-     * @param type the damage type
+     * @param damageType the damage type
      * @param formula The formula of the roll.
      * @param dc DC for the flat check to remove it
      * @returns
      */
-    async addPersistentDamage(actor: Actor | Actor[], type: DamageType, formula: string, dc = 15) {
+    async addPersistentDamage(
+        actor: Actor | Actor[],
+        damageType: DamageType,
+        formula: string,
+        dc = 15,
+    ) {
         // Test for invalid parameters
         const errors = [];
-        if (!type) errors.push("Missing damage type");
+        if (!damageType) errors.push("Missing damage type");
         if (!formula) errors.push("Missing damage value");
         if (errors.length > 0) {
             ui.notifications.error("Persistent Damage Errors: " + errors.join("; "));
@@ -117,9 +123,9 @@ export class PersistentDamagePF2e {
             return;
         }
 
-        const effect = createPersistentEffect(type, formula, dc);
+        const effect = createPersistentEffect({ damageType, value: formula, dc });
         for (const actor of actors) {
-            const existing = PF2EPersistentDamage.getPersistentDamage(actor, type);
+            const existing = PF2EPersistentDamage.getPersistentDamage(actor, damageType);
             const { average: existingAverage } = calculateRoll(
                 existing?.data.flags.persistent?.value,
             );
@@ -127,7 +133,7 @@ export class PersistentDamagePF2e {
             if (!existing || newAverage >= existingAverage) {
                 // Overwrite if greater or equal
                 // If equal, it may have been a DC tweak, such as with certain monster abilities
-                if (existing) await this.removePersistentDamage(actor, type);
+                if (existing) await this.removePersistentDamage(actor, damageType);
                 await actor.createOwnedItem(effect);
 
                 if (existing) {
@@ -153,26 +159,6 @@ export class PersistentDamagePF2e {
 
     getPersistentDamage(actor: Actor, type: DamageType) {
         return actor.items.find((i) => i.data.flags.persistent?.damageType === type);
-    }
-
-    /**
-     * Deals persistent damage effects to one or more tokens
-     * @param token
-     * @param type
-     * @param value
-     * @returns
-     */
-    async dealPersistentDamage(token, itemID, type: DamageType) {
-        //console.log(`Deal ${type} damage`);
-        const tokens = Array.isArray(token) ? token : [token];
-        if (tokens.length == 0) {
-            ui.notifications.warn("No token provided.");
-            return;
-        }
-        // for (const _token of tokens) {
-        //     //do the calculateDamage stuff in here
-        //     console.log("not yet implemented");
-        // }
     }
 
     /**
@@ -229,8 +215,10 @@ export class PersistentDamagePF2e {
         for (const token of tokens) {
             const actor = token.actor;
             const persistentDamageElements = actor.itemTypes.effect.filter(
-                (i: Item) => i.data.flags.persistent,
-            );
+                (i: Item<ItemDataPF2e>) =>
+                    i.data.data.rules.some((r) => r.key === "PF2E.RuleElement.PersistentDamage") ||
+                    i.data.flags.persistent,
+            ) as Item<EffectData>[];
             if (!persistentDamageElements) {
                 continue;
             }
@@ -241,7 +229,7 @@ export class PersistentDamagePF2e {
                 (autoCheckMode === AutoRecoverMode.NPCOnly && !isPlayer);
 
             for (const effect of persistentDamageElements) {
-                const data = getPersistentData(effect.data);
+                const data = getPersistentData(effect);
                 const { damageType, value, dc } = data;
                 const typeName = CONFIG.PF2E.damageTypes[damageType];
                 const roll = new Roll(value).roll();

@@ -1,4 +1,4 @@
-import { EffectData } from "../types/item";
+import { EffectData, ItemDataPF2e } from "../types/item";
 
 export const typeImages = {
     bleed: "systems/pf2e/icons/spells/blade-barrier.jpg",
@@ -44,10 +44,22 @@ interface PersistentDataOld extends PersistentData {
  * Retrieves persistent data values from item data if exists.
  * Also handles "migrations" in a way.
  */
-export function getPersistentData(itemData: {
-    flags: { persistent?: PersistentDataOld };
-}): PersistentData {
-    const data = itemData.flags.persistent;
+export function getPersistentData(item: Item<ItemDataPF2e>): PersistentData {
+    // Use the rule element data as a marker
+    const persistentRule = item.data.data.rules.find(
+        (r) => r.key === "PF2E.RuleElement.PersistentDamage",
+    ) as unknown;
+    if (persistentRule) {
+        const data = persistentRule as PersistentData;
+        const damageType = String(data.damageType) as DamageType;
+        const value = String(data.value);
+        const dc = Number(data.dc);
+        // validation?
+        return { damageType, value, dc };
+    }
+
+    // This is the old path (pre rule). Eventually it will be phased out
+    const data = item.data.flags.persistent as PersistentDataOld;
     if (data) {
         // Ensure damage type is suitable for the latest version
         let damageType = data.damageType ?? data.type?.toLowerCase();
@@ -60,25 +72,6 @@ export function getPersistentData(itemData: {
         };
     }
 }
-
-/**
- * Update item name and description based on persistent flags
- */
-Hooks.on("preUpdateOwnedItem", (actor: Actor, item: Item.Data, update) => {
-    if (update?.flags?.persistent) {
-        // Merge the persistent flags. This also "migrates" the flags.
-        const previous = item.flags?.persistent as PersistentData;
-        const persistent = getPersistentData({
-            flags: {
-                persistent: mergeObject({ ...previous }, update.flags.persistent),
-            },
-        });
-
-        update.flags.persistent = persistent;
-        update.name = createTitle(persistent);
-        update.description = createDescription(persistent);
-    }
-});
 
 /**
  * Overrides the item sheet so that all sheets for persistent damage effects
@@ -105,37 +98,19 @@ export function overrideItemSheet() {
     };
 }
 
-function createTitle(data: PersistentData) {
-    const { damageType, value, dc } = data;
-    const typeName = CONFIG.PF2E.damageTypes[damageType];
-    const dcStr = dc === 15 ? "" : ` DC${dc}`;
-    return `Persistent ${typeName} [${value}]${dcStr}`;
-}
-
-function createDescription(data: PersistentData) {
-    const { damageType, value, dc } = data;
-    const typeName = CONFIG.PF2E.damageTypes[damageType];
-    return `<p>[[/r ${value}]] persistent ${typeName} damage</p><p>Roll DC ${dc} Flat Check, [[/r 1d20]]</p>`;
-}
-
 /**
  * Creates the persistent effect data that can be used to create an item.
  * @param damageType
  * @param value
  * @returns
  */
-export function createPersistentEffect(
-    damageType: DamageType,
-    value: string,
-    dc = 15,
-): Partial<EffectData> {
-    const persistent: PersistentData = { damageType, value, dc };
+export function createPersistentEffect(persistent: PersistentData): Partial<EffectData> {
     return {
-        name: createTitle(persistent),
         type: "effect",
+        name: "Persistent Damage",
         data: {
             description: {
-                value: createDescription(persistent),
+                value: "Persistent Damage",
             },
             duration: {
                 expiry: "turn-end",
@@ -143,9 +118,15 @@ export function createPersistentEffect(
                 value: 0,
                 sustained: false,
             },
-            rules: [{ key: "PF2E.RuleElement.TokenEffectIcon" }],
+            rules: [
+                {
+                    key: "PF2E.RuleElement.PersistentDamage",
+                    ...persistent,
+                },
+                { key: "PF2E.RuleElement.TokenEffectIcon" },
+            ],
         },
         flags: { persistent },
-        img: typeImages[damageType],
+        img: typeImages[persistent.damageType],
     };
 }
