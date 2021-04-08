@@ -1,0 +1,44 @@
+{
+    "_id": "wzx5fg9qyfzukpbp",
+    "data": {
+        "description": {
+            "chat": "",
+            "unidentified": "",
+            "value": "<p>Basic Troll regeneration</p>"
+        },
+        "duration": {
+            "expiry": "turn-end",
+            "sustained": false,
+            "unit": "unlimited"
+        },
+        "level": {
+            "value": null
+        },
+        "rules": [
+            {
+                "key": "PF2E.RuleElement.Healing",
+                "selector": "regeneration",
+                "value": 20,
+                "suppressedBy": ["fire", "acid"]
+            },
+            {
+                "key": "PF2E.RuleElement.TokenEffectIcon"
+            }
+        ],
+        "traits": {
+            "custom": "",
+            "rarity": {
+                "value": "common"
+            },
+            "value": []
+        }
+    },
+    "effects": [],
+    "flags": {},
+    "img": "systems/pf2e/icons/spells/revival.jpg",
+    "name": "Troll Regeneration",
+    "permission": {
+        "default": 0
+    },
+    "type": "effect"
+}

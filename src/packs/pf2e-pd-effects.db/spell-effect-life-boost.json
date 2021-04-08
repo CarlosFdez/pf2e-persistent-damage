@@ -1,0 +1,44 @@
+{
+    "_id": "t79b5hdkx6ho4rov",
+    "data": {
+        "description": {
+            "chat": "",
+            "unidentified": "",
+            "value": "<p>Granted by @Compendium[pf2e.spells-srd.Life Boost]{Life Boost}.</p>\n</p>Set the level of this effect to the spell level.</p>"
+        },
+        "duration": {
+            "expiry": "turn-end",
+            "sustained": false,
+            "unit": "rounds",
+            "value": 4
+        },
+        "level": {
+            "value": null
+        },
+        "rules": [
+            {
+                "key": "PF2E.RuleElement.Healing",
+                "selector": "fast-healing",
+                "value": "@item.level.value * 2"
+            },
+            {
+                "key": "PF2E.RuleElement.TokenEffectIcon"
+            }
+        ],
+        "traits": {
+            "custom": "",
+            "rarity": {
+                "value": "common"
+            },
+            "value": []
+        }
+    },
+    "effects": [],
+    "flags": {},
+    "img": "systems/pf2e/icons/spells/life-boost.jpg",
+    "name": "Spell Effect: Life Boost",
+    "permission": {
+        "default": 0
+    },
+    "type": "effect"
+}

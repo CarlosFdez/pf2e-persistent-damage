@@ -8,31 +8,13 @@ import { PF2RuleElement, PF2RuleElementSynthetics } from "../rule-element.js";
 //     "damageTypes": ["fire", "acid"]
 // }
 
-interface ActorDataWithHealing extends Actor.Data {
-    data: {
-        attributes: {
-            healing?: {
-                'fast-healing'?: {
-                    value: number;
-                    notes?: string;
-                },
-                regeneration?: {
-                    value: number;
-                    notes?: string;
-                    suppressedBy?: Array<string | string[]>;
-                    suppressed?: boolean;
-                }
-            }
-        }
-    }
-}
-
-const VALID_SELECTORS = ['fast-healing', 'regeneration'] as const;
+const VALID_SELECTORS = ["fast-healing", "regeneration"] as const;
 
 export class HealingRuleElement extends PF2RuleElement {
     onBeforePrepareData(actorData: ActorDataWithHealing, synthetics: PF2RuleElementSynthetics) {
         const selector = this.ruleData.selector as typeof VALID_SELECTORS[number];
         if (!VALID_SELECTORS.includes(selector)) {
+            console.warn(`PF2E (Persistent Damage) | Healing selector can only be one of ${VALID_SELECTORS.join(", ")}`);
             return;
         }
 
@@ -44,7 +26,7 @@ export class HealingRuleElement extends PF2RuleElement {
 
         if (value > (attributes.healing[selector] ?? 0)) {
             const notes = this.ruleData.notes && String(this.ruleData.notes);
-            const suppressedBy = selector === 'regeneration' ? this.ruleData.suppressedBy : undefined;
+            const suppressedBy = selector === "regeneration" ? this.ruleData.suppressedBy : undefined;
             attributes.healing[selector] = { value, notes, suppressedBy };
         }
     }

@@ -1,0 +1,43 @@
+{
+    "_id": "uzrg4p7r4ck9r0rg",
+    "data": {
+        "description": {
+            "chat": "",
+            "unidentified": "",
+            "value": "<p>All regeneration effects are suppressed</p>"
+        },
+        "duration": {
+            "expiry": "turn-end",
+            "sustained": false,
+            "unit": "rounds",
+            "value": 1
+        },
+        "level": {
+            "value": null
+        },
+        "rules": [
+            {
+                "key": "PF2E.RuleElement.SuppressRegen",
+                "label": "Suppress Regeneration"
+            },
+            {
+                "key": "PF2E.RuleElement.TokenEffectIcon"
+            }
+        ],
+        "traits": {
+            "custom": "",
+            "rarity": {
+                "value": "common"
+            },
+            "value": []
+        }
+    },
+    "effects": [],
+    "flags": {},
+    "img": "systems/pf2e/icons/spells/lock.jpg",
+    "name": "Suppress Regeneration",
+    "permission": {
+        "default": 0
+    },
+    "type": "effect"
+}
