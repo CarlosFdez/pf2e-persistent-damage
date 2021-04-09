@@ -16,6 +16,16 @@ export enum RollHideMode {
     Always = 3,
 }
 
+declare global {
+    interface ClientSettings {
+        get(name: typeof MODULE_NAME, key: "auto-roll"): boolean;
+        get(name: typeof MODULE_NAME, key: "auto-recover"): AutoRecoverMode;
+        get(name: typeof MODULE_NAME, key: "auto-resolve"): boolean;
+        get(name: typeof MODULE_NAME, key: "hide-rolls"): RollHideMode;
+    }
+}
+
+
 /**
  * Initializes settings. Must be called only once.
  */
@@ -85,30 +95,4 @@ export function registerSettings() {
         onChange: value =>  location.reload()
     });
     */
-}
-
-export function getSettings() {
-    return {
-        get autoRoll() {
-            return game.settings.get(MODULE_NAME, "auto-roll") as boolean;
-        },
-
-        get autoRecoverMode() {
-            return game.settings.get(MODULE_NAME, "auto-recover") as AutoRecoverMode;
-        },
-
-        get autoResolve() {
-            return game.settings.get(MODULE_NAME, "auto-resolve") as boolean;
-        },
-
-        get autoDamage(): boolean {
-            // Not yet implemented
-            // return game.settings.get(MODULE_NAME, "auto-damage");
-            return false;
-        },
-
-        get rollHideMode() {
-            return game.settings.get(MODULE_NAME, "hide-rolls") as RollHideMode;
-        },
-    };
 }

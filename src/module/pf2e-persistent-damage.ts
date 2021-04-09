@@ -6,7 +6,7 @@ import {
     PersistentData,
     typeImages,
 } from "./persistent-effect.js";
-import { AutoRecoverMode, getSettings, RollHideMode } from "./settings.js";
+import { AutoRecoverMode, MODULE_NAME, RollHideMode } from "./settings.js";
 import { calculateRoll } from "./utils.js";
 
 function getTypeData(damageType: DamageType) {
@@ -190,7 +190,7 @@ export class PersistentDamagePF2e {
         });
 
         // Auto-remove the condition if enabled and it passes the DC
-        if (success && getSettings().autoResolve) {
+        if (success && game.settings.get(MODULE_NAME, "auto-resolve")) {
             actor.deleteOwnedItem(effect.id);
         }
 
@@ -203,12 +203,9 @@ export class PersistentDamagePF2e {
      * @param token one or more tokens to apply persistent damage to
      */
     async processPersistentDamage(token: Token | Token[]): Promise<ChatMessage[]> {
-        const {
-            autoResolve,
-            autoRecoverMode: autoCheckMode,
-            autoDamage,
-            rollHideMode,
-        } = getSettings();
+        const autoRecover = game.settings.get(MODULE_NAME, "auto-recover");
+        const autoResolve = game.settings.get(MODULE_NAME, "auto-resolve");
+        const rollHideMode = game.settings.get(MODULE_NAME, "hide-rolls");
 
         const messages = [];
         const tokens = Array.isArray(token) ? token : [token];
@@ -225,8 +222,8 @@ export class PersistentDamagePF2e {
 
             const isPlayer = actor.hasPlayerOwner;
             const autoCheck =
-                autoCheckMode === AutoRecoverMode.Always ||
-                (autoCheckMode === AutoRecoverMode.NPCOnly && !isPlayer);
+                autoRecover === AutoRecoverMode.Always ||
+                (autoRecover === AutoRecoverMode.NPCOnly && !isPlayer);
 
             for (const effect of persistentDamageElements) {
                 const data = getPersistentData(effect);
@@ -265,13 +262,6 @@ export class PersistentDamagePF2e {
                     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
                     roll,
                 });
-
-                // Apply damage directly
-                // TODO: Wait for apply damage to be part of the PF2E core system
-                if (autoDamage) {
-                    // add the code to damage the player here.
-                    // we should check for resistence to this damage type before dealing the damage
-                }
 
                 // Auto-remove the condition if enabled and it passes the DC
                 if (autoCheck && autoResolve && success) {
