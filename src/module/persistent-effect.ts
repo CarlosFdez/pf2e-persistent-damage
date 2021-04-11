@@ -74,31 +74,6 @@ export function getPersistentData(item: Item<ItemDataPF2e>): PersistentData {
 }
 
 /**
- * Overrides the item sheet so that all sheets for persistent damage effects
- * will have editable details.
- */
-export function overrideItemSheet() {
-    // unfortunately....pf2e does not override the item default sheet
-    const baseSheet: new () => ItemSheet = Items.registeredSheets.find(
-        (s) => s.name === "ItemSheetPF2e",
-    );
-
-    const original = baseSheet.prototype.getData;
-    baseSheet.prototype.getData = function (...args) {
-        const data = original.bind(this)(...args);
-        const { item } = data;
-
-        if (item.flags.persistent) {
-            data.detailsTemplate = () =>
-                "modules/pf2e-persistent-damage/templates/persistent-details.html";
-            data.hasDetails = true;
-        }
-
-        return data;
-    };
-}
-
-/**
  * Creates the persistent effect data that can be used to create an item.
  * @param damageType
  * @param value
@@ -110,7 +85,7 @@ export function createPersistentEffect(persistent: PersistentData): Partial<Effe
         name: "Persistent Damage",
         data: {
             description: {
-                value: "Persistent Damage",
+                value: "Persistent Damage from some source. Deals damage at the end of each turn and needs a check to remove.",
             },
             duration: {
                 expiry: "turn-end",
