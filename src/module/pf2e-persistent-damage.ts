@@ -17,6 +17,11 @@ function getTypeData(damageType: DamageType) {
     };
 }
 
+/**
+ * The main class that handles the entire module.
+ * It handles more than persistent damage, but that's because the scope of the module increased.
+ * This should probably be renamed.
+ */
 export class PersistentDamagePF2e {
     /**
      * Shows a dialog that can be used to add persistent damage effects to selected tokens.
@@ -267,6 +272,52 @@ export class PersistentDamagePF2e {
                 if (autoCheck && autoResolve && success) {
                     token.actor.deleteOwnedItem(effect._id);
                 }
+
+                messages.push(message);
+            }
+        }
+
+        return messages;
+    }
+
+
+    async processHealing(token: Token | Token[]): Promise<ChatMessage[]> {
+        const tokens = Array.isArray(token) ? token : [token];
+        const messages = [];
+        for (const token of tokens) {
+            const actor: Actor<ActorDataWithHealing> = token.actor;
+            const healing = actor.data.data.attributes.healing;
+            if (!healing) {
+                continue;
+            }
+
+            const sources = [];
+            const formulas = [];
+
+            // Handle fast healing
+            if (healing['fast-healing'].value) {
+                sources.push("Fast Healing");
+                formulas.push(healing["fast-healing"].value);
+            }
+
+            // Handle regeneration
+            if (healing.regeneration?.value) {
+                if (healing.regeneration.suppressed) {
+                    // Create message of suppression
+                } else {
+                    sources.push("Regeneration");
+                    formulas.push(healing.regeneration.value);
+                }
+            }
+
+            if (formulas.length > 0) {
+                const flavor = game.i18n.format("PF2E-PD.HealingProcess", { sources: sources.join(", ")});
+                const message = await ChatMessage.create({
+                    speaker: ChatMessage.getSpeaker({ actor, token }),
+                    flavor,
+                    type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+                    roll: (new Roll(formulas.join(" + "))).evaluate(),
+                });
 
                 messages.push(message);
             }

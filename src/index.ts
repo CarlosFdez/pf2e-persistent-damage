@@ -64,6 +64,20 @@ Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElem
 });
 
 /**
+ * Start of turn event.
+ * Use to handle fast-healing and regeneration
+ */
+Hooks.on("updateCombat", (combat) => {
+    const autoRoll = game.settings.get(MODULE_NAME, "auto-roll");
+    if (autoRoll && canvas.ready) {
+        const combatantToken = canvas.tokens.get(combat.current.tokenId);
+        window.PF2EPersistentDamage.processHealing(combatantToken);
+    }
+});
+
+/**
+ * End of turn event.
+ * Use to handle
  * Apply damage on turn end
  */
 Hooks.on("preUpdateCombat", async (combat, update) => {

@@ -42,5 +42,9 @@
     "PF2E-PD.Migrating": "Applying migration for PF2E Persistent Damage",
     "PF2E-PD.Migrated": "Applied PF2E Persistent Damage migration up to version {version}",
     "PF2E-PD.PersistentDamageLabel": "Formula",
-    "PF2E-PD.PersistentDCLabel": "DC"
+    "PF2E-PD.PersistentDCLabel": "DC",
+
+    "PF2E-PD.FastHealing": "Fast Healing",
+    "PF2E-PD.Regeneration": "Regeneration",
+    "PF2E-PD.HealingProcess": "Received healing ({sources})"
 }
