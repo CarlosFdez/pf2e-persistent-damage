@@ -280,7 +280,6 @@ export class PersistentDamagePF2e {
         return messages;
     }
 
-
     async processHealing(token: Token | Token[]): Promise<ChatMessage[]> {
         const tokens = Array.isArray(token) ? token : [token];
         const messages = [];
@@ -295,7 +294,7 @@ export class PersistentDamagePF2e {
             const formulas = [];
 
             // Handle fast healing
-            if (healing['fast-healing'].value) {
+            if (healing['fast-healing']?.value) {
                 sources.push("Fast Healing");
                 formulas.push(healing["fast-healing"].value);
             }
