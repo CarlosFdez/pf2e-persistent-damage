@@ -1,4 +1,4 @@
-import { EffectData, ItemDataPF2e } from "../types/item";
+import { EffectData } from "../types/item";
 
 export const typeImages = {
     bleed: "systems/pf2e/icons/spells/blade-barrier.jpg",
@@ -44,22 +44,10 @@ interface PersistentDataOld extends PersistentData {
  * Retrieves persistent data values from item data if exists.
  * Also handles "migrations" in a way.
  */
-export function getPersistentData(item: Item<ItemDataPF2e>): PersistentData {
-    // Use the rule element data as a marker
-    const persistentRule = item.data.data.rules.find(
-        (r) => r.key === "PF2E.RuleElement.PersistentDamage",
-    ) as unknown;
-    if (persistentRule) {
-        const data = persistentRule as PersistentData;
-        const damageType = String(data.damageType) as DamageType;
-        const value = String(data.value);
-        const dc = Number(data.dc);
-        // validation?
-        return { damageType, value, dc };
-    }
-
-    // This is the old path (pre rule). Eventually it will be phased out
-    const data = item.data.flags.persistent as PersistentDataOld;
+export function getPersistentData(itemData: {
+    flags: { persistent?: PersistentDataOld };
+}): PersistentData {
+    const data = itemData.flags.persistent;
     if (data) {
         // Ensure damage type is suitable for the latest version
         let damageType = data.damageType ?? data.type?.toLowerCase();

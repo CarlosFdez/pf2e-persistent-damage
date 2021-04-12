@@ -144,25 +144,7 @@ export abstract class PF2RuleElement {
         });
     }
 
-    /**
-     * Parses the value attribute on a rule.
-     *
-     * @param valueData can be one of 3 different formats:
-     * * {value: 5}: returns 5
-     * * {value: "4 + @details.level.value"}: uses foundry's built in roll syntax to evaluate it
-     * * {
-     *      field: "item|data.level.value",
-     *      brackets: [
-     *          {start: 1, end: 4, value: 5}],
-     *          {start: 5, end: 9, value: 10}],
-     *   }: compares the value from field to >= start and <= end of a bracket and uses that value
-     * @param ruleData current rule data
-     * @param item current item data
-     * @param actorData current actor data
-     * @param defaultValue if no value is found, use that one
-     * @return the evaluated value
-     */
-    resolveValue(valueData: RuleValue, ruleData: any, item: any, actorData: any, defaultValue = 0) {
+    resolveBracket(valueData: RuleValue, ruleData: any, item: any, actorData: any, defaultValue = 0): string | number {
         let value = defaultValue;
         if (typeof valueData === "object") {
             let bracket = getProperty(actorData, "data.details.level.value");
@@ -193,8 +175,32 @@ export abstract class PF2RuleElement {
                 )?.value ?? defaultValue;
         }
 
-        if (typeof valueData === "string") {
-            const roll = new Roll(valueData, { ...actorData.data, item: item.data });
+        return value;
+    }
+
+    /**
+     * Parses the value attribute on a rule.
+     *
+     * @param valueData can be one of 3 different formats:
+     * * {value: 5}: returns 5
+     * * {value: "4 + @details.level.value"}: uses foundry's built in roll syntax to evaluate it
+     * * {
+     *      field: "item|data.level.value",
+     *      brackets: [
+     *          {start: 1, end: 4, value: 5}],
+     *          {start: 5, end: 9, value: 10}],
+     *   }: compares the value from field to >= start and <= end of a bracket and uses that value
+     * @param ruleData current rule data
+     * @param item current item data
+     * @param actorData current actor data
+     * @param defaultValue if no value is found, use that one
+     * @return the evaluated value
+     */
+    resolveValue(valueData: RuleValue, ruleData: any, item: any, actorData: any, defaultValue = 0) {
+        let value = this.resolveBracket(valueData, ruleData, item, actorData, defaultValue);
+
+        if (typeof value === "string") {
+            const roll = new Roll(value, { ...actorData.data, item: item.data });
             roll.roll();
             value = roll.total!;
         }

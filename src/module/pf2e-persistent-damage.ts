@@ -231,7 +231,7 @@ export class PersistentDamagePF2e {
                 (autoRecover === AutoRecoverMode.NPCOnly && !isPlayer);
 
             for (const effect of persistentDamageElements) {
-                const data = getPersistentData(effect);
+                const data = getPersistentData(effect.data);
                 const { damageType, value, dc } = data;
                 const typeName = CONFIG.PF2E.damageTypes[damageType];
                 const roll = new Roll(value).roll();
