@@ -144,7 +144,7 @@ export abstract class PF2RuleElement {
         });
     }
 
-    resolveBracket(valueData: RuleValue, ruleData: any, item: any, actorData: any, defaultValue = 0): string | number {
+    resolveBracket(valueData: RuleValue, ruleData: any, item: any, actorData: any, defaultValue = undefined): string | number {
         let value = defaultValue;
         if (typeof valueData === "object") {
             let bracket = getProperty(actorData, "data.details.level.value");
@@ -175,7 +175,7 @@ export abstract class PF2RuleElement {
                 )?.value ?? defaultValue;
         }
 
-        return value;
+        return value ?? valueData;
     }
 
     /**

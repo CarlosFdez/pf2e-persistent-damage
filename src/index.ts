@@ -4,8 +4,6 @@ import { setupCustomRules } from "./module/custom-rules.js";
 
 Hooks.on("init", () => {
     registerSettings();
-    loadTemplates(["modules/pf2e-persistent-damage/templates/persistent-details.html"]);
-
     window.PF2EPersistentDamage = new PersistentDamagePF2e();
 });
 

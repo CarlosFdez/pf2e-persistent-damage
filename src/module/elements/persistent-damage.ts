@@ -17,7 +17,7 @@ export class PersistentDamageElement extends PF2RuleElement {
     }
 
     private createTitle() {
-        const { damageType, value, dc } = this.ruleData as PersistentData;
+        const { damageType, value, dc } = this.item.flags.persistent;
         const typeName = CONFIG.PF2E.damageTypes[damageType];
         const dcStr = dc === 15 ? "" : ` DC${String(dc)}`;
         return `${this.item.name} [${typeName} ${String(value)}${dcStr}]`;
