@@ -17,8 +17,10 @@
         },
         "rules": [
             {
-                "key": "PF2E.RuleElement.SuppressRegen",
-                "label": "Suppress Regeneration"
+                "key": "PF2E.RuleElement.Healing",
+                "label": "Suppress Regen",
+                "selector": "regeneration",
+                "suppressed": true
             },
             {
                 "key": "PF2E.RuleElement.TokenEffectIcon"

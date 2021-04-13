@@ -4,7 +4,7 @@ import { PF2RuleElement, PF2RuleElementSynthetics } from "./rule-element.js";
 //     "key": "PF2E.RuleElement.Healing",
 //     "selector": "regeneration",
 //     "label": "Troll Regeneration",
-//     "value": 10
+//     "value": 10,
 //     "damageTypes": ["fire", "acid"]
 // }
 
@@ -30,6 +30,15 @@ export class HealingRuleElement extends PF2RuleElement {
             const suppressedBy =
                 selector === "regeneration" ? this.ruleData.suppressedBy : undefined;
             attributes.healing[selector] = { value, notes, suppressedBy };
+        }
+    }
+
+    onAfterPrepareData(actorData: ActorDataWithHealing) {
+        if (this.ruleData.suppressed && this.ruleData.selector === "regeneration") {
+            const regeneration = actorData.data.attributes.healing?.regeneration;
+            if (regeneration) {
+                regeneration.suppressed = true;
+            }
         }
     }
 }
