@@ -41,6 +41,9 @@ interface EffectDataDetails extends ItemDescriptionData {
         value: number;
         initiative: number | null;
     };
+    tokenIcon?: {
+        show: boolean;
+    }
 }
 
 export interface EffectData extends Item.Data<EffectDataDetails> {

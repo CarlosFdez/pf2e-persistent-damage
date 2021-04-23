@@ -62,6 +62,31 @@ export function getPersistentData(itemData: {
 }
 
 /**
+ * Update item name and description based on persistent flags
+ */
+ Hooks.on("preUpdateOwnedItem", (actor: Actor, item: Item.Data, update) => {
+    if (update?.flags?.persistent) {
+        // Merge the persistent flags. This also "migrates" the flags.
+        const previous = item.flags?.persistent as PersistentData;
+        const persistent = getPersistentData({
+            flags: {
+                persistent: mergeObject({ ...previous }, update.flags.persistent),
+            },
+        });
+
+        update.flags.persistent = persistent;
+        update.name = createTitle(persistent);
+    }
+});
+
+function createTitle(data: PersistentData) {
+    const { damageType, value, dc } = data;
+    const typeName = game.i18n.localize(CONFIG.PF2E.damageTypes[damageType]);
+    const dcStr = dc === 15 ? "" : ` DC${String(dc)}`;
+    return `Persistent Damage [${typeName} ${String(value)}${dcStr}]`;
+}
+
+/**
  * Creates the persistent effect data that can be used to create an item.
  * @param damageType
  * @param value
@@ -70,7 +95,7 @@ export function getPersistentData(itemData: {
 export function createPersistentEffect(persistent: PersistentData): Partial<EffectData> {
     return {
         type: "effect",
-        name: "Persistent Damage",
+        name: createTitle(persistent),
         data: {
             description: {
                 value: "Persistent Damage from some source. Deals damage at the end of each turn and needs a check to remove.",
@@ -81,13 +106,10 @@ export function createPersistentEffect(persistent: PersistentData): Partial<Effe
                 value: 0,
                 sustained: false,
             },
-            rules: [
-                {
-                    key: "PF2E.RuleElement.PersistentDamage",
-                    ...persistent,
-                },
-                { key: "PF2E.RuleElement.TokenEffectIcon" },
-            ],
+            rules: [],
+            tokenIcon: {
+                show: true
+            }
         },
         flags: { persistent },
         img: typeImages[persistent.damageType],

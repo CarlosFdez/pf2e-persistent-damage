@@ -1,9 +1,11 @@
 import { PersistentDamagePF2e } from "./module/pf2e-persistent-damage.js";
 import { MODULE_NAME, registerSettings } from "./module/settings.js";
 import { setupCustomRules } from "./module/custom-rules.js";
+import { overrideItemSheet } from "./module/item-sheet.js";
 
 Hooks.on("init", () => {
     registerSettings();
+    loadTemplates(["modules/pf2e-persistent-damage/templates/persistent-details.html"]);
     window.PF2EPersistentDamage = new PersistentDamagePF2e();
 });
 
@@ -12,7 +14,8 @@ Hooks.on("setup", () => {
 });
 
 Hooks.on("ready", () => {
-    console.log("PF2E Persistent | Registered Sheet");
+    overrideItemSheet();
+    console.log("PF2E Persistent | Registered Item Sheet Modification");
 });
 
 Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElement>) => {

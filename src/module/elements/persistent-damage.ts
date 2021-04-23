@@ -1,6 +1,10 @@
 import { PersistentData } from "../persistent-effect.js";
 import { PF2RuleElement } from "./rule-element.js";
 
+/**
+ * A potential rule element for applying persistent damage, but currently its disabled.
+ * Re-enable if conditions will be implemented using rule elements later, otherwise remove.
+ */
 export class PersistentDamageElement extends PF2RuleElement {
     onBeforePrepareData(actorData: ActorDataWithHealing) {
         const { damageType, value, dc } = this.ruleData as PersistentData;
