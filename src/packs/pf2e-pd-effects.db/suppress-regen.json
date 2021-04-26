@@ -21,11 +21,11 @@
                 "label": "Suppress Regen",
                 "selector": "regeneration",
                 "suppressed": true
-            },
-            {
-                "key": "PF2E.RuleElement.TokenEffectIcon"
             }
         ],
+        "tokenIcon": {
+            "show": true
+        },
         "traits": {
             "custom": "",
             "rarity": {

@@ -24,14 +24,16 @@
             "label": "PF2E Persistent Damage Macros",
             "system": "pf2e",
             "path": "packs/pf2e-pd-macros.db",
-            "entity": "Macro"
+            "entity": "Macro",
+            "module": "pf2e-persistent-damage"
         },
         {
             "name": "pf2e-persistent-damage-effects",
             "label": "PF2E Persistent Damage Effects",
             "system": "pf2e",
             "path": "packs/pf2e-pd-effects.db",
-            "entity": "Item"
+            "entity": "Item",
+            "module": "pf2e-persistent-damage"
         }
     ],
     "url": "https://github.com/CarlosFdez/pf2e-persistent-damage",
