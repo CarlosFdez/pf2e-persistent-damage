@@ -12,13 +12,13 @@ In Foundry setup, click on the Install Module button and put the following path 
 
 `https://github.com/CarlosFdez/pf2e-persistent-damage/releases/latest/download/module.json`
 
-## How to Use
+## Persistent Damage
 The module comes with a compendium with two macros, Add Persistent Damage and Process Persistent Damage.
 
 ### Add Persistent Damage
-Use to add persistent damage effects to selected tokens. These effects can be removed either in the sheet or via right clicking in the "effects panel". Make sure the effects panel is enabled in the left toolbar to see it.
+Use to add persistent damage effects to selected tokens. These effects can be removed either in the sheet or by right clicking in the "effects panel". Make sure the effects panel is enabled in the left toolbar to see it.
 
-![image](https://user-images.githubusercontent.com/1286721/111926228-5f0cfb80-8a82-11eb-8efb-852f5aef5e07.png)
+![image](https://user-images.githubusercontent.com/1286721/116132472-9a12d800-a69b-11eb-8605-57f4e67763c5.png)
 
 Once added, persistent damage value can be edited via the effect:
 
@@ -28,6 +28,11 @@ Once added, persistent damage value can be edited via the effect:
 Use to inspect selected tokens for all persistent damage effects and create chat messages for them. On each chat message, clicking on the crosshair button will select the token, making it easier to use the chat damage buttons to apply damage.
 
 ![image](https://user-images.githubusercontent.com/1286721/111949776-b24d7100-8ab7-11eb-86d1-3270c4f138dc.png)
+
+## Fast Healing
+There is some rudimentary fast healing and regeneration support, but its not complete. There is a new rule element added by the module, `PF2E.RuleElement.Healing`, with two examples in the compendium: Life Boost and Troll Regeneration. If you have an ideas on things I can do to improve tracking fast healing and troll regen, or if you want to add more items to the compendium, please let me know and we can work it out.
+
+Beginning of turn healing is handled either by progressing the combat tracking (if auto processing is enabled) or by using the `Process Healing` macro from the compendium. Fast healing can be removed by right clicking in the Effect Panel just like persistent damage can.
 
 ## Incompatibilities
 Modules known to cause issues running alongside this one.
