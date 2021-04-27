@@ -11,7 +11,7 @@
     }
 
     .window-content {
-        border-image: url(../../../systems/pf2e/assets/sheet/corner-box.png) 9 repeat;
+        border-image: url(../../../systems/pf2e/assets/sheet/corner-box.webp) 9 repeat;
     }
 
     form {
@@ -152,11 +152,12 @@
         }
     }
 
-    .card-content {
+    .card-content, .persistent-header {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        margin: 4px 0;
     }
 
     .flat-check-success {

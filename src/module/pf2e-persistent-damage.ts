@@ -182,16 +182,11 @@ export class PersistentDamagePF2e {
 
         const roll = new Roll("1d20").evaluate();
         const success = roll.total >= data.dc;
+        const typeName = game.i18n.localize(CONFIG.PF2E.damageTypes[data.damageType]);
+        const templatePath = "modules/pf2e-persistent-damage/templates/chat/recover-persistent-card.html";
         const message = await roll.toMessage({
             speaker: ChatMessage.getSpeaker({ actor }),
-            flavor: await renderTemplate(
-                "modules/pf2e-persistent-damage/templates/chat/recover-persistent-card.html",
-                {
-                    data,
-                    typeName: CONFIG.PF2E.damageTypes[data.damageType],
-                    success,
-                },
-            ),
+            flavor: await renderTemplate(templatePath, { data, typeName, success }),
         });
 
         // Auto-remove the condition if enabled and it passes the DC
@@ -233,7 +228,7 @@ export class PersistentDamagePF2e {
             for (const effect of persistentDamageElements) {
                 const data = getPersistentData(effect.data);
                 const { damageType, value, dc } = data;
-                const typeName = CONFIG.PF2E.damageTypes[damageType];
+                const typeName = game.i18n.localize(CONFIG.PF2E.damageTypes[damageType]);
                 const roll = new Roll(value).roll();
 
                 const inlineCheck = autoCheck && TextEditor.enrichHTML("[[1d20]]");
