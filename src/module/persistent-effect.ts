@@ -64,7 +64,7 @@ export function getPersistentData(itemData: {
 /**
  * Update item name and description based on persistent flags
  */
- Hooks.on("preUpdateOwnedItem", (actor: Actor, item: Item.Data, update) => {
+Hooks.on("preUpdateOwnedItem", (actor: Actor, item: Item.Data, update) => {
     if (update?.flags?.persistent) {
         // Merge the persistent flags. This also "migrates" the flags.
         const previous = item.flags?.persistent as PersistentData;
@@ -76,6 +76,7 @@ export function getPersistentData(itemData: {
 
         update.flags.persistent = persistent;
         update.name = createTitle(persistent);
+        update['data.slug'] = `persistent-damage-${persistent.damageType}`;
     }
 });
 
@@ -97,6 +98,7 @@ export function createPersistentEffect(persistent: PersistentData): Partial<Effe
         type: "effect",
         name: createTitle(persistent),
         data: {
+            slug: `persistent-damage-${persistent.damageType}`,
             description: {
                 value: "Persistent Damage from some source. Deals damage at the end of each turn and needs a check to remove.",
             },
