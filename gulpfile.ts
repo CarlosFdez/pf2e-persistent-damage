@@ -5,13 +5,20 @@ import * as sourcemaps from "gulp-sourcemaps";
 import * as sass from "gulp-sass";
 import * as del from "del";
 import * as path from "path";
-import * as fs from "fs/promises";
+import * as fs from "fs-extra";
 import * as through from "through2";
 
-const project = ts.createProject("src/tsconfig.json")
+const project = ts.createProject("src/tsconfig.json");
+
+// Get output directory. Pulls from foundryconfig.json if it exists and falls back to dist/
+const outDir = (() => {
+    const configPath = path.resolve(process.cwd(), 'foundryconfig.json');
+    const configData = fs.existsSync(configPath) ? fs.readJSONSync(configPath) : undefined;
+    return configData !== undefined ? path.join(configData.dataPath, 'Data', 'modules', configData.moduleName) : null;
+})() ?? path.join(__dirname, 'dist/');
 
 task("clean", () => {
-  return del("dist");
+  return del(outDir, { force: true });
 });
 
 task("compile:ts", () => {
@@ -19,13 +26,13 @@ task("compile:ts", () => {
     .pipe(sourcemaps.init())
     .pipe(project())
     .pipe(sourcemaps.write())
-    .pipe(dest("dist/"))
+    .pipe(dest(outDir))
 });
 
 task("compile:sass", () => {
   return src("src/styles/**/*.scss")
     .pipe(sass.sync().on("error", sass.logError))
-    .pipe(dest("dist/styles"))
+    .pipe(dest(path.resolve(outDir, "styles")))
 });
 
 async function getFolders(dir: string) {
@@ -52,7 +59,7 @@ task("compile:packs", async () => {
                 cb(null, file);
             }))
             .pipe(concat(folder))
-            .pipe(dest("dist/packs/"));
+            .pipe(dest(path.resolve(outDir, "packs")));
     });
 
     return tasks;
@@ -61,15 +68,19 @@ task("compile:packs", async () => {
 task("compile", parallel("compile:ts", "compile:sass", "compile:packs"));
 
 task("copy", async () => {
-  return new Promise<void>((resolve) => {
-    src("README.md").pipe(dest("dist/"))
-    src("src/module.json").pipe(dest("dist/"))
-    src("src/lang/**").pipe(dest("dist/lang/"))
-    src("src/templates/**").pipe(dest("dist/templates/"))
-    src("src/styles/**/*.css").pipe(dest("dist/styles/"))
-    src("src/assets/**").pipe(dest("dist/assets/"))
-    resolve();
-  })
+    const createPipe = (subPath: string) => (
+        src(`src/${subPath}/**`).pipe(dest(path.resolve(outDir, subPath)))
+    );
+
+    return new Promise<void>((resolve) => {
+        src("README.md").pipe(dest(outDir));
+        src("src/module.json").pipe(dest(outDir));
+        createPipe("lang");
+        createPipe("templates");
+        createPipe("assets");
+        src("src/styles/**/*.css").pipe(dest(path.resolve(outDir, "styles/")));
+        resolve();
+    })
 });
 
 task("build", series("clean", parallel("compile", "copy")));
