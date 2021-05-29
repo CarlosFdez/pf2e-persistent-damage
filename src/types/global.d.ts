@@ -1,12 +1,46 @@
-import { PersistentDamagePF2e } from "../module/pf2e-persistent-damage.js";
+import { ActorPF2e, ChatMessagePF2e } from "./actor";
+import { EffectPF2e, ItemPF2e } from "./item";
+
+export {};
 
 declare global {
-    interface String {
-        toLowerCase<T extends string>(this: T): Lowercase<T>;
+    namespace globalThis {
+        var game: Game<ActorPF2e, ChatMessagePF2e, Combat, Item, Macro>;
     }
 
-    const PF2EPersistentDamage: PersistentDamagePF2e;
-    interface Window {
-        PF2EPersistentDamage: PersistentDamagePF2e;
+    interface PF2ECONFIG {
+        damageTypes: Record<string, string>;
+        Item: {
+            entityClasses: {
+                effect: typeof EffectPF2e;
+            };
+        };
     }
+
+    interface ConfigPF2e
+        extends Config<ActiveEffect, ActorPF2e, ChatMessagePF2e, Combatant, Combat, ItemPF2e, Macro> {
+        debug: Config['debug'] & {
+            ruleElement: boolean;
+        };
+
+        PF2E: PF2ECONFIG;
+        time: {
+            roundTime: number;
+        };
+        ui: Config<
+            ActiveEffect,
+            ActorPF2e,
+            ChatMessagePF2e,
+            Combatant,
+            Combat,
+            ItemPF2e,
+            Macro
+        >['ui'] & {
+            combat: typeof CombatTracker;
+            compendium: typeof CompendiumDirectory;
+        };
+    }
+
+    const CONFIG: ConfigPF2e;
+    const canvas: Canvas<ActorPF2e>;
 }

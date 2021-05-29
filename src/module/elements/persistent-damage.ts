@@ -6,7 +6,7 @@ import { PF2RuleElement } from "./rule-element.js";
  * Re-enable if conditions will be implemented using rule elements later, otherwise remove.
  */
 export class PersistentDamageElement extends PF2RuleElement {
-    onBeforePrepareData(actorData: ActorDataWithHealing) {
+    onBeforePrepareData(actorData: ActorData) {
         const { damageType, value, dc } = this.ruleData as PersistentData;
         this.item.flags.persistent = {
             damageType,

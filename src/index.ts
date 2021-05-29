@@ -2,6 +2,7 @@ import { PersistentDamagePF2e } from "./module/pf2e-persistent-damage.js";
 import { MODULE_NAME, registerSettings } from "./module/settings.js";
 import { setupCustomRules } from "./module/custom-rules.js";
 import { overrideItemSheet } from "./module/item-sheet.js";
+import { ActorPF2e } from "./types/actor.js";
 
 Hooks.on("init", () => {
     registerSettings();
@@ -29,24 +30,17 @@ Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElem
                 const effectId = card.attr("data-effect-id");
 
                 // Get the Actor from a synthetic Token
-                let actor: Actor | null;
+                let actor: ActorPF2e | null = null;
                 const tokenKey = card.attr("data-token-id");
-                if (tokenKey && canvas.ready) {
+                if (tokenKey) {
                     const [sceneId, tokenId] = tokenKey.split(".");
-                    let token: Token | undefined;
-                    if (sceneId === canvas.scene?._id) token = canvas.tokens.get(tokenId);
-                    else {
-                        const scene = game.scenes.get(sceneId);
-                        if (!scene) return;
-                        const tokenData = scene.data.tokens.find((t) => t._id === tokenId);
-                        if (tokenData) token = new Token(tokenData);
-                    }
+                    const scene = game.scenes.get(sceneId);
+                    const token = scene?.data.tokens.get(tokenId);
                     if (!token) return;
-                    const ActorPF2e = CONFIG.Actor.entityClass as typeof Actor;
-                    actor = ActorPF2e.fromToken(token);
+                    actor = (token.actor as unknown) as ActorPF2e;
                 } else actor = game.actors.get(card.attr("data-actor-id"));
 
-                const effect = actor?.getOwnedItem(effectId);
+                const effect = actor?.items.get(effectId);
                 PF2EPersistentDamage.rollRecoveryCheck(actor, effect);
             });
     }
@@ -92,7 +86,7 @@ Hooks.on("preUpdateCombat", async (combat, update) => {
 /**
  * If persistent damage is clicked, use this module instead.
  */
-Hooks.on("renderTokenHUD", (app, html: JQuery, tokenData: Token.Data) => {
+Hooks.on("renderTokenHUD", (app, html: JQuery, tokenData: TokenData) => {
     setTimeout(() => {
         html.find("div.status-effects img[data-effect=persistentDamage]")
             .off()

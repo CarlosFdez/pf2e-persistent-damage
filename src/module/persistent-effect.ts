@@ -1,6 +1,6 @@
-import { EffectData } from "../types/item";
+import { EffectData, ItemDataPF2e, ItemPF2e } from "../types/item";
 
-export const typeImages = {
+export const typeImages: Record<string, ImagePath> = {
     bleed: "systems/pf2e/icons/spells/blade-barrier.webp",
     piercing: "systems/pf2e/icons/equipment/weapons/throwing-knife.webp",
     bludgeoning: "systems/pf2e/icons/equipment/weapons/bola.webp",
@@ -64,10 +64,10 @@ export function getPersistentData(itemData: {
 /**
  * Update item name and description based on persistent flags
  */
-Hooks.on("preUpdateOwnedItem", (actor: Actor, item: Item.Data, update) => {
+Hooks.on("preUpdateItem", (item: ItemPF2e, update: Partial<ItemDataPF2e>) => {
     if (update?.flags?.persistent) {
         // Merge the persistent flags. This also "migrates" the flags.
-        const previous = item.flags?.persistent as PersistentData;
+        const previous = item.data.flags?.persistent as PersistentData;
         const persistent = getPersistentData({
             flags: {
                 persistent: mergeObject({ ...previous }, update.flags.persistent),
@@ -93,7 +93,7 @@ function createTitle(data: PersistentData) {
  * @param value
  * @returns
  */
-export function createPersistentEffect(persistent: PersistentData): Partial<EffectData> {
+export function createPersistentEffect(persistent: PersistentData): DeepPartial<EffectData> {
     return {
         type: "effect",
         name: createTitle(persistent),

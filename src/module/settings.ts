@@ -1,7 +1,10 @@
 export const MODULE_NAME = "pf2e-persistent-damage";
 
 function getVersion(): string {
-    return game.modules.get(MODULE_NAME).data["version"];
+    const module = game.modules.get(MODULE_NAME);
+    if (module.active) {
+        return (module as any).data.version;
+    }
 }
 
 export enum AutoRecoverMode {
@@ -32,6 +35,8 @@ declare global {
 export function registerSettings() {
     // Special non-config flag to handle migrations
     game.settings.register(MODULE_NAME, "migration", {
+        name: "Migration Version",
+        hint: "Used to perform migrations",
         config: false,
         default: { version: getVersion() },
         scope: "world",

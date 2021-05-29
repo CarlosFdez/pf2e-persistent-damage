@@ -15,7 +15,7 @@ export type RuleValue = string | number | BracketedValue;
 
 export type PF2RuleElementSynthetics = Record<string, unknown>;
 
-type CreatureData = Actor.Data;
+type CreatureData = Actor['data'];
 
 /**
  * Rule Elements allow you to modify actorData and tokenData values when present on items. They can be configured
@@ -92,7 +92,7 @@ export abstract class PF2RuleElement {
      * @param item the item data of the item containing the rule element
      * @param token the token data of the token to be created
      */
-    onCreateToken(_actorData: Actor.Data, _item: ItemDataPF2e, _token: Token.Data) {}
+    onCreateToken(_actorData: CreatureData, _item: ItemDataPF2e, _token: TokenData) {}
 
     /**
      * Used to look up the label when displaying a rule effect. By default uses the label field on a rule and if absent

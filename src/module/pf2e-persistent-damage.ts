@@ -1,4 +1,4 @@
-import { EffectData, ItemDataPF2e } from "../types/item.js";
+import { ActorPF2e } from "../types/actor.js";
 import {
     createPersistentEffect,
     DamageType,
@@ -139,7 +139,7 @@ export class PersistentDamagePF2e {
                 // Overwrite if greater or equal
                 // If equal, it may have been a DC tweak, such as with certain monster abilities
                 if (existing) await this.removePersistentDamage(actor, damageType);
-                await actor.createOwnedItem(effect);
+                await actor.createEmbeddedDocuments("Item", [effect]);
 
                 if (existing) {
                     ui.notifications.info(game.i18n.localize("PF2E-PD.Notification.Overwritten"));
@@ -159,7 +159,7 @@ export class PersistentDamagePF2e {
      */
     async removePersistentDamage(actor: Actor, type: DamageType) {
         const effects = actor.items.filter((i) => i.data.flags.persistent?.damageType === type);
-        await actor?.deleteOwnedItem(effects.map((i) => i._id));
+        await actor?.deleteEmbeddedDocuments("Item", effects.map((i) => i.id));
     }
 
     getPersistentDamage(actor: Actor, type: DamageType) {
@@ -191,7 +191,7 @@ export class PersistentDamagePF2e {
 
         // Auto-remove the condition if enabled and it passes the DC
         if (success && game.settings.get(MODULE_NAME, "auto-resolve")) {
-            actor.deleteOwnedItem(effect.id);
+            await effect.delete();
         }
 
         return message;
@@ -210,12 +210,12 @@ export class PersistentDamagePF2e {
         const messages = [];
         const tokens = Array.isArray(token) ? token : [token];
         for (const token of tokens) {
-            const actor = token.actor;
+            const actor = token.actor as ActorPF2e;
             const persistentDamageElements = actor.itemTypes.effect.filter(
-                (i: Item<ItemDataPF2e>) =>
+                (i) =>
                     i.data.data.rules.some((r) => r.key === "PF2E.RuleElement.PersistentDamage") ||
                     i.data.flags.persistent,
-            ) as Item<EffectData>[];
+            );
             if (!persistentDamageElements) {
                 continue;
             }
@@ -237,35 +237,38 @@ export class PersistentDamagePF2e {
                 const templateName =
                     "modules/pf2e-persistent-damage/templates/chat/persistent-card.html";
 
+                const speaker = ChatMessage.getSpeaker({ actor, token });
+                const flavor = await renderTemplate(templateName, {
+                    actor,
+                    token,
+                    effect,
+                    data,
+                    inlineCheck,
+                    typeName,
+                    autoCheck,
+                    success,
+                    tokenId: `${token.scene.id}.${token.id}`,
+                });
+
+                const rollMode = rollHideMode === RollHideMode.Never
+                    ? "roll"
+                    : rollHideMode === RollHideMode.Always
+                    ? "blindroll"
+                    : game.settings.get('core', 'rollMode');
+
                 const message = await ChatMessage.create({
-                    speaker: ChatMessage.getSpeaker({ actor, token }),
+                    speaker,
+                    flavor,
                     flags: {
                         persistent: data,
                     },
-                    flavor: await renderTemplate(templateName, {
-                        actor,
-                        token,
-                        effect,
-                        data,
-                        inlineCheck,
-                        typeName,
-                        autoCheck,
-                        success,
-                        tokenId: `${token.scene._id}.${token.id}`,
-                    }),
-                    rollMode:
-                        rollHideMode === RollHideMode.Never
-                            ? "roll"
-                            : rollHideMode === RollHideMode.Always
-                            ? "blindroll"
-                            : undefined,
                     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
                     roll,
-                });
+                }, { rollMode });
 
                 // Auto-remove the condition if enabled and it passes the DC
                 if (autoCheck && autoResolve && success) {
-                    token.actor.deleteOwnedItem(effect._id);
+                    token.actor.deleteEmbeddedDocuments("Item", [effect.id]);
                 }
 
                 messages.push(message);
@@ -279,7 +282,7 @@ export class PersistentDamagePF2e {
         const tokens = Array.isArray(token) ? token : [token];
         const messages = [];
         for (const token of tokens) {
-            const actor: Actor<ActorDataWithHealing> = token.actor;
+            const actor = token.actor as ActorPF2e;
             const healing = actor.data.data.attributes.healing;
             if (!healing) {
                 continue;
