@@ -17,6 +17,26 @@ function getTypeData(damageType: DamageType) {
     };
 }
 
+type TokenOrActorInput = Token<ActorPF2e> | ActorPF2e | Array<Token<ActorPF2e> | ActorPF2e>;
+
+/**
+ * Converts a single token/actor or list of tokens and/or actors into a list of actors.
+ * Necessary for backwards compatibility, the macros give tokens, but we need to process
+ * on the actors instead.
+ * @param documents
+ * @returns
+ */
+function resolveActors(documents: TokenOrActorInput): ActorPF2e[] {
+    const arr = Array.isArray(documents) ? documents : [documents];
+    return arr.map((document) => {
+        if (document instanceof Actor) {
+            return document;
+        } else {
+            return document.actor;
+        }
+    })
+}
+
 /**
  * The main class that handles the entire module.
  * It handles more than persistent damage, but that's because the scope of the module increased.
@@ -116,7 +136,7 @@ export class PersistentDamagePF2e {
 
         try {
             // Test if the roll is valid
-            new Roll(formula).roll();
+            new Roll(formula).evaluate({ async: false });
         } catch (err) {
             ui.notifications.error(err);
             return;
@@ -202,15 +222,14 @@ export class PersistentDamagePF2e {
      * for each one.
      * @param token one or more tokens to apply persistent damage to
      */
-    async processPersistentDamage(token: Token | Token[]): Promise<ChatMessage[]> {
+    async processPersistentDamage(tokensOrActors: TokenOrActorInput): Promise<ChatMessage[]> {
         const autoRecover = game.settings.get(MODULE_NAME, "auto-recover");
         const autoResolve = game.settings.get(MODULE_NAME, "auto-resolve");
         const rollHideMode = game.settings.get(MODULE_NAME, "hide-rolls");
 
         const messages = [];
-        const tokens = Array.isArray(token) ? token : [token];
-        for (const token of tokens) {
-            const actor = token.actor as ActorPF2e;
+        for (const actor of resolveActors(tokensOrActors)) {
+            const token = (actor.token as any)?.object;
             const persistentDamageElements = actor.itemTypes.effect.filter(
                 (i) =>
                     i.data.data.rules.some((r) => r.key === "PF2E.RuleElement.PersistentDamage") ||
@@ -229,7 +248,7 @@ export class PersistentDamagePF2e {
                 const data = getPersistentData(effect.data);
                 const { damageType, value, dc } = data;
                 const typeName = game.i18n.localize(CONFIG.PF2E.damageTypes[damageType]);
-                const roll = new Roll(value).roll();
+                const roll = new Roll(value).evaluate({ async: false });
 
                 const inlineCheck = autoCheck && TextEditor.enrichHTML("[[1d20]]");
                 const success = autoCheck && Number($(inlineCheck).text()) >= dc;
@@ -238,6 +257,7 @@ export class PersistentDamagePF2e {
                     "modules/pf2e-persistent-damage/templates/chat/persistent-card.html";
 
                 const speaker = ChatMessage.getSpeaker({ actor, token });
+                const tokenId = token ? `${token.scene.id}.${token.id}` : undefined;
                 const flavor = await renderTemplate(templateName, {
                     actor,
                     token,
@@ -247,7 +267,7 @@ export class PersistentDamagePF2e {
                     typeName,
                     autoCheck,
                     success,
-                    tokenId: `${token.scene.id}.${token.id}`,
+                    tokenId,
                 });
 
                 const rollMode = rollHideMode === RollHideMode.Never
@@ -264,6 +284,7 @@ export class PersistentDamagePF2e {
                     },
                     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
                     roll,
+                    sound: CONFIG.sounds.dice,
                 }, { rollMode });
 
                 // Auto-remove the condition if enabled and it passes the DC
@@ -278,11 +299,10 @@ export class PersistentDamagePF2e {
         return messages;
     }
 
-    async processHealing(token: Token | Token[]): Promise<ChatMessage[]> {
-        const tokens = Array.isArray(token) ? token : [token];
+    async processHealing(tokensOrActors: TokenOrActorInput): Promise<ChatMessage[]> {
         const messages = [];
-        for (const token of tokens) {
-            const actor = token.actor as ActorPF2e;
+        for (const actor of resolveActors(tokensOrActors)) {
+            const token = actor.token;
             const healing = actor.data.data.attributes.healing;
             if (!healing) {
                 continue;
@@ -309,11 +329,13 @@ export class PersistentDamagePF2e {
 
             if (formulas.length > 0) {
                 const flavor = game.i18n.format("PF2E-PD.HealingProcess", { sources: sources.join(", ")});
+                const roll = new Roll(formulas.join(" + ")).evaluate({ async: false });
                 const message = await ChatMessage.create({
                     speaker: ChatMessage.getSpeaker({ actor, token }),
                     flavor,
                     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-                    roll: (new Roll(formulas.join(" + "))).evaluate(),
+                    roll,
+                    sound: CONFIG.sounds.dice,
                 });
 
                 messages.push(message);
