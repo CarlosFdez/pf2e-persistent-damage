@@ -163,6 +163,8 @@ export class PersistentDamagePF2e {
 
                 if (existing) {
                     ui.notifications.info(game.i18n.localize("PF2E-PD.Notification.Overwritten"));
+                } else {
+                    ui.notifications.info(game.i18n.format("PF2E-PD.Notification.Created", { damageType }));
                 }
             } else if (existing) {
                 ui.notifications.info(game.i18n.localize("PF2E-PD.Notification.NotOverwritten"));
@@ -289,7 +291,7 @@ export class PersistentDamagePF2e {
 
                 // Auto-remove the condition if enabled and it passes the DC
                 if (autoCheck && autoResolve && success) {
-                    token.actor.deleteEmbeddedDocuments("Item", [effect.id]);
+                    actor.deleteEmbeddedDocuments("Item", [effect.id]);
                 }
 
                 messages.push(message);
