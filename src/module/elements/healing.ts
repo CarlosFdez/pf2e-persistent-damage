@@ -1,5 +1,5 @@
 import { ActorDataPF2e } from "../../types/actor.js";
-import { PF2RuleElement, PF2RuleElementSynthetics } from "./rule-element.js";
+import { PF2RuleElement } from "./rule-element.js";
 
 // {
 //     "key": "PF2E.RuleElement.Healing",
@@ -12,7 +12,7 @@ import { PF2RuleElement, PF2RuleElementSynthetics } from "./rule-element.js";
 const VALID_SELECTORS = ["fast-healing", "regeneration"] as const;
 
 export class HealingRuleElement extends PF2RuleElement {
-    onBeforePrepareData(actorData: ActorDataPF2e, synthetics: PF2RuleElementSynthetics) {
+    onBeforePrepareData(actorData: ActorDataPF2e) {
         const selector = this.ruleData.selector as typeof VALID_SELECTORS[number];
         if (!VALID_SELECTORS.includes(selector)) {
             const valid = VALID_SELECTORS.join(", ");

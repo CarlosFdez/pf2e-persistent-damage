@@ -62,8 +62,8 @@ Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElem
  * Start of turn event.
  * Use to handle fast-healing and regeneration
  */
-Hooks.on("pf2e.startTurn", (combatant: Combatant<ActorPF2e>) => {
-    if (game.settings.get(MODULE_NAME, "auto-roll")) {
+Hooks.on("pf2e.startTurn", (combatant: Combatant<ActorPF2e>, _combat, userId: string) => {
+    if (game.settings.get(MODULE_NAME, "auto-roll") && game.user.isGM) {
         window.PF2EPersistentDamage.processHealing(combatant.actor);
     }
 });
@@ -72,8 +72,8 @@ Hooks.on("pf2e.startTurn", (combatant: Combatant<ActorPF2e>) => {
  * End of turn event.
  * Use to handle apply damage on turn end
  */
-Hooks.on("pf2e.endTurn", (combatant: Combatant<ActorPF2e>) => {
-    if (game.settings.get(MODULE_NAME, "auto-roll")) {
+Hooks.on("pf2e.endTurn", (combatant: Combatant<ActorPF2e>, _combat, userId: string) => {
+    if (game.settings.get(MODULE_NAME, "auto-roll") && game.user.id === userId) {
         window.PF2EPersistentDamage.processPersistentDamage(combatant.actor);
     }
 });
