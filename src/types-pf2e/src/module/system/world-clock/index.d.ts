@@ -1,0 +1,53 @@
+/// <reference types="jquery" />
+/// <reference types="tooltipster" />
+import { DateTime } from 'luxon';
+import { animateDarkness } from './animate-darkness';
+interface WorldClockData {
+    date: string;
+    time: string;
+    options?: {};
+    user: User;
+}
+export declare class WorldClock extends Application {
+    /** Localization keys */
+    private readonly translations;
+    readonly animateDarkness: typeof animateDarkness;
+    /** Whether the Calendar/Weather module is installed and active */
+    readonly usingCalendarWeather: boolean;
+    /** @override */
+    constructor();
+    /** Setting: the date theme (Imperial Calendar not yet supported) */
+    get dateTheme(): 'AR' | 'IC' | 'AD' | 'CE';
+    /** Setting: display either a 24-hour or 12-hour clock */
+    get timeConvention(): 24 | 12;
+    /** Setting: whether to keep the scene's darkness level synchronized with the world time */
+    get syncDarkness(): boolean;
+    /** Setting: Date and time of the Foundry world's creation date */
+    get worldCreatedOn(): DateTime;
+    /** The current date and time of the game world */
+    get worldTime(): DateTime;
+    /** @override */
+    static get defaultOptions(): ApplicationOptions & {
+        id: string;
+        width: number;
+        template: string;
+        title: string;
+    };
+    /** The era in the game */
+    private get era();
+    /** The year in the game */
+    private get year();
+    /** The month in the game */
+    private get month();
+    /** The day of the week in the game */
+    private get weekday();
+    /** The ordinal suffix of the month's day (in English: "st", "nd", "rd", or "th") */
+    private get ordinalSuffix();
+    /** @override */
+    getData(options?: ApplicationOptions): WorldClockData;
+    /** @override */
+    protected _getHeaderButtons(): ApplicationHeaderButton[];
+    /** @override */
+    activateListeners($html: JQuery): void;
+}
+export {};

@@ -1,4 +1,6 @@
-import { ActorPF2e } from "../types/actor.js";
+import { ActorPF2e } from "@pf2e/module/actor/index.js";
+import { TokenPF2e } from "@pf2e/module/canvas/token.js";
+import { ChatMessagePF2e } from "@pf2e/module/chat-message/index.js";
 import {
     createPersistentEffect,
     DamageType,
@@ -17,7 +19,7 @@ function getTypeData(damageType: DamageType) {
     };
 }
 
-type TokenOrActorInput = Token<ActorPF2e> | ActorPF2e | Array<Token<ActorPF2e> | ActorPF2e>;
+type TokenOrActorInput = TokenPF2e | ActorPF2e | Array<TokenPF2e | ActorPF2e>;
 
 /**
  * Converts a single token/actor or list of tokens and/or actors into a list of actors.
@@ -48,7 +50,7 @@ export class PersistentDamagePF2e {
      * If actor is given, the dialog will add a single effect to that actor.
      * If not given, it can be used to add effects to selected tokens.
      */
-    async showDialog({ actor }: { actor?: Actor } = {}) {
+    async showDialog({ actor }: { actor?: ActorPF2e } = {}) {
         const applyDamage = (html: JQuery<HTMLElement>) => {
             const type = html.find("[name=Type]:checked").val() as DamageType;
             const value = html.find("[name=Damage]").val() as string;
@@ -120,7 +122,7 @@ export class PersistentDamagePF2e {
      * @returns
      */
     async addPersistentDamage(
-        actor: Actor | Actor[],
+        actor: ActorPF2e | ActorPF2e[],
         damageType: DamageType,
         formula: string,
         dc = 15,
@@ -184,7 +186,7 @@ export class PersistentDamagePF2e {
         await actor?.deleteEmbeddedDocuments("Item", effects.map((i) => i.id));
     }
 
-    getPersistentDamage(actor: Actor, type: DamageType) {
+    getPersistentDamage(actor: ActorPF2e, type: DamageType) {
         return actor.items.find((i) => i.data.flags.persistent?.damageType === type);
     }
 
@@ -194,7 +196,7 @@ export class PersistentDamagePF2e {
      * @param itemId
      * @returns
      */
-    async rollRecoveryCheck(actor: Actor, damageType: DamageType | Item) {
+    async rollRecoveryCheck(actor: ActorPF2e, damageType: DamageType | Item) {
         const effect =
             damageType instanceof Item
                 ? damageType
@@ -258,6 +260,7 @@ export class PersistentDamagePF2e {
                 const templateName =
                     "modules/pf2e-persistent-damage/templates/chat/persistent-card.html";
 
+                const ChatMessage = CONFIG.ChatMessage.documentClass as typeof ChatMessagePF2e;
                 const speaker = ChatMessage.getSpeaker({ actor, token });
                 const tokenId = token ? `${token.scene.id}.${token.id}` : undefined;
                 const flavor = await renderTemplate(templateName, {
@@ -332,8 +335,9 @@ export class PersistentDamagePF2e {
             if (formulas.length > 0) {
                 const flavor = game.i18n.format("PF2E-PD.HealingProcess", { sources: sources.join(", ")});
                 const roll = new Roll(formulas.join(" + ")).evaluate({ async: false });
+                const ChatMessage = CONFIG.ChatMessage.documentClass as typeof ChatMessagePF2e;
                 const message = await ChatMessage.create({
-                    speaker: ChatMessage.getSpeaker({ actor, token }),
+                    speaker: ChatMessage.getSpeaker({ actor, token: token.object }),
                     flavor,
                     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
                     roll,

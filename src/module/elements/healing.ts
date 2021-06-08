@@ -1,5 +1,4 @@
-import { ActorDataPF2e } from "../../types/actor.js";
-import { PF2RuleElement } from "./rule-element.js";
+import { ActorDataPF2e } from "@pf2e/module/actor/data";
 
 // {
 //     "key": "PF2E.RuleElement.Healing",
@@ -9,9 +8,10 @@ import { PF2RuleElement } from "./rule-element.js";
 //     "damageTypes": ["fire", "acid"]
 // }
 
+
 const VALID_SELECTORS = ["fast-healing", "regeneration"] as const;
 
-export class HealingRuleElement extends PF2RuleElement {
+export class HealingRuleElement extends game.pf2e.RuleElement {
     onBeforePrepareData(actorData: ActorDataPF2e) {
         const selector = this.ruleData.selector as typeof VALID_SELECTORS[number];
         if (!VALID_SELECTORS.includes(selector)) {
