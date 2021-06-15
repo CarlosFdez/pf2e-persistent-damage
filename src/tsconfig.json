@@ -12,14 +12,14 @@
         "resolveJsonModule": true,
         "baseUrl": ".",
         "paths": {
-            "@pf2e/*": ["./types-pf2e/src/*"],
-            "@actor": ["types-pf2e/src/module/actor/index"],
-            "@actor/*": ["types-pf2e/src/module/actor/*"],
-            "@item": ["types-pf2e/src/module/item/index"],
-            "@item/*": ["types-pf2e/src/module/item/*"],
-            "@system/*": ["types-pf2e/src/module/system/*"],
-            "@module/*": ["types-pf2e/src/module/*"],
-            "@scripts/*": ["types-pf2e/src/scripts/*"]
+            "@pf2e/*": ["./types/src/*"],
+            "@actor": ["types/src/module/actor/index"],
+            "@actor/*": ["types/src/module/actor/*"],
+            "@item": ["types/src/module/item/index"],
+            "@item/*": ["types/src/module/item/*"],
+            "@system/*": ["types/src/module/system/*"],
+            "@module/*": ["types/src/module/*"],
+            "@scripts/*": ["types/src/scripts/*"]
         },
         "types": [
             "jquery",

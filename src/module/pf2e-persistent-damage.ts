@@ -20,7 +20,7 @@ function getTypeData(damageType: DamageType) {
     };
 }
 
-type TokenOrActorInput = TokenPF2e | ActorPF2e | Array<TokenPF2e | ActorPF2e>;
+type TokenOrActorInput = TokenPF2e | ExtendedActor<ActorPF2e> | Array<TokenPF2e | ExtendedActor<ActorPF2e>>;
 
 /**
  * Converts a single token/actor or list of tokens and/or actors into a list of actors.
@@ -29,7 +29,7 @@ type TokenOrActorInput = TokenPF2e | ActorPF2e | Array<TokenPF2e | ActorPF2e>;
  * @param documents
  * @returns
  */
-function resolveActors(documents: TokenOrActorInput): ActorPF2e[] {
+function resolveActors(documents: TokenOrActorInput): ExtendedActor<ActorPF2e>[] {
     const arr = Array.isArray(documents) ? documents : [documents];
     return arr.map((document) => {
         if (document instanceof Actor) {
