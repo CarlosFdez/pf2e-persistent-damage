@@ -2,9 +2,9 @@ import { PersistentDamagePF2e } from "./module/pf2e-persistent-damage.js";
 import { MODULE_NAME, registerSettings } from "./module/settings.js";
 import { setupCustomRules } from "./module/custom-rules.js";
 import { overrideItemSheet } from "./module/item-sheet.js";
-import { CombatantPF2e } from "@pf2e/module/combatant.js";
-import { ActorPF2e } from "@pf2e/module/actor/index.js";
-import { TokenDocumentPF2e } from "@pf2e/module/token-document/index.js";
+import type { CombatantPF2e } from "@pf2e/module/combatant.js";
+import type { ActorPF2e } from "@pf2e/module/actor/index.js";
+import type  { TokenDocumentPF2e } from "@pf2e/module/token-document/index.js";
 
 Hooks.on("init", () => {
     registerSettings();
