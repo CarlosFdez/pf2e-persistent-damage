@@ -24,8 +24,8 @@ declare interface LightChannels {
  * @example <caption>The lightingRefresh hook</caption>
  * Hooks.on("lightingRefresh", layer => {});
  */
-declare class LightingLayer extends PlaceablesLayer<AmbientLight> {
-    constructor(document: AmbientLightDocument);
+declare class LightingLayer extends PlaceablesLayer {
+    constructor();
 
     /** A mapping of light sources which are active within the rendered Scene */
     sources: foundry.utils.Collection<PointSource>;
@@ -96,7 +96,7 @@ declare class LightingLayer extends PlaceablesLayer<AmbientLight> {
      * Update the scene background color, light sources, and darkness sources
      * @param darkness
      */
-    refresh(darkness: number): void;
+    refresh(darkness: number | null): void;
 
     override tearDown(): Promise<void>;
 

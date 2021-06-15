@@ -1,4 +1,4 @@
-declare class AmbientLight extends PlaceableObject<AmbientLightDocument> {
+declare class AmbientLight extends PlaceableObject {
     /** @override */
     constructor(document: AmbientLightDocument);
 
