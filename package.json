@@ -46,6 +46,7 @@
     "gulp-uglify": "^3.0.2",
     "handlebars": "^4.7.7",
     "husky": "^6.0.0",
+    "pixi.js": "^6.0.4",
     "prettier": "^2.3.1",
     "through2": "^4.0.2",
     "tinymce": "^5.8.1",

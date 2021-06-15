@@ -2,11 +2,13 @@ import { ActiveEffectPF2e } from "@pf2e/module/active-effect";
 import { ActorPF2e } from "@pf2e/module/actor";
 import { CompendiumBrowser } from "@pf2e/module/apps/compendium-browser";
 import { CompendiumDirectoryPF2e } from "@pf2e/module/apps/ui/compendium-directory";
+import { CanvasPF2e } from "@pf2e/module/canvas";
 import { TokenPF2e } from "@pf2e/module/canvas/token";
 import { ChatMessagePF2e } from "@pf2e/module/chat-message";
 import { CombatPF2e } from "@pf2e/module/combat";
 import { CombatantPF2e } from "@pf2e/module/combatant";
 import { ConditionManager } from "@pf2e/module/conditions";
+import { FolderPF2e } from "@pf2e/module/folder";
 import { ItemPF2e } from "@pf2e/module/item";
 import { MacroPF2e } from "@pf2e/module/macro";
 import { AbilityModifier, CheckModifier, ModifierPF2e, MODIFIER_TYPE, ProficiencyModifier, StatisticModifier } from "@pf2e/module/modifiers";
@@ -67,8 +69,10 @@ declare global {
             ChatMessagePF2e,
             CombatantPF2e,
             CombatPF2e,
+            FolderPF2e,
             ItemPF2e,
             MacroPF2e,
+            ScenePF2e,
             TokenDocumentPF2e
         > {
         debug: Config['debug'] & {
@@ -85,8 +89,10 @@ declare global {
             ChatMessagePF2e,
             CombatantPF2e,
             CombatPF2e,
+            FolderPF2e,
             ItemPF2e,
             MacroPF2e,
+            ScenePF2e,
             TokenDocumentPF2e
         >['ui'] & {
             combat: typeof CombatTrackerPF2e;
@@ -95,7 +101,7 @@ declare global {
     }
 
     const CONFIG: ConfigPF2e;
-    const canvas: Canvas<TokenPF2e>;
+    const canvas: CanvasPF2e;
     namespace globalThis {
         // eslint-disable-next-line no-var
         var game: Game<ActorPF2e, ChatMessagePF2e, CombatPF2e, ItemPF2e, MacroPF2e, ScenePF2e, UserPF2e>;
@@ -116,6 +122,8 @@ declare global {
 
     interface ClientSettings {
         get(module: 'pf2e', setting: 'ancestryParagonVariant'): boolean;
+        get(module: 'pf2e', setting: 'automation.rulesBasedVision'): boolean;
+        get(module: 'pf2e', setting: 'automation.effectExpiration'): boolean;
         get(module: 'pf2e', setting: 'automation.lootableNPCs'): boolean;
         get(module: 'pf2e', setting: 'defaultTokenSettings'): boolean;
         get(module: 'pf2e', setting: 'defaultTokenSettingsBar'): number;
