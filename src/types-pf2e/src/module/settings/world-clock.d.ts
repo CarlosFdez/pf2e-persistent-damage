@@ -3,7 +3,6 @@
 interface FormInputData extends ClientSettingsData {
     key: string;
     value: unknown;
-    isDisabled: boolean;
     isSelect: boolean;
     isCheckbox: boolean;
     isDateTime: boolean;

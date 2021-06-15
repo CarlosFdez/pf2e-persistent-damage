@@ -5,19 +5,14 @@ import { ClassPF2e } from '@item/class';
 import { CreaturePF2e } from '../index';
 import { FeatPF2e } from '@item/feat';
 export declare class CharacterPF2e extends CreaturePF2e {
-    /** @override */
     static get schema(): typeof CharacterData;
     get ancestry(): AncestryPF2e | null;
     get background(): BackgroundPF2e | null;
     get class(): ClassPF2e | null;
     get heritage(): FeatPF2e | null;
-    /** @override */
-    static get defaultImg(): `${string}.svg` | `${string}.jpg` | `${string}.jpeg` | `${string}.png` | `${string}.webp`;
-    /** @override */
     prepareBaseData(): void;
-    /** @override */
-    prepareEmbeddedEntities(): void;
-    /** @override */
+    /** Adjustments from ABC items are made after all items are prepared but before active effects are applied. */
+    applyActiveEffects(): void;
     prepareDerivedData(): void;
     private prepareInitiative;
     private prepareAncestry;

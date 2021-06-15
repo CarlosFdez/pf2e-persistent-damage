@@ -4,7 +4,6 @@ import { ActiveEffectPF2e } from '@module/active-effect';
 import { ActorPF2e } from '../base';
 import { VehicleData } from './data';
 export declare class VehiclePF2e extends ActorPF2e {
-    /** @override */
     static get schema(): typeof VehicleData;
 }
 export interface VehiclePF2e {

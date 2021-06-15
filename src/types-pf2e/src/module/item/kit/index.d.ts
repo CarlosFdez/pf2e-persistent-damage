@@ -2,7 +2,6 @@ import { ActorPF2e } from '@actor/index';
 import { ItemPF2e } from '@item/index';
 import { KitData, KitEntryData } from './data';
 export declare class KitPF2e extends ItemPF2e {
-    /** @override */
     static get schema(): typeof KitData;
     get entries(): KitEntryData[];
     /** Inflate this kit and add its items to the provided actor */

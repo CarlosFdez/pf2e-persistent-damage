@@ -8,6 +8,7 @@ import { BasicSelectorOptions, TagSelectorType } from '@system/trait-selector';
 import type { ActorPF2e } from '../base';
 import { ActorSheetDataPF2e, CoinageSummary } from './data-types';
 import { ActorDataPF2e } from '@actor/data';
+import { DropCanvasDataPF2e } from '@scripts/system/dragstart-handler';
 interface SpellSheetData extends SpellData {
     spellInfo?: unknown;
     data: SpellSystemData & {
@@ -23,21 +24,14 @@ interface SpellSheetData extends SpellData {
  * @category Actor
  */
 export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends ActorSheet<TActor, ItemPF2e> {
-    /** @override */
     static get defaultOptions(): ActorSheetOptions & {
         classes: string[];
         submitOnClose: boolean;
         scrollY: string[];
     };
-    /**
-     * Return the type of the current Actor
-     */
-    get type(): string;
-    /** @override */
     get isEditable(): boolean;
     /** Can non-owning users loot items from this sheet? */
     get isLootSheet(): boolean;
-    /** @override */
     getData(): ActorSheetDataPF2e<TActor>;
     protected abstract prepareItems(sheetData: {
         actor: ActorDataPF2e;
@@ -81,38 +75,22 @@ export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends A
      * @param spellSlot The number of the spell slot
      */
     private setExpendedPreparedSpellSlot;
-    /**
-     * Save any open tinyMCE editor before closing
-     * @override
-     */
+    /** Save any open tinyMCE editor before closing */
     close(options?: {
         force?: boolean;
     }): Promise<void>;
-    /** @override */
     activateListeners(html: JQuery): void;
     onClickDeleteItem(event: JQuery.ClickEvent | JQuery.ContextMenuEvent): Promise<void>;
-    /** @override */
     protected _canDragStart(selector: string): boolean;
-    /** @override */
     protected _canDragDrop(selector: string): boolean;
-    /**
-     * Override core method due to bug in which new items are created from prepared data
-     * @override
-     */
+    /** Add support for dropping actions and toggles */
     protected _onDragStart(event: ElementDragEvent): void;
-    /**
-     * Handle a drop event for an existing Owned Item to sort that item
-     * @override
-     */
+    /** Handle a drop event for an existing Owned Item to sort that item */
     protected _onSortItem(event: ElementDragEvent, itemData: ItemSourcePF2e): Promise<ItemPF2e[]>;
-    /** @override */
     protected _onDropItemCreate(itemData: ItemSourcePF2e): Promise<ItemPF2e[]>;
-    onDropItem(data: DropCanvasData): Promise<unknown>;
-    /**
-     * Extend the base _onDrop method to handle dragging spells onto spell slots.
-     * @override
-     */
-    protected _onDropItem(event: ElementDragEvent, data: DropCanvasData): Promise<unknown>;
+    onDropItem(data: DropCanvasDataPF2e<ItemSourcePF2e>): Promise<ItemPF2e[]>;
+    /** Extend the base _onDrop method to handle dragging spells onto spell slots. */
+    protected _onDropItem(event: ElementDragEvent, data: DropCanvasDataPF2e<ItemSourcePF2e>): Promise<ItemPF2e[]>;
     /**
      * Moves an item between two actors' inventories.
      * @param event         Event that fired this method.
@@ -127,19 +105,26 @@ export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends A
      */
     private onItemRoll;
     /**
-     * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+     * Handles expanding and contracting the item summary,
+     * delegating the populating of the item summary to renderItemSummary()
      */
     protected onItemSummary(event: JQuery.ClickEvent): void;
-    protected renderItemSummary(li: JQuery, _item: ItemPF2e, chatData: any): void;
     /**
-     * Opens an item container
+     * Triggers toggling the visibility of an item summary element,
+     * delegating the populating of the item summary to renderItemSummary()
      */
+    toggleItemSummary(li: JQuery, options?: {
+        instant?: boolean;
+    }): void;
+    /**
+     * Called when an item summary is expanded and needs to be filled out.
+     */
+    protected renderItemSummary(div: JQuery, _item: ItemPF2e, chatData: any): void;
+    /** Opens an item container */
     private toggleContainer;
     /** Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset */
     private onClickCreateItem;
-    /**
-     * Handle creating a new spellcasting entry for the actor
-     */
+    /** Handle creating a new spellcasting entry for the actor */
     private createSpellcastingEntry;
     /**
      * Handle removing an existing spellcasting entry for the actor
@@ -152,12 +137,8 @@ export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends A
     /** Construct and render a tag selection menu */
     protected tagSelector(selectorType: Exclude<TagSelectorType, 'basic'>, options?: FormApplicationOptions): void;
     protected tagSelector(selectorType: 'basic', options: BasicSelectorOptions): void;
-    /**
-     * Prevent `ActorSheet#_getSubmitData` from preventing the submission of updates to overridden values`
-     * @override
-     */
+    /** Prevent `ActorSheet#_getSubmitData` from preventing the submission of updates to overridden values */
     protected _getSubmitData(updateData?: Record<string, unknown>): Record<string, unknown>;
-    /** @override */
     protected _onSubmit(event: Event, options?: OnSubmitFormOptions): Promise<Record<string, unknown>>;
     /**
      * A user edits numeric values on actor sheets that are frequently modified by data preparation: we should be able
@@ -165,9 +146,9 @@ export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends A
      * underlying base value.
      */
     protected getIntendedChange(propertyPath: string, update: number): number;
-    /**
-     * Hide the sheet-config button unless there is more than one sheet option.
-     *@override */
+    /** Hide the sheet-config button unless there is more than one sheet option. */
     protected _getHeaderButtons(): ApplicationHeaderButton[];
+    /** Override of inner render function to maintain item summary state */
+    protected _renderInner(data: Record<string, unknown>, options: RenderOptions): Promise<JQuery<HTMLElement>>;
 }
 export {};

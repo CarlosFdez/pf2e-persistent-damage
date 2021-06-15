@@ -12,9 +12,6 @@ export declare class WorldClock extends Application {
     /** Localization keys */
     private readonly translations;
     readonly animateDarkness: typeof animateDarkness;
-    /** Whether the Calendar/Weather module is installed and active */
-    readonly usingCalendarWeather: boolean;
-    /** @override */
     constructor();
     /** Setting: the date theme (Imperial Calendar not yet supported) */
     get dateTheme(): 'AR' | 'IC' | 'AD' | 'CE';
@@ -26,7 +23,6 @@ export declare class WorldClock extends Application {
     get worldCreatedOn(): DateTime;
     /** The current date and time of the game world */
     get worldTime(): DateTime;
-    /** @override */
     static get defaultOptions(): ApplicationOptions & {
         id: string;
         width: number;
@@ -43,11 +39,9 @@ export declare class WorldClock extends Application {
     private get weekday();
     /** The ordinal suffix of the month's day (in English: "st", "nd", "rd", or "th") */
     private get ordinalSuffix();
-    /** @override */
     getData(options?: ApplicationOptions): WorldClockData;
-    /** @override */
     protected _getHeaderButtons(): ApplicationHeaderButton[];
-    /** @override */
+    /** Advance the world time by a static or input value */
     activateListeners($html: JQuery): void;
 }
 export {};

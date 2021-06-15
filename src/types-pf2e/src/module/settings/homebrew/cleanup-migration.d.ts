@@ -1,3 +1,3 @@
 import { MigrationBase } from '@module/migration/base';
-import { ConfigPF2eListName } from './index';
-export declare function prepareCleanup(listKey: ConfigPF2eListName, deletions: string[]): MigrationBase;
+import { ConfigPF2eHomebrewList } from './index';
+export declare function prepareCleanup(listKey: ConfigPF2eHomebrewList, deletions: string[]): MigrationBase;

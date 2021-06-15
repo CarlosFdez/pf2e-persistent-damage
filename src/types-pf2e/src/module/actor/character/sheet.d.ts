@@ -5,7 +5,6 @@ import { ItemSourcePF2e } from '@item/data';
 import { CharacterPF2e } from '.';
 import { CreatureSheetPF2e } from '../creature/sheet';
 export declare class CharacterSheetPF2e extends CreatureSheetPF2e<CharacterPF2e> {
-    /** @override */
     static get defaultOptions(): ActorSheetOptions & {
         classes: string[];
         submitOnClose: boolean;
@@ -22,9 +21,7 @@ export declare class CharacterSheetPF2e extends CreatureSheetPF2e<CharacterPF2e>
         showUnpreparedSpells: boolean;
     };
     get template(): string;
-    /** @override */
     protected _updateObject(event: Event, formData: any): Promise<void>;
-    /** @override */
     getData(): any;
     /**
      * Organize and classify Items for Character sheets
@@ -55,15 +52,13 @@ export declare class CharacterSheetPF2e extends CreatureSheetPF2e<CharacterPF2e>
     private onClickDyingWoundedDoomed;
     private getNearestSlotId;
     private onToggleSignatureSpell;
-    /** @override */
-    protected _onDropItem(event: ElementDragEvent, data: DropCanvasData): Promise<unknown>;
+    protected _onDropItem(event: ElementDragEvent, data: DropCanvasData<ItemSourcePF2e>): Promise<ItemPF2e[]>;
     /**
      * Handle a drop event for an existing Owned Item to sort that item
      * @param event
      * @param itemData
      */
     protected _onSortItem(event: ElementDragEvent, itemData: ItemSourcePF2e): Promise<ItemPF2e[]>;
-    /** @override */
     protected _onSubmit(event: any): Promise<Record<string, unknown>>;
     /**
      * Get the font-awesome icon used to display a certain level of dying
@@ -77,8 +72,6 @@ export declare class CharacterSheetPF2e extends CreatureSheetPF2e<CharacterPF2e>
      * Get the font-awesome icon used to display a certain level of doomed
      */
     private getDoomedIcon;
-    /**
-     * Get the font-awesome icon used to display hero points
-     */
+    /** Get the font-awesome icon used to display hero points */
     private getHeroPointsIcon;
 }

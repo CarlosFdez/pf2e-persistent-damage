@@ -14,5 +14,6 @@ export interface LootData extends Omit<LootSource, 'effects' | 'items' | 'token'
 /** The system-level data of loot actors. */
 export interface LootSystemData extends ActorSystemData {
     lootSheetType: 'Merchant' | 'Loot';
+    hiddenWhenEmpty: boolean;
     [key: string]: any;
 }

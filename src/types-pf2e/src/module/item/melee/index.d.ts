@@ -1,14 +1,7 @@
 import { ItemPF2e } from '@item/base';
-import { Rarity } from '@module/data';
 import { MeleeData } from './data';
 export declare class MeleePF2e extends ItemPF2e {
-    /** @override */
     static get schema(): typeof MeleeData;
-    /** @override */
-    get rarity(): Rarity;
-    /** @override */
-    get isEquipped(): true;
-    /** @override */
     getChatData(this: Embedded<MeleePF2e>, htmlOptions?: EnrichHTMLOptions): {
         traits: import("../data").TraitChatData[];
         map2: string;

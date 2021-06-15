@@ -1,9 +1,7 @@
 import { PhysicalItemPF2e } from '../physical';
 import { ArmorCategory, ArmorData, ArmorGroup, BaseArmorType } from './data';
 export declare class ArmorPF2e extends PhysicalItemPF2e {
-    /** @override */
     static get schema(): typeof ArmorData;
-    /** @override */
     isStackableWith(item: PhysicalItemPF2e): boolean;
     get isShield(): boolean;
     get isArmor(): boolean;
@@ -22,7 +20,6 @@ export declare class ArmorPF2e extends PhysicalItemPF2e {
     get hardness(): number;
     get brokenThreshold(): number;
     get isBroken(): boolean;
-    /** @override */
     prepareBaseData(): void;
     getChatData(this: Embedded<ArmorPF2e>, htmlOptions?: EnrichHTMLOptions): {
         properties: (string | null)[];
@@ -31,7 +28,7 @@ export declare class ArmorPF2e extends PhysicalItemPF2e {
             value: number;
         };
         armorType: {
-            value: "medium" | "light" | "shield" | "unarmored" | "heavy";
+            value: "medium" | "light" | "unarmored" | "heavy" | "shield";
         };
         baseItem: "explorers-clothing" | "padded-armor" | "leather-armor" | "studded-leather-armor" | "chain-shirt" | "hide-armor" | "scale-mail" | "chain-mail" | "breastplate" | "splint-mail" | "half-plate" | "full-plate" | "hellknight-plate" | null;
         group: {
@@ -145,7 +142,6 @@ export declare class ArmorPF2e extends PhysicalItemPF2e {
             value: number;
         };
     };
-    /** @override */
     generateUnidentifiedName({ typeOnly }?: {
         typeOnly?: boolean;
     }): string;

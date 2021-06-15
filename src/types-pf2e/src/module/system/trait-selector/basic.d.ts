@@ -10,7 +10,6 @@ export declare class TagSelectorBasic extends TraitSelectorBase {
     private filterTimeout;
     constructor(object: ActorPF2e | ItemPF2e, options: BasicSelectorOptions);
     protected get configTypes(): readonly SelectableTagField[];
-    /** @override */
     static get defaultOptions(): FormApplicationOptions & {
         id: string;
         classes: string[];
@@ -21,7 +20,6 @@ export declare class TagSelectorBasic extends TraitSelectorBase {
         title: string;
         height: number;
     };
-    /** @override */
     getData(): {
         choices: Record<string, {
             label: string;
@@ -33,9 +31,7 @@ export declare class TagSelectorBasic extends TraitSelectorBase {
         options?: FormApplicationOptions | undefined;
         title?: string | undefined;
     };
-    /** @override */
     activateListeners($html: JQuery): void;
-    /** @override */
     protected _updateObject(_event: Event, formData: Record<string, unknown>): Promise<void>;
     private getUpdateData;
     /**

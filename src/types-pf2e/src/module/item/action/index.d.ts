@@ -1,9 +1,7 @@
 import { ItemPF2e } from '@item/base';
 import { ActionData } from './data';
 export declare class ActionPF2e extends ItemPF2e {
-    /** @override */
     static get schema(): typeof ActionData;
-    /** @override */
     prepareData(): void;
     getChatData(this: Embedded<ActionPF2e>, htmlOptions?: EnrichHTMLOptions): {
         properties: (string | null)[];

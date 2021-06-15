@@ -3,7 +3,6 @@ import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from '@item/data/n
 import { FeatPF2e } from '.';
 export declare type FeatSource = BaseNonPhysicalItemSource<'feat', FeatSystemData>;
 export declare class FeatData extends BaseNonPhysicalItemData<FeatPF2e> {
-    /** @override */
     static DEFAULT_ICON: ImagePath;
 }
 export interface FeatData extends Omit<FeatSource, '_id' | 'effects'> {
@@ -14,7 +13,7 @@ export interface FeatData extends Omit<FeatSource, '_id' | 'effects'> {
 export declare type FeatTrait = keyof ConfigPF2e['PF2E']['featTraits'];
 export declare type FeatTraits = ItemTraits<FeatTrait>;
 export declare type FeatType = keyof ConfigPF2e['PF2E']['featTypes'];
-interface PrerequisiteTagData {
+export interface PrerequisiteTagData {
     value: string;
 }
 interface FeatSystemData extends ItemSystemData, ItemLevelData {

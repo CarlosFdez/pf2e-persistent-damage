@@ -9,6 +9,5 @@ export declare class FamiliarSheetPF2e extends ActorSheet<FamiliarPF2e, ItemPF2e
     static get defaultOptions(): ActorSheetOptions;
     get template(): string;
     getData(): any;
-    /** @override */
     activateListeners(html: JQuery): void;
 }

@@ -26,17 +26,12 @@ export declare class CompendiumDirectoryPF2e extends CompendiumDirectory {
     /** Folders! */
     folders: Map<string, PackFolderPF2e>;
     private static readonly contentSelector;
-    /** @override */
     static get defaultOptions(): CompendiumDirectoryOptions;
-    /** @override */
     getData(options?: object): PackDirectoryDataPF2e;
     private setupFolders;
     private findOrCreateFolder;
-    /** @override */
     activateListeners($html: JQuery): void;
-    /** @override */
     protected _canDragDrop(): boolean;
-    /** @override */
     protected _onSearchFilter(_event: KeyboardEvent, query: string): void;
     /**
      * Handle toggling the collapsed or expanded state of a folder within the directory tab

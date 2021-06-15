@@ -18,13 +18,9 @@ export declare class ItemPF2e extends Item<ActorPF2e> {
     get sourceId(): string | undefined;
     get traits(): Set<string>;
     get description(): string;
-    /** @override */
-    protected _preCreate(data: PreCreate<this['data']['_source']>, options: DocumentModificationContext, user: UserPF2e): Promise<void>;
-    /** @override */
+    protected _preCreate(data: PreDocumentId<this['data']['_source']>, options: DocumentModificationContext, user: UserPF2e): Promise<void>;
     protected _onCreate(data: ItemSourcePF2e, options: DocumentModificationContext, userId: string): void;
-    /** @override */
-    protected _onUpdate(changed: DocumentUpdateData<this>, options: DocumentModificationContext, userId: string): void;
-    /** @override */
+    protected _onUpdate(changed: DeepPartial<this['data']['_source']>, options: DocumentModificationContext, userId: string): void;
     protected _onDelete(options: DocumentModificationContext, userId: string): void;
     /**
      * Create a chat card for this item and send it to the chat log. Many cards contain follow-up options for attack
@@ -94,10 +90,7 @@ export declare class ItemPF2e extends Item<ActorPF2e> {
         map2: number;
         map3: number;
     };
-    /**
-     * Don't allow the user to create a condition or spellcasting entry from the sidebar.
-     * @override
-     */
+    /** Don't allow the user to create a condition or spellcasting entry from the sidebar. */
     static createDialog(data?: {
         folder?: string;
     }, options?: FormApplicationOptions): Promise<ItemPF2e | undefined>;

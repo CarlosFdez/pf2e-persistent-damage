@@ -3,8 +3,8 @@ import { MODULE_NAME, registerSettings } from "./module/settings.js";
 import { setupCustomRules } from "./module/custom-rules.js";
 import { overrideItemSheet } from "./module/item-sheet.js";
 import { CombatantPF2e } from "@pf2e/module/combatant.js";
-import { TokenDocumentPF2e } from "@pf2e/module/token-document.js";
 import { ActorPF2e } from "@pf2e/module/actor/index.js";
+import { TokenDocumentPF2e } from "@pf2e/module/token-document/index.js";
 
 Hooks.on("init", () => {
     registerSettings();

@@ -6,7 +6,6 @@ import { IdentificationStatus, MystifiedData } from './data';
 export declare abstract class PhysicalItemPF2e extends ItemPF2e {
     private _container;
     get level(): number;
-    /** @override */
     get traits(): Set<string>;
     get rarity(): Rarity;
     get quantity(): number;
@@ -20,9 +19,7 @@ export declare abstract class PhysicalItemPF2e extends ItemPF2e {
     get isInContainer(): boolean;
     /** Get this item's container, returning null if it is not in a container */
     get container(): Embedded<ContainerPF2e> | null;
-    /** @override */
     prepareBaseData(): void;
-    /** @override */
     prepareDerivedData(): void;
     /** Can the provided item stack with this item? */
     isStackableWith(item: PhysicalItemPF2e): boolean;
@@ -31,10 +28,7 @@ export declare abstract class PhysicalItemPF2e extends ItemPF2e {
     generateUnidentifiedName({ typeOnly }?: {
         typeOnly?: boolean;
     }): string;
-    /**
-     * Include mystification-related rendering instructions for views that will display this data.
-     * @override
-     */
+    /** Include mystification-related rendering instructions for views that will display this data. */
     protected traitChatData(dictionary: Record<string, string>): TraitChatData[];
 }
 export interface PhysicalItemPF2e {

@@ -1,9 +1,7 @@
 import { PhysicalItemPF2e } from '../physical';
 import { EquipmentData } from './data';
 export declare class EquipmentPF2e extends PhysicalItemPF2e {
-    /** @override */
     static get schema(): typeof EquipmentData;
-    /** @override */
     getChatData(this: Embedded<EquipmentPF2e>, htmlOptions?: EnrichHTMLOptions): {
         properties: (string | null)[];
         traits: import("../data").TraitChatData[];
@@ -86,7 +84,6 @@ export declare class EquipmentPF2e extends PhysicalItemPF2e {
             value: number;
         };
     };
-    /** @override */
     generateUnidentifiedName({ typeOnly }?: {
         typeOnly?: boolean;
     }): string;

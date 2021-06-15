@@ -5,7 +5,6 @@ import { TraitSelectorBase } from './base';
 import { SelectableTagField } from './index';
 export declare class TraitSelectorWeaknesses extends TraitSelectorBase<ActorPF2e> {
     objectProperty: string;
-    /** @override */
     static get defaultOptions(): FormApplicationOptions & {
         id: string;
         classes: string[];
@@ -16,11 +15,8 @@ export declare class TraitSelectorWeaknesses extends TraitSelectorBase<ActorPF2e
         title: string;
     };
     protected get configTypes(): readonly SelectableTagField[];
-    /** @override */
     getData(): any;
-    /** @override */
     activateListeners($html: JQuery): void;
-    /** @override */
     protected _updateObject(_event: Event, formData: Record<string, unknown>): Promise<void>;
     protected getUpdateData(formData: Record<string, unknown>): Record<string, unknown>[];
 }

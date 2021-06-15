@@ -6,25 +6,16 @@ export declare class ActiveEffectPF2e extends ActiveEffect {
     /** Apply this ActiveEffect to the actor immediately upon spellcasting */
     get applyOnCast(): boolean;
     prepareBaseData(): void;
-    /**
-     * Parse non-primitive change values just prior to application to the actor
-     * @override
-     */
+    /** Parse non-primitive change values just prior to application to the actor */
     apply(actor: ActorPF2e, change: ApplicableChangeData<this>): unknown;
-    /**
-     * Create a non-existing property before the parent class applies an upgrade
-     * @override
-     */
+    /** Create a non-existing property before the parent class applies an upgrade */
     protected _applyUpgrade(actor: ActorPF2e, change: ApplicableChangeData<this>): unknown;
     /** Disable this active effect for a single data-preparation cycle  */
     temporarilyDisable(this: Embedded<ActiveEffectPF2e>, actor: ActorPF2e): void;
     private valueIsLookupData;
     private grantItem;
     private revokeItem;
-    /**
-     * Propagate deletion of prototype token overrides to any placed tokens
-     * @override
-     */
+    /** Propagate deletion of prototype token overrides to any placed tokens */
     protected _onDelete(options: DocumentModificationContext, userId: string): void;
 }
 export interface ActiveEffectPF2e {

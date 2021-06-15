@@ -1,6 +1,7 @@
 import { ActorPF2e } from "@pf2e/module/actor/index.js";
 import { TokenPF2e } from "@pf2e/module/canvas/token.js";
 import { ChatMessagePF2e } from "@pf2e/module/chat-message/index.js";
+import { ItemPF2e } from "@pf2e/module/item/index.js";
 import {
     createPersistentEffect,
     DamageType,
@@ -181,7 +182,7 @@ export class PersistentDamagePF2e {
      * @param value
      * @returns
      */
-    async removePersistentDamage(actor: Actor, type: DamageType) {
+    async removePersistentDamage(actor: ActorPF2e, type: DamageType) {
         const effects = actor.items.filter((i) => i.data.flags.persistent?.damageType === type);
         await actor?.deleteEmbeddedDocuments("Item", effects.map((i) => i.id));
     }
@@ -196,7 +197,7 @@ export class PersistentDamagePF2e {
      * @param itemId
      * @returns
      */
-    async rollRecoveryCheck(actor: ActorPF2e, damageType: DamageType | Item) {
+    async rollRecoveryCheck(actor: ActorPF2e, damageType: DamageType | Embedded<ItemPF2e>) {
         const effect =
             damageType instanceof Item
                 ? damageType
@@ -209,7 +210,7 @@ export class PersistentDamagePF2e {
         const typeName = game.i18n.localize(CONFIG.PF2E.damageTypes[data.damageType]);
         const templatePath = "modules/pf2e-persistent-damage/templates/chat/recover-persistent-card.html";
         const message = await roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ actor }),
+            speaker: ChatMessagePF2e.getSpeaker({ actor }),
             flavor: await renderTemplate(templatePath, { data, typeName, success }),
         });
 

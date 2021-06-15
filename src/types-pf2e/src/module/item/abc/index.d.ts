@@ -10,7 +10,6 @@ export declare abstract class ABCItemPF2e extends ItemPF2e {
     protected getFeature(entry: ABCFeatureEntryData): Promise<FeatSource>;
     protected deleteExistingFeatures(actor: CharacterPF2e): Promise<void>;
     addFeatures(actor: CharacterPF2e): Promise<void>;
-    /** @override */
     protected _onCreate(data: AncestrySource | BackgroundSource | ClassSource, options: DocumentModificationContext, userId: string): void;
 }
 export interface ABCItemPF2e {

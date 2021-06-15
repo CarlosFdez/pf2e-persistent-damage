@@ -8,14 +8,9 @@ export declare class HazardSheetPF2e extends ActorSheetPF2e<HazardPF2e> {
         submitOnClose: boolean;
         scrollY: string[];
     };
-    /**
-     * Get the correct HTML template path to use for rendering this particular sheet
-     */
+    /** Get the HTML template path to use depending on whether this sheet is in edit mode */
     get template(): string;
-    /** @override */
     getData(): any;
-    /** @override */
     prepareItems(sheetData: any): void;
-    /** @override */
     activateListeners(html: JQuery): void;
 }

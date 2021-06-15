@@ -120,23 +120,16 @@ export declare class NPCSheetPF2e extends CreatureSheetPF2e<NPCPF2e> {
         submitOnClose: boolean;
         scrollY: string[];
     };
-    /**
-     * Returns the path to the HTML template to use to render this sheet.
-     */
-    get template(): "systems/pf2e/templates/actors/npc/loot-sheet.html" | "systems/pf2e/templates/actors/npc/npc-sheet.html";
-    /**
-     * Use the token name as the title if showing a lootable NPC sheet
-     * @override
-     */
+    /** Show either the actual NPC sheet or a briefened lootable version if the NPC is dead */
+    get template(): string;
+    /** Use the token name as the title if showing a lootable NPC sheet */
     get title(): string;
-    /** @override */
     get isLootSheet(): boolean;
     /**
      * Prepares items in the actor for easier access during sheet rendering.
      * @param actorData Data from the actor associated to this sheet.
      */
     protected prepareItems(sheetData: NPCSheetData): void;
-    /** @override */
     getData(): NPCSheetData;
     /**
      * Subscribe to events from the sheet.
@@ -191,7 +184,6 @@ export declare class NPCSheetPF2e extends CreatureSheetPF2e<NPCPF2e> {
     private onChangeSpellcastingEntry;
     private onSpellSlotIncrementReset;
     private assignActionGraphics;
-    /** @override */
     protected _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
 }
 export {};

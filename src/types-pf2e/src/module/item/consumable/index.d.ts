@@ -2,7 +2,6 @@ import { ConsumableData, ConsumableType } from './data';
 import { PhysicalItemPF2e, SpellPF2e } from '@item';
 import { TrickMagicItemCastData } from '@item/data';
 export declare class ConsumablePF2e extends PhysicalItemPF2e {
-    /** @override */
     static get schema(): typeof ConsumableData;
     get consumableType(): ConsumableType;
     get charges(): {
@@ -141,7 +140,6 @@ export declare class ConsumablePF2e extends PhysicalItemPF2e {
             units: any;
         };
     };
-    /** @override */
     generateUnidentifiedName({ typeOnly }?: {
         typeOnly?: boolean;
     }): string;

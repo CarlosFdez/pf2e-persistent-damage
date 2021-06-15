@@ -2,18 +2,16 @@ import { ItemPF2e } from '@item/index';
 import { SpellcastingEntryPF2e } from '@item/spellcasting-entry';
 import { SpellData } from './data';
 export declare class SpellPF2e extends ItemPF2e {
-    /** @override */
     static get schema(): typeof SpellData;
     get spellcasting(): SpellcastingEntryPF2e | undefined;
     get level(): import("../../data").ZeroToTen;
     get isCantrip(): boolean;
     get isFocusSpell(): boolean;
     get isRitual(): boolean;
-    /** @override */
     prepareBaseData(): void;
     getChatData(this: Embedded<SpellPF2e>, htmlOptions?: EnrichHTMLOptions, rollOptions?: {
         spellLvl?: number;
-    }): {
+    }): import("./data").SpellSystemData | {
         save: {
             basic: string;
             value: "" | "fortitude" | "reflex" | "will";
@@ -52,7 +50,7 @@ export declare class SpellPF2e extends ItemPF2e {
             value: string;
         };
         area: {
-            value: 10 | 5 | 15 | 20 | 100 | 30 | 40 | 50 | 60 | 120;
+            value: 10 | 5 | 15 | 20 | 40 | 30 | 50 | 100 | 60 | 120;
             areaType: "line" | "cone" | "burst" | "emanation";
         };
         time: {
@@ -66,7 +64,6 @@ export declare class SpellPF2e extends ItemPF2e {
             applyMod: false;
         };
         damageType: {
-            /** @todo: handle elsewhere */
             value: string;
         };
         scaling: {

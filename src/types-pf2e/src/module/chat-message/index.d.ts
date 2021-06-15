@@ -4,7 +4,6 @@ import type { ActorPF2e } from '@actor/index';
 import { CheckModifiersContext } from '@module/system/check-modifiers-dialog';
 import { RollDataPF2e } from '@system/rolls';
 export declare class ChatMessagePF2e extends ChatMessage<ActorPF2e> {
-    /** @override */
     getHTML(): Promise<JQuery>;
     protected _onCreate(data: foundry.data.ChatMessageSource, options: DocumentModificationContext, userId: string): void;
 }

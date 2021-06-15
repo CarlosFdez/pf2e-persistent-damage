@@ -53,6 +53,5 @@ export declare class CheckModifiersDialog extends Application {
     activateListeners(html: JQuery): void;
     onAddModifier(event: JQuery.ClickEvent): void;
     onChangeRollMode(event: JQuery.ChangeEvent): void;
-    /** @override */
     protected _getHeaderButtons(): ApplicationHeaderButton[];
 }

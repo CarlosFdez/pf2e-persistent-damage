@@ -3,20 +3,6 @@ import { ActorPF2e } from '../module/actor/base';
 /**
  * @category Other
  */
-export declare class FormulaPreservingRoll extends Roll {
-    toJSON(): {
-        class: string;
-        options: Record<string, unknown>;
-        dice: DiceTerm<DiceTermData>[];
-        formula: string;
-        terms: RollTerm<RollTermData>[];
-        total?: number | undefined;
-        evaluated: boolean;
-    };
-}
-/**
- * @category Other
- */
 export declare class DicePF2e {
     _rolled?: boolean;
     terms?: string[];
@@ -87,6 +73,6 @@ export declare class DicePF2e {
         critical?: boolean;
         onClose?: any;
         dialogOptions?: object;
-    }): Promise<unknown> | FormulaPreservingRoll;
+    }): Promise<unknown> | Roll<any>;
     alter(add: number, multiply: number): this;
 }

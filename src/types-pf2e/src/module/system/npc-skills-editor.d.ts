@@ -11,9 +11,7 @@ export declare class NPCSkillsEditor extends FormApplication<NPCPF2e> {
     constructor(actor: NPCPF2e, options: FormApplicationOptions);
     get npc(): NPCPF2e;
     static get defaultOptions(): FormApplicationOptions;
-    /**
-     * Prepare data to be sent to HTML.
-     */
+    /** Prepare data to be sent to HTML. */
     getData(): {
         skills: Record<string, NPCSkillData>;
         missingSkills: Record<string, NPCSkillData>;

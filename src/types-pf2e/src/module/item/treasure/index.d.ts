@@ -1,9 +1,7 @@
 import { PhysicalItemPF2e } from '@item/physical';
 import { TreasureData } from './data';
 export declare class TreasurePF2e extends PhysicalItemPF2e {
-    /** @override */
     static get schema(): typeof TreasureData;
-    /** @override */
     getChatData(this: Embedded<TreasurePF2e>, htmlOptions?: EnrichHTMLOptions): {
         traits: import("../data").TraitChatData[];
         denomination: {

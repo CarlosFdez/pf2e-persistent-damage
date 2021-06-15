@@ -1,7 +1,7 @@
 import { AbilityString, ActorSystemData, BaseActorDataPF2e, BaseActorSourcePF2e, BaseTraitsData, HitPointsData, RawSkillData, Rollable } from '@actor/data/base';
 import type { CREATURE_ACTOR_TYPES, SAVE_TYPES, SKILL_ABBREVIATIONS } from '@actor/data/values';
 import { DamageDicePF2e, ModifierPF2e, StatisticModifier } from '@module/modifiers';
-import { LabeledString, ValuesList } from '@module/data';
+import { LabeledString, ValuesList, ZeroToThree } from '@module/data';
 import type { CreaturePF2e } from '.';
 export declare type BaseCreatureSource<TCreatureType extends CreatureType = CreatureType, TSystemData extends CreatureSystemData = CreatureSystemData> = BaseActorSourcePF2e<TCreatureType, TSystemData>;
 export declare class BaseCreatureData<TActor extends CreaturePF2e = CreaturePF2e, TSystemData extends CreatureSystemData = CreatureSystemData> extends BaseActorDataPF2e<TActor> {
@@ -12,6 +12,11 @@ export interface BaseCreatureData extends Omit<BaseCreatureSource, 'effects' | '
     readonly _source: BaseCreatureSource;
 }
 export interface CreatureSystemData extends ActorSystemData {
+    details: {
+        level: {
+            value: number;
+        };
+    };
     /** Traits, languages, and other information. */
     traits: CreatureTraitsData;
     attributes: BaseCreatureAttributes;
@@ -86,3 +91,10 @@ export interface BaseCreatureAttributes {
     };
 }
 export declare type Alignment = 'LG' | 'NG' | 'CG' | 'LN' | 'N' | 'CN' | 'LE' | 'NE' | 'CE';
+export declare enum VisionLevels {
+    BLINDED = 0,
+    NORMAL = 1,
+    LOWLIGHT = 2,
+    DARKVISION = 3
+}
+export declare type VisionLevel = ZeroToThree;

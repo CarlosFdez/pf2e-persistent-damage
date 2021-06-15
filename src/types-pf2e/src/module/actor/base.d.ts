@@ -6,7 +6,7 @@ import type { ConditionPF2e, ArmorPF2e } from '@item/index';
 import { WeaponData, ItemSourcePF2e, ItemType } from '@item/data';
 import type { ActiveEffectPF2e } from '@module/active-effect';
 import { ActorSheetPF2e } from './sheet/base';
-import { SaveString, SkillAbbreviation } from './creature/data';
+import { SaveString, SkillAbbreviation, VisionLevel } from './creature/data';
 import { AbilityString } from './data/base';
 import { ActorDataPF2e, ActorSourcePF2e } from './data';
 import { TokenDocumentPF2e } from '@module/token-document';
@@ -26,28 +26,27 @@ export declare class ActorPF2e extends Actor<TokenDocumentPF2e> {
     constructor(data: PreCreate<ActorSourcePF2e>, context?: ActorConstructorContextPF2e);
     get traits(): Set<string>;
     get level(): number;
-    /** @override */
+    /**
+     * Whether the actor can see, given its token placement in the current scene.
+     * A meaningful implementation is found in `CreaturePF2e`.
+     */
+    get canSee(): boolean;
+    get visionLevel(): VisionLevel;
+    /** Add effect icons from effect items and rule elements */
     get temporaryEffects(): TemporaryEffect[];
     /** Get the actor's held shield. Meaningful implementation in `CreaturePF2e`'s override. */
     get heldShield(): Embedded<ArmorPF2e> | null;
-    /** As of Foundry 0.8: All subclasses of ActorPF2e need to use this factory method rather than having their own
-     *  overrides, since Foundry itself will call `ActorPF2e.create` when a new actor is created from the sidebar.
-     * @override
+    /**
+     * As of Foundry 0.8: All subclasses of ActorPF2e need to use this factory method rather than having their own
+     * overrides, since Foundry itself will call `ActorPF2e.create` when a new actor is created from the sidebar.
      */
     static create<A extends ActorPF2e>(this: ConstructorOf<A>, data: PreCreate<A['data']['_source']>, context?: DocumentModificationContext): Promise<A | undefined>;
     static create<A extends ActorPF2e>(this: ConstructorOf<A>, data: PreCreate<A['data']['_source']>[], context?: DocumentModificationContext): Promise<A[]>;
     static create<A extends ActorPF2e>(this: ConstructorOf<A>, data: PreCreate<A['data']['_source']>[] | PreCreate<A['data']['_source']>, context?: DocumentModificationContext): Promise<A[] | A | undefined>;
-    /** @override */
     prepareBaseData(): void;
-    /**
-     * Prepare physical item getters on this actor and containers
-     * @override
-     */
+    /** Prepare physical item getters on this actor and containers */
     prepareEmbeddedEntities(): void;
-    /**
-     * Disable active effects from a physical item if it isn't equipped and (if applicable) invested
-     * @override
-     */
+    /** Disable active effects from a physical item if it isn't equipped and (if applicable) invested */
     applyActiveEffects(): void;
     /** Synchronize the token image with the actor image, if the token does not currently have an image */
     private prepareTokenImg;
@@ -197,7 +196,7 @@ export declare class ActorPF2e extends Actor<TokenDocumentPF2e> {
 export interface ActorPF2e {
     readonly data: ActorDataPF2e;
     _sheet: ActorSheetPF2e<ActorPF2e> | ActorSheet<ActorPF2e, ItemPF2e> | null;
-    readonly itemTypes: {
+    get itemTypes(): {
         [K in ItemType]: Embedded<InstanceType<ConfigPF2e['PF2E']['Item']['documentClasses'][K]>>[];
     };
     /** See implementation in class */

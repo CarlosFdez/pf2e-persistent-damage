@@ -8,13 +8,10 @@ interface PlayerSettings {
  */
 export declare class PlayerConfigPF2e extends FormApplication {
     settings: PlayerSettings;
-    /** @override */
     constructor();
     static init(): Promise<void>;
     static readonly defaultSettings: PlayerSettings;
-    /** @override */
     static get defaultOptions(): FormApplicationOptions;
-    /** @override */
     getData(): FormApplicationData & PlayerSettings;
     static activateColorScheme(): void;
     /**
@@ -22,7 +19,6 @@ export declare class PlayerConfigPF2e extends FormApplication {
      * @param html the html element where the button will be created
      */
     static hookOnRenderSettings(): void;
-    /** @override */
     _updateObject(_event: Event, formData: FormData & PlayerSettings): Promise<void>;
 }
 export {};

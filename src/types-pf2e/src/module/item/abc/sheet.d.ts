@@ -4,11 +4,8 @@ import { AbilityString } from '@actor/data';
 import { AncestryPF2e, BackgroundPF2e, ClassPF2e } from '@item/index';
 import { ItemSheetPF2e } from '../sheet/base';
 import { ABCSheetData } from '../sheet/data-types';
-/**
- * @category Other
- */
-export declare abstract class ABCSheetPF2e<TItem extends AncestryPF2e | BackgroundPF2e | ClassPF2e> extends ItemSheetPF2e<TItem> {
-    /** @override */
+declare type ABCItem = AncestryPF2e | BackgroundPF2e | ClassPF2e;
+export declare abstract class ABCSheetPF2e<TItem extends ABCItem> extends ItemSheetPF2e<TItem> {
     static get defaultOptions(): {
         scrollY: string[];
         dragDrop: {
@@ -33,7 +30,6 @@ export declare abstract class ABCSheetPF2e<TItem extends AncestryPF2e | Backgrou
         tabs?: TabsOptions[] | undefined;
         title?: string | undefined;
     };
-    /** @override */
     getData(): ABCSheetData<TItem>;
     protected getLocalizedAbilities(traits: {
         value: AbilityString[];
@@ -42,9 +38,8 @@ export declare abstract class ABCSheetPF2e<TItem extends AncestryPF2e | Backgrou
     };
     /** Is the dropped feat or feature valid for the given section? */
     private isValidDrop;
-    /** @override */
     protected _onDrop(event: ElementDragEvent): Promise<void>;
     private removeItem;
-    /** @override */
     activateListeners(html: JQuery): void;
 }
+export {};

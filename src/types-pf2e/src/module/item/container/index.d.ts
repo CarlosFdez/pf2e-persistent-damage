@@ -3,11 +3,9 @@ import { ContainerData } from './data';
 export declare class ContainerPF2e extends PhysicalItemPF2e {
     /** This container's contents, reloaded every data preparation cycle */
     contents: Collection<Embedded<PhysicalItemPF2e>>;
-    /** @override */
     static get schema(): typeof ContainerData;
     /** Reload this container's contents following Actor embedded-document preparation */
     prepareContents(this: Embedded<ContainerPF2e>): void;
-    /** @override */
     getChatData(this: Embedded<ContainerPF2e>, htmlOptions?: EnrichHTMLOptions): {
         traits: import("../data").TraitChatData[];
         capacity: {

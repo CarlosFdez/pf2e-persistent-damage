@@ -1638,6 +1638,7 @@ export declare const PF2ECONFIG: {
         shoony: string;
         sleep: string;
         splash: string;
+        'splash-10': string;
         summoned: string;
         tattoo: string;
         teleportation: string;
@@ -2466,6 +2467,20 @@ export declare const PF2ECONFIG: {
         };
     };
     SETTINGS: {
+        automation: {
+            rulesBasedVision: {
+                name: string;
+                hint: string;
+            };
+            effectExpiration: {
+                name: string;
+                hint: string;
+            };
+            lootableNPCs: {
+                name: string;
+                hint: string;
+            };
+        };
         homebrew: {
             creatureTraits: {
                 name: string;

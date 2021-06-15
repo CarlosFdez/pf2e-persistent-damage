@@ -304,7 +304,6 @@ export declare class CompendiumBrowser extends Application {
         }[];
     };
     get title(): string;
-    /** @override */
     activateListeners(html: JQuery): void;
     private addPhysicalItemsToSelectedTokens;
     private createPhysicalItemFromCompendiumId;

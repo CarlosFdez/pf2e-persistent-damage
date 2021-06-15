@@ -1,7 +1,6 @@
 import { ItemPF2e } from '../base';
 import { ConditionData } from './data';
 export declare class ConditionPF2e extends ItemPF2e {
-    /** @override */
     static get schema(): typeof ConditionData;
     get value(): number | null;
     get duration(): number | null;

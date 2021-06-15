@@ -12,7 +12,6 @@ export declare abstract class SettingsMenuPF2e extends FormApplication {
     /** Settings to be registered and also later referenced during user updates */
     protected static get settings(): Record<string, ClientSettingsData>;
     static registerSettings(): void;
-    /** @override */
     getData(): MenuTemplateData;
     protected _updateObject(_event: Event, data: Record<string, unknown>): Promise<void>;
 }

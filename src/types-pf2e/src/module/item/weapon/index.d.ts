@@ -1,14 +1,11 @@
 import { PhysicalItemPF2e } from '../physical';
 import { BaseWeaponType, WeaponCategory, WeaponData, WeaponGroup } from './data';
 export declare class WeaponPF2e extends PhysicalItemPF2e {
-    /** @override */
     static get schema(): typeof WeaponData;
-    /** @override */
     isStackableWith(item: PhysicalItemPF2e): boolean;
     get baseType(): BaseWeaponType | null;
     get group(): WeaponGroup | null;
     get category(): WeaponCategory | null;
-    /** @override */
     prepareBaseData(): void;
     getChatData(this: Embedded<WeaponPF2e>, htmlOptions?: EnrichHTMLOptions): {
         traits: import("../data").TraitChatData[];
@@ -28,7 +25,7 @@ export declare class WeaponPF2e extends PhysicalItemPF2e {
             value: "advanced" | "martial" | "unarmed" | "simple" | null;
         };
         group: {
-            value: "bomb" | "club" | "dart" | "flail" | "pick" | "sling" | "spear" | "knife" | "brawling" | "sword" | "axe" | "polearm" | "hammer" | "shield" | "bow" | null;
+            value: "bomb" | "shield" | "club" | "dart" | "flail" | "pick" | "sling" | "spear" | "knife" | "brawling" | "sword" | "axe" | "polearm" | "hammer" | "bow" | null;
         };
         baseItem: "staff" | "adze" | "aklys" | "alchemical-bomb" | "alchemical-crossbow" | "aldori-dueling-sword" | "arrows" | "bastard-sword" | "battle-axe" | "battle-lute" | "bladed-diabolo" | "bladed-hoop" | "bladed-scarf" | "blowgun-darts" | "blowgun" | "bo-staff" | "boarding-axe" | "boarding-pike" | "bola" | "bolts" | "buugeng" | "clan-dagger" | "claw" | "claw-blade" | "club" | "combat-grapnel" | "composite-longbow" | "composite-shortbow" | "crossbow" | "dagger" | "daikyu" | "dart" | "dogslicer" | "dwarven-war-axe" | "elven-curve-blade" | "exquisite-sword-cane-sheath" | "exquisite-sword-cane" | "falchion" | "fangwire" | "fauchard" | "fighting-fan" | "filchers-fork" | "fire-poi" | "fist" | "flail" | "gaff" | "gauntlet" | "gill-hook" | "glaive" | "gnome-flickmace" | "gnome-hooked-hammer" | "greataxe" | "greatclub" | "greatpick" | "greatsword" | "guisarme" | "halberd" | "halfling-sling-staff" | "hand-adze" | "hand-crossbow" | "hatchet" | "heavy-crossbow" | "horsechopper" | "javelin" | "jaws" | "juggling-club" | "kama" | "katana" | "katar" | "khakkara" | "khopesh" | "kukri" | "lance" | "light-hammer" | "light-mace" | "light-pick" | "longbow" | "longspear" | "longsword" | "mace" | "machete" | "main-gauche" | "mambele" | "maul" | "meteor-hammer" | "monkeys-fist" | "morningstar" | "naginata" | "nightstick" | "nine-ring-sword" | "nunchaku" | "ogre-hook" | "orc-knuckle-dagger" | "orc-necksplitter" | "pick" | "poi" | "polytool" | "ranseur" | "rapier" | "rhoka-sword" | "rungu" | "sai" | "sap" | "sawtooth-saber" | "scimitar" | "scorpion-whip" | "scourge" | "scythe" | "shears" | "shield-bash" | "shield-boss" | "shield-spikes" | "shortbow" | "shortsword" | "shuriken" | "sickle" | "sling-bullets" | "sling" | "spear" | "spiked-chain" | "spiked-gauntlet" | "starknife" | "stiletto-pen" | "sword-cane" | "tamchal-chakram" | "taw-launcher" | "tekko-kagi" | "temple-sword" | "tengu-gale-blade" | "throwing-knife" | "thunder-sling" | "tricky-pick" | "trident" | "urumi" | "wakizashi" | "war-flail" | "war-razor" | "warhammer" | "whip-claw" | "whip" | "wish-blade" | "wish-knife" | "wooden-taws" | null;
         hands: {
@@ -163,7 +160,6 @@ export declare class WeaponPF2e extends PhysicalItemPF2e {
             value: number;
         };
     };
-    /** @override */
     generateUnidentifiedName({ typeOnly }?: {
         typeOnly?: boolean;
     }): string;

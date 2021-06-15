@@ -22,6 +22,7 @@ export interface LabeledNumber extends LabeledValue {
     value: number;
 }
 /** Literal numeric types */
-export declare type ZeroToThree = 0 | 1 | 2 | 3;
+export declare type ZeroToTwo = 0 | 1 | 2;
+export declare type ZeroToThree = ZeroToTwo | 3;
 export declare type ZeroToFour = ZeroToThree | 4;
 export declare type ZeroToTen = ZeroToFour | 5 | 6 | 7 | 8 | 9 | 10;

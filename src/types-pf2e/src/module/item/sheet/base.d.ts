@@ -9,11 +9,8 @@ export interface ItemSheetDataPF2e<TItem extends ItemPF2e> extends ItemSheetData
     enabledRulesUI: boolean;
     activeEffects: AESheetData;
 }
-/** @override */
 export declare class ItemSheetPF2e<TItem extends ItemPF2e> extends ItemSheet<TItem> {
-    /** @override */
     static get defaultOptions(): DocumentSheetOptions;
-    /** @override */
     getData(): any;
     /** An alternative to super.getData() for subclasses that don't need this class's `getData` */
     protected getBaseData(): ItemSheetDataPF2e<TItem>;
@@ -31,21 +28,12 @@ export declare class ItemSheetPF2e<TItem extends ItemPF2e> extends ItemSheet<TIt
     protected getActionImg(action: string): ImagePath;
     private addDamageRoll;
     private deleteDamageRoll;
-    /** @override */
     protected _canDragDrop(_selector: string): boolean;
-    /** @override */
     activateListeners(html: JQuery): void;
-    /** @override */
     protected _getSubmitData(updateData?: Record<string, unknown>): Record<string, unknown>;
-    /**
-     * Hide the sheet-config button unless there is more than one sheet option.
-     * @override */
+    /** Hide the sheet-config button unless there is more than one sheet option. */
     protected _getHeaderButtons(): ApplicationHeaderButton[];
-    /**
-     * Tagify sets an empty input field to "" instead of "[]", which later causes the JSON parse to throw an error
-     * @override
-     */
+    /** Tagify sets an empty input field to "" instead of "[]", which later causes the JSON parse to throw an error */
     protected _onSubmit(event: Event, { updateData, preventClose, preventRender }?: OnSubmitFormOptions): Promise<Record<string, unknown>>;
-    /** @override */
     protected _updateObject(event: Event, formData: Record<string, unknown>): Promise<void>;
 }

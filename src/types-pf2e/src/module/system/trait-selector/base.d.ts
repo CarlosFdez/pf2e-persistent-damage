@@ -6,7 +6,6 @@ export declare abstract class TraitSelectorBase<EntityType extends ActorPF2e | I
     objectProperty: string;
     constructor(object: EntityType, options?: TagSelectorOptions);
     protected abstract get configTypes(): readonly SelectableTagField[];
-    /** @override */
     static get defaultOptions(): FormApplicationOptions & {
         id: string;
         classes: string[];

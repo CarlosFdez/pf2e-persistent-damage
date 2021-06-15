@@ -19,7 +19,7 @@ export declare class EffectPanel extends Application {
      * to properly wait for promises to resolve before refreshing the UI.
      */
     refresh(): void;
-    getData(options?: any): EffectPanelData;
+    getData(options?: ApplicationOptions): EffectPanelData;
     activateListeners(html: JQuery): void;
     private static get actor();
     private static getParentConditionsBreakdown;

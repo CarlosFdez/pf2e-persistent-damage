@@ -8,7 +8,7 @@ interface ItemsDiff {
 }
 export declare class MigrationRunnerBase {
     migrations: MigrationBase[];
-    static WORLD_SCHEMA_VERSION: number;
+    static LATEST_SCHEMA_VERSION: number;
     static MINIMUM_SAFE_VERSION: number;
     static RECOMMENDED_SAFE_VERSION: number;
     constructor(migrations?: MigrationBase[]);

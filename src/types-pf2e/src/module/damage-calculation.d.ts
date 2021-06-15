@@ -4,10 +4,10 @@ declare const damageTypes: Set<"mental" | "chaotic" | "evil" | "good" | "lawful"
 export declare type SetElement<SetType extends Set<unknown>> = SetType extends Set<infer ElementType> ? ElementType : never;
 export declare type DamageType = SetElement<typeof damageTypes>;
 export declare function isDamageType(value: string): value is DamageType;
-declare const attackTraits: Set<"unarmed" | "light" | "magical" | "air" | "earth" | "fire" | "water" | "adamantine" | "coldiron" | "ghostTouch" | "silver" | "orichalcum" | "vorpal" | "area-damage" | "darkwood" | "mithral" | "salt" | "salt water" | "warpglass" | "nonlethal attacks" | "persistent-damage">;
+declare const attackTraits: Set<"unarmed" | "light" | "magical" | "air" | "earth" | "fire" | "water" | "adamantine" | "coldiron" | "ghostTouch" | "silver" | "area-damage" | "darkwood" | "mithral" | "orichalcum" | "salt" | "salt water" | "vorpal" | "warpglass" | "nonlethal attacks" | "persistent-damage">;
 export declare type AttackTrait = SetElement<typeof attackTraits>;
 export declare function isAttackTrait(trait: string): trait is AttackTrait;
-declare const combinedTraits: Set<"all" | "physical" | "energy" | "unarmed" | "light" | "mental" | "magical" | "chaotic" | "evil" | "good" | "lawful" | "air" | "earth" | "fire" | "water" | "acid" | "cold" | "electricity" | "force" | "positive" | "sonic" | "negative" | "poison" | "adamantine" | "coldiron" | "ghostTouch" | "silver" | "bludgeoning" | "piercing" | "slashing" | "bleed" | "orichalcum" | "vorpal" | "critical-hits" | "precision" | "area-damage" | "darkwood" | "mithral" | "salt" | "salt water" | "splash-damage" | "warpglass" | "nonlethal attacks" | "persistent-damage" | "non-magical">;
+declare const combinedTraits: Set<"all" | "physical" | "energy" | "unarmed" | "light" | "mental" | "magical" | "chaotic" | "evil" | "good" | "lawful" | "air" | "earth" | "fire" | "water" | "acid" | "cold" | "electricity" | "force" | "positive" | "sonic" | "negative" | "poison" | "adamantine" | "coldiron" | "ghostTouch" | "silver" | "bludgeoning" | "piercing" | "slashing" | "bleed" | "critical-hits" | "precision" | "area-damage" | "darkwood" | "mithral" | "orichalcum" | "salt" | "salt water" | "splash-damage" | "vorpal" | "warpglass" | "nonlethal attacks" | "persistent-damage" | "non-magical">;
 export declare type CombinedTrait = SetElement<typeof combinedTraits>;
 export declare function isCombinedTrait(trait: string): trait is CombinedTrait;
 export declare class DamageValues {
@@ -29,7 +29,7 @@ export declare class DamageValues {
     totalPrecision(): number;
     totalCritical(): number;
     totalSplash(): number;
-    getTraits(): Set<"all" | "physical" | "energy" | "unarmed" | "light" | "mental" | "magical" | "chaotic" | "evil" | "good" | "lawful" | "air" | "earth" | "fire" | "water" | "acid" | "cold" | "electricity" | "force" | "positive" | "sonic" | "negative" | "poison" | "adamantine" | "coldiron" | "ghostTouch" | "silver" | "bludgeoning" | "piercing" | "slashing" | "bleed" | "orichalcum" | "vorpal" | "critical-hits" | "precision" | "area-damage" | "darkwood" | "mithral" | "salt" | "salt water" | "splash-damage" | "warpglass" | "nonlethal attacks" | "persistent-damage" | "non-magical">;
+    getTraits(): Set<"all" | "physical" | "energy" | "unarmed" | "light" | "mental" | "magical" | "chaotic" | "evil" | "good" | "lawful" | "air" | "earth" | "fire" | "water" | "acid" | "cold" | "electricity" | "force" | "positive" | "sonic" | "negative" | "poison" | "adamantine" | "coldiron" | "ghostTouch" | "silver" | "bludgeoning" | "piercing" | "slashing" | "bleed" | "critical-hits" | "precision" | "area-damage" | "darkwood" | "mithral" | "orichalcum" | "salt" | "salt water" | "splash-damage" | "vorpal" | "warpglass" | "nonlethal attacks" | "persistent-damage" | "non-magical">;
     withoutCritical(): DamageValues;
     withoutPrecision(): DamageValues;
     withoutSplash(): DamageValues;

@@ -9,12 +9,11 @@ import { ZeroToFour } from '@module/data';
  * @category Actor
  */
 export declare abstract class CreatureSheetPF2e<ActorType extends CreaturePF2e> extends ActorSheetPF2e<ActorType> {
-    protected renderItemSummary(li: JQuery, item: Embedded<ItemPF2e>, chatData: any): void;
+    protected renderItemSummary(div: JQuery, item: Embedded<ItemPF2e>, chatData: any): void;
     getData(): any;
     /**
      * Get the font-awesome icon used to display a certain level of skill proficiency
      */
     protected getProficiencyIcon(level: ZeroToFour): string;
-    /** @override */
     activateListeners(html: JQuery): void;
 }

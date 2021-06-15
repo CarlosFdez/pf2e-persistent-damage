@@ -5,6 +5,7 @@ import { DamageDicePF2e, DiceModifierPF2e, ModifierPF2e } from '@module/modifier
 import { RollNotePF2e } from '@module/notes';
 import { StrikingPF2e, WeaponPotencyPF2e } from '@module/rules/rules-data-definitions';
 import { DamageDieSize } from './damage';
+import { SIZES } from '@module/data';
 export interface DamagePartials {
     [damageType: string]: {
         [damageCategory: string]: string;
@@ -48,6 +49,8 @@ export declare type DamagePool = Record<string, {
         };
     };
 }>;
+export declare function ensureWeaponCategory(options: string[], weaponCategory: 'simple' | 'martial' | 'advanced' | 'unarmed'): void;
+export declare function ensureWeaponSize(options: string[], weaponSize: typeof SIZES[number] | null | undefined, wielderSize: typeof SIZES[number] | null | undefined): void;
 /**
  * @category PF2
  */

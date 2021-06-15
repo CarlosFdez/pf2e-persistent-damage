@@ -8,34 +8,22 @@ export declare class NPCLegacySheetPF2e extends NPCLegacyEditSheetPF2e {
         submitOnClose: boolean;
         scrollY: string[];
     };
-    /** @override */
     get title(): string;
-    /** @override */
     getData(): any;
     private getLootData;
-    /** @override */
     get isLootSheet(): boolean;
-    /**
-     * Increases the NPC via the Elite/Weak adjustment rules
-     */
+    /** Increases the NPC via the Elite/Weak adjustment rules */
     npcAdjustment(increase: boolean): void;
-    /**
-     * Check if Elite
-     */
+    /** Check if Elite */
     get npcIsElite(): boolean;
-    /**
-     * Check if Weak
-     */
+    /** Check if Weak */
     get npcIsWeak(): boolean;
     /**
      * Roll NPC Damage using DamageRoll
      * Rely upon the DicePF2e.damageRoll logic for the core implementation
      */
     rollNPCDamageRoll(event: any, damageRoll: any, item: any): void;
-    /**
-     * Toggle expansion of an attackEffect ability if it exists.
-     *
-     */
+    /** Toggle expansion of an attackEffect ability if it exists. */
     expandAttackEffect(attackEffectName: string, event: JQuery.TriggeredEvent): void;
     /**
      * Activate event listeners using the prepared sheet HTML

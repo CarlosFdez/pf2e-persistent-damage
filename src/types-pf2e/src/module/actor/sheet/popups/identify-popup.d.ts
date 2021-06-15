@@ -3,10 +3,8 @@
 import { IdentifyAlchemyDCs, IdentifyMagicDCs } from '@item/identification';
 import { PhysicalItemPF2e } from '@item/physical';
 export declare class IdentifyItemPopup extends FormApplication<PhysicalItemPF2e> {
-    /** @override */
     static get defaultOptions(): FormApplicationOptions;
     get item(): PhysicalItemPF2e;
-    /** @override */
     getData(): {
         isMagic: boolean;
         isAlchemical: boolean;
@@ -15,7 +13,6 @@ export declare class IdentifyItemPopup extends FormApplication<PhysicalItemPF2e>
         options?: FormApplicationOptions | undefined;
         title?: string | undefined;
     };
-    /** @override */
     activateListeners($form: JQuery<HTMLFormElement>): void;
     protected _updateObject(_event: Event, formData: Record<string, unknown>): Promise<void>;
 }
