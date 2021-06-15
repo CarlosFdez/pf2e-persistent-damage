@@ -2,7 +2,9 @@ import { PersistentDamagePF2e } from "./module/pf2e-persistent-damage.js";
 import { MODULE_NAME, registerSettings } from "./module/settings.js";
 import { setupCustomRules } from "./module/custom-rules.js";
 import { overrideItemSheet } from "./module/item-sheet.js";
-import { ActorPF2e } from "./types/actor.js";
+import { CombatantPF2e } from "@pf2e/module/combatant.js";
+import { ActorPF2e } from "@pf2e/module/actor/index.js";
+import { TokenDocumentPF2e } from "@pf2e/module/token-document/index.js";
 
 Hooks.on("init", () => {
     registerSettings();
@@ -62,7 +64,7 @@ Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElem
  * Start of turn event.
  * Use to handle fast-healing and regeneration
  */
-Hooks.on("pf2e.startTurn", (combatant: Combatant<ActorPF2e>, _combat, userId: string) => {
+Hooks.on("pf2e.startTurn", (combatant: CombatantPF2e, _combat, userId: string) => {
     if (game.settings.get(MODULE_NAME, "auto-roll") && game.user.isGM) {
         window.PF2EPersistentDamage.processHealing(combatant.actor);
     }
@@ -72,7 +74,7 @@ Hooks.on("pf2e.startTurn", (combatant: Combatant<ActorPF2e>, _combat, userId: st
  * End of turn event.
  * Use to handle apply damage on turn end
  */
-Hooks.on("pf2e.endTurn", (combatant: Combatant<ActorPF2e>, _combat, userId: string) => {
+Hooks.on("pf2e.endTurn", (combatant: CombatantPF2e, _combat, userId: string) => {
     if (game.settings.get(MODULE_NAME, "auto-roll") && game.user.id === userId) {
         window.PF2EPersistentDamage.processPersistentDamage(combatant.actor);
     }
@@ -81,7 +83,7 @@ Hooks.on("pf2e.endTurn", (combatant: Combatant<ActorPF2e>, _combat, userId: stri
 /**
  * If persistent damage is clicked, use this module instead.
  */
-Hooks.on("renderTokenHUD", (app, html: JQuery, tokenData: TokenData) => {
+Hooks.on("renderTokenHUD", (app, html: JQuery, tokenData: TokenDocumentPF2e) => {
     setTimeout(() => {
         html.find("div.status-effects img[data-effect=persistentDamage]")
             .off()
@@ -93,7 +95,7 @@ Hooks.on("renderTokenHUD", (app, html: JQuery, tokenData: TokenData) => {
                 evt.preventDefault();
                 evt.stopPropagation();
 
-                const token = canvas.tokens.get(tokenData._id);
+                const token = canvas.tokens.get(tokenData.id);
                 if (token) {
                     PF2EPersistentDamage.showDialog({ actor: token.actor });
                 }

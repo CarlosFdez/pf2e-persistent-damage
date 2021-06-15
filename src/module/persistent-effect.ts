@@ -1,4 +1,5 @@
-import { EffectData, ItemDataPF2e, ItemPF2e } from "../types/item";
+import { ItemPF2e } from "@pf2e/module/item";
+import { EffectData, ItemDataPF2e } from "@pf2e/module/item/data";
 
 export const typeImages: Record<string, ImagePath> = {
     bleed: "systems/pf2e/icons/spells/blade-barrier.webp",

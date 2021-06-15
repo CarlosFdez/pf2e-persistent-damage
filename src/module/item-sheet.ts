@@ -4,9 +4,9 @@
  */
  export function overrideItemSheet() {
     // unfortunately....pf2e does not override the item default sheet
-    const baseSheet: typeof ItemSheet = Items.registeredSheets.find(
-        (s) => s.name === "ItemSheetPF2e",
-    );
+    const baseSheet = Items.registeredSheets.find(
+        (s: any) => s.name === "ItemSheetPF2e",
+    ) as unknown as typeof ItemSheet;
 
     const original = baseSheet.prototype.getData;
     baseSheet.prototype.getData = function (...args) {
