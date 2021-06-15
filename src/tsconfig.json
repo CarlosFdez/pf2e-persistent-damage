@@ -19,7 +19,11 @@
             "@item/*": ["types/src/module/item/*"],
             "@system/*": ["types/src/module/system/*"],
             "@module/*": ["types/src/module/*"],
-            "@scripts/*": ["types/src/scripts/*"]
+            "@scripts/*": ["types/src/scripts/*"],
+            // https://github.com/Hypercubed/mini-signals/issues/20
+            "mini-signals": [
+                "../node_modules/resource-loader/typings/mini-signals.d.ts"
+            ]
         },
         "types": [
             "jquery",
