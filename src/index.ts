@@ -111,8 +111,9 @@ TextEditor.enrichHTML = function (...args) {
     const html = document.createElement("div");
     html.innerHTML = String(content);
 
-    html.querySelectorAll<HTMLElement>(".inline-roll").forEach(roll => {
+    html.querySelectorAll<HTMLElement>(".inline-roll:not(.inline-result)").forEach(roll => {
         const flavor = roll.dataset.flavor;
+        if (!flavor) return;
         const match = flavor.match(/^persistent ([A-Za-z]+)/i);
         if (!match) return;
 
