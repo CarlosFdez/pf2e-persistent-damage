@@ -21,4 +21,6 @@
 
         return data;
     };
+
+    console.log("PF2E Persistent | Registered Item Sheet Modification");
 }

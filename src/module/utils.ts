@@ -1,5 +1,5 @@
 /**
- * Calculates the average result for a roll.
+ * Calculates the average expected result for a roll.
  * @param formula
  * @returns
  */

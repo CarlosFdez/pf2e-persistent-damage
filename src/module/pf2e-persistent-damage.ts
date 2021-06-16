@@ -29,13 +29,13 @@ type TokenOrActorInput = TokenPF2e | ExtendedActor<ActorPF2e> | Array<TokenPF2e 
  * @param documents
  * @returns
  */
-function resolveActors(documents: TokenOrActorInput): ExtendedActor<ActorPF2e>[] {
+function resolveActors(documents: TokenOrActorInput): { token?: TokenPF2e, actor: ExtendedActor<ActorPF2e> }[] {
     const arr = Array.isArray(documents) ? documents : [documents];
     return arr.map((document) => {
         if (document instanceof Actor) {
-            return document;
+            return { actor: document, token: document.token?.object };
         } else {
-            return document.actor;
+            return { actor: document.actor, token: document };
         }
     })
 }
@@ -233,8 +233,7 @@ export class PersistentDamagePF2e {
         const rollHideMode = game.settings.get(MODULE_NAME, "hide-rolls");
 
         const messages = [];
-        for (const actor of resolveActors(tokensOrActors)) {
-            const token = (actor.token as any)?.object;
+        for (const { actor, token } of resolveActors(tokensOrActors)) {
             const persistentDamageElements = actor.itemTypes.effect.filter(
                 (i) =>
                     i.data.data.rules.some((r) => r.key === "PF2E.RuleElement.PersistentDamage") ||
@@ -307,8 +306,7 @@ export class PersistentDamagePF2e {
 
     async processHealing(tokensOrActors: TokenOrActorInput): Promise<ChatMessage[]> {
         const messages = [];
-        for (const actor of resolveActors(tokensOrActors)) {
-            const token = actor.token;
+        for (const { actor, token } of resolveActors(tokensOrActors)) {
             const healing = actor.data.data.attributes.healing;
             if (!healing) {
                 continue;
@@ -338,7 +336,7 @@ export class PersistentDamagePF2e {
                 const roll = new Roll(formulas.join(" + ")).evaluate({ async: false });
                 const ChatMessage = CONFIG.ChatMessage.documentClass as typeof ChatMessagePF2e;
                 const message = await ChatMessage.create({
-                    speaker: ChatMessage.getSpeaker({ actor, token: token.object }),
+                    speaker: ChatMessage.getSpeaker({ actor, token }),
                     flavor,
                     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
                     roll,
@@ -350,5 +348,22 @@ export class PersistentDamagePF2e {
         }
 
         return messages;
+    }
+
+    async _startDrag(event: DragEvent) {
+        event.stopPropagation();
+        const dataTransfer = event.dataTransfer;
+        if (!dataTransfer) return;
+
+        const target = event.target as HTMLElement;
+        const value = target.dataset.value;
+        const damageType = target.dataset.damageType;
+        const dc = Number(target.dataset.dc) || 15;
+        const effect = createPersistentEffect({ value, damageType, dc });
+
+        dataTransfer.setData('text/plain', JSON.stringify({
+            type: "Item",
+            data: effect
+        }));
     }
 }

@@ -2,9 +2,9 @@ import { PersistentDamagePF2e } from "./module/pf2e-persistent-damage.js";
 import { MODULE_NAME, registerSettings } from "./module/settings.js";
 import { setupCustomRules } from "./module/custom-rules.js";
 import { overrideItemSheet } from "./module/item-sheet.js";
+import { createPersistentTitle, typeImages } from "./module/persistent-effect.js";
 import type { CombatantPF2e } from "@pf2e/module/combatant.js";
 import type { ActorPF2e } from "@pf2e/module/actor/index.js";
-import type  { TokenDocumentPF2e } from "@pf2e/module/token-document/index.js";
 
 Hooks.on("init", () => {
     registerSettings();
@@ -18,7 +18,6 @@ Hooks.on("setup", () => {
 
 Hooks.on("ready", () => {
     overrideItemSheet();
-    console.log("PF2E Persistent | Registered Item Sheet Modification");
 });
 
 Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElement>) => {
@@ -66,7 +65,7 @@ Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElem
  */
 Hooks.on("pf2e.startTurn", (combatant: CombatantPF2e, _combat, userId: string) => {
     if (game.settings.get(MODULE_NAME, "auto-roll") && game.user.isGM) {
-        window.PF2EPersistentDamage.processHealing(combatant.actor);
+        window.PF2EPersistentDamage.processHealing(combatant.token ?? combatant.actor);
     }
 });
 
@@ -76,14 +75,14 @@ Hooks.on("pf2e.startTurn", (combatant: CombatantPF2e, _combat, userId: string) =
  */
 Hooks.on("pf2e.endTurn", (combatant: CombatantPF2e, _combat, userId: string) => {
     if (game.settings.get(MODULE_NAME, "auto-roll") && game.user.id === userId) {
-        window.PF2EPersistentDamage.processPersistentDamage(combatant.actor);
+        window.PF2EPersistentDamage.processPersistentDamage(combatant.token ?? combatant.actor);
     }
 });
 
 /**
  * If persistent damage is clicked, use this module instead.
  */
-Hooks.on("renderTokenHUD", (app, html: JQuery, tokenData: TokenDocumentPF2e) => {
+Hooks.on("renderTokenHUD", (_app, html: JQuery, tokenData: foundry.data.TokenData) => {
     setTimeout(() => {
         html.find("div.status-effects img[data-effect=persistentDamage]")
             .off()
@@ -95,10 +94,48 @@ Hooks.on("renderTokenHUD", (app, html: JQuery, tokenData: TokenDocumentPF2e) => 
                 evt.preventDefault();
                 evt.stopPropagation();
 
-                const token = canvas.tokens.get(tokenData.id);
+                const token = canvas.tokens.get(tokenData._id);
                 if (token) {
                     PF2EPersistentDamage.showDialog({ actor: token.actor });
                 }
             });
     }, 0);
 });
+
+// Override the enrichHTML method to create persistent effect links from inline rolls
+const persistentConditionId = "lDVqvLKA6eF3Df60";
+const originalEnrichHTML = TextEditor.enrichHTML;
+TextEditor.enrichHTML = function (...args) {
+    const content = originalEnrichHTML.call(this, ...args);
+
+    const html = document.createElement("div");
+    html.innerHTML = String(content);
+
+    html.querySelectorAll<HTMLElement>(".inline-roll").forEach(roll => {
+        const flavor = roll.dataset.flavor;
+        const match = flavor.match(/^persistent ([A-Za-z]+)/i);
+        if (!match) return;
+
+        const damageType = match[1]?.toLowerCase();
+        if (damageType in typeImages) {
+            // Remove the persistent effect condition image first
+            const compendiumLink = $(roll).next();
+            if (compendiumLink.hasClass("entity-link") && compendiumLink.attr("data-id") === persistentConditionId) {
+                compendiumLink.remove();
+            }
+
+            // Replace with a custom draggable link
+            const formula = roll.dataset.formula;
+            const newLink = document.createElement("a");
+            newLink.classList.add("entity-link");
+            newLink.draggable = true;
+            newLink.dataset.value = formula;
+            newLink.dataset.damageType = damageType;
+            newLink.innerText = createPersistentTitle({ damageType, value: formula, dc: 15 });
+            newLink.setAttribute("ondragstart", "PF2EPersistentDamage._startDrag(event)");
+            $(roll).replaceWith(newLink);
+        }
+    });
+
+    return html.innerHTML;
+}

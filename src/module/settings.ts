@@ -28,7 +28,6 @@ declare global {
     }
 }
 
-
 /**
  * Initializes settings. Must be called only once.
  */

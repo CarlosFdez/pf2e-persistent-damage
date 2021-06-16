@@ -76,12 +76,12 @@ Hooks.on("preUpdateItem", (item: ItemPF2e, update: Partial<ItemDataPF2e>) => {
         });
 
         update.flags.persistent = persistent;
-        update.name = createTitle(persistent);
+        update.name = createPersistentTitle(persistent);
         update['data.slug'] = `persistent-damage-${persistent.damageType}`;
     }
 });
 
-function createTitle(data: PersistentData) {
+export function createPersistentTitle(data: PersistentData) {
     const { damageType, value, dc } = data;
     const typeName = game.i18n.localize(CONFIG.PF2E.damageTypes[damageType]);
     const dcStr = dc === 15 ? "" : ` DC${String(dc)}`;
@@ -97,7 +97,7 @@ function createTitle(data: PersistentData) {
 export function createPersistentEffect(persistent: PersistentData): DeepPartial<EffectData> {
     return {
         type: "effect",
-        name: createTitle(persistent),
+        name: createPersistentTitle(persistent),
         data: {
             slug: `persistent-damage-${persistent.damageType}`,
             description: {
