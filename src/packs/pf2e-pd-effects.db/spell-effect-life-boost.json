@@ -7,7 +7,7 @@
             "value": "<p>Granted by @Compendium[pf2e.spells-srd.Life Boost]{Life Boost}.</p>\n</p>Set the level of this effect to the spell level.</p>"
         },
         "duration": {
-            "expiry": "turn-end",
+            "expiry": "turn-start",
             "sustained": false,
             "unit": "rounds",
             "value": 4
