@@ -29,6 +29,11 @@ Use to inspect selected tokens for all persistent damage effects and create chat
 
 ![image](https://user-images.githubusercontent.com/1286721/111949776-b24d7100-8ab7-11eb-86d1-3270c4f138dc.png)
 
+### Inline Roll Dragging
+Any inline roll with `persistent damageType` flavor text such as [[/r 1d6 #persistent mental]] will be converted to draggable links that apply persistent damage. Many compendium entries in PF2e already have these inline rolls.
+
+https://user-images.githubusercontent.com/1286721/122157689-4ae65980-ce39-11eb-85b5-dbf789dfbd29.mp4
+
 ## Fast Healing
 There is some rudimentary fast healing and regeneration support, but its not complete. There is a new rule element added by the module, `PF2E.RuleElement.Healing`, with two examples in the compendium: Life Boost and Troll Regeneration. If you have an ideas on things I can do to improve tracking fast healing and troll regen, or if you want to add more items to the compendium, please let me know and we can work it out.
 
