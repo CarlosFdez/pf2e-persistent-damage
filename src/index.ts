@@ -128,7 +128,7 @@ TextEditor.enrichHTML = function (...args) {
             // Replace with a custom draggable link
             const formula = roll.dataset.formula;
             const newLink = document.createElement("a");
-            newLink.classList.add("entity-link");
+            newLink.classList.add("entity-link", "persistent-link");
             newLink.draggable = true;
             newLink.dataset.value = formula;
             newLink.dataset.damageType = damageType;
@@ -140,3 +140,9 @@ TextEditor.enrichHTML = function (...args) {
 
     return html.innerHTML;
 }
+
+// Rendered chat messages strip out javascript events...so we need to add it back in
+Hooks.on("renderChatMessage", (_message, html) => {
+    html.find(".persistent-link:not([ondragstart])")
+        .attr("ondragstart", "PF2EPersistentDamage._startDrag(event)");
+})
