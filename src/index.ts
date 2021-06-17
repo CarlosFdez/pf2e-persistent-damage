@@ -125,16 +125,14 @@ TextEditor.enrichHTML = function (...args) {
                 compendiumLink.remove();
             }
 
-            // Replace with a custom draggable link
             const formula = roll.dataset.formula;
-            const newLink = document.createElement("a");
-            newLink.classList.add("entity-link", "persistent-link");
-            newLink.draggable = true;
-            newLink.dataset.value = formula;
-            newLink.dataset.damageType = damageType;
-            newLink.innerText = createPersistentTitle({ damageType, value: formula, dc: 15 });
-            newLink.setAttribute("ondragstart", "PF2EPersistentDamage._startDrag(event)");
-            $(roll).replaceWith(newLink);
+            const newTitle = createPersistentTitle({ damageType, value: formula, dc: 15 });
+            roll.classList.add("persistent-link");
+            roll.draggable = true;
+            roll.dataset.value = formula;
+            roll.dataset.damageType = damageType;
+            roll.innerHTML = `<i class="fas fa-suitcase"></i> ${newTitle}`;
+            roll.setAttribute("ondragstart", "PF2EPersistentDamage._startDrag(event)");
         }
     });
 
