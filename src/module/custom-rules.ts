@@ -6,7 +6,7 @@ import type { ActorDataPF2e } from "@pf2e/module/actor/data";
 export function setupCustomRules() {
     const custom = game.pf2e.RuleElements.custom;
     const HealingRuleElement = createHealingRuleElement();
-    custom["PF2E.RuleElement.Healing"] = (ruleData, item) => new HealingRuleElement(ruleData, item);
+    custom["PF2E.RuleElement.Healing"] = (ruleData, item, itemUUID) => new HealingRuleElement(ruleData, item, itemUUID);
 }
 
 interface HealingRuleData {

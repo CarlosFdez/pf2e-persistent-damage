@@ -6,8 +6,8 @@ export { RuleElementPF2e };
  * @category RuleElement
  */
 export declare class RuleElements {
-    static readonly builtin: Record<string, (ruleData: PF2RuleElementData, item: ItemDataPF2e) => RuleElementPF2e>;
-    static custom: Record<string, (ruleData: PF2RuleElementData, item: ItemDataPF2e) => RuleElementPF2e>;
+    static readonly builtin: Record<string, (ruleData: PF2RuleElementData, item: ItemDataPF2e, itemUUID?: string) => RuleElementPF2e>;
+    static custom: Record<string, (ruleData: PF2RuleElementData, item: ItemDataPF2e, itemUUID?: string) => RuleElementPF2e>;
     static fromOwnedItem(item: ItemDataPF2e): RuleElementPF2e[];
     static fromRuleElementData(ruleData: PF2RuleElementData[], item: ItemDataPF2e): RuleElementPF2e[];
 }

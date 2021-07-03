@@ -37,7 +37,7 @@ export declare abstract class RuleElementPF2e {
      * @param ruleData unserialized JSON data from the actual rule input
      * @param item where the rule is persisted on
      */
-    constructor(ruleData: any, item: ItemDataPF2e);
+    constructor(ruleData: any, item: ItemDataPF2e, itemUUID?: string);
     /**
      * Globally ignore this rule element.
      */
