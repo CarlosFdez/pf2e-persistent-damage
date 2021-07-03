@@ -7,6 +7,7 @@ import * as del from "del";
 import * as path from "path";
 import * as fs from "fs-extra";
 import * as through from "through2";
+import * as uglify from "gulp-uglify";
 
 const project = ts.createProject("src/tsconfig.json");
 
@@ -25,6 +26,7 @@ task("compile:ts", () => {
   return src("src/**/*.ts")
     .pipe(sourcemaps.init())
     .pipe(project())
+    .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(dest(outDir))
 });
