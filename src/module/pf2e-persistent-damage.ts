@@ -335,6 +335,7 @@ export class PersistentDamagePF2e {
             }
 
             if (formulas.length > 0) {
+                const rollMode = actor.hasPlayerOwner ? "roll" : game.settings.get('core', 'rollMode');
                 const flavor = game.i18n.format("PF2E-PD.HealingProcess", { sources: sources.join(", ")});
                 const roll = new Roll(formulas.join(" + ")).evaluate({ async: false });
                 const ChatMessage = CONFIG.ChatMessage.documentClass as typeof ChatMessagePF2e;
@@ -344,7 +345,7 @@ export class PersistentDamagePF2e {
                     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
                     roll,
                     sound: CONFIG.sounds.dice,
-                });
+                }, { rollMode });
 
                 messages.push(message);
             }
