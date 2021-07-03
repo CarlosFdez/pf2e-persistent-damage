@@ -34,10 +34,13 @@ function resolveActors(documents: TokenOrActorInput): { token?: TokenPF2e, actor
     return arr.map((document) => {
         if (document instanceof Actor) {
             return { actor: document, token: document.token?.object };
+        } else if (document?.data?.actorId && !document.actor) {
+            ui.notifications.warn("TOKEN.WarningNoActor", { localize: true });
+            return null;
         } else {
             return { actor: document.actor, token: document };
         }
-    })
+    }).filter(arr => arr);
 }
 
 /**
