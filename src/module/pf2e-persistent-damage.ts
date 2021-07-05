@@ -1,16 +1,16 @@
-import type { ActorPF2e } from "@pf2e/module/actor/index.js";
-import type { TokenPF2e } from "@pf2e/module/canvas/token.js";
-import type { ChatMessagePF2e } from "@pf2e/module/chat-message/index.js";
-import type { ItemPF2e } from "@pf2e/module/item/index.js";
+import type { ActorPF2e } from "@pf2e/module/actor/index";
+import type { TokenPF2e } from "@pf2e/module/canvas/token";
+import type { ChatMessagePF2e } from "@pf2e/module/chat-message/index";
+import type { ItemPF2e } from "@pf2e/module/item/index";
 import {
     createPersistentEffect,
     DamageType,
     getPersistentData,
     PersistentData,
     typeImages,
-} from "./persistent-effect.js";
-import { AutoRecoverMode, MODULE_NAME, RollHideMode } from "./settings.js";
-import { calculateRoll } from "./utils.js";
+} from "./persistent-effect";
+import { AutoRecoverMode, MODULE_NAME, RollHideMode } from "./settings";
+import { calculateRoll } from "./utils";
 
 function getTypeData(damageType: DamageType) {
     return {
