@@ -1,13 +1,12 @@
-import { ItemDataPF2e } from '@item/data';
-import { PF2RuleElementData } from './rules-data-definitions';
+import { RuleElementData } from './rules-data-definitions';
 import { RuleElementPF2e } from './rule-element';
+import { ItemPF2e } from '../item';
 export { RuleElementPF2e };
 /**
  * @category RuleElement
  */
 export declare class RuleElements {
-    static readonly builtin: Record<string, (ruleData: PF2RuleElementData, item: ItemDataPF2e, itemUUID?: string) => RuleElementPF2e>;
-    static custom: Record<string, (ruleData: PF2RuleElementData, item: ItemDataPF2e, itemUUID?: string) => RuleElementPF2e>;
-    static fromOwnedItem(item: ItemDataPF2e): RuleElementPF2e[];
-    static fromRuleElementData(ruleData: PF2RuleElementData[], item: ItemDataPF2e): RuleElementPF2e[];
+    static readonly builtin: Record<string, (ruleData: RuleElementData, item: Embedded<ItemPF2e>) => RuleElementPF2e>;
+    static custom: Record<string, (ruleData: RuleElementData, item: Embedded<ItemPF2e>) => RuleElementPF2e>;
+    static fromOwnedItem(item: Embedded<ItemPF2e>): RuleElementPF2e[];
 }

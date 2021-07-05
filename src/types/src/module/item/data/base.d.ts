@@ -3,7 +3,7 @@ import type { ItemPF2e } from '@item/base';
 import { FeatTrait } from '@item/feat/data';
 import { SpellTrait } from '@item/spell/data';
 import type { ActiveEffectPF2e } from '@module/active-effect';
-import { PF2RuleElementData } from '@module/rules/rules-data-definitions';
+import { RuleElementData } from '@module/rules/rules-data-definitions';
 import { Rarity, ValuesList } from '@module/data';
 import { ItemType } from '.';
 import { PhysicalItemTrait } from '../physical/data';
@@ -47,7 +47,7 @@ export interface ItemSystemData {
     usage: {
         value: string;
     };
-    rules: PF2RuleElementData[];
+    rules: RuleElementData[];
     slug: string | null;
 }
 export {};

@@ -1,4 +1,5 @@
 import type { ActorDataPF2e } from "@pf2e/module/actor/data";
+import { RuleElementData } from "@pf2e/module/rules/rules-data-definitions";
 
 /**
  * Extends built in rule elements with any new rule elements used by this module.
@@ -6,14 +7,10 @@ import type { ActorDataPF2e } from "@pf2e/module/actor/data";
 export function setupCustomRules() {
     const custom = game.pf2e.RuleElements.custom;
     const HealingRuleElement = createHealingRuleElement();
-    custom["PF2E.RuleElement.Healing"] = (ruleData, item, itemUUID) => new HealingRuleElement(ruleData, item, itemUUID);
+    custom["PF2E.RuleElement.Healing"] = (data, item) => new HealingRuleElement(data, item);
 }
 
-interface HealingRuleData {
-    key: "PF2E.RuleElement.Healing";
-    selector: string;
-    label: string;
-    value: number | string;
+interface HealingRuleData extends RuleElementData {
     notes?: string;
     damageTypes?: string[];
 }
@@ -22,7 +19,7 @@ function createHealingRuleElement() {
     const VALID_SELECTORS = ["fast-healing", "regeneration"] as const;
     return class HealingRuleElement extends game.pf2e.RuleElement {
         onBeforePrepareData(actorData: ExtendedData<ActorDataPF2e>) {
-            const ruleData: HealingRuleData = this.ruleData;
+            const ruleData: HealingRuleData = this.data;
             const selector = ruleData.selector as typeof VALID_SELECTORS[number];
             if (!VALID_SELECTORS.includes(selector)) {
                 const valid = VALID_SELECTORS.join(", ");
@@ -45,7 +42,7 @@ function createHealingRuleElement() {
         }
 
         onAfterPrepareData(actorData: ExtendedData<ActorDataPF2e>) {
-            const ruleData: HealingRuleData = this.ruleData;
+            const ruleData: HealingRuleData = this.data;
             if (ruleData.damageTypes && ruleData.selector === "regeneration") {
                 const regeneration = actorData.data.attributes.healing?.regeneration;
                 if (regeneration) {

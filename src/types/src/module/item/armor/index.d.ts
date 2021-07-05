@@ -136,7 +136,7 @@ export declare class ArmorPF2e extends PhysicalItemPF2e {
         usage: {
             value: string;
         };
-        rules: import("../../rules/rules-data-definitions").PF2RuleElementData[];
+        rules: import("../../rules/rules-data-definitions").RuleElementData[];
         slug: string | null;
         level: {
             value: number;

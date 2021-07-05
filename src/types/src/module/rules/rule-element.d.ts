@@ -1,6 +1,7 @@
 import type { ActorDataPF2e, CreatureData } from '@actor/data';
 import type { ItemDataPF2e } from '@item/data';
-import { RuleElementSyntheticsPF2e } from './rules-data-definitions';
+import { ItemPF2e } from '../item';
+import { RuleElementData, RuleElementSyntheticsPF2e } from './rules-data-definitions';
 export interface Bracket {
     start?: number;
     end?: number;
@@ -31,13 +32,13 @@ export declare class TokenEffect implements TemporaryEffect {
  * @category RuleElement
  */
 export declare abstract class RuleElementPF2e {
-    ruleData: any;
-    item: ItemDataPF2e;
+    data: RuleElementData;
+    item: Embedded<ItemPF2e>;
     /**
      * @param ruleData unserialized JSON data from the actual rule input
      * @param item where the rule is persisted on
      */
-    constructor(ruleData: any, item: ItemDataPF2e, itemUUID?: string);
+    constructor(data: RuleElementData, item: Embedded<ItemPF2e>);
     /**
      * Globally ignore this rule element.
      */
