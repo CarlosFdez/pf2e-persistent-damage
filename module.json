@@ -3,7 +3,7 @@
     "title": "PF2E Persistent Damage",
     "description": "Macros that create effects to handle persistent damage",
     "author": "Supe",
-    "version": "0.6.7",
+    "version": "0.6.8",
     "compatibleCoreVersion": "0.8.8",
     "minimumCoreVersion": "0.8.6",
     "minimumSystemVersion": "2.1.0",
