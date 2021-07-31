@@ -255,7 +255,7 @@ export class PersistentDamagePF2e {
                 const data = getPersistentData(effect.data);
                 const { damageType, value, dc } = data;
                 const typeName = game.i18n.localize(CONFIG.PF2E.damageTypes[damageType]);
-                const roll = new Roll(value).evaluate({ async: false });
+                const roll = new Roll(value, { item: effect.data }).evaluate({ async: false });
 
                 const inlineCheck = autoCheck && TextEditor.enrichHTML("[[1d20]]");
                 const success = autoCheck && Number($(inlineCheck).text()) >= dc;
