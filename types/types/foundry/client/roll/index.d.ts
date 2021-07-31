@@ -26,7 +26,7 @@ declare global {
      * // The total resulting from the roll
      * console.log(r.total);    // 22
      */
-    class Roll<TData extends RollData = RollData> {
+    class Roll<TData extends object & RollData = object & RollData> {
         constructor(formula: string, data?: TData, options?: RollData);
 
         /** The original provided data object which substitutes into attributes of the roll formula */

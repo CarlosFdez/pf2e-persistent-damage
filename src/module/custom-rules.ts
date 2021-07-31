@@ -7,7 +7,7 @@ import { RuleElementData } from "@pf2e/module/rules/rules-data-definitions";
 export function setupCustomRules() {
     const custom = game.pf2e.RuleElements.custom;
     const HealingRuleElement = createHealingRuleElement();
-    custom["PF2E.RuleElement.Healing"] = (data, item) => new HealingRuleElement(data, item);
+    custom["PF2E.RuleElement.Healing"] = HealingRuleElement;
 }
 
 interface HealingRuleData extends RuleElementData {

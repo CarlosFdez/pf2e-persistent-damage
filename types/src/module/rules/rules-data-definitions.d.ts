@@ -8,10 +8,19 @@ export interface RuleElementData {
     selector?: string;
     value?: RuleValue;
     scope?: string;
-    label?: string;
+    label: string;
     slug?: string;
     predicate?: ModifierPredicate;
+    /** The place in order of application (ascending), among an actor's list of rule elements */
+    priority: number;
+    ignored: boolean;
 }
+
+export type RuleElementSource = Omit<RuleElementData, 'label' | 'priority' | 'ignored'> & {
+    label?: string;
+    priority?: number;
+};
+
 export type RuleValue = string | number | null | BracketedValue;
 export interface Bracket {
     start?: number;
