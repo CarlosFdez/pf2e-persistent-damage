@@ -77,7 +77,9 @@ Hooks.on("preUpdateItem", (item: ItemPF2e, update: Partial<ItemDataPF2e>) => {
 
         update.flags.persistent = persistent;
         update.name = createPersistentTitle(persistent);
-        update['data.slug'] = `persistent-damage-${persistent.damageType}`;
+
+        const slug = `persistent-damage-${persistent.damageType}`;
+        mergeObject(update, { data: { slug } });
     }
 });
 

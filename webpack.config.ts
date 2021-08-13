@@ -16,6 +16,8 @@ const pf2eSystemPath = (() => {
 })();
 const outDir = pf2eSystemPath ?? path.join(__dirname, "dist/");
 
+console.log(`Destination Folder set to ${outDir}`)
+
 const config: Configuration = {
     context: __dirname,
     mode: buildMode,
