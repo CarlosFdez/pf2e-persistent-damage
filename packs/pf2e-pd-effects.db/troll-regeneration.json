@@ -19,7 +19,10 @@
                 "key": "PF2E.RuleElement.Healing",
                 "selector": "regeneration",
                 "value": 20,
-                "suppressedBy": ["fire", "acid"]
+                "suppressedBy": [
+                    "fire",
+                    "acid"
+                ]
             }
         ],
         "tokenIcon": {
