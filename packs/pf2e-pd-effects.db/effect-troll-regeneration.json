@@ -1,25 +1,29 @@
 {
-    "_id": "t79b5hdkx6ho4rov",
+    "_id": "wzx5fg9qyfzukpbp",
     "data": {
         "description": {
             "chat": "",
             "unidentified": "",
-            "value": "<p>Granted by @Compendium[pf2e.spells-srd.Life Boost]{Life Boost}.</p>\n</p>Set the level of this effect to the spell level.</p>"
+            "value": "<p>Basic Troll regeneration, 20 (acid, fire).</p>"
         },
         "duration": {
-            "expiry": "turn-start",
+            "expiry": "turn-end",
             "sustained": false,
-            "unit": "rounds",
-            "value": 4
+            "unit": "unlimited",
+            "value": -1
         },
         "level": {
-            "value": 1
+            "value": null
         },
         "rules": [
             {
                 "key": "PF2E.RuleElement.Healing",
-                "selector": "fast-healing",
-                "value": "@item.level.value * 2"
+                "selector": "regeneration",
+                "value": 20,
+                "suppressedBy": [
+                    "fire",
+                    "acid"
+                ]
             }
         ],
         "start": {
@@ -39,8 +43,8 @@
     },
     "effects": [],
     "flags": {},
-    "img": "systems/pf2e/icons/spells/life-boost.webp",
-    "name": "Spell Effect: Life Boost",
+    "img": "systems/pf2e/icons/spells/revival.webp",
+    "name": "Effect: Troll Regeneration",
     "permission": {
         "default": 0
     },

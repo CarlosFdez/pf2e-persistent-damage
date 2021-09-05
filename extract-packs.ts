@@ -2,7 +2,21 @@ import fs from "fs-extra";
 import path from "path";
 import Datastore from "nedb-promises";
 
-type PackEntry = { name: string };
+type PackEntry = {
+    name: string;
+    sort?: unknown;
+    folder?: unknown;
+    data?: {
+        schema?: {
+            lastMigration: unknown;
+            version: unknown;
+        }
+        slug?: unknown;
+        source?: { value?: unknown };
+        target?: unknown;
+    }
+
+};
 
 function sluggify(entityName: string) {
     return entityName
@@ -60,17 +74,53 @@ async function extractPack(filePath: string, packFilename: string) {
     }
 
     console.log(`Extracting pack: ${packFilename}`);
-    //const outPath = path.resolve(dataPath, packFilename);
 
     const data = await getAllData(filePath);
     for (const entry of data) {
-        const slug = sluggify(entry.name);
-        const filename = `${slug}.json`;
-        const outputPath = path.join(outDirPath, filename);
-        await fs.writeJSON(outputPath, entry, { spaces: 4 });
+        try {
+            // Delete certain unnecessary properties, or any optional null ones
+            delete entry.sort;
+            delete entry.folder;
+            if (entry.data) {
+                if (entry.data.schema?.version === null || entry.data.schema?.lastMigration === null) {
+                    delete entry.data.schema;
+                }
+                if (entry.data.slug === null) {
+                    delete entry.data.slug;
+                }
+                if (entry.data.source?.value === "") {
+                    delete entry.data.source;
+                }
+                if (entry.data.target === null) {
+                    delete entry.data.target;
+                }
+            }
+
+            const slug = sluggify(entry.name);
+            const filename = `${slug}.json`;
+            const outputPath = path.join(outDirPath, filename);
+            await fs.writeJSON(outputPath, prepareObject(entry), { spaces: 4 });
+        } catch (err) {
+            console.error(`Error writing "${entry.name}"`, err);
+        }
+
     }
 
     return data.length;
+}
+
+function prepareObject(object: unknown) {
+    if (!object || typeof object !== "object" || object instanceof Array) {
+        return object;
+    }
+
+    const keys = Object.keys(object).sort();
+    const newObject = {};
+    for (const key of keys) {
+        newObject[key] = prepareObject(object[key]);
+    }
+
+    return newObject;
 }
 
 extractPacks().catch((err) => console.error(err));

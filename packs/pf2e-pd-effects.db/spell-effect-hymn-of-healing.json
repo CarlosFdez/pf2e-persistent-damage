@@ -1,14 +1,14 @@
 {
-    "_id": "t79b5hdkx6ho4rov",
+    "_id": "7MfflFvjK1k87fMg",
     "data": {
         "description": {
             "chat": "",
             "unidentified": "",
-            "value": "<p>Granted by @Compendium[pf2e.spells-srd.Life Boost]{Life Boost}.</p>\n</p>Set the level of this effect to the spell level.</p>"
+            "value": "<p>Granted by @Compendium[pf2e.spells-srd.gSUQlTDYoLDGAsCP]{Hymn of Healing}.</p>\n<p>Set the level of this effect to the spell level.</p>"
         },
         "duration": {
             "expiry": "turn-start",
-            "sustained": false,
+            "sustained": true,
             "unit": "rounds",
             "value": 4
         },
@@ -22,6 +22,17 @@
                 "value": "@item.level.value * 2"
             }
         ],
+        "schema": {
+            "lastMigration": {
+                "datetime": "2021-09-04T19:55:35.949-04:00",
+                "version": {
+                    "foundry": "0.8.9",
+                    "schema": 0.662,
+                    "system": "2.13.2"
+                }
+            },
+            "version": 0.664
+        },
         "start": {
             "initiative": null,
             "value": 0
@@ -38,10 +49,15 @@
         }
     },
     "effects": [],
-    "flags": {},
-    "img": "systems/pf2e/icons/spells/life-boost.webp",
-    "name": "Spell Effect: Life Boost",
+    "flags": {
+        "core": {
+            "sourceId": "Compendium.pf2e-persistent-damage.pf2e-persistent-damage-effects.t79b5hdkx6ho4rov"
+        }
+    },
+    "img": "systems/pf2e/icons/spells/hymn-of-healing.webp",
+    "name": "Spell Effect: Hymn of Healing",
     "permission": {
+        "A7Cmsw43rnggTkpf": 3,
         "default": 0
     },
     "type": "effect"
