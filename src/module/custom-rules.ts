@@ -43,7 +43,7 @@ function createHealingRuleElement() {
 
         onAfterPrepareData(actorData: ExtendedData<ActorDataPF2e>) {
             const ruleData: HealingRuleData = this.data;
-            if (ruleData.damageTypes && ruleData.selector === "regeneration") {
+            if (ruleData.selector === "regeneration") {
                 const regeneration = actorData.data.attributes.healing?.regeneration;
                 if (regeneration) {
                     regeneration.suppressed = true;
