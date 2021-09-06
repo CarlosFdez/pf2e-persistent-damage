@@ -4,7 +4,7 @@
         "description": {
             "chat": "",
             "unidentified": "",
-            "value": "<p>Granted by @Compendium[pf2e.spells-srd.Life Boost]{Life Boost}.</p>\n</p>Set the level of this effect to the spell level.</p>"
+            "value": "<p>Granted by @Compendium[pf2e.spells-srd.Life Boost]{Life Boost}.</p>\n<p>Set the level of this effect to the spell level, or add an effect link to the spell so it heightens automatically.</p>"
         },
         "duration": {
             "expiry": "turn-start",

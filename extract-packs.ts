@@ -103,7 +103,6 @@ async function extractPack(filePath: string, packFilename: string) {
         } catch (err) {
             console.error(`Error writing "${entry.name}"`, err);
         }
-
     }
 
     return data.length;
