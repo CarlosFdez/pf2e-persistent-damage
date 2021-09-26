@@ -17,7 +17,7 @@ declare global {
         constructor({ terms, modifiers, rolls, results, options }?: PoolTermData);
 
         /** The original provided terms to the Dice Pool */
-        terms: RollTerm[];
+        terms: (string | RollTerm)[];
 
         /** The string modifiers applied to resolve the pool */
         modifiers: string[];

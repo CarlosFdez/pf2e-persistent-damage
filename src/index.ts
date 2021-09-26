@@ -114,32 +114,58 @@ TextEditor.enrichHTML = function (...args) {
     const html = document.createElement("div");
     html.innerHTML = String(content);
 
-    html.querySelectorAll<HTMLElement>(".inline-roll:not(.inline-result)").forEach(roll => {
-        const flavor = roll.dataset.flavor;
-        if (!flavor) return;
-        const match = flavor.match(/^persistent ([A-Za-z]+)/i);
-        if (!match) return;
+    html.querySelectorAll<HTMLElement>(".inline-roll:not(.inline-result)").forEach(rollElement => {
+        // Attempt to pull persistent damage from the roll first
+        const result = parseInlineRollHTML(rollElement);
+        if (!result) return;
 
-        const damageType = match[1]?.toLowerCase();
-        if (damageType in typeImages) {
-            // Remove the persistent effect condition image first
-            const compendiumLink = $(roll).next();
-            if (compendiumLink.hasClass("entity-link") && compendiumLink.attr("data-id") === persistentConditionId) {
-                compendiumLink.remove();
-            }
+        const { formula, damageType } = result;
 
-            const formula = roll.dataset.formula;
-            const newTitle = createPersistentTitle({ damageType, value: formula, dc: 15 });
-            roll.classList.add("persistent-link");
-            roll.draggable = true;
-            roll.dataset.value = formula;
-            roll.dataset.damageType = damageType;
-            roll.innerHTML = `<i class="fas fa-suitcase"></i> ${newTitle}`;
-            roll.setAttribute("ondragstart", "PF2EPersistentDamage._startDrag(event)");
+        // Remove the persistent effect condition image first
+        const compendiumLink = $(rollElement).next();
+        if (compendiumLink.hasClass("entity-link") && compendiumLink.attr("data-id") === persistentConditionId) {
+            compendiumLink.remove();
         }
+
+        const newTitle = createPersistentTitle({ damageType, value: formula, dc: 15 });
+        rollElement.classList.add("persistent-link");
+        rollElement.draggable = true;
+        rollElement.dataset.value = formula;
+        rollElement.dataset.damageType = damageType;
+        rollElement.innerHTML = `<i class="fas fa-suitcase"></i> ${newTitle}`;
+        rollElement.setAttribute("ondragstart", "PF2EPersistentDamage._startDrag(event)");
     });
 
     return html.innerHTML;
+}
+
+/** Pulls  */
+function parseInlineRollHTML(rollElement: HTMLElement) {
+    // Check if the roll formula already is marked as persistent
+    const roll = new Roll(rollElement.dataset.formula);
+    if (roll.terms.length === 1 && "flavor" in roll.terms[0].options && roll.terms[0].options.flavor) {
+        const term = roll.terms[0];
+        const flavor = term.options.flavor as string;
+        const types = new Set(flavor.split(",").map((t) => t.trim().toLowerCase()));
+        if (term instanceof PoolTerm && types.has("persistent")) {
+            const formula = term.terms[0].toString();
+            const damageType = [...types.values()].find((type) => type in typeImages);
+            if (damageType) {
+                return { formula, damageType };
+            }
+        }
+    }
+
+    // Fallback to the old message, parse the flavor text
+    const flavor = rollElement.dataset.flavor;
+    if (!flavor) return;
+    const match = flavor.match(/^persistent ([A-Za-z]+)/i);
+    if (!match) return;
+    const damageType = match[1]?.toLowerCase();
+    if (damageType in typeImages) {
+        const formula = rollElement.dataset.formula;
+        return { formula, damageType };
+    }
 }
 
 // Rendered chat messages strip out javascript events...so we need to add it back in
