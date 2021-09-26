@@ -17,10 +17,12 @@ jobs:
           node-version: '14.x'
 
       - name: Install
-        run: npm install
+        run: npm ci
+
+      - name: "Make output folder"
+        run: mkdir dist
 
       - name: Build
-        working-directory: ./
         run: npm run build
 
       # create a zip file with all files required by the module to add to the release
