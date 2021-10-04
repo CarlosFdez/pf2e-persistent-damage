@@ -1,4 +1,4 @@
-import * as io from 'socket.io';
+import * as io from "socket.io";
 
 declare global {
     const socket: io.Socket | null;
@@ -40,8 +40,8 @@ declare global {
 
         /** The object of world data passed from the server */
         data: {
-            actors: TActor['data']['_source'][];
-            items: TItem['data']['_source'][];
+            actors: TActor["data"]["_source"][];
+            items: TItem["data"]["_source"][];
             macros: foundry.data.MacroSource[];
             messages: foundry.data.ChatMessageSource[];
             packs: CompendiumMetadata[];
@@ -111,7 +111,11 @@ declare global {
         combats: CombatEncounters<TCombat>;
         tables: RollTables;
         folders: Folders;
-        packs: Collection<CompendiumCollection<TActor | TItem | JournalEntry | TMacro | Playlist | RollTable | TScene>>;
+        packs: Collection<
+            CompendiumCollection<
+                TActor | TItem | JournalEntry | TMacro | Playlist | RollTable | TScene
+            >
+        >;
 
         constructor(view: string, worldData: {}, sessionId: string, socket: io.Socket);
 

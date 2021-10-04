@@ -37,7 +37,7 @@ declare module foundry {
             darkness: DarknessActivation;
         }
 
-        interface AmbientSoundData extends Omit<AmbientSoundSource, 'darkness'> {
+        interface AmbientSoundData extends Omit<AmbientSoundSource, "darkness"> {
             readonly _source: AmbientSoundSource;
         }
     }

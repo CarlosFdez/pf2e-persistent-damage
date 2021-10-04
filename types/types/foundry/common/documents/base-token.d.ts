@@ -14,7 +14,11 @@ declare module foundry {
             get name(): string;
 
             /** Is a user able to update an existing Token? */
-            protected static _canUpdate(user: BaseUser, doc: BaseToken, data: data.TokenData): boolean;
+            protected static _canUpdate(
+                user: BaseUser,
+                doc: BaseToken,
+                data: data.TokenData,
+            ): boolean;
         }
 
         interface BaseToken extends abstract.Document {
@@ -24,13 +28,13 @@ declare module foundry {
         }
 
         interface TokenMetadata extends abstract.DocumentMetadata {
-            name: 'Token';
-            collection: 'tokens';
-            label: 'DOCUMENT.Token';
+            name: "Token";
+            collection: "tokens";
+            label: "DOCUMENT.Token";
             isEmbedded: true;
-            permissions: Omit<abstract.DocumentMetadata['permissions'], 'create' | 'update'> & {
-                create: 'TOKEN_CREATE';
-                update: typeof BaseToken['_canUpdate'];
+            permissions: Omit<abstract.DocumentMetadata["permissions"], "create" | "update"> & {
+                create: "TOKEN_CREATE";
+                update: typeof BaseToken["_canUpdate"];
             };
         }
     }

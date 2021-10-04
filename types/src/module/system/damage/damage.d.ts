@@ -1,5 +1,5 @@
 /** The possible standard damage die sizes. */
-export declare type DamageDieSize = 'd4' | 'd6' | 'd8' | 'd10' | 'd12';
+export declare type DamageDieSize = "d4" | "d6" | "d8" | "d10" | "d12";
 /** Provides constants for typical damage categories, as well as a simple API for adding custom damage types and categories. */
 export declare const DamageCategory: Readonly<{
     /**

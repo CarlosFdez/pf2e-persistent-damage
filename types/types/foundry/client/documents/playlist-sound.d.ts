@@ -1,4 +1,4 @@
-import { PlaylistSoundConstructor } from './constructors';
+import { PlaylistSoundConstructor } from "./constructors";
 
 declare global {
     /**

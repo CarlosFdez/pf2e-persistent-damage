@@ -9,9 +9,9 @@ declare global {
         height: string;
         tabs: [
             {
-                navSelector: '.tabs';
-                contentSelector: 'form';
-                initial: 'details';
+                navSelector: ".tabs";
+                contentSelector: "form";
+                initial: "details";
             },
         ];
     }
@@ -25,7 +25,9 @@ declare global {
         modes: Record<number, string>;
     }
 
-    class ActiveEffectConfig<TDocument extends ActiveEffect = ActiveEffect> extends DocumentSheet<TDocument> {
+    class ActiveEffectConfig<
+        TDocument extends ActiveEffect = ActiveEffect,
+    > extends DocumentSheet<TDocument> {
         /** @override */
         static get defaultOptions(): ActiveEffectConfigOptions;
 

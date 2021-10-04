@@ -1,6 +1,33 @@
-import { ActionPF2e, AncestryPF2e, BackgroundPF2e, ArmorPF2e, ClassPF2e, ConditionPF2e, ConsumablePF2e, ContainerPF2e, EffectPF2e, EquipmentPF2e, FeatPF2e, KitPF2e, LorePF2e, MeleePF2e, MartialPF2e, SpellPF2e, SpellcastingEntryPF2e, TreasurePF2e, WeaponPF2e } from '@item/index';
-import { CharacterPF2e, NPCPF2e, FamiliarPF2e, HazardPF2e, LootPF2e, VehiclePF2e } from '@actor/index';
-export declare type StatusEffectIconType = 'default' | 'blackWhite' | 'legacy';
+import {
+    ActionPF2e,
+    AncestryPF2e,
+    BackgroundPF2e,
+    ArmorPF2e,
+    ClassPF2e,
+    ConditionPF2e,
+    ConsumablePF2e,
+    ContainerPF2e,
+    EffectPF2e,
+    EquipmentPF2e,
+    FeatPF2e,
+    KitPF2e,
+    LorePF2e,
+    MeleePF2e,
+    MartialPF2e,
+    SpellPF2e,
+    SpellcastingEntryPF2e,
+    TreasurePF2e,
+    WeaponPF2e,
+} from "@item/index";
+import {
+    CharacterPF2e,
+    NPCPF2e,
+    FamiliarPF2e,
+    HazardPF2e,
+    LootPF2e,
+    VehiclePF2e,
+} from "@actor/index";
+export declare type StatusEffectIconType = "default" | "blackWhite" | "legacy";
 export declare const PF2ECONFIG: {
     chatDamageButtonShieldToggle: boolean;
     statusEffects: {
@@ -47,13 +74,13 @@ export declare const PF2ECONFIG: {
         initiative: string;
     };
     dcAdjustments: {
-        'incredibly easy': string;
-        'very easy': string;
+        "incredibly easy": string;
+        "very easy": string;
         easy: string;
         normal: string;
         hard: string;
-        'very hard': string;
-        'incredibly hard': string;
+        "very hard": string;
+        "incredibly hard": string;
     };
     skills: {
         acr: string;
@@ -112,14 +139,14 @@ export declare const PF2ECONFIG: {
         mithral: string;
         orichalcum: string;
         silver: string;
-        'sovereign steel': string;
+        "sovereign steel": string;
         warpglass: string;
     };
     armorPotencyRunes: {
-        '1': string;
-        '2': string;
-        '3': string;
-        '4': string;
+        "1": string;
+        "2": string;
+        "3": string;
+        "4": string;
     };
     armorResiliencyRunes: {
         resilient: string;
@@ -157,10 +184,10 @@ export declare const PF2ECONFIG: {
         greaterWinged: string;
     };
     weaponPotencyRunes: {
-        '1': string;
-        '2': string;
-        '3': string;
-        '4': string;
+        "1": string;
+        "2": string;
+        "3": string;
+        "4": string;
     };
     weaponStrikingRunes: {
         striking: string;
@@ -235,7 +262,7 @@ export declare const PF2ECONFIG: {
         bludgeoning: string;
         chaotic: string;
         cold: string;
-        'critical-hits': string;
+        "critical-hits": string;
         earth: string;
         electricity: string;
         evil: string;
@@ -251,7 +278,7 @@ export declare const PF2ECONFIG: {
         poison: string;
         positive: string;
         precision: string;
-        'protean anatomy': string;
+        "protean anatomy": string;
         slashing: string;
         sonic: string;
         water: string;
@@ -272,7 +299,7 @@ export declare const PF2ECONFIG: {
         acid: string;
         adamantine: string;
         air: string;
-        'area-damage': string;
+        "area-damage": string;
         bleed: string;
         bludgeoning: string;
         chaotic: string;
@@ -297,14 +324,14 @@ export declare const PF2ECONFIG: {
         positive: string;
         precision: string;
         salt: string;
-        'salt water': string;
+        "salt water": string;
         silver: string;
         slashing: string;
         sonic: string;
-        'splash-damage': string;
-        'vampire weaknesses': string;
+        "splash-damage": string;
+        "vampire weaknesses": string;
         vorpal: string;
-        'vorpal fear': string;
+        "vorpal fear": string;
         warpglass: string;
         water: string;
     };
@@ -365,11 +392,11 @@ export declare const PF2ECONFIG: {
         bomb: string;
     };
     usageTraits: {
-        'held-in-one-hand': string;
-        'held-in-two-hands': string;
-        'affixed-to-armor': string;
-        'affixed-to-weapon': string;
-        'affixed-to-a-shield': string;
+        "held-in-one-hand": string;
+        "held-in-two-hands": string;
+        "affixed-to-armor": string;
+        "affixed-to-weapon": string;
+        "affixed-to-a-shield": string;
         bonded: string;
         worn: string;
         wornamulet: string;
@@ -395,13 +422,13 @@ export declare const PF2ECONFIG: {
         wornshoes: string;
         wornhorseshoes: string;
         wornsaddle: string;
-        'etched-onto-armor': string;
-        'etched-onto-a-weapon': string;
+        "etched-onto-armor": string;
+        "etched-onto-a-weapon": string;
         wornwrist: string;
-        'etched-onto-thrown-weapon': string;
-        'etched-onto-melee-weapon': string;
-        'etched-onto-clan-dagger': string;
-        'etched-onto-lm-nonmetal-armor': string;
+        "etched-onto-thrown-weapon": string;
+        "etched-onto-melee-weapon": string;
+        "etched-onto-clan-dagger": string;
+        "etched-onto-lm-nonmetal-armor": string;
     };
     rarityTraits: {
         common: string;
@@ -533,9 +560,9 @@ export declare const PF2ECONFIG: {
         gnome: string;
         goblin: string;
         grippli: string;
-        'half-elf': string;
+        "half-elf": string;
         halfling: string;
-        'half-orc': string;
+        "half-orc": string;
         human: string;
         hobgoblin: string;
         kitsune: string;
@@ -580,9 +607,9 @@ export declare const PF2ECONFIG: {
         gnome: string;
         goblin: string;
         grippli: string;
-        'half-elf': string;
+        "half-elf": string;
         halfling: string;
-        'half-orc': string;
+        "half-orc": string;
         human: string;
         hobgoblin: string;
         kitsune: string;
@@ -621,31 +648,31 @@ export declare const PF2ECONFIG: {
         concealable: string;
         consumable: string;
         cursed: string;
-        'deadly-d6': string;
-        'deadly-d8': string;
-        'deadly-2d8': string;
-        'deadly-d10': string;
-        'deadly-2d10': string;
-        'deadly-3d10': string;
-        'deadly-d12': string;
-        'deadly-2d12': string;
-        'deadly-3d12': string;
+        "deadly-d6": string;
+        "deadly-d8": string;
+        "deadly-2d8": string;
+        "deadly-d10": string;
+        "deadly-2d10": string;
+        "deadly-3d10": string;
+        "deadly-d12": string;
+        "deadly-2d12": string;
+        "deadly-3d12": string;
         death: string;
         disarm: string;
         earth: string;
         electricity: string;
         emotion: string;
         evil: string;
-        'fatal-d8': string;
-        'fatal-d10': string;
-        'fatal-d12': string;
+        "fatal-d8": string;
+        "fatal-d10": string;
+        "fatal-d12": string;
         fear: string;
         finesse: string;
         fire: string;
         force: string;
         forceful: string;
         fortune: string;
-        'free-hand': string;
+        "free-hand": string;
         fungus: string;
         ghostTouch: string;
         good: string;
@@ -655,7 +682,7 @@ export declare const PF2ECONFIG: {
         infused: string;
         intelligent: string;
         invested: string;
-        'jousting-d6': string;
+        "jousting-d6": string;
         lawful: string;
         light: string;
         magical: string;
@@ -667,52 +694,52 @@ export declare const PF2ECONFIG: {
         positive: string;
         propulsive: string;
         range: string;
-        'range-increment-5': string;
-        'range-increment-10': string;
-        'range-increment-15': string;
-        'range-increment-20': string;
-        'range-increment-30': string;
-        'range-increment-40': string;
-        'range-increment-50': string;
-        'range-increment-60': string;
-        'range-increment-70': string;
-        'range-increment-80': string;
-        'range-increment-90': string;
-        'range-increment-100': string;
-        'range-increment-110': string;
-        'range-increment-120': string;
-        'range-increment-130': string;
-        'range-increment-140': string;
-        'range-increment-150': string;
-        'range-increment-160': string;
-        'range-increment-170': string;
-        'range-increment-180': string;
-        'range-increment-190': string;
-        'range-increment-200': string;
-        'range-increment-210': string;
-        'range-increment-220': string;
-        'range-increment-230': string;
-        'range-increment-240': string;
-        'range-increment-250': string;
-        'range-increment-260': string;
-        'range-increment-270': string;
-        'range-increment-280': string;
-        'range-increment-290': string;
-        'range-increment-300': string;
-        'range-increment-310': string;
-        'range-increment-320': string;
-        'ranged-trip': string;
+        "range-increment-5": string;
+        "range-increment-10": string;
+        "range-increment-15": string;
+        "range-increment-20": string;
+        "range-increment-30": string;
+        "range-increment-40": string;
+        "range-increment-50": string;
+        "range-increment-60": string;
+        "range-increment-70": string;
+        "range-increment-80": string;
+        "range-increment-90": string;
+        "range-increment-100": string;
+        "range-increment-110": string;
+        "range-increment-120": string;
+        "range-increment-130": string;
+        "range-increment-140": string;
+        "range-increment-150": string;
+        "range-increment-160": string;
+        "range-increment-170": string;
+        "range-increment-180": string;
+        "range-increment-190": string;
+        "range-increment-200": string;
+        "range-increment-210": string;
+        "range-increment-220": string;
+        "range-increment-230": string;
+        "range-increment-240": string;
+        "range-increment-250": string;
+        "range-increment-260": string;
+        "range-increment-270": string;
+        "range-increment-280": string;
+        "range-increment-290": string;
+        "range-increment-300": string;
+        "range-increment-310": string;
+        "range-increment-320": string;
+        "ranged-trip": string;
         reach: string;
-        'reach-10': string;
-        'reach-15': string;
-        'reach-20': string;
-        'reach-25': string;
-        'reach-30': string;
-        'reach-40': string;
-        'reach-60': string;
-        'reload-0': string;
-        'reload-1': string;
-        'reload-2': string;
+        "reach-10": string;
+        "reach-15": string;
+        "reach-20": string;
+        "reach-25": string;
+        "reach-30": string;
+        "reach-40": string;
+        "reach-60": string;
+        "reload-0": string;
+        "reload-1": string;
+        "reload-2": string;
         repeating: string;
         resonant: string;
         shove: string;
@@ -723,24 +750,24 @@ export declare const PF2ECONFIG: {
         sweep: string;
         teleportation: string;
         tethered: string;
-        'thrown-10': string;
-        'thrown-15': string;
-        'thrown-20': string;
-        'thrown-30': string;
-        'thrown-40': string;
-        'thrown-60': string;
+        "thrown-10": string;
+        "thrown-15": string;
+        "thrown-20": string;
+        "thrown-30": string;
+        "thrown-40": string;
+        "thrown-60": string;
         trip: string;
         twin: string;
-        'two-hand-d8': string;
-        'two-hand-d10': string;
-        'two-hand-d12': string;
+        "two-hand-d8": string;
+        "two-hand-d10": string;
+        "two-hand-d12": string;
         unarmed: string;
-        'versatile-s': string;
-        'versatile-p': string;
-        'versatile-b': string;
-        'volley-30': string;
+        "versatile-s": string;
+        "versatile-p": string;
+        "versatile-b": string;
+        "volley-30": string;
         water: string;
-        'modular-b-P-or-s': string;
+        "modular-b-P-or-s": string;
         arcane: string;
         divine: string;
         occult: string;
@@ -789,9 +816,9 @@ export declare const PF2ECONFIG: {
         gnome: string;
         goblin: string;
         grippli: string;
-        'half-elf': string;
+        "half-elf": string;
         halfling: string;
-        'half-orc': string;
+        "half-orc": string;
         human: string;
         hobgoblin: string;
         kitsune: string;
@@ -921,9 +948,9 @@ export declare const PF2ECONFIG: {
         gnome: string;
         goblin: string;
         grippli: string;
-        'half-elf': string;
+        "half-elf": string;
         halfling: string;
-        'half-orc': string;
+        "half-orc": string;
         human: string;
         hobgoblin: string;
         kitsune: string;
@@ -1109,7 +1136,7 @@ export declare const PF2ECONFIG: {
         lineage: string;
         vigilante: string;
         heritage: string;
-        'versatile heritage': string;
+        "versatile heritage": string;
         attack: string;
         cantrip: string;
         composition: string;
@@ -1190,9 +1217,9 @@ export declare const PF2ECONFIG: {
         gnome: string;
         goblin: string;
         grippli: string;
-        'half-elf': string;
+        "half-elf": string;
         halfling: string;
-        'half-orc': string;
+        "half-orc": string;
         human: string;
         hobgoblin: string;
         kitsune: string;
@@ -1233,7 +1260,7 @@ export declare const PF2ECONFIG: {
         boggard: string;
         caligni: string;
         celestial: string;
-        'charau-ka': string;
+        "charau-ka": string;
         clockwork: string;
         cold: string;
         couatl: string;
@@ -1302,7 +1329,7 @@ export declare const PF2ECONFIG: {
         ratfolk: string;
         sahkil: string;
         samsaran: string;
-        'sea devil': string;
+        "sea devil": string;
         serpentfolk: string;
         shabti: string;
         shadow: string;
@@ -1354,9 +1381,9 @@ export declare const PF2ECONFIG: {
         geniekin: string;
         gnome: string;
         goblin: string;
-        'half-elf': string;
+        "half-elf": string;
         halfling: string;
-        'half-orc': string;
+        "half-orc": string;
         human: string;
         hobgoblin: string;
         kitsune: string;
@@ -1387,7 +1414,7 @@ export declare const PF2ECONFIG: {
         boggard: string;
         caligni: string;
         celestial: string;
-        'charau-ka': string;
+        "charau-ka": string;
         clockwork: string;
         cold: string;
         couatl: string;
@@ -1456,7 +1483,7 @@ export declare const PF2ECONFIG: {
         ratfolk: string;
         sahkil: string;
         samsaran: string;
-        'sea devil': string;
+        "sea devil": string;
         serpentfolk: string;
         shabti: string;
         shadow: string;
@@ -1508,9 +1535,9 @@ export declare const PF2ECONFIG: {
         geniekin: string;
         gnome: string;
         goblin: string;
-        'half-elf': string;
+        "half-elf": string;
         halfling: string;
-        'half-orc': string;
+        "half-orc": string;
         human: string;
         hobgoblin: string;
         kitsune: string;
@@ -1552,25 +1579,25 @@ export declare const PF2ECONFIG: {
         backstabber: string;
         backswing: string;
         bomb: string;
-        'deadly-d6': string;
-        'deadly-d8': string;
-        'deadly-d10': string;
-        'deadly-d12': string;
+        "deadly-d6": string;
+        "deadly-d8": string;
+        "deadly-d10": string;
+        "deadly-d12": string;
         disarm: string;
         dwarf: string;
         elf: string;
-        'fatal-d8': string;
-        'fatal-d10': string;
-        'fatal-d12': string;
+        "fatal-d8": string;
+        "fatal-d10": string;
+        "fatal-d12": string;
         finesse: string;
         forceful: string;
-        'free-hand': string;
+        "free-hand": string;
         fungus: string;
         gnome: string;
         goblin: string;
         grapple: string;
         halfling: string;
-        'jousting-d6': string;
+        "jousting-d6": string;
         nonlethal: string;
         olfactory: string;
         orc: string;
@@ -1578,31 +1605,31 @@ export declare const PF2ECONFIG: {
         plant: string;
         propulsive: string;
         range: string;
-        'ranged-trip': string;
+        "ranged-trip": string;
         reach: string;
-        'reach-10': string;
-        'reach-15': string;
-        'reach-20': string;
-        'reach-25': string;
-        'reach-30': string;
+        "reach-10": string;
+        "reach-15": string;
+        "reach-20": string;
+        "reach-25": string;
+        "reach-30": string;
         repeating: string;
         shove: string;
         sweep: string;
         tethered: string;
-        'thrown-10': string;
-        'thrown-20': string;
-        'thrown-30': string;
-        'thrown-40': string;
+        "thrown-10": string;
+        "thrown-20": string;
+        "thrown-30": string;
+        "thrown-40": string;
         trip: string;
         twin: string;
-        'two-hand-d8': string;
-        'two-hand-d10': string;
-        'two-hand-d12': string;
+        "two-hand-d8": string;
+        "two-hand-d10": string;
+        "two-hand-d12": string;
         unarmed: string;
-        'versatile-s': string;
-        'versatile-p': string;
-        'versatile-b': string;
-        'volley-30': string;
+        "versatile-s": string;
+        "versatile-p": string;
+        "versatile-b": string;
+        "volley-30": string;
         attack: string;
         consumable: string;
         death: string;
@@ -1638,15 +1665,15 @@ export declare const PF2ECONFIG: {
         shoony: string;
         sleep: string;
         splash: string;
-        'splash-10': string;
+        "splash-10": string;
         summoned: string;
         tattoo: string;
         teleportation: string;
         trap: string;
         virulent: string;
         skill: string;
-        'half-elf': string;
-        'half-orc': string;
+        "half-elf": string;
+        "half-orc": string;
         human: string;
         manipulate: string;
         additive1: string;
@@ -1741,11 +1768,11 @@ export declare const PF2ECONFIG: {
     };
     weaponHands: {
         1: string;
-        '1+': string;
+        "1+": string;
         2: string;
     };
     itemBonuses: {
-        '-2': string;
+        "-2": string;
         0: string;
         1: string;
         2: string;
@@ -1787,7 +1814,7 @@ export declare const PF2ECONFIG: {
         5: string;
     };
     weaponReload: {
-        '-': string;
+        "-": string;
         0: string;
         1: string;
         2: string;
@@ -1948,7 +1975,13 @@ export declare const PF2ECONFIG: {
         defensive: string;
         offensive: string;
     };
-    proficiencyLevels: readonly ["PF2E.ProficiencyLevel0", "PF2E.ProficiencyLevel1", "PF2E.ProficiencyLevel2", "PF2E.ProficiencyLevel3", "PF2E.ProficiencyLevel4"];
+    proficiencyLevels: readonly [
+        "PF2E.ProficiencyLevel0",
+        "PF2E.ProficiencyLevel1",
+        "PF2E.ProficiencyLevel2",
+        "PF2E.ProficiencyLevel3",
+        "PF2E.ProficiencyLevel4",
+    ];
     heroPointLevels: {
         0: string;
         1: string;
@@ -2040,7 +2073,51 @@ export declare const PF2ECONFIG: {
         49: string;
         50: string;
     };
-    conditionTypes: Record<"controlled" | "hidden" | "blinded" | "broken" | "clumsy" | "concealed" | "confused" | "dazzled" | "deafened" | "doomed" | "drained" | "dying" | "encumbered" | "enfeebled" | "fascinated" | "fatigued" | "flat-footed" | "fleeing" | "friendly" | "frightened" | "grabbed" | "helpful" | "hostile" | "immobilized" | "indifferent" | "invisible" | "observed" | "paralyzed" | "persistent" | "petrified" | "prone" | "quickened" | "restrained" | "sickened" | "slowed" | "stunned" | "stupefied" | "unconscious" | "undetected" | "unfriendly" | "unnoticed" | "wounded", string>;
+    conditionTypes: Record<
+        | "controlled"
+        | "hidden"
+        | "blinded"
+        | "broken"
+        | "clumsy"
+        | "concealed"
+        | "confused"
+        | "dazzled"
+        | "deafened"
+        | "doomed"
+        | "drained"
+        | "dying"
+        | "encumbered"
+        | "enfeebled"
+        | "fascinated"
+        | "fatigued"
+        | "flat-footed"
+        | "fleeing"
+        | "friendly"
+        | "frightened"
+        | "grabbed"
+        | "helpful"
+        | "hostile"
+        | "immobilized"
+        | "indifferent"
+        | "invisible"
+        | "observed"
+        | "paralyzed"
+        | "persistent"
+        | "petrified"
+        | "prone"
+        | "quickened"
+        | "restrained"
+        | "sickened"
+        | "slowed"
+        | "stunned"
+        | "stupefied"
+        | "unconscious"
+        | "undetected"
+        | "unfriendly"
+        | "unnoticed"
+        | "wounded",
+        string
+    >;
     pfsFactions: {
         EA: string;
         GA: string;
@@ -2069,12 +2146,12 @@ export declare const PF2ECONFIG: {
         confused: string;
         confusion: string;
         controlled: string;
-        'critical-hits': string;
+        "critical-hits": string;
         curse: string;
         dazzled: string;
         deafened: string;
         detection: string;
-        'death effects': string;
+        "death effects": string;
         disease: string;
         doomed: string;
         drained: string;
@@ -2087,9 +2164,9 @@ export declare const PF2ECONFIG: {
         evocation: string;
         fascinated: string;
         fatigued: string;
-        'fear effects': string;
+        "fear effects": string;
         fire: string;
-        'flat-footed': string;
+        "flat-footed": string;
         fleeing: string;
         force: string;
         friendly: string;
@@ -2110,8 +2187,8 @@ export declare const PF2ECONFIG: {
         mental: string;
         necromancy: string;
         negative: string;
-        'nonlethal attacks': string;
-        'object-immunities': string;
+        "nonlethal attacks": string;
+        "object-immunities": string;
         observed: string;
         olfactory: string;
         paralyzed: string;
@@ -2134,8 +2211,8 @@ export declare const PF2ECONFIG: {
         spellDeflection: string;
         stunned: string;
         stupefied: string;
-        'swarm attacks': string;
-        'swarm-mind': string;
+        "swarm attacks": string;
+        "swarm-mind": string;
         unconscious: string;
         undetected: string;
         unfriendly: string;
@@ -2236,13 +2313,13 @@ export declare const PF2ECONFIG: {
     };
     attackEffects: {
         grab: string;
-        'improved-grab': string;
+        "improved-grab": string;
         constrict: string;
-        'greater-constrict': string;
+        "greater-constrict": string;
         knockdown: string;
-        'improved-knockdown': string;
+        "improved-knockdown": string;
         push: string;
-        'improved-push': string;
+        "improved-push": string;
         trip: string;
     };
     worldClock: {
@@ -2260,22 +2337,22 @@ export declare const PF2ECONFIG: {
         };
     };
     monsterAbilities: () => {
-        'All-Around Vision': {
+        "All-Around Vision": {
             actionType: string;
             actionCost: number;
             description: string;
         };
-        'Aquatic Ambush': {
+        "Aquatic Ambush": {
             actionType: string;
             actionCost: number;
             description: string;
         };
-        'Attack of Opportunity': {
+        "Attack of Opportunity": {
             actionType: string;
             actionCost: number;
             description: string;
         };
-        'At-Will Spells': {
+        "At-Will Spells": {
             actionType: string;
             actionCost: number;
             description: string;
@@ -2290,17 +2367,17 @@ export declare const PF2ECONFIG: {
             actionCost: number;
             description: string;
         };
-        'Catch Rock': {
+        "Catch Rock": {
             actionType: string;
             actionCost: number;
             description: string;
         };
-        'Change Shape': {
+        "Change Shape": {
             actionType: string;
             actionCost: number;
             description: string;
         };
-        'Constant Spells': {
+        "Constant Spells": {
             actionType: string;
             actionCost: number;
             description: string;
@@ -2330,7 +2407,7 @@ export declare const PF2ECONFIG: {
             actionCost: number;
             description: string;
         };
-        'Fast Healing': {
+        "Fast Healing": {
             actionType: string;
             actionCost: number;
             description: string;
@@ -2340,7 +2417,7 @@ export declare const PF2ECONFIG: {
             actionCost: number;
             description: string;
         };
-        'Frightful Presence': {
+        "Frightful Presence": {
             actionType: string;
             actionCost: number;
             description: string;
@@ -2350,22 +2427,22 @@ export declare const PF2ECONFIG: {
             actionCost: number;
             description: string;
         };
-        'Greater Constrict': {
+        "Greater Constrict": {
             actionType: string;
             actionCost: number;
             description: string;
         };
-        'Improved Grab': {
+        "Improved Grab": {
             actionType: string;
             actionCost: number;
             description: string;
         };
-        'Improved Knockdown': {
+        "Improved Knockdown": {
             actionType: string;
             actionCost: number;
             description: string;
         };
-        'Improved Push': {
+        "Improved Push": {
             actionType: string;
             actionCost: number;
             description: string;
@@ -2380,12 +2457,12 @@ export declare const PF2ECONFIG: {
             actionCost: number;
             description: string;
         };
-        'Light Blindness': {
+        "Light Blindness": {
             actionType: string;
             actionCost: number;
             description: string;
         };
-        'Low-Light Vision': {
+        "Low-Light Vision": {
             actionType: string;
             actionCost: number;
             description: string;
@@ -2410,7 +2487,7 @@ export declare const PF2ECONFIG: {
             actionCost: number;
             description: string;
         };
-        'Retributive Strike': {
+        "Retributive Strike": {
             actionType: string;
             actionCost: number;
             description: string;
@@ -2420,22 +2497,22 @@ export declare const PF2ECONFIG: {
             actionCost: number;
             description: string;
         };
-        'Shield Block': {
+        "Shield Block": {
             actionType: string;
             actionCost: number;
             description: string;
         };
-        'Sneak Attack': {
+        "Sneak Attack": {
             actionType: string;
             actionCost: number;
             description: string;
         };
-        'Swallow Whole': {
+        "Swallow Whole": {
             actionType: string;
             actionCost: number;
             description: string;
         };
-        'Swarm Mind': {
+        "Swarm Mind": {
             actionType: string;
             actionCost: number;
             description: string;
@@ -2445,7 +2522,7 @@ export declare const PF2ECONFIG: {
             actionCost: number;
             description: string;
         };
-        'Throw Rock': {
+        "Throw Rock": {
             actionType: string;
             actionCost: number;
             description: string;

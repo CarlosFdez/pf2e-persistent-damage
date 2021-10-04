@@ -1,6 +1,6 @@
-import { ActorPF2e } from '@actor/base';
-import { SpellcastingEntryPF2e } from '../spellcasting-entry';
-import { SpellSource } from './data';
+import { ActorPF2e } from "@actor/base";
+import { SpellcastingEntryPF2e } from "../spellcasting-entry";
+import { SpellSource } from "./data";
 /**
  * This is an outdated class.
  * All new spell functionality should go in spell.ts, and some
@@ -12,10 +12,13 @@ export declare class SpellFacade {
     castingActor?: ActorPF2e;
     _castLevel: number;
     spellcastingEntry?: SpellcastingEntryPF2e;
-    constructor(data: SpellSource, scope?: {
-        castingActor?: ActorPF2e;
-        castLevel?: number;
-    });
+    constructor(
+        data: SpellSource,
+        scope?: {
+            castingActor?: ActorPF2e;
+            castLevel?: number;
+        },
+    );
     get spellcastingEntryId(): string;
     get spellLevel(): import("../../data").ZeroToTen;
     get heightenedLevel(): number;

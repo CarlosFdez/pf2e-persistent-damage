@@ -6,7 +6,7 @@
  */
 declare class Items<TItem extends Item> extends WorldCollection<TItem> {
     /** @override */
-    static documentName: 'Item';
+    static documentName: "Item";
 
     /* -------------------------------------------- */
     /*  Methods                                     */
@@ -26,7 +26,11 @@ declare class Items<TItem extends Item> extends WorldCollection<TItem> {
      * Unregister an Item sheet class, removing it from the list of avaliable sheet Applications to use
      * See EntitySheetConfig.unregisterSheet for details
      */
-    static unregisterSheet(scope: string, sheetClass: new (...args: any[]) => ItemSheet, types?: string[]): void;
+    static unregisterSheet(
+        scope: string,
+        sheetClass: new (...args: any[]) => ItemSheet,
+        types?: string[],
+    ): void;
 
     /**
      * Return an Array of currently registered sheet classes for this Entity type

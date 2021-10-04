@@ -175,7 +175,13 @@ declare class PointSource<TPlaceableObject extends PlaceableObject = PlaceableOb
             sigma,
             max,
             min,
-        }?: { phi?: number; center?: number; sigma?: number; max?: number | null; min?: number | null },
+        }?: {
+            phi?: number;
+            center?: number;
+            sigma?: number;
+            max?: number | null;
+            min?: number | null;
+        },
     ): number;
 }
 

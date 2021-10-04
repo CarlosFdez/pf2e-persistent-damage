@@ -1,7 +1,7 @@
-import type { ActorDataPF2e, CreatureData } from '@actor/data';
-import type { ItemDataPF2e } from '@item/data';
-import { ItemPF2e } from '../item';
-import { RuleElementData, RuleElementSyntheticsPF2e } from './rules-data-definitions';
+import type { ActorDataPF2e, CreatureData } from "@actor/data";
+import type { ItemDataPF2e } from "@item/data";
+import { ItemPF2e } from "../item";
+import { RuleElementData, RuleElementSyntheticsPF2e } from "./rules-data-definitions";
 export interface Bracket {
     start?: number;
     end?: number;
@@ -58,7 +58,12 @@ export declare abstract class RuleElementPF2e {
      * multiple times onto a canvas. Works similar to actorUpdates and used if you want to change values on the token
      * object
      */
-    onCreate(_actorData: CreatureData, _item: ItemDataPF2e, _actorUpdates: any, _tokens: any[]): void;
+    onCreate(
+        _actorData: CreatureData,
+        _item: ItemDataPF2e,
+        _actorUpdates: any,
+        _tokens: any[],
+    ): void;
     /**
      * Run after an item holding this rule is removed from an actor. This method is used for cleaning up any values
      * on the actorData or token objects, e.g. removing temp HP.
@@ -68,7 +73,12 @@ export declare abstract class RuleElementPF2e {
      * @param actorUpdates see onCreate
      * @param tokens see onCreate
      */
-    onDelete(_actorData: CreatureData, _item: ItemDataPF2e, _actorUpdates: any, _tokens: any[]): void;
+    onDelete(
+        _actorData: CreatureData,
+        _item: ItemDataPF2e,
+        _actorUpdates: any,
+        _tokens: any[],
+    ): void;
     /**
      * Run in Actor#prepareDerivedData which is similar to an init method and is the very first thing that is run after
      * an actor.update() was called. Use this hook if you want to save or modify values on the actual data objects
@@ -95,7 +105,11 @@ export declare abstract class RuleElementPF2e {
      * @param item the item data of the item containing the rule element
      * @param token the token data of the token to be created
      */
-    onCreateToken(_actorData: ActorDataPF2e, _item: ItemDataPF2e, _token: PreDocumentId<foundry.data.TokenSource>): void;
+    onCreateToken(
+        _actorData: ActorDataPF2e,
+        _item: ItemDataPF2e,
+        _token: PreDocumentId<foundry.data.TokenSource>,
+    ): void;
     /**
      * Used to look up the label when displaying a rule effect. By default uses the label field on a rule and if absent
      * falls back to the item name that holds the rule
@@ -146,5 +160,11 @@ export declare abstract class RuleElementPF2e {
      * @param defaultValue if no value is found, use that one
      * @return the evaluated value
      */
-    resolveValue(valueData: RuleValue, ruleData: any, item: any, actorData: any, defaultValue?: any): any;
+    resolveValue(
+        valueData: RuleValue,
+        ruleData: any,
+        item: any,
+        actorData: any,
+        defaultValue?: any,
+    ): any;
 }

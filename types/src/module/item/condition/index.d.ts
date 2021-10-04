@@ -1,5 +1,5 @@
-import { ItemPF2e } from '../base';
-import { ConditionData } from './data';
+import { ItemPF2e } from "../base";
+import { ConditionData } from "./data";
 export declare class ConditionPF2e extends ItemPF2e {
     static get schema(): typeof ConditionData;
     get value(): number | null;
@@ -14,6 +14,6 @@ export declare class ConditionPF2e extends ItemPF2e {
 export interface ConditionPF2e {
     readonly data: ConditionData;
     getFlag(scope: string, key: string): unknown;
-    getFlag(scope: 'core', key: 'sourceId'): string | undefined;
-    getFlag(scope: 'pf2e', key: 'condition'): true | undefined;
+    getFlag(scope: "core", key: "sourceId"): string | undefined;
+    getFlag(scope: "pf2e", key: "condition"): true | undefined;
 }

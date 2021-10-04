@@ -1,12 +1,15 @@
-import { PhysicalItemPF2e } from '@item/physical';
-import { ContainerData } from './data';
+import { PhysicalItemPF2e } from "@item/physical";
+import { ContainerData } from "./data";
 export declare class ContainerPF2e extends PhysicalItemPF2e {
     /** This container's contents, reloaded every data preparation cycle */
     contents: Collection<Embedded<PhysicalItemPF2e>>;
     static get schema(): typeof ContainerData;
     /** Reload this container's contents following Actor embedded-document preparation */
     prepareContents(this: Embedded<ContainerPF2e>): void;
-    getChatData(this: Embedded<ContainerPF2e>, htmlOptions?: EnrichHTMLOptions): {
+    getChatData(
+        this: Embedded<ContainerPF2e>,
+        htmlOptions?: EnrichHTMLOptions,
+    ): {
         traits: import("../data").TraitChatData[];
         capacity: {
             type: string;
@@ -86,9 +89,11 @@ export declare class ContainerPF2e extends PhysicalItemPF2e {
         source: {
             value: string;
         };
-        options?: {
-            value: string[];
-        } | undefined;
+        options?:
+            | {
+                  value: string[];
+              }
+            | undefined;
         usage: {
             value: string;
         };

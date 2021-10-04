@@ -1,17 +1,36 @@
-import { Abilities, Alignment, BaseCreatureAttributes, BaseCreatureData, BaseCreatureSource, CreatureSystemData, Saves, Skills } from '@actor/creature/data';
-import { AbilityString, ArmorClassData, DexterityModifierCapData, HitPointsData, PerceptionData, ProficiencyData, RawSkillData, RollToggle, StrikeData } from '@actor/data/base';
-import { ArmorCategory } from '@item/armor/data';
-import { BaseWeaponType, WeaponCategory, WeaponGroup, WeaponTrait } from '@item/weapon/data';
-import { CheckModifier, StatisticModifier } from '@module/modifiers';
-import { LabeledValue, ZeroToFour, ZeroToThree } from '@module/data';
-import type { CharacterPF2e } from '.';
-export declare type CharacterSource = BaseCreatureSource<'character', CharacterSystemData>;
+import {
+    Abilities,
+    Alignment,
+    BaseCreatureAttributes,
+    BaseCreatureData,
+    BaseCreatureSource,
+    CreatureSystemData,
+    Saves,
+    Skills,
+} from "@actor/creature/data";
+import {
+    AbilityString,
+    ArmorClassData,
+    DexterityModifierCapData,
+    HitPointsData,
+    PerceptionData,
+    ProficiencyData,
+    RawSkillData,
+    RollToggle,
+    StrikeData,
+} from "@actor/data/base";
+import { ArmorCategory } from "@item/armor/data";
+import { BaseWeaponType, WeaponCategory, WeaponGroup, WeaponTrait } from "@item/weapon/data";
+import { CheckModifier, StatisticModifier } from "@module/modifiers";
+import { LabeledValue, ZeroToFour, ZeroToThree } from "@module/data";
+import type { CharacterPF2e } from ".";
+export declare type CharacterSource = BaseCreatureSource<"character", CharacterSystemData>;
 export declare class CharacterData extends BaseCreatureData<CharacterPF2e, CharacterSystemData> {
     static DEFAULT_ICON: ImagePath;
 }
-export interface CharacterData extends Omit<CharacterSource, 'effects' | 'items' | 'token'> {
-    readonly type: CharacterSource['type'];
-    data: CharacterSource['data'];
+export interface CharacterData extends Omit<CharacterSource, "effects" | "items" | "token"> {
+    readonly type: CharacterSource["type"];
+    data: CharacterSource["data"];
     readonly _source: CharacterSource;
 }
 /** The raw information contained within the actor data object for characters. */
@@ -116,21 +135,26 @@ export interface CharacterProficiencyData extends ProficiencyData {
         trait: WeaponTrait;
     };
 }
-export declare type CategoryProficiencies = Record<ArmorCategory | WeaponCategory, CharacterProficiencyData>;
+export declare type CategoryProficiencies = Record<
+    ArmorCategory | WeaponCategory,
+    CharacterProficiencyData
+>;
 export declare type BaseWeaponProficiencyKey = `weapon-base-${BaseWeaponType}`;
 declare type BaseWeaponProficiencies = Record<BaseWeaponProficiencyKey, CharacterProficiencyData>;
 export declare type WeaponGroupProficiencyKey = `weapon-group-${WeaponGroup}`;
 declare type WeaponGroupProfiencies = Record<WeaponGroupProficiencyKey, CharacterProficiencyData>;
-export declare type CombatProficiencies = CategoryProficiencies & BaseWeaponProficiencies & WeaponGroupProfiencies;
+export declare type CombatProficiencies = CategoryProficiencies &
+    BaseWeaponProficiencies &
+    WeaponGroupProfiencies;
 export declare type CombatProficiencyKey = keyof CombatProficiencies;
 /** The full data for the class DC; similar to SkillData, but is not rollable. */
 export declare type ClassDCData = StatisticModifier & RawSkillData;
 /** The full data for a character action (used primarily for strikes.) */
 export declare type CharacterStrike = StatisticModifier & StrikeData;
 /** A Pathfinder Society Faction */
-declare type PFSFaction = 'EA' | 'GA' | 'HH' | 'VS' | 'RO' | 'VW';
+declare type PFSFaction = "EA" | "GA" | "HH" | "VS" | "RO" | "VW";
 /** A Pathfinder Society School */
-declare type PFSSchool = 'none' | 'scrolls' | 'spells' | 'swords';
+declare type PFSSchool = "none" | "scrolls" | "spells" | "swords";
 /** PFS faction reputation values */
 interface PathfinderSocietyReputation {
     EA: number;

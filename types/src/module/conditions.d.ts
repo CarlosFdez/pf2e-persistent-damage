@@ -1,7 +1,7 @@
-import { ModifierPF2e } from './modifiers';
-import type { ConditionData, ConditionSource } from '@item/condition/data';
-import { ConditionPF2e } from '@item/condition';
-import { TokenPF2e } from './canvas/token';
+import { ModifierPF2e } from "./modifiers";
+import type { ConditionData, ConditionSource } from "@item/condition/data";
+import { ConditionPF2e } from "@item/condition";
+import { TokenPF2e } from "./canvas/token";
 /** A helper class to manage PF2e Conditions. */
 export declare class ConditionManager {
     static _compediumConditions: Map<string, ConditionData>;
@@ -70,13 +70,18 @@ export declare class ConditionManager {
      * @param conditions A collection of conditions to retrieve modifiers from.
      * @return A map of PF2Modifiers from the conditions collection.
      */
-    static getModifiersFromConditions(conditions: IterableIterator<ConditionData>): Map<string, Array<ModifierPF2e>>;
+    static getModifiersFromConditions(
+        conditions: IterableIterator<ConditionData>,
+    ): Map<string, Array<ModifierPF2e>>;
     /**
      * Adds a condition to a token.
      * @param name  A collection of conditions to retrieve modifiers from.
      * @param token The token to add the condition to.
      */
-    static addConditionToToken(name: string | ConditionSource, token: TokenPF2e): Promise<ConditionPF2e | null>;
+    static addConditionToToken(
+        name: string | ConditionSource,
+        token: TokenPF2e,
+    ): Promise<ConditionPF2e | null>;
     private static createConditions;
     /**
      * Removes a condition from a token.

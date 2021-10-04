@@ -1,7 +1,7 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { ActorSheetPF2e } from '../sheet/base';
-import { HazardPF2e } from '.';
+import { ActorSheetPF2e } from "../sheet/base";
+import { HazardPF2e } from ".";
 export declare class HazardSheetPF2e extends ActorSheetPF2e<HazardPF2e> {
     static get defaultOptions(): ActorSheetOptions & {
         classes: string[];

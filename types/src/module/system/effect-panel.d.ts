@@ -1,7 +1,7 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { ActorPF2e } from '@actor/base';
-import { ConditionData, EffectData } from '@item/data';
+import { ActorPF2e } from "@actor/base";
+import { ConditionData, EffectData } from "@item/data";
 interface EffectPanelData {
     conditions?: ConditionData[];
     effects?: EffectData[];

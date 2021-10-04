@@ -1,4 +1,4 @@
-import { MigrationBase } from './base';
+import { MigrationBase } from "./base";
 export declare class Migrations {
     private static list;
     static get latestVersion(): number;

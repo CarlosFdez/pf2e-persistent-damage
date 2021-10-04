@@ -1,13 +1,25 @@
-import { BaseItemDataPF2e, BaseItemSourcePF2e, ItemLevelData, ItemSystemData, ItemTraits } from '../data/base';
-import type { PhysicalItemPF2e } from '@item/physical';
-import type { PHYSICAL_ITEM_TYPES } from '../data/values';
-import { EquipmentTrait } from '@item/equipment/data';
-import { ArmorTrait } from '@item/armor/data';
-import { WeaponTrait } from '@item/weapon/data';
-import { ConsumableTrait } from '@item/consumable/data';
-import { Size } from '@module/data';
-export declare type BasePhysicalItemSource<TItemType extends PhysicalItemType = PhysicalItemType, TSystemData extends PhysicalSystemData = PhysicalSystemData> = BaseItemSourcePF2e<TItemType, TSystemData>;
-export declare class BasePhysicalItemData<TItem extends PhysicalItemPF2e = PhysicalItemPF2e, TSystemData extends PhysicalSystemData = PhysicalSystemData> extends BaseItemDataPF2e<TItem> {
+import {
+    BaseItemDataPF2e,
+    BaseItemSourcePF2e,
+    ItemLevelData,
+    ItemSystemData,
+    ItemTraits,
+} from "../data/base";
+import type { PhysicalItemPF2e } from "@item/physical";
+import type { PHYSICAL_ITEM_TYPES } from "../data/values";
+import { EquipmentTrait } from "@item/equipment/data";
+import { ArmorTrait } from "@item/armor/data";
+import { WeaponTrait } from "@item/weapon/data";
+import { ConsumableTrait } from "@item/consumable/data";
+import { Size } from "@module/data";
+export declare type BasePhysicalItemSource<
+    TItemType extends PhysicalItemType = PhysicalItemType,
+    TSystemData extends PhysicalSystemData = PhysicalSystemData,
+> = BaseItemSourcePF2e<TItemType, TSystemData>;
+export declare class BasePhysicalItemData<
+    TItem extends PhysicalItemPF2e = PhysicalItemPF2e,
+    TSystemData extends PhysicalSystemData = PhysicalSystemData,
+> extends BaseItemDataPF2e<TItem> {
     /** Prepared data */
     readonly isPhysical: true;
     isEquipped: boolean;
@@ -17,9 +29,10 @@ export declare class BasePhysicalItemData<TItem extends PhysicalItemPF2e = Physi
     isInvested: boolean | null;
     isCursed: boolean;
 }
-export interface BasePhysicalItemData<TItem extends PhysicalItemPF2e = PhysicalItemPF2e> extends Omit<BasePhysicalItemSource, 'effects'> {
+export interface BasePhysicalItemData<TItem extends PhysicalItemPF2e = PhysicalItemPF2e>
+    extends Omit<BasePhysicalItemSource, "effects"> {
     type: PhysicalItemType;
-    data: BasePhysicalItemSource['data'];
+    data: BasePhysicalItemSource["data"];
     readonly document: TItem;
     readonly _source: BasePhysicalItemSource;
 }
@@ -55,7 +68,7 @@ export interface ActivatedEffectData {
         per: any;
     };
 }
-export declare type IdentificationStatus = 'identified' | 'unidentified' | 'misidentified';
+export declare type IdentificationStatus = "identified" | "unidentified" | "misidentified";
 export interface MystifiedData {
     name: string;
     img: string;
@@ -72,7 +85,8 @@ export interface IdentificationData {
     misidentified: {};
 }
 export declare type PhysicalItemTrait = ArmorTrait | ConsumableTrait | EquipmentTrait | WeaponTrait;
-export declare type PhysicalItemTraits<T extends PhysicalItemTrait = PhysicalItemTrait> = ItemTraits<T>;
+export declare type PhysicalItemTraits<T extends PhysicalItemTrait = PhysicalItemTrait> =
+    ItemTraits<T>;
 export interface PhysicalSystemData extends ItemSystemData, ItemLevelData {
     traits: PhysicalItemTraits;
     quantity: {

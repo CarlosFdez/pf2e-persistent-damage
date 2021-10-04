@@ -1,6 +1,6 @@
-import type { ActorPF2e } from '@actor/base';
-import { TokenPF2e } from './canvas/token';
-import { CombatPF2e } from './combat';
+import type { ActorPF2e } from "@actor/base";
+import { TokenPF2e } from "./canvas/token";
+import { CombatPF2e } from "./combat";
 export declare class CombatantPF2e extends Combatant {
     /** In order for the Combat Tracker's "Skip Defeated" feature to function, a Combatant instance needs a `defeated`
      *  property or an ActiveEffect with a flag located at `core.statusId`, corresponding with

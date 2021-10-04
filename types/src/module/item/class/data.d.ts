@@ -1,16 +1,16 @@
-import { AbilityString } from '@actor/data/base';
-import { ABCSystemData } from '@item/abc/data';
-import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from '@item/data/non-physical';
-import { ZeroToFour } from '@module/data';
-import type { ClassPF2e } from '.';
-export declare type ClassSource = BaseNonPhysicalItemSource<'class', ClassSystemData>;
+import { AbilityString } from "@actor/data/base";
+import { ABCSystemData } from "@item/abc/data";
+import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from "@item/data/non-physical";
+import { ZeroToFour } from "@module/data";
+import type { ClassPF2e } from ".";
+export declare type ClassSource = BaseNonPhysicalItemSource<"class", ClassSystemData>;
 export declare class ClassData extends BaseNonPhysicalItemData<ClassPF2e> {
     /** @override */
     static DEFAULT_ICON: ImagePath;
 }
-export interface ClassData extends Omit<ClassSource, '_id' | 'effects'> {
-    type: ClassSource['type'];
-    data: ClassSource['data'];
+export interface ClassData extends Omit<ClassSource, "_id" | "effects"> {
+    type: ClassSource["type"];
+    data: ClassSource["data"];
     readonly _source: ClassSource;
 }
 interface ClassSystemData extends ABCSystemData {

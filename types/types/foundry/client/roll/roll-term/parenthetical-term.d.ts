@@ -3,8 +3,24 @@ export {};
 declare global {
     /** A type of RollTerm used to enclose a parenthetical expression to be recursively evaluated. */
     class ParentheticalTerm extends RollTerm<ParentheticalTermData> {
-        constructor({ term, roll, options }: { term: string; roll?: Roll; options?: Record<string, unknown> });
-        constructor({ term, roll, options }: { term?: string; roll: Roll; options?: Record<string, unknown> });
+        constructor({
+            term,
+            roll,
+            options,
+        }: {
+            term: string;
+            roll?: Roll;
+            options?: Record<string, unknown>;
+        });
+        constructor({
+            term,
+            roll,
+            options,
+        }: {
+            term?: string;
+            roll: Roll;
+            options?: Record<string, unknown>;
+        });
 
         /** The original provided string term used to construct the parenthetical */
         term: string;
@@ -25,7 +41,7 @@ declare global {
         static CLOSE_REGEXP: RegExp;
 
         /** @override */
-        static SERIALIZE_ATTRIBUTES: ['term'];
+        static SERIALIZE_ATTRIBUTES: ["term"];
 
         /* -------------------------------------------- */
         /*  Parenthetical Term Attributes               */
@@ -45,7 +61,13 @@ declare global {
         /* -------------------------------------------- */
 
         /** @override */
-        protected _evaluateSync({ minimize, maximize }?: { minimize?: boolean; maximize?: boolean }): Evaluated<this>;
+        protected _evaluateSync({
+            minimize,
+            maximize,
+        }?: {
+            minimize?: boolean;
+            maximize?: boolean;
+        }): Evaluated<this>;
 
         /** @override */
         protected _evaluate({

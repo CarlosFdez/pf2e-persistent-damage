@@ -1,8 +1,8 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { StatusEffectIconType } from '@scripts/config';
-import { ActorPF2e } from '@actor/base';
-import { TokenPF2e } from '@module/canvas/token';
+import { StatusEffectIconType } from "@scripts/config";
+import { ActorPF2e } from "@actor/base";
+import { TokenPF2e } from "@module/canvas/token";
 /**
  * Class StatusEffects, which is the module to handle the status effects
  * @category PF2
@@ -252,7 +252,11 @@ export declare class StatusEffects {
      * Updates the core CONFIG.statusEffects with the new icons
      */
     static _updateStatusIcons(): void;
-    static _hookOnRenderTokenHUD(_app: TokenHUD, html: JQuery, tokenData: foundry.data.TokenData): Promise<void>;
+    static _hookOnRenderTokenHUD(
+        _app: TokenHUD,
+        html: JQuery,
+        tokenData: foundry.data.TokenData,
+    ): Promise<void>;
     static updateHUD(html: JQuery, actor: ActorPF2e): Promise<void>;
     /**
      * Show the Status Effect name and summary on mouseover of the token HUD
@@ -263,7 +267,10 @@ export declare class StatusEffects {
      *
      * @param event    The window click event
      */
-    static _setStatusValue(this: TokenPF2e, event: JQuery.ClickEvent | JQuery.ContextMenuEvent): Promise<void>;
+    static _setStatusValue(
+        this: TokenPF2e,
+        event: JQuery.ClickEvent | JQuery.ContextMenuEvent,
+    ): Promise<void>;
     private static toggleStatus;
     /**
      * Recreating TokenHUD._onToggleOverlay. Handle assigning a status effect icon as the overlay effect

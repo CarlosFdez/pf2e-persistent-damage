@@ -1,4 +1,4 @@
-import { ActorPF2e } from '../../base';
+import { ActorPF2e } from "../../base";
 interface PopupData extends FormApplicationData<ActorPF2e> {
     selection?: string[];
     actorInfo?: {
@@ -18,7 +18,10 @@ export declare class DistributeCoinsPopup extends FormApplication<ActorPF2e> {
     static get defaultOptions(): FormApplicationOptions;
     _updateObject(_event: Event, formData: PopupFormData): Promise<void>;
     /** Prevent Foundry from converting the actor IDs to boolean values */
-    protected _onSubmit(event: Event, options?: OnSubmitFormOptions): Promise<Record<string, unknown>>;
+    protected _onSubmit(
+        event: Event,
+        options?: OnSubmitFormOptions,
+    ): Promise<Record<string, unknown>>;
     getData(): PopupData;
 }
 export {};

@@ -1,7 +1,7 @@
 /**
  * Dialog for excluding certain modifiers before rolling for damage.
  */
-import { DamageTemplate } from '@system/damage/weapon';
+import { DamageTemplate } from "@system/damage/weapon";
 /**
  * @category Other
  */

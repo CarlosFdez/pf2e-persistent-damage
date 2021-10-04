@@ -1,7 +1,7 @@
-import { RuleElementPF2e } from '../rule-element';
-import { CharacterData, NPCData } from '@actor/data';
-import { SkillAbbreviation } from '@actor/creature/data';
-import { PF2CheckDCModifiers } from '@system/check-degree-of-success';
+import { RuleElementPF2e } from "../rule-element";
+import { CharacterData, NPCData } from "@actor/data";
+import { SkillAbbreviation } from "@actor/creature/data";
+import { PF2CheckDCModifiers } from "@system/check-degree-of-success";
 /**
  * @category RuleElement
  */

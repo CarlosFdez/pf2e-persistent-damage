@@ -1,9 +1,9 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { ActorPF2e } from '@actor/index';
-import { ItemPF2e } from '@item/index';
-import { TraitSelectorBase } from './base';
-import { BasicSelectorOptions, SelectableTagField } from './index';
+import { ActorPF2e } from "@actor/index";
+import { ItemPF2e } from "@item/index";
+import { TraitSelectorBase } from "./base";
+import { BasicSelectorOptions, SelectableTagField } from "./index";
 export declare class TagSelectorBasic extends TraitSelectorBase {
     allowCustom: boolean;
     searchString: string;
@@ -21,10 +21,13 @@ export declare class TagSelectorBasic extends TraitSelectorBase {
         height: number;
     };
     getData(): {
-        choices: Record<string, {
-            label: string;
-            selected: boolean;
-        }>;
+        choices: Record<
+            string,
+            {
+                label: string;
+                selected: boolean;
+            }
+        >;
         allowCustom: boolean;
         custom: string | null;
         object?: ActorPF2e | ItemPF2e | undefined;

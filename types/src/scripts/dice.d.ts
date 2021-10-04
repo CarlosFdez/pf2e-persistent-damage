@@ -1,5 +1,5 @@
 /// <reference types="jquery" />
-import { ActorPF2e } from '../module/actor/base';
+import { ActorPF2e } from "../module/actor/base";
 /**
  * @category Other
  */
@@ -27,7 +27,19 @@ export declare class DicePF2e {
      * @param onClose       Callback for actions to take when the dialog form is closed
      * @param dialogOptions Modal dialog options
      */
-    static d20Roll({ event, parts, data, template, title, speaker, flavor, onClose, dialogOptions, rollMode, rollType, }: {
+    static d20Roll({
+        event,
+        parts,
+        data,
+        template,
+        title,
+        speaker,
+        flavor,
+        onClose,
+        dialogOptions,
+        rollMode,
+        rollType,
+    }: {
         event: JQuery.Event;
         parts: any[];
         actor?: ActorPF2e;
@@ -60,7 +72,19 @@ export declare class DicePF2e {
      * @param onClose       Callback for actions to take when the dialog form is closed
      * @param dialogOptions Modal dialog options
      */
-    static damageRoll({ event, partsCritOnly, parts, data, template, title, speaker, flavor, critical, onClose, dialogOptions, }: {
+    static damageRoll({
+        event,
+        partsCritOnly,
+        parts,
+        data,
+        template,
+        title,
+        speaker,
+        flavor,
+        critical,
+        onClose,
+        dialogOptions,
+    }: {
         event: JQuery.Event;
         partsCritOnly?: any[];
         parts: any[];

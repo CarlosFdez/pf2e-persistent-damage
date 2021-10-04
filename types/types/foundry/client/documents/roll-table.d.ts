@@ -1,4 +1,4 @@
-import { RollTableConstructor } from './constructors';
+import { RollTableConstructor } from "./constructors";
 
 declare global {
     /**
@@ -77,7 +77,12 @@ declare global {
                 recursive,
                 displayChat,
                 rollMode,
-            }?: { roll?: Roll | null; recursive?: boolean; displayChat?: boolean; rollMode?: RollMode | null },
+            }?: {
+                roll?: Roll | null;
+                recursive?: boolean;
+                displayChat?: boolean;
+                rollMode?: RollMode | null;
+            },
         ): Promise<RollTableDraw>;
 
         /** Normalize the probabilities of rolling each item in the RollTable based on their assigned weights */
@@ -127,7 +132,7 @@ declare global {
         /* -------------------------------------------- */
 
         protected override _onCreateEmbeddedDocuments(
-            embeddedName: 'TableResult',
+            embeddedName: "TableResult",
             documents: TableResult[],
             result: foundry.data.TableResultSource[],
             options: DocumentModificationContext,
@@ -135,7 +140,7 @@ declare global {
         ): void;
 
         protected override _onDeleteEmbeddedDocuments(
-            embeddedName: 'TableResult',
+            embeddedName: "TableResult",
             documents: TableResult[],
             result: foundry.data.TableResultSource[],
             options: DocumentModificationContext,
@@ -153,7 +158,10 @@ declare global {
          * @param folder  The Folder entity from which to create a roll table
          * @param options Additional options passed to the RollTable.create method
          */
-        static fromFolder(folder: Folder, options?: DocumentModificationContext): Promise<RollTable | undefined>;
+        static fromFolder(
+            folder: Folder,
+            options?: DocumentModificationContext,
+        ): Promise<RollTable | undefined>;
     }
 
     /**

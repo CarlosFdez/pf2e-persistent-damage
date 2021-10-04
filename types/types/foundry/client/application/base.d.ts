@@ -116,7 +116,7 @@ declare class Application<OptionsType extends ApplicationOptions = ApplicationOp
      * Track the render state of the Application
      * @see {Application.RENDER_STATES}
      */
-    protected _state: keyof typeof Application['RENDER_STATES'];
+    protected _state: keyof typeof Application["RENDER_STATES"];
 
     /**
      * Track the most recent scroll positions for any vertically scrolling containers
@@ -241,7 +241,11 @@ declare class Application<OptionsType extends ApplicationOptions = ApplicationOp
      * @param element   The original HTML element
      * @param html      New updated HTML
      */
-    protected _replaceHTML(element: JQuery, html: JQuery | HTMLElement, options: Record<string, unknown>): void;
+    protected _replaceHTML(
+        element: JQuery,
+        html: JQuery | HTMLElement,
+        options: Record<string, unknown>,
+    ): void;
 
     /**
      * Customize how a new HTML Application is added and first appears in the DOC
@@ -281,7 +285,12 @@ declare class Application<OptionsType extends ApplicationOptions = ApplicationOp
      * @param rgx   The regular expression to test against
      * @param html  The HTML element which should be filtered
      */
-    protected _onSearchFilter(event: KeyboardEvent, query: string, rgx: RegExp, html: HTMLElement): void;
+    protected _onSearchFilter(
+        event: KeyboardEvent,
+        query: string,
+        rgx: RegExp,
+        html: HTMLElement,
+    ): void;
 
     /**
      * Define whether a user is able to begin a dragstart workflow for a given drag selector
@@ -343,7 +352,13 @@ declare class Application<OptionsType extends ApplicationOptions = ApplicationOp
     /**
      * Set the application position and store it's new location
      */
-    setPosition({ left, top, width, height, scale }?: ApplicationPosition): ApplicationPosition | undefined;
+    setPosition({
+        left,
+        top,
+        width,
+        height,
+        scale,
+    }?: ApplicationPosition): ApplicationPosition | undefined;
 
     /**
      * Handle application minimization behavior - collapsing content and reducing the size of the header

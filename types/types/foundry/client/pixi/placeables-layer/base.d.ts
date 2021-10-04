@@ -2,7 +2,9 @@ export {};
 
 declare global {
     /** The base PlaceablesLayer subclass of CanvasLayer */
-    abstract class PlaceablesLayer<TPlaceableObject extends PlaceableObject = PlaceableObject> extends CanvasLayer {
+    abstract class PlaceablesLayer<
+        TPlaceableObject extends PlaceableObject = PlaceableObject,
+    > extends CanvasLayer {
         constructor();
 
         /** Placeable Layer Objects */
@@ -71,7 +73,7 @@ declare global {
         override draw(): Promise<this>;
 
         /** Draw a single placeable object */
-        createObject(data: PreCreate<TPlaceableObject['data']['_source']>): TPlaceableObject;
+        createObject(data: PreCreate<TPlaceableObject["data"]["_source"]>): TPlaceableObject;
 
         override tearDown(): Promise<void>;
 
@@ -184,7 +186,7 @@ declare global {
          * A helper method to prompt for deletion of all PlaceableObject instances within the Scene
          * Renders a confirmation dialogue to confirm with the requester that all objects will be deleted
          */
-        deleteAll(): Promise<TPlaceableObject['document'][] | void>;
+        deleteAll(): Promise<TPlaceableObject["document"][] | void>;
 
         /**
          * Record a new CRUD event in the history log so that it can be undone later
@@ -206,7 +208,7 @@ declare global {
         pasteObjects(
             position: { x: number; y: number },
             { hidden }?: { hidden?: boolean },
-        ): Promise<TPlaceableObject['document'][]>;
+        ): Promise<TPlaceableObject["document"][]>;
 
         /**
          * Select all PlaceableObject instances which fall within a coordinate rectangle.
@@ -246,10 +248,12 @@ declare global {
         updateAll(
             transformation: (
                 document: TPlaceableObject,
-            ) => DocumentUpdateData<TPlaceableObject['document']> | DocumentUpdateData<TPlaceableObject['document']>,
+            ) =>
+                | DocumentUpdateData<TPlaceableObject["document"]>
+                | DocumentUpdateData<TPlaceableObject["document"]>,
             condition?: Function | null,
             options?: DocumentModificationContext,
-        ): Promise<TPlaceableObject['document'][]>;
+        ): Promise<TPlaceableObject["document"][]>;
 
         /* -------------------------------------------- */
         /*  Event Listeners and Handlers                */

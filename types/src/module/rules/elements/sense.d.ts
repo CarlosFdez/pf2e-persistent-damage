@@ -1,5 +1,5 @@
-import { RuleElementPF2e } from '../rule-element';
-import { CreatureData } from '@actor/data';
+import { RuleElementPF2e } from "../rule-element";
+import { CreatureData } from "@actor/data";
 /**
  * @category RuleElement
  */

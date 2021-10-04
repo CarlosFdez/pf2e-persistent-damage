@@ -1,8 +1,8 @@
-import { ModifierPF2e } from '@module/modifiers';
-import { RollParameters } from '@system/rolls';
-import { RollNotePF2e } from '@module/notes';
-import { ActorPF2e } from '@actor';
-import { DegreeOfSuccessAdjustment } from '@system/check-degree-of-success';
+import { ModifierPF2e } from "@module/modifiers";
+import { RollParameters } from "@system/rolls";
+import { RollNotePF2e } from "@module/notes";
+import { ActorPF2e } from "@actor";
+import { DegreeOfSuccessAdjustment } from "@system/check-degree-of-success";
 export interface StatisticCheckData {
     adjustments?: DegreeOfSuccessAdjustment[];
     label?: string;
@@ -23,12 +23,12 @@ export interface StatisticData {
 }
 export interface StatisticCheck {
     modifiers: ModifierPF2e[];
-    roll: (args: RollParameters & {
-        modifiers: ModifierPF2e[];
-    }) => void;
-    totalModifier: (options?: {
-        options?: string[];
-    }) => number;
+    roll: (
+        args: RollParameters & {
+            modifiers: ModifierPF2e[];
+        },
+    ) => void;
+    totalModifier: (options?: { options?: string[] }) => number;
     value: number;
 }
 export interface StatisticDifficultyClass {
@@ -36,25 +36,32 @@ export interface StatisticDifficultyClass {
     value: number;
 }
 export interface StatisticWithDC {
-    dc(options?: {
-        options?: string[];
-    }): StatisticDifficultyClass;
+    dc(options?: { options?: string[] }): StatisticDifficultyClass;
 }
 export interface StatisticWithCheck {
     get check(): StatisticCheck;
 }
-export interface Statistic extends StatisticWithCheck, StatisticWithDC {
-}
+export interface Statistic extends StatisticWithCheck, StatisticWithDC {}
 export declare class StatisticBuilder {
-    static from(actor: ActorPF2e, data: StatisticData & ({
-        check: StatisticCheckData;
-    } & {
-        dc: StatisticDifficultyClassData;
-    })): StatisticWithCheck & StatisticWithDC;
-    static from(actor: ActorPF2e, data: StatisticData & {
-        check: StatisticCheckData;
-    }): StatisticWithCheck;
-    static from(actor: ActorPF2e, data: StatisticData & {
-        dc: StatisticDifficultyClassData;
-    }): StatisticWithDC;
+    static from(
+        actor: ActorPF2e,
+        data: StatisticData &
+            ({
+                check: StatisticCheckData;
+            } & {
+                dc: StatisticDifficultyClassData;
+            }),
+    ): StatisticWithCheck & StatisticWithDC;
+    static from(
+        actor: ActorPF2e,
+        data: StatisticData & {
+            check: StatisticCheckData;
+        },
+    ): StatisticWithCheck;
+    static from(
+        actor: ActorPF2e,
+        data: StatisticData & {
+            dc: StatisticDifficultyClassData;
+        },
+    ): StatisticWithDC;
 }

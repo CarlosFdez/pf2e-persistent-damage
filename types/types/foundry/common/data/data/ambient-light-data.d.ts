@@ -46,7 +46,8 @@ declare module foundry {
             darkness: DarknessActivation;
         }
 
-        interface AmbientLightData extends Omit<AmbientLightSource, 'lightAnimation' | 'darknessActivation'> {
+        interface AmbientLightData
+            extends Omit<AmbientLightSource, "lightAnimation" | "darknessActivation"> {
             readonly _source: AmbientLightSource;
         }
     }

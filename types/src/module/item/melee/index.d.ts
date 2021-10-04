@@ -1,8 +1,11 @@
-import { ItemPF2e } from '@item/base';
-import { MeleeData } from './data';
+import { ItemPF2e } from "@item/base";
+import { MeleeData } from "./data";
 export declare class MeleePF2e extends ItemPF2e {
     static get schema(): typeof MeleeData;
-    getChatData(this: Embedded<MeleePF2e>, htmlOptions?: EnrichHTMLOptions): {
+    getChatData(
+        this: Embedded<MeleePF2e>,
+        htmlOptions?: EnrichHTMLOptions,
+    ): {
         traits: import("../data").TraitChatData[];
         map2: string;
         map3: string;
@@ -27,9 +30,11 @@ export declare class MeleePF2e extends ItemPF2e {
         source: {
             value: string;
         };
-        options?: {
-            value: string[];
-        } | undefined;
+        options?:
+            | {
+                  value: string[];
+              }
+            | undefined;
         usage: {
             value: string;
         };

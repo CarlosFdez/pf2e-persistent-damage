@@ -31,7 +31,7 @@ declare module foundry {
             combatants: abstract.EmbeddedCollection<TCombatant>;
         }
 
-        interface CombatData extends Omit<CombatSource, 'combatants'> {
+        interface CombatData extends Omit<CombatSource, "combatants"> {
             readonly _source: CombatSource;
 
             readonly parent: null;

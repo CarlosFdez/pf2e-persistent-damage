@@ -13,7 +13,11 @@ declare module foundry {
             ): Promise<void>;
 
             /** Is a user able to update an existing Macro document? */
-            protected static _canUpdate(user: BaseUser, doc: BaseMacro, data: data.MacroData): boolean;
+            protected static _canUpdate(
+                user: BaseUser,
+                doc: BaseMacro,
+                data: data.MacroData,
+            ): boolean;
 
             /** Is a user able to delete an existing Macro document? */
             protected static _canDelete(user: BaseUser, doc: BaseMacro): boolean;
@@ -26,15 +30,15 @@ declare module foundry {
         }
 
         interface MacroMetadata extends abstract.DocumentMetadata {
-            name: 'Macro';
-            collection: 'macros';
-            label: 'DOCUMENT.Macro';
+            name: "Macro";
+            collection: "macros";
+            label: "DOCUMENT.Macro";
             isPrimary: true;
-            types: ['script', 'chat'];
+            types: ["script", "chat"];
             permissions: {
-                create: 'PLAYER';
-                update: typeof BaseMacro['_canUpdate'];
-                delete: typeof BaseMacro['_canDelete'];
+                create: "PLAYER";
+                update: typeof BaseMacro["_canUpdate"];
+                delete: typeof BaseMacro["_canDelete"];
             };
         }
     }

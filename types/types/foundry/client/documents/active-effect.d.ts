@@ -1,4 +1,4 @@
-import { ActiveEffectConstructor } from './constructors';
+import { ActiveEffectConstructor } from "./constructors";
 
 declare global {
     /**
@@ -54,7 +54,7 @@ declare global {
          * An instance of the ActiveEffectConfig sheet to use for this ActiveEffect instance.
          * The reference to the sheet is cached so the same sheet instance is reused.
          */
-        override get sheet(): NonNullable<this['_sheet']>;
+        override get sheet(): NonNullable<this["_sheet"]>;
 
         /* -------------------------------------------- */
         /*  Methods                                     */
@@ -126,7 +126,7 @@ declare global {
         /* -------------------------------------------- */
 
         protected override _preCreate(
-            data: PreDocumentId<this['data']['_source']>,
+            data: PreDocumentId<this["data"]["_source"]>,
             options: DocumentModificationContext,
             user: User,
         ): Promise<void>;
@@ -136,8 +136,8 @@ declare global {
         readonly data: foundry.data.ActiveEffectData<this>;
         readonly parent: Actor | Item | null;
 
-        getFlag(scope: 'core', key: 'overlay'): string | undefined;
-        getFlag(scope: 'core', key: 'statusId'): string | undefined;
+        getFlag(scope: "core", key: "overlay"): string | undefined;
+        getFlag(scope: "core", key: "statusId"): string | undefined;
         getFlag(scope: string, key: string): unknown;
     }
 

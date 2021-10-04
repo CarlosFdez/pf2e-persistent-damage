@@ -47,7 +47,7 @@ declare module foundry {
             results: abstract.EmbeddedCollection<TResults>;
         }
 
-        interface RollTableData extends Omit<RollTableSource, 'results'> {
+        interface RollTableData extends Omit<RollTableSource, "results"> {
             readonly _source: RollTableSource;
         }
     }

@@ -1,5 +1,5 @@
-import { ActionPF2e } from '@item/action';
-import { ItemSheetPF2e } from './base';
+import { ActionPF2e } from "@item/action";
+import { ItemSheetPF2e } from "./base";
 export declare class ActionSheetPF2e extends ItemSheetPF2e<ActionPF2e> {
     getData(): {
         categories: {
@@ -57,7 +57,7 @@ export declare class ActionSheetPF2e extends ItemSheetPF2e<ActionPF2e> {
             lineage: string;
             vigilante: string;
             heritage: string;
-            'versatile heritage': string;
+            "versatile heritage": string;
             attack: string;
             cantrip: string;
             composition: string;
@@ -138,9 +138,9 @@ export declare class ActionSheetPF2e extends ItemSheetPF2e<ActionPF2e> {
             gnome: string;
             goblin: string;
             grippli: string;
-            'half-elf': string;
+            "half-elf": string;
             halfling: string;
-            'half-orc': string;
+            "half-orc": string;
             human: string;
             hobgoblin: string;
             kitsune: string;
@@ -179,7 +179,13 @@ export declare class ActionSheetPF2e extends ItemSheetPF2e<ActionPF2e> {
             thievery: string;
             lore: string;
         };
-        proficiencies: readonly ["PF2E.ProficiencyLevel0", "PF2E.ProficiencyLevel1", "PF2E.ProficiencyLevel2", "PF2E.ProficiencyLevel3", "PF2E.ProficiencyLevel4"];
+        proficiencies: readonly [
+            "PF2E.ProficiencyLevel0",
+            "PF2E.ProficiencyLevel1",
+            "PF2E.ProficiencyLevel2",
+            "PF2E.ProficiencyLevel3",
+            "PF2E.ProficiencyLevel4",
+        ];
         traits: import("./data-types").SheetOptions;
         user: {
             isGM: boolean;

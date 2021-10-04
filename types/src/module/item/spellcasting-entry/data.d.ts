@@ -1,16 +1,19 @@
-import { AbilityString } from '@actor/data/base';
-import { ItemSystemData } from '@item/data/base';
-import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from '@item/data/non-physical';
-import { RollNotePF2e } from '@module/notes';
-import { SpellcastingEntryPF2e } from '.';
-export declare type SpellcastingEntrySource = BaseNonPhysicalItemSource<'spellcastingEntry', SpellcastingEntrySystemData>;
+import { AbilityString } from "@actor/data/base";
+import { ItemSystemData } from "@item/data/base";
+import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from "@item/data/non-physical";
+import { RollNotePF2e } from "@module/notes";
+import { SpellcastingEntryPF2e } from ".";
+export declare type SpellcastingEntrySource = BaseNonPhysicalItemSource<
+    "spellcastingEntry",
+    SpellcastingEntrySystemData
+>;
 export declare class SpellcastingEntryData extends BaseNonPhysicalItemData<SpellcastingEntryPF2e> {
     /** @override */
     static DEFAULT_ICON: ImagePath;
 }
-export interface SpellcastingEntryData extends Omit<SpellcastingEntrySource, '_id' | 'effects'> {
-    type: SpellcastingEntrySource['type'];
-    data: SpellcastingEntrySource['data'];
+export interface SpellcastingEntryData extends Omit<SpellcastingEntrySource, "_id" | "effects"> {
+    type: SpellcastingEntrySource["type"];
+    data: SpellcastingEntrySource["data"];
     readonly _source: SpellcastingEntrySource;
 }
 export interface SpellAttackRollModifier {
@@ -31,8 +34,8 @@ interface SpellSlotData {
     value: number;
     max: number;
 }
-export declare type MagicTradition = keyof ConfigPF2e['PF2E']['magicTraditions'];
-export declare type PreparationType = 'prepared' | 'spontaneous' | 'innate';
+export declare type MagicTradition = keyof ConfigPF2e["PF2E"]["magicTraditions"];
+export declare type PreparationType = "prepared" | "spontaneous" | "innate";
 export interface SpellSlots {
     slot0: SpellSlotData;
     slot1: SpellSlotData;
@@ -49,7 +52,7 @@ export interface SpellSlots {
 }
 export interface SpellcastingEntrySystemData extends ItemSystemData {
     ability: {
-        value: AbilityString | '';
+        value: AbilityString | "";
     };
     spelldc: {
         value: number;

@@ -3,7 +3,7 @@
  * @todo: fill this in
  */
 declare interface TemplateLayerOptions extends PlaceablesLayerOptions {
-    name: 'templates';
+    name: "templates";
     sortActiveTop: boolean;
     zIndex: number;
 }
@@ -11,7 +11,7 @@ declare interface TemplateLayerOptions extends PlaceablesLayerOptions {
 declare class TemplateLayer extends PlaceablesLayer<MeasuredTemplate> {
     static override get layerOptions(): TemplateLayerOptions;
 
-    static documentName: 'MeasuredTemplate';
+    static documentName: "MeasuredTemplate";
 
     /* -------------------------------------------- */
     /*  Methods                                     */

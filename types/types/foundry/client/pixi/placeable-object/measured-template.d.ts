@@ -94,7 +94,7 @@ declare class MeasuredTemplate extends PlaceableObject<MeasuredTemplateDocument>
     /* -------------------------------------------- */
 
     protected override _onUpdate(
-        changed: DeepPartial<this['document']['data']['_source']>,
+        changed: DeepPartial<this["document"]["data"]["_source"]>,
         options: DocumentModificationContext,
         userId: string,
     ): void;

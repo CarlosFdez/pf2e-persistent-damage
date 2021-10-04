@@ -9,44 +9,61 @@ interface DropCanvasData<T extends foundry.abstract.DocumentSource> {
     tokenId?: string;
 }
 
-declare type HookCallback<P extends any[]> = (...args: P) => boolean | void | Promise<boolean | void>;
-declare type HookParameters<H extends string, C extends any[]> = [hook: H, callback: HookCallback<C>];
-declare type HookParamsInit = HookParameters<'init', never>;
-declare type HookParamsSetup = HookParameters<'setup', never>;
-declare type HookParamsReady = HookParameters<'ready', never>;
-declare type HookParamsCanvasReady = HookParameters<'canvasReady', [Canvas]>;
-declare type HookParamsDeleteCombat = HookParameters<'deleteCombat', [Combat, { [key: string]: any }, string]>;
-declare type HookParamsDropCanvasData = HookParameters<'dropCanvasData', [Canvas, DropCanvasData<any>]>;
+declare type HookCallback<P extends any[]> = (
+    ...args: P
+) => boolean | void | Promise<boolean | void>;
+declare type HookParameters<H extends string, C extends any[]> = [
+    hook: H,
+    callback: HookCallback<C>,
+];
+declare type HookParamsInit = HookParameters<"init", never>;
+declare type HookParamsSetup = HookParameters<"setup", never>;
+declare type HookParamsReady = HookParameters<"ready", never>;
+declare type HookParamsCanvasReady = HookParameters<"canvasReady", [Canvas]>;
+declare type HookParamsDeleteCombat = HookParameters<
+    "deleteCombat",
+    [Combat, { [key: string]: any }, string]
+>;
+declare type HookParamsDropCanvasData = HookParameters<
+    "dropCanvasData",
+    [Canvas, DropCanvasData<any>]
+>;
 declare type HookParamsGetChatLogEntryContext = HookParameters<
-    'getChatLogEntryContext',
+    "getChatLogEntryContext",
     [JQuery, EntryContextOption[]]
 >;
-declare type HookParamsHotbarDrop = HookParameters<'hotbarDrop', [Hotbar, unknown, string]>;
+declare type HookParamsHotbarDrop = HookParameters<"hotbarDrop", [Hotbar, unknown, string]>;
 declare type HookParamsPreCreateItem = HookParameters<
-    'preCreateItem',
+    "preCreateItem",
     [PreCreate<foundry.data.ItemSource>, DocumentModificationContext, string]
 >;
 declare type HooksParamsPreUpdateCombat = HookParameters<
-    'preUpdateCombat',
+    "preUpdateCombat",
     [Combat, object, { diff: boolean; advanceTime: number; [key: string]: any }, string]
 >;
 declare type HookParamsPreUpdateToken = HookParameters<
-    'preUpdateToken',
-    [Scene, foundry.data.TokenData, Partial<foundry.data.TokenData>, { diff: boolean; [key: string]: any }, string]
+    "preUpdateToken",
+    [
+        Scene,
+        foundry.data.TokenData,
+        Partial<foundry.data.TokenData>,
+        { diff: boolean; [key: string]: any },
+        string,
+    ]
 >;
 declare type HookParamsRender<T extends Application, N extends string> = HookParameters<
     `render${N}`,
-    [T, JQuery, ReturnType<T['getData']>]
+    [T, JQuery, ReturnType<T["getData"]>]
 >;
 declare type HookParamsRenderChatMessage = HookParameters<
-    'renderChatMessage',
+    "renderChatMessage",
     [ChatMessage, JQuery, foundry.data.ChatMessageSource]
 >;
 declare type HookParamsUpdateCombat = HookParameters<
-    'updateCombat',
+    "updateCombat",
     [Combat, object, { diff: boolean; advanceTime: number; [key: string]: any }, string]
 >;
-declare type HookParamsUpdateWorldTime = HookParameters<'updateWorldTime', [number, number]>;
+declare type HookParamsUpdateWorldTime = HookParameters<"updateWorldTime", [number, number]>;
 
 declare class Hooks {
     /**
@@ -66,12 +83,12 @@ declare class Hooks {
     static on(...args: HooksParamsPreUpdateCombat): number;
     static on(...args: HookParamsPreUpdateToken): number;
     static on(...args: HookParamsRenderChatMessage): number;
-    static on(...args: HookParamsRender<ChatLog, 'ChatLog'>): number;
-    static on(...args: HookParamsRender<ChatPopout, 'ChatPopout'>): number;
-    static on(...args: HookParamsRender<CompendiumDirectory, 'CompendiumDirectory'>): number;
-    static on(...args: HookParamsRender<ActorDirectory, 'ActorDirectory'>): number;
-    static on(...args: HookParamsRender<ItemDirectory, 'ItemDirectory'>): number;
-    static on(...args: HookParamsRender<Settings, 'Settings'>): number;
+    static on(...args: HookParamsRender<ChatLog, "ChatLog">): number;
+    static on(...args: HookParamsRender<ChatPopout, "ChatPopout">): number;
+    static on(...args: HookParamsRender<CompendiumDirectory, "CompendiumDirectory">): number;
+    static on(...args: HookParamsRender<ActorDirectory, "ActorDirectory">): number;
+    static on(...args: HookParamsRender<ItemDirectory, "ItemDirectory">): number;
+    static on(...args: HookParamsRender<Settings, "Settings">): number;
     static on(...args: HookParamsUpdateCombat): number;
     static on(...args: HookParamsUpdateWorldTime): number;
     static on(...args: HookParameters<string, any>): number;
@@ -93,12 +110,12 @@ declare class Hooks {
     static once(...args: HookParamsPreCreateItem): number;
     static once(...args: HookParamsPreUpdateToken): number;
     static once(...args: HookParamsRenderChatMessage): number;
-    static once(...args: HookParamsRender<ChatLog, 'ChatLog'>): number;
-    static once(...args: HookParamsRender<ChatPopout, 'ChatPopout'>): number;
-    static once(...args: HookParamsRender<CompendiumDirectory, 'CompendiumDirectory'>): number;
-    static once(...args: HookParamsRender<ActorDirectory, 'ActorDirectory'>): number;
-    static once(...args: HookParamsRender<ItemDirectory, 'ItemDirectory'>): number;
-    static once(...args: HookParamsRender<Settings, 'Settings'>): number;
+    static once(...args: HookParamsRender<ChatLog, "ChatLog">): number;
+    static once(...args: HookParamsRender<ChatPopout, "ChatPopout">): number;
+    static once(...args: HookParamsRender<CompendiumDirectory, "CompendiumDirectory">): number;
+    static once(...args: HookParamsRender<ActorDirectory, "ActorDirectory">): number;
+    static once(...args: HookParamsRender<ItemDirectory, "ItemDirectory">): number;
+    static once(...args: HookParamsRender<Settings, "Settings">): number;
     static once(...args: HookParamsUpdateWorldTime): number;
     static once(...args: HookParameters<string, any>): number;
 

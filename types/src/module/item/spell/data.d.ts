@@ -1,10 +1,10 @@
-import { AbilityString } from '@actor/data/base';
-import { TrickMagicItemCastData } from '@item/data';
-import { ItemLevelData, ItemSystemData, ItemTraits } from '@item/data/base';
-import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from '@item/data/non-physical';
-import { ValuesList, ZeroToTen } from '@module/data';
-import type { SpellPF2e } from '.';
-export declare type SpellSource = BaseNonPhysicalItemSource<'spell', SpellSystemData>;
+import { AbilityString } from "@actor/data/base";
+import { TrickMagicItemCastData } from "@item/data";
+import { ItemLevelData, ItemSystemData, ItemTraits } from "@item/data/base";
+import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from "@item/data/non-physical";
+import { ValuesList, ZeroToTen } from "@module/data";
+import type { SpellPF2e } from ".";
+export declare type SpellSource = BaseNonPhysicalItemSource<"spell", SpellSystemData>;
 export declare class SpellData extends BaseNonPhysicalItemData<SpellPF2e> {
     /** Prepared data */
     isCantrip: boolean;
@@ -13,14 +13,14 @@ export declare class SpellData extends BaseNonPhysicalItemData<SpellPF2e> {
     /** @override */
     static DEFAULT_ICON: ImagePath;
 }
-export interface SpellData extends Omit<SpellSource, '_id' | 'effects'> {
-    type: SpellSource['type'];
-    data: SpellSource['data'];
+export interface SpellData extends Omit<SpellSource, "_id" | "effects"> {
+    type: SpellSource["type"];
+    data: SpellSource["data"];
     readonly _source: SpellSource;
 }
-export declare type MagicSchool = keyof ConfigPF2e['PF2E']['magicSchools'];
-export declare type SaveType = keyof ConfigPF2e['PF2E']['saves'];
-export declare type SpellTrait = keyof ConfigPF2e['PF2E']['spellTraits'];
+export declare type MagicSchool = keyof ConfigPF2e["PF2E"]["magicSchools"];
+export declare type SaveType = keyof ConfigPF2e["PF2E"]["saves"];
+export declare type SpellTrait = keyof ConfigPF2e["PF2E"]["spellTraits"];
 export declare type SpellTraits = ItemTraits<SpellTrait>;
 export interface SpellSystemData extends ItemSystemData, ItemLevelData {
     traits: SpellTraits;
@@ -31,9 +31,9 @@ export interface SpellSystemData extends ItemSystemData, ItemLevelData {
         value: string;
     };
     category: {
-        value: keyof ConfigPF2e['PF2E']['spellCategories'];
+        value: keyof ConfigPF2e["PF2E"]["spellCategories"];
     };
-    traditions: ValuesList<keyof ConfigPF2e['PF2E']['spellTraditions']>;
+    traditions: ValuesList<keyof ConfigPF2e["PF2E"]["spellTraditions"]>;
     school: {
         value: MagicSchool;
     };
@@ -50,8 +50,8 @@ export interface SpellSystemData extends ItemSystemData, ItemLevelData {
         value: string;
     };
     area: {
-        value: keyof ConfigPF2e['PF2E']['areaSizes'];
-        areaType: keyof ConfigPF2e['PF2E']['areaTypes'];
+        value: keyof ConfigPF2e["PF2E"]["areaSizes"];
+        areaType: keyof ConfigPF2e["PF2E"]["areaTypes"];
     };
     time: {
         value: string;
@@ -72,7 +72,7 @@ export interface SpellSystemData extends ItemSystemData, ItemLevelData {
     };
     save: {
         basic: string;
-        value: SaveType | '';
+        value: SaveType | "";
         dc?: number;
         str?: string;
     };

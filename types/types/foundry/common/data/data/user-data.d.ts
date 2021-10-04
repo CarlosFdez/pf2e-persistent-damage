@@ -31,7 +31,7 @@ declare module foundry {
             character: documents.BaseActor | null;
         }
 
-        interface UserData extends Omit<UserSource, 'character'> {
+        interface UserData extends Omit<UserSource, "character"> {
             readonly _source: UserSource;
         }
     }

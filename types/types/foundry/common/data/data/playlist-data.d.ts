@@ -35,7 +35,7 @@ declare module foundry {
             sounds: abstract.EmbeddedCollection<documents.BasePlaylistSound>;
         }
 
-        interface PlaylistData extends Omit<PlaylistSoundSource, 'sounds'> {
+        interface PlaylistData extends Omit<PlaylistSoundSource, "sounds"> {
             readonly _source: PlaylistSource;
         }
     }

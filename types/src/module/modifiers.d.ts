@@ -1,5 +1,5 @@
-import { AbilityString } from '@actor/data/base';
-import { DamageDieSize } from '@system/damage/damage';
+import { AbilityString } from "@actor/data/base";
+import { DamageDieSize } from "@system/damage/damage";
 export declare const PROFICIENCY_RANK_OPTION: readonly string[];
 export declare function ensureProficiencyOption(options: string[], proficiencyRank: number): void;
 /**
@@ -74,9 +74,16 @@ export declare class ModifierPF2e implements RawModifier {
      * @param source The source which this modifier originates from, if any.
      * @param notes Any notes about this modifier.
      */
-    constructor(name: string, modifier: number, type: string, enabled?: boolean, source?: string, notes?: string);
+    constructor(
+        name: string,
+        modifier: number,
+        type: string,
+        enabled?: boolean,
+        source?: string,
+        notes?: string,
+    );
 }
-export declare type MinimalModifier = Pick<ModifierPF2e, 'name' | 'type' | 'modifier'>;
+export declare type MinimalModifier = Pick<ModifierPF2e, "name" | "type" | "modifier">;
 export declare const STRENGTH: Readonly<{
     withScore: (score: number) => ModifierPF2e;
 }>;
@@ -221,13 +228,15 @@ export declare class DiceModifierPF2e implements RawModifier {
     enabled: boolean;
     custom: boolean;
     predicate: ModifierPredicate;
-    constructor(param: Partial<DiceModifierPF2e> & {
-        name: string;
-    });
+    constructor(
+        param: Partial<DiceModifierPF2e> & {
+            name: string;
+        },
+    );
 }
 export declare class DamageDicePF2e extends DiceModifierPF2e {
     /** The selector used to determine when   */
     selector: string;
-    constructor(params: Partial<DamageDicePF2e> & Pick<DamageDicePF2e, 'selector' | 'name'>);
+    constructor(params: Partial<DamageDicePF2e> & Pick<DamageDicePF2e, "selector" | "name">);
 }
 export {};

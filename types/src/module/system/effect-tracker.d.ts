@@ -1,6 +1,6 @@
-import type { ActorPF2e } from '@actor/base';
-import type { EffectData } from '@item/data';
-import type { EffectPF2e } from '@item/index';
+import type { ActorPF2e } from "@actor/base";
+import type { EffectData } from "@item/data";
+import type { EffectPF2e } from "@item/index";
 export declare class EffectTracker {
     private trackedEffects;
     private insert;

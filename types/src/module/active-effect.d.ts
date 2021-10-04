@@ -1,5 +1,5 @@
-import { ActorPF2e } from '@actor/base';
-import { ItemPF2e } from '@item/base';
+import { ActorPF2e } from "@actor/base";
+import { ItemPF2e } from "@item/base";
 export declare class ActiveEffectPF2e extends ActiveEffect {
     get isDisabled(): boolean;
     get isEnabled(): boolean;
@@ -21,7 +21,7 @@ export declare class ActiveEffectPF2e extends ActiveEffect {
 export interface ActiveEffectPF2e {
     readonly parent: ActorPF2e | ItemPF2e;
     getFlag(scope: string, key: string): unknown;
-    getFlag(scope: 'core', key: 'overlay'): string | undefined;
-    getFlag(scope: 'core', key: 'statusId'): string | undefined;
-    getFlag(scope: 'pf2e', key: 'applyOnCast'): boolean | undefined;
+    getFlag(scope: "core", key: "overlay"): string | undefined;
+    getFlag(scope: "core", key: "statusId"): string | undefined;
+    getFlag(scope: "pf2e", key: "applyOnCast"): boolean | undefined;
 }

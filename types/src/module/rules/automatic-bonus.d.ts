@@ -1,4 +1,4 @@
-import { RuleElementSyntheticsPF2e } from './rules-data-definitions';
+import { RuleElementSyntheticsPF2e } from "./rules-data-definitions";
 export declare class AutomaticBonusProgression {
     /**
      * @param level The name of this collection of statistic modifiers.

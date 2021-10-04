@@ -1,5 +1,5 @@
 interface PlayerSettings {
-    uiTheme: 'blue' | 'red' | 'original' | 'ui';
+    uiTheme: "blue" | "red" | "original" | "ui";
     showEffectPanel: boolean;
     showRollDialogs: boolean;
 }

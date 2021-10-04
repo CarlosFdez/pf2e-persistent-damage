@@ -65,7 +65,10 @@ declare class AudioHelper {
      * // Play the sound of a locked door for all players
      * Audio.play({src: "sounds/lock.wav", volume: 0.8, autoplay: true, loop: false}, true);
      */
-    static play(data: { src: string; autoplay: boolean; volume: number; loop: boolean }, push: boolean): void;
+    static play(
+        data: { src: string; autoplay: boolean; volume: number; loop: boolean },
+        push: boolean,
+    ): void;
 
     /**
      * Create a Howl object and load it to be ready for later playback

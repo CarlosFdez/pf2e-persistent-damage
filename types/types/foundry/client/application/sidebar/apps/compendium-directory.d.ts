@@ -57,7 +57,12 @@ declare class CompendiumDirectory extends SidebarTab {
     protected _onDeleteCompendium(pack: CompendiumCollection): Promise<boolean>;
 
     /** @override */
-    protected _onSearchFilter(event: KeyboardEvent, query: string, rgx: RegExp, html: HTMLElement): void;
+    protected _onSearchFilter(
+        event: KeyboardEvent,
+        query: string,
+        rgx: RegExp,
+        html: HTMLElement,
+    ): void;
 }
 
 declare interface CompendiumDirectory {

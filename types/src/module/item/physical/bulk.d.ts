@@ -1,13 +1,10 @@
-import { Size } from '@module/data';
-import { Optional } from '@module/utils';
-import { ItemDataPF2e, PhysicalItemData } from '../data';
+import { Size } from "@module/data";
+import { Optional } from "@module/utils";
+import { ItemDataPF2e, PhysicalItemData } from "../data";
 export declare class Bulk {
     normal: number;
     light: number;
-    constructor({ normal, light }?: {
-        normal?: number;
-        light?: number;
-    });
+    constructor({ normal, light }?: { normal?: number; light?: number });
     get isNegligible(): boolean;
     get isLight(): boolean;
     toLightBulk(): number;
@@ -72,7 +69,19 @@ export declare class BulkItem {
     holdsItems: BulkItem[];
     negateBulk: Bulk;
     extraDimensionalContainer: boolean;
-    constructor({ id, bulk, quantity, stackGroup, isEquipped, unequippedBulk, equippedBulk, holdsItems, negateBulk, extraDimensionalContainer, size, }?: {
+    constructor({
+        id,
+        bulk,
+        quantity,
+        stackGroup,
+        isEquipped,
+        unequippedBulk,
+        equippedBulk,
+        holdsItems,
+        negateBulk,
+        extraDimensionalContainer,
+        size,
+    }?: {
         id?: string;
         bulk?: Bulk;
         quantity?: number;
@@ -104,7 +113,12 @@ export declare const defaultBulkConfig: BulkConfig;
  * @param actorSize
  * @return
  */
-export declare function calculateBulk({ items, nestedExtraDimensionalContainer, actorSize, bulkConfig, }?: {
+export declare function calculateBulk({
+    items,
+    nestedExtraDimensionalContainer,
+    actorSize,
+    bulkConfig,
+}?: {
     items?: BulkItem[];
     nestedExtraDimensionalContainer?: boolean;
     actorSize?: Size;
@@ -142,9 +156,7 @@ export declare function toBulkItems(items: PhysicalItemData[]): BulkItem[];
  * Takes actor data and returns a list of items to calculate bulk with
  * @param actorData
  */
-export declare function itemsFromActorData(actorData: {
-    items: ItemDataPF2e[];
-}): BulkItem[];
+export declare function itemsFromActorData(actorData: { items: ItemDataPF2e[] }): BulkItem[];
 /**
  * Carried armor usually has one more bulk when not worn, or 1 bulk if L
  * @param wornBulk

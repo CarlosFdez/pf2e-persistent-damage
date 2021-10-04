@@ -1,7 +1,7 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { DateTime } from 'luxon';
-import { animateDarkness } from './animate-darkness';
+import { DateTime } from "luxon";
+import { animateDarkness } from "./animate-darkness";
 interface WorldClockData {
     date: string;
     time: string;
@@ -14,7 +14,7 @@ export declare class WorldClock extends Application {
     readonly animateDarkness: typeof animateDarkness;
     constructor();
     /** Setting: the date theme (Imperial Calendar not yet supported) */
-    get dateTheme(): 'AR' | 'IC' | 'AD' | 'CE';
+    get dateTheme(): "AR" | "IC" | "AD" | "CE";
     /** Setting: display either a 24-hour or 12-hour clock */
     get timeConvention(): 24 | 12;
     /** Setting: whether to keep the scene's darkness level synchronized with the world time */

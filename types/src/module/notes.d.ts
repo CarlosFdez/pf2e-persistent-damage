@@ -1,5 +1,5 @@
-import { ModifierPredicate } from './modifiers';
-import { DegreeOfSuccessString } from '@system/check-degree-of-success';
+import { ModifierPredicate } from "./modifiers";
+import { DegreeOfSuccessString } from "@system/check-degree-of-success";
 export declare class RollNotePF2e {
     /** The selector used to determine on which rolls the note will be shown for. */
     selector: string;
@@ -9,5 +9,10 @@ export declare class RollNotePF2e {
     predicate?: ModifierPredicate;
     /** List of outcomes to show this note for; or all outcomes if none are specified */
     outcome: DegreeOfSuccessString[];
-    constructor(selector: string, text: string, predicate?: ModifierPredicate, outcome?: DegreeOfSuccessString[]);
+    constructor(
+        selector: string,
+        text: string,
+        predicate?: ModifierPredicate,
+        outcome?: DegreeOfSuccessString[],
+    );
 }

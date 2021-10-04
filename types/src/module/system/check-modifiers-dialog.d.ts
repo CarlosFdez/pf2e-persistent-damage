@@ -1,9 +1,9 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { StatisticModifier } from '../modifiers';
-import { ActorPF2e } from '@actor/base';
-import { RollNotePF2e } from '../notes';
-import { PF2CheckDC } from './check-degree-of-success';
+import { StatisticModifier } from "../modifiers";
+import { ActorPF2e } from "@actor/base";
+import { RollNotePF2e } from "../notes";
+import { PF2CheckDC } from "./check-degree-of-success";
 export interface CheckModifiersContext {
     /** Any options which should be used in the roll. */
     options?: string[];
@@ -37,9 +37,17 @@ export declare class CheckModifiersDialog extends Application {
     context: CheckModifiersContext;
     /** Callback called when the roll occurs. */
     callback?: (roll: Rolled<Roll>) => void;
-    constructor(check: StatisticModifier, context?: CheckModifiersContext, callback?: (roll: Rolled<Roll>) => void);
+    constructor(
+        check: StatisticModifier,
+        context?: CheckModifiersContext,
+        callback?: (roll: Rolled<Roll>) => void,
+    );
     /** Roll the given check, rendering the roll to the chat menu. */
-    static roll(check: StatisticModifier, context?: CheckModifiersContext, callback?: (roll: Rolled<Roll>) => void): Promise<void>;
+    static roll(
+        check: StatisticModifier,
+        context?: CheckModifiersContext,
+        callback?: (roll: Rolled<Roll>) => void,
+    ): Promise<void>;
     getData(): {
         appId: string;
         check: StatisticModifier;

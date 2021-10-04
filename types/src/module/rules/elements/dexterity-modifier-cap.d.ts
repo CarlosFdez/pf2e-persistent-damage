@@ -1,5 +1,5 @@
-import { CharacterData, NPCData } from '@actor/data';
-import { RuleElementPF2e } from '../rule-element';
+import { CharacterData, NPCData } from "@actor/data";
+import { RuleElementPF2e } from "../rule-element";
 /**
  * @category RuleElement
  */

@@ -1,4 +1,4 @@
-import * as io from 'socket.io';
+import * as io from "socket.io";
 
 declare global {
     /**
@@ -15,10 +15,10 @@ declare global {
         current: TUser | null;
 
         /** @override */
-        protected _initialize(data: TUser['data']['_source'][]): void;
+        protected _initialize(data: TUser["data"]["_source"][]): void;
 
         /** @override */
-        static documentName: 'User';
+        static documentName: "User";
 
         /** Get the users with player roles */
         get players(): TUser[];

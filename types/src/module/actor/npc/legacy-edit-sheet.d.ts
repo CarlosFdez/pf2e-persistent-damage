@@ -1,7 +1,7 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { CreatureSheetPF2e } from '../creature/sheet';
-import { NPCPF2e } from '.';
+import { CreatureSheetPF2e } from "../creature/sheet";
+import { NPCPF2e } from ".";
 export declare class NPCLegacyEditSheetPF2e extends CreatureSheetPF2e<NPCPF2e> {
     static get defaultOptions(): ActorSheetOptions & {
         classes: string[];

@@ -7,10 +7,10 @@ declare abstract class WorldCollection<
     TDocument extends foundry.abstract.Document,
 > extends DocumentCollection<TDocument> {
     /** @override */
-    constructor(data?: TDocument['data']['_source'][]);
+    constructor(data?: TDocument["data"]["_source"][]);
 
     /** The source data is, itself, a mapping of IDs to data objects */
-    protected readonly _source: TDocument['data']['_source'];
+    protected readonly _source: TDocument["data"]["_source"];
 
     /** An Array of application references which will be automatically updated when the collection content changes */
     apps: Application[];
@@ -19,7 +19,7 @@ declare abstract class WorldCollection<
      * Initialize the WorldCollection object by constructing its contained Document instances
      * @param data
      */
-    protected _initialize(data: TDocument['data']['_source'][]): void;
+    protected _initialize(data: TDocument["data"]["_source"][]): void;
 
     /* -------------------------------------------- */
     /*  Collection Properties                       */
@@ -70,5 +70,7 @@ declare abstract class WorldCollection<
      * @param document The source Document, or a plain data object
      * @return The processed data ready for world Document creation
      */
-    fromCompendium(document: TDocument | TDocument['data']['_source']): TDocument['data']['_source'];
+    fromCompendium(
+        document: TDocument | TDocument["data"]["_source"],
+    ): TDocument["data"]["_source"];
 }

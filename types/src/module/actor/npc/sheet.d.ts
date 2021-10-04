@@ -1,13 +1,13 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { CreatureSheetPF2e } from '../creature/sheet';
-import { NPCPF2e } from '@actor/index';
-import { IdentifyCreatureData } from '@module/recall-knowledge';
-import { ConditionData, EffectData, ItemDataPF2e, SpellcastingEntryData } from '@item/data';
-import { ActorSheetDataPF2e, SheetInventory } from '../sheet/data-types';
-import { LabeledString } from '@module/data';
-import { NPCAttributes, NPCSkillData, NPCStrike, NPCSystemData } from './data';
-import { CreatureTraitsData, SaveString, SkillAbbreviation } from '@actor/creature/data';
+import { CreatureSheetPF2e } from "../creature/sheet";
+import { NPCPF2e } from "@actor/index";
+import { IdentifyCreatureData } from "@module/recall-knowledge";
+import { ConditionData, EffectData, ItemDataPF2e, SpellcastingEntryData } from "@item/data";
+import { ActorSheetDataPF2e, SheetInventory } from "../sheet/data-types";
+import { LabeledString } from "@module/data";
+import { NPCAttributes, NPCSkillData, NPCStrike, NPCSystemData } from "./data";
+import { CreatureTraitsData, SaveString, SkillAbbreviation } from "@actor/creature/data";
 interface NPCSheetLabeledValue extends LabeledString {
     localizedName?: string;
 }
@@ -33,7 +33,7 @@ interface NPCSystemSheetData extends NPCSystemData {
     attributes: NPCAttributes & {
         shieldBroken?: boolean;
     };
-    details: NPCSystemData['details'] & {
+    details: NPCSystemData["details"] & {
         alignment: {
             localizedName?: string;
         };
@@ -71,15 +71,15 @@ interface NPCSheetData extends ActorSheetDataPF2e<NPCPF2e> {
     unspecificLoreProgression?: string;
     isNotCommon?: boolean;
     actorSize?: string;
-    actorAttitudes?: ConfigPF2e['PF2E']['attitude'];
+    actorAttitudes?: ConfigPF2e["PF2E"]["attitude"];
     actorAttitude?: string;
     traits?: Record<string, string>;
     immunities?: Record<string, string>;
     languages?: Record<string, string>;
     isWeak?: boolean;
     isElite?: boolean;
-    eliteState: 'active' | 'inactive';
-    weakState: 'active' | 'inactive';
+    eliteState: "active" | "inactive";
+    weakState: "active" | "inactive";
     notAdjusted: boolean;
     inventory: SheetInventory;
     hasShield?: boolean;
@@ -160,9 +160,7 @@ export declare class NPCSheetPF2e extends CreatureSheetPF2e<NPCPF2e> {
      * Prepares the equipment list of the actor.
      * @param sheetData Data of the sheet.
      */
-    prepareInventory(sheetData: {
-        items: ItemDataPF2e[];
-    }): SheetInventory;
+    prepareInventory(sheetData: { items: ItemDataPF2e[] }): SheetInventory;
     private get isWeak();
     private get isElite();
     private getSizeLocalizedKey;

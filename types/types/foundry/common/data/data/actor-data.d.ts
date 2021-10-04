@@ -54,7 +54,7 @@ declare module foundry {
             /** Default Token settings that are used for Tokens created from this Actor **/
             token: PrototypeTokenData;
 
-            protected override _initializeSource(data: ActorSource): this['_source'];
+            protected override _initializeSource(data: ActorSource): this["_source"];
 
             protected override _initialize(): void;
         }
@@ -63,7 +63,7 @@ declare module foundry {
             TDocument extends documents.BaseActor,
             TActiveEffect extends documents.BaseActiveEffect,
             TItem extends documents.BaseItem,
-        > extends Omit<ActorSource, 'effects' | 'items' | 'token'> {
+        > extends Omit<ActorSource, "effects" | "items" | "token"> {
             readonly _source: ActorSource;
         }
     }

@@ -4,8 +4,15 @@ declare interface ClientSettingsData {
     scope: string;
     hint?: string;
     config?: boolean;
-    type?: NumberConstructor | StringConstructor | BooleanConstructor | ObjectConstructor | FunctionConstructor;
-    range?: this['type'] extends NumberConstructor ? { min: number; max: number; step: number } : undefined;
+    type?:
+        | NumberConstructor
+        | StringConstructor
+        | BooleanConstructor
+        | ObjectConstructor
+        | FunctionConstructor;
+    range?: this["type"] extends NumberConstructor
+        ? { min: number; max: number; step: number }
+        : undefined;
     choices?: Record<string, string> | Record<number, string>;
     onChange?: (choice?: string) => void | Promise<void>;
 }
@@ -25,8 +32,8 @@ declare interface SettingsMenuData {
 }
 
 declare interface ClientSettingsStorage extends Map<string, Storage | WorldSettingsStorage> {
-    get(key: 'client'): Storage;
-    get(key: 'world'): WorldSettingsStorage;
+    get(key: "client"): Storage;
+    get(key: "world"): WorldSettingsStorage;
 }
 
 /**
@@ -126,8 +133,14 @@ declare class ClientSettings {
      * @param module    The module namespace under which the setting is registered
      * @param key       The setting key to retrieve
      */
-    get(module: 'core', key: 'compendiumConfiguration'): Record<string, { private: boolean; locked: boolean }>;
-    get(module: 'core', key: 'rollMode'): typeof CONST.DICE_ROLL_MODES[keyof typeof CONST.DICE_ROLL_MODES];
+    get(
+        module: "core",
+        key: "compendiumConfiguration",
+    ): Record<string, { private: boolean; locked: boolean }>;
+    get(
+        module: "core",
+        key: "rollMode",
+    ): typeof CONST.DICE_ROLL_MODES[keyof typeof CONST.DICE_ROLL_MODES];
     get(module: string, key: string): any;
 
     /**

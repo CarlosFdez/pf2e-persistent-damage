@@ -14,7 +14,10 @@ declare module foundry {
             static override get metadata(): ChatMessageMetadata;
 
             /** Is a user able to create a new chat message? */
-            protected static _canCreate(user: documents.BaseUser, doc: documents.BaseChatMessage): boolean;
+            protected static _canCreate(
+                user: documents.BaseUser,
+                doc: documents.BaseChatMessage,
+            ): boolean;
 
             /** Is a user able to update an existing chat message? */
             protected static _canUpdate(
@@ -24,7 +27,10 @@ declare module foundry {
             ): boolean;
 
             /** Is a user able to delete an existing chat message? */
-            protected static _canDelete(user: documents.BaseUser, doc: documents.BaseChatMessage): boolean;
+            protected static _canDelete(
+                user: documents.BaseUser,
+                doc: documents.BaseChatMessage,
+            ): boolean;
         }
 
         interface BaseChatMessage {
@@ -34,14 +40,14 @@ declare module foundry {
         }
 
         interface ChatMessageMetadata extends abstract.DocumentMetadata {
-            name: 'ChatMessage';
-            collection: 'messages';
-            label: 'DOCUMENT.ChatMessage';
+            name: "ChatMessage";
+            collection: "messages";
+            label: "DOCUMENT.ChatMessage";
             isPrimary: true;
             permissions: {
-                create: typeof BaseChatMessage['_canCreate'];
-                update: typeof BaseChatMessage['_canUpdate'];
-                delete: typeof BaseChatMessage['_canDelete'];
+                create: typeof BaseChatMessage["_canCreate"];
+                update: typeof BaseChatMessage["_canUpdate"];
+                delete: typeof BaseChatMessage["_canDelete"];
             };
         }
     }

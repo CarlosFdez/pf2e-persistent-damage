@@ -7,9 +7,13 @@ declare module foundry {
             static override get metadata(): ItemMetadata;
 
             /** A reference to the Collection of ActiveEffect instances in the Item document, indexed by _id. */
-            get effects(): this['data']['effects'];
+            get effects(): this["data"]["effects"];
 
-            override canUserModify(user: BaseUser, action: UserAction, data?: DocumentUpdateData<this>): boolean;
+            override canUserModify(
+                user: BaseUser,
+                action: UserAction,
+                data?: DocumentUpdateData<this>,
+            ): boolean;
 
             override testUserPermission(
                 user: BaseUser,
@@ -34,7 +38,7 @@ declare module foundry {
                 insertKeys?: boolean;
                 insertValues?: boolean;
                 enforceTypes?: boolean;
-            }): this['data']['data'];
+            }): this["data"]["data"];
         }
 
         interface BaseItem {
@@ -44,17 +48,17 @@ declare module foundry {
         }
 
         interface ItemMetadata extends abstract.DocumentMetadata {
-            name: 'Item';
-            collection: 'items';
-            label: 'DOCUMENT.Item';
+            name: "Item";
+            collection: "items";
+            label: "DOCUMENT.Item";
             embedded: {
                 ActiveEffect: typeof BaseActiveEffect;
             };
             isPrimary: true;
             hasSystemData: true;
             types: string[];
-            permissions: Omit<abstract.DocumentMetadata['permissions'], 'create'> & {
-                create: 'ITEM_CREATE';
+            permissions: Omit<abstract.DocumentMetadata["permissions"], "create"> & {
+                create: "ITEM_CREATE";
             };
         }
     }

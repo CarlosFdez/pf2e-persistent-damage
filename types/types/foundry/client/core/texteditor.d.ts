@@ -16,7 +16,7 @@ declare class TextEditor {
      * @param content   Initial HTML or text content to populate the editor with
      * @return          The editor instance.
      */
-    static create(options: object, content: string): Promise<import('tinymce').Editor[]>;
+    static create(options: object, content: string): Promise<import("tinymce").Editor[]>;
 
     /**
      * Enrich HTML content by replacing or augmenting components of it
@@ -28,7 +28,10 @@ declare class TextEditor {
      * @param rollData  The data object providing context for inline rolls
      * @return          The enriched HTML content
      */
-    static enrichHTML(content: string, { secrets, entities, links, rolls, rollData }?: EnrichHTMLOptions): string;
+    static enrichHTML(
+        content: string,
+        { secrets, entities, links, rolls, rollData }?: EnrichHTMLOptions,
+    ): string;
 
     /**
      * Preview an HTML fragment by constructing a substring of a given length from its inner text.
@@ -47,7 +50,12 @@ declare class TextEditor {
     /**
      * Handle replacement of content links within HTML by delegating to different helper methods based on entity type
      */
-    protected static _replaceContentLinks(match: string, entityType: string, id: string, name: string): string;
+    protected static _replaceContentLinks(
+        match: string,
+        entityType: string,
+        id: string,
+        name: string,
+    ): string;
 
     /**
      * Replace a matched Entity Link with an actual HTML link to that entity
@@ -68,7 +76,12 @@ declare class TextEditor {
      * @param name      A custom text name to display
      * @return          The replacement string
      */
-    protected static _replaceEntityLink(match: string, entityType: string, id: string, name: string): string;
+    protected static _replaceEntityLink(
+        match: string,
+        entityType: string,
+        id: string,
+        name: string,
+    ): string;
 
     /**
      * Replace a hyperlink-like string with an actual HTML <a> tag
@@ -84,7 +97,12 @@ declare class TextEditor {
      * @param rollData  The data object providing context for inline rolls
      * @return          The replaced match
      */
-    protected static _replaceInlineRolls(match: string, command: string, formula: string, ...args: any[]): string;
+    protected static _replaceInlineRolls(
+        match: string,
+        command: string,
+        formula: string,
+        ...args: any[]
+    ): string;
 
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
@@ -119,5 +137,8 @@ declare class TextEditor {
      * @param event The originating drop event which triggered the data transfer
      * @param editor    The TinyMCE editor instance being dropped on
      */
-    protected static _onDropEditorData(event: Event, editor: import('tinymce').Editor): Promise<boolean>;
+    protected static _onDropEditorData(
+        event: Event,
+        editor: import("tinymce").Editor,
+    ): Promise<boolean>;
 }

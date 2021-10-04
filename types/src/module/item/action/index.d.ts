@@ -1,9 +1,12 @@
-import { ItemPF2e } from '@item/base';
-import { ActionData } from './data';
+import { ItemPF2e } from "@item/base";
+import { ActionData } from "./data";
 export declare class ActionPF2e extends ItemPF2e {
     static get schema(): typeof ActionData;
     prepareData(): void;
-    getChatData(this: Embedded<ActionPF2e>, htmlOptions?: EnrichHTMLOptions): {
+    getChatData(
+        this: Embedded<ActionPF2e>,
+        htmlOptions?: EnrichHTMLOptions,
+    ): {
         properties: (string | null)[];
         traits: import("../data").TraitChatData[];
         actionType: {
@@ -32,9 +35,11 @@ export declare class ActionPF2e extends ItemPF2e {
         source: {
             value: string;
         };
-        options?: {
-            value: string[];
-        } | undefined;
+        options?:
+            | {
+                  value: string[];
+              }
+            | undefined;
         usage: {
             value: string;
         };

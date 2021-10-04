@@ -102,7 +102,13 @@ declare global {
          * This method is temporarily factored out in order to provide different behaviors synchronous evaluation.
          * This will be removed in 0.10.x
          */
-        protected _evaluateSync({ minimize, maximize }?: { minimize?: boolean; maximize?: boolean }): Evaluated<this>;
+        protected _evaluateSync({
+            minimize,
+            maximize,
+        }?: {
+            minimize?: boolean;
+            maximize?: boolean;
+        }): Evaluated<this>;
 
         /* -------------------------------------------- */
         /*  Serialization and Loading                   */
@@ -120,7 +126,10 @@ declare global {
          * @param data The de-serialized term data
          * @returns The re-constructed RollTerm object
          */
-        protected static _fromData<T extends RollTerm>(this: ConstructorOf<T>, data: RollTermData): T;
+        protected static _fromData<T extends RollTerm>(
+            this: ConstructorOf<T>,
+            data: RollTermData,
+        ): T;
 
         /**
          * Reconstruct a RollTerm instance from a provided JSON string
@@ -144,6 +153,6 @@ declare global {
 
     type Evaluated<T extends RollTerm> = T & {
         _evaluated: true;
-        total: NonNullable<T['total']>;
+        total: NonNullable<T["total"]>;
     };
 }

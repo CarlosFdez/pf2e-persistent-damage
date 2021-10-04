@@ -94,7 +94,11 @@ declare global {
          * @param [multiplyNumeric]  Apply multiplication factor to numeric scalar terms
          * @return The altered Roll expression
          */
-        alter(multiply: number, add: number, { multiplyNumeric }?: { multiplyNumeric?: boolean }): this;
+        alter(
+            multiply: number,
+            add: number,
+            { multiplyNumeric }?: { multiplyNumeric?: boolean },
+        ): this;
 
         /** Clone the Roll instance, returning a new Roll instance that has not yet been evaluated. */
         clone(): this;
@@ -146,13 +150,25 @@ declare global {
          * Evaluate the roll asynchronously.
          * A temporary helper method used to migrate behavior from 0.7.x (sync by default) to 0.9.x (async by default).
          */
-        protected _evaluate({ minimize, maximize }?: { minimize?: boolean; maximize?: boolean }): Promise<Rolled<this>>;
+        protected _evaluate({
+            minimize,
+            maximize,
+        }?: {
+            minimize?: boolean;
+            maximize?: boolean;
+        }): Promise<Rolled<this>>;
 
         /**
          * Evaluate the roll synchronously.
          * A temporary helper method used to migrate behavior from 0.7.x (sync by default) to 0.9.x (async by default).
          */
-        protected _evaluateSync({ minimize, maximize }?: { minimize?: boolean; maximize?: boolean }): Rolled<this>;
+        protected _evaluateSync({
+            minimize,
+            maximize,
+        }?: {
+            minimize?: boolean;
+            maximize?: boolean;
+        }): Rolled<this>;
 
         /**
          * Safely evaluate the final total result for the Roll using its component terms.
@@ -185,7 +201,11 @@ declare global {
          * @param [options={}] Additional options which modify or describe this Roll
          * @return The constructed Roll instance
          */
-        static create<T extends RollData>(formula: string, data?: T, options?: Record<string, unknown>): Roll;
+        static create<T extends RollData>(
+            formula: string,
+            data?: T,
+            options?: Record<string, unknown>,
+        ): Roll;
 
         /**
          * Transform an array of RollTerm objects into a cleaned string formula representation.
@@ -444,7 +464,11 @@ declare global {
          * const roll = Roll.fromTerms([t1, plus, t2]);
          * roll.formula; // 4d8 + 8
          */
-        static fromTerms<T extends Roll>(this: T, terms: RollTerm[], options?: Record<string, unknown>): T;
+        static fromTerms<T extends Roll>(
+            this: T,
+            terms: RollTerm[],
+            options?: Record<string, unknown>,
+        ): T;
     }
 
     interface RollData {

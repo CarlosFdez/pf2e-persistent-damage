@@ -1,15 +1,15 @@
-import { CONDITION_TYPES } from '@actor/data/values';
-import { ItemSystemData } from '@item/data/base';
-import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from '@item/data/non-physical';
-import { ConditionPF2e } from '.';
-export declare type ConditionSource = BaseNonPhysicalItemSource<'condition', ConditionSystemData>;
+import { CONDITION_TYPES } from "@actor/data/values";
+import { ItemSystemData } from "@item/data/base";
+import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from "@item/data/non-physical";
+import { ConditionPF2e } from ".";
+export declare type ConditionSource = BaseNonPhysicalItemSource<"condition", ConditionSystemData>;
 export declare class ConditionData extends BaseNonPhysicalItemData<ConditionPF2e> {
     /** @override */
     static DEFAULT_ICON: ImagePath;
 }
-export interface ConditionData extends Omit<ConditionSource, '_id' | 'effects'> {
-    type: ConditionSource['type'];
-    data: ConditionSource['data'];
+export interface ConditionData extends Omit<ConditionSource, "_id" | "effects"> {
+    type: ConditionSource["type"];
+    data: ConditionSource["data"];
     readonly _source: ConditionSource;
 }
 export interface ConditionSystemData extends ItemSystemData {
@@ -19,25 +19,33 @@ export interface ConditionSystemData extends ItemSystemData {
     references: {
         parent?: {
             id: string;
-            type: 'status' | 'condition' | 'feat' | 'weapon' | 'armor' | 'consumable' | 'equipment' | 'spell';
+            type:
+                | "status"
+                | "condition"
+                | "feat"
+                | "weapon"
+                | "armor"
+                | "consumable"
+                | "equipment"
+                | "spell";
         };
         children: [
             {
                 id: string;
-                type: 'condition';
-            }
+                type: "condition";
+            },
         ];
         overriddenBy: [
             {
                 id: string;
-                type: 'condition';
-            }
+                type: "condition";
+            },
         ];
         overrides: [
             {
                 id: string;
-                type: 'condition';
-            }
+                type: "condition";
+            },
         ];
         /**
          * This status is immune, and thereby inactive, from the following list.
@@ -45,8 +53,16 @@ export interface ConditionSystemData extends ItemSystemData {
         immunityFrom: [
             {
                 id: string;
-                type: 'status' | 'condition' | 'feat' | 'weapon' | 'armor' | 'consumable' | 'equipment' | 'spell';
-            }
+                type:
+                    | "status"
+                    | "condition"
+                    | "feat"
+                    | "weapon"
+                    | "armor"
+                    | "consumable"
+                    | "equipment"
+                    | "spell";
+            },
         ];
     };
     hud: {
@@ -64,11 +80,11 @@ export interface ConditionSystemData extends ItemSystemData {
     };
     modifiers: [
         {
-            type: 'ability' | 'proficiency' | 'status' | 'circumstance' | 'item' | 'untyped';
+            type: "ability" | "proficiency" | "status" | "circumstance" | "item" | "untyped";
             name: string;
             group: string;
             value?: number;
-        }
+        },
     ];
     base: string;
     group: string;
@@ -80,7 +96,7 @@ export interface ConditionSystemData extends ItemSystemData {
             {
                 value: number;
                 source: string;
-            }
+            },
         ];
     };
     sources: {
@@ -91,13 +107,13 @@ export interface ConditionSystemData extends ItemSystemData {
             {
                 condition: string;
                 value?: number;
-            }
+            },
         ];
         unlinked: [
             {
                 condition: string;
                 value?: number;
-            }
+            },
         ];
     };
     overrides: string[];

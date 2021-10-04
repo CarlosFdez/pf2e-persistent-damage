@@ -1,11 +1,11 @@
-import { RollNotePF2e } from '@module/notes';
-import { CreaturePF2e } from '@actor/index';
-import { MeleeData } from '@item/data';
-import { Rarity } from '@module/data';
-import { NPCData } from './data';
-import { VisionLevel } from '@actor/creature/data';
-import { NPCSheetPF2e } from './sheet';
-import { NPCLegacySheetPF2e } from './legacy-sheet';
+import { RollNotePF2e } from "@module/notes";
+import { CreaturePF2e } from "@actor/index";
+import { MeleeData } from "@item/data";
+import { Rarity } from "@module/data";
+import { NPCData } from "./data";
+import { VisionLevel } from "@actor/creature/data";
+import { NPCSheetPF2e } from "./sheet";
+import { NPCLegacySheetPF2e } from "./legacy-sheet";
 export declare class NPCPF2e extends CreaturePF2e {
     static get schema(): typeof NPCData;
     get rarity(): Rarity;
@@ -22,18 +22,26 @@ export declare class NPCPF2e extends CreaturePF2e {
     /** Grant all users at least limited permission on dead NPCs */
     get permission(): PermissionLevel;
     /** Grant players limited permission on dead NPCs */
-    testUserPermission(user: User, permission: DocumentPermission | UserAction, options?: {
-        exact?: boolean;
-    }): boolean;
+    testUserPermission(
+        user: User,
+        permission: DocumentPermission | UserAction,
+        options?: {
+            exact?: boolean;
+        },
+    ): boolean;
     prepareDerivedData(): void;
     private updateTokenAttitude;
     private static mapNPCAttitudeToTokenDisposition;
     private static mapTokenDispositionToNPCAttitude;
     protected getAttackEffects(item: MeleeData): Promise<RollNotePF2e[]>;
     protected getHpAdjustment(level: number): number;
-    protected _onUpdate(changed: DeepPartial<this['data']['_source']>, options: DocumentModificationContext, userId: string): void;
+    protected _onUpdate(
+        changed: DeepPartial<this["data"]["_source"]>,
+        options: DocumentModificationContext,
+        userId: string,
+    ): void;
     /** Make the NPC elite, weak, or normal */
-    applyAdjustment(adjustment: 'elite' | 'weak' | 'normal'): Promise<void>;
+    applyAdjustment(adjustment: "elite" | "weak" | "normal"): Promise<void>;
     updateAttitudeFromDisposition(disposition: number): void;
 }
 export interface NPCPF2e {

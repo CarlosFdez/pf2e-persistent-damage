@@ -1,8 +1,8 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { NPCSkillData } from '@actor/npc/data';
-import type { NPCPF2e } from '@actor/index';
-import type { ItemPF2e, LorePF2e } from '@item/index';
+import { NPCSkillData } from "@actor/npc/data";
+import type { NPCPF2e } from "@actor/index";
+import type { ItemPF2e, LorePF2e } from "@item/index";
 /**
  * Specialized form to setup skills for an NPC character.
  */

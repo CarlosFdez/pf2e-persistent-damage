@@ -1,7 +1,7 @@
-import { TrickMagicItemDifficultyData } from '@item/consumable/spell-consumables';
-import type { ConsumablePF2e } from '@item';
-import type { ActorPF2e } from '@actor';
-declare type TrickMagicItemSkill = TrickMagicItemPopup['SKILLS'][number];
+import { TrickMagicItemDifficultyData } from "@item/consumable/spell-consumables";
+import type { ConsumablePF2e } from "@item";
+import type { ActorPF2e } from "@actor";
+declare type TrickMagicItemSkill = TrickMagicItemPopup["SKILLS"][number];
 export declare class TrickMagicItemPopup {
     /** The wand or scroll being "tricked" */
     readonly item: Embedded<ConsumablePF2e>;

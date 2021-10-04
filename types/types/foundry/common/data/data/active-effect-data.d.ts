@@ -35,14 +35,14 @@ declare module foundry {
             changes: EffectChangeData<TDocument>[];
         }
 
-        interface ActiveEffectData extends Omit<ActiveEffectSource, 'duration' | 'changes'> {
+        interface ActiveEffectData extends Omit<ActiveEffectSource, "duration" | "changes"> {
             readonly _source: ActiveEffectSource;
         }
     }
 }
 
 declare interface ActiveEffectDurationSummary {
-    type: 'seconds' | 'turns' | 'none';
+    type: "seconds" | "turns" | "none";
     duration: number;
     remaining: number;
     label: string;

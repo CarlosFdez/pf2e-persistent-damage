@@ -1,16 +1,32 @@
-import { ItemPF2e } from '../index';
-import { FeatData, FeatType } from './data';
+import { ItemPF2e } from "../index";
+import { FeatData, FeatType } from "./data";
 export declare class FeatPF2e extends ItemPF2e {
     static get schema(): typeof FeatData;
     get featType(): {
         value: FeatType;
         label: string;
     };
-    getChatData(this: Embedded<FeatPF2e>, htmlOptions?: EnrichHTMLOptions): {
+    getChatData(
+        this: Embedded<FeatPF2e>,
+        htmlOptions?: EnrichHTMLOptions,
+    ): {
         properties: (string | null)[];
         traits: import("../data").TraitChatData[];
         featType: {
-            value: "ancestry" | "class" | "general" | "skill" | "archetype" | "curse" | "heritage" | "ancestryfeature" | "classfeature" | "bonus" | "pfsboon" | "deityboon" | "variantrule";
+            value:
+                | "ancestry"
+                | "class"
+                | "general"
+                | "skill"
+                | "archetype"
+                | "curse"
+                | "heritage"
+                | "ancestryfeature"
+                | "classfeature"
+                | "bonus"
+                | "pfsboon"
+                | "deityboon"
+                | "variantrule";
         };
         actionType: {
             value: "passive" | "action" | "reaction" | "free";
@@ -33,9 +49,11 @@ export declare class FeatPF2e extends ItemPF2e {
         source: {
             value: string;
         };
-        options?: {
-            value: string[];
-        } | undefined;
+        options?:
+            | {
+                  value: string[];
+              }
+            | undefined;
         usage: {
             value: string;
         };

@@ -26,7 +26,7 @@ declare global {
         static CACHE_LIFETIME_SECONDS: number;
 
         /** The named game setting which contains Compendium configurations. */
-        static CONFIG_SETTING: 'compendiumConfiguration';
+        static CONFIG_SETTING: "compendiumConfiguration";
 
         /**
          * Create a new Compendium Collection using provided metadata.
@@ -141,7 +141,7 @@ declare global {
         /** @override */
         _onCreateDocuments(
             documents: TDocument[],
-            result: TDocument['data']['_source'][],
+            result: TDocument["data"]["_source"][],
             options: DocumentModificationContext,
             userId: string,
         ): void;
@@ -149,7 +149,7 @@ declare global {
         /** @override */
         _onUpdateDocuments(
             documents: TDocument[],
-            result: TDocument['data']['_source'][],
+            result: TDocument["data"]["_source"][],
             options: DocumentModificationContext,
             userId: string,
         ): void;
@@ -157,35 +157,39 @@ declare global {
         /** @override */
         _onDeleteDocuments(
             documents: TDocument[],
-            result: TDocument['data']['_source'][],
+            result: TDocument["data"]["_source"][],
             options: DocumentModificationContext,
             userId: string,
         ): void;
 
         /** Follow-up actions taken when Documents within this Compendium pack are modified */
-        protected _onModifyContents(documents: TDocument[], options: DocumentModificationContext, userId: string): void;
+        protected _onModifyContents(
+            documents: TDocument[],
+            options: DocumentModificationContext,
+            userId: string,
+        ): void;
     }
 
     type CompendiumDocumentType = typeof CONST.COMPENDIUM_ENTITY_TYPES[number];
-    type CompendiumUUID = `${'Compendium' | CompendiumDocumentType}.${string}.${string}`;
+    type CompendiumUUID = `${"Compendium" | CompendiumDocumentType}.${string}.${string}`;
     function fromUuid(uuid: CompendiumUUID): Promise<CompendiumDocument | null>;
 
     interface CompendiumMetadata<T extends CompendiumDocument = CompendiumDocument> {
         absPath: string;
         readonly entity: T extends Actor
-            ? 'Actor'
+            ? "Actor"
             : T extends Item
-            ? 'Item'
+            ? "Item"
             : T extends JournalEntry
-            ? 'JournalEntry'
+            ? "JournalEntry"
             : T extends Macro
-            ? 'Macro'
+            ? "Macro"
             : T extends Playlist
-            ? 'Playlist'
+            ? "Playlist"
             : T extends RollTable
-            ? 'RollTable'
+            ? "RollTable"
             : T extends Scene
-            ? 'Scene'
+            ? "Scene"
             : CompendiumDocumentType;
         label: string;
         module: string;

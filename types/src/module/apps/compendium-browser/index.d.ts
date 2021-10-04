@@ -52,7 +52,13 @@ export declare class CompendiumBrowser extends Application {
             thievery: string;
             lore: string;
         };
-        proficiencies: readonly ["PF2E.ProficiencyLevel0", "PF2E.ProficiencyLevel1", "PF2E.ProficiencyLevel2", "PF2E.ProficiencyLevel3", "PF2E.ProficiencyLevel4"];
+        proficiencies: readonly [
+            "PF2E.ProficiencyLevel0",
+            "PF2E.ProficiencyLevel1",
+            "PF2E.ProficiencyLevel2",
+            "PF2E.ProficiencyLevel3",
+            "PF2E.ProficiencyLevel4",
+        ];
     }>;
     loadBestiary(): Promise<{
         bestiaryActors: {};

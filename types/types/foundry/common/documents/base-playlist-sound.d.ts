@@ -20,9 +20,9 @@ declare module foundry {
         }
 
         interface PlaylistSoundMetadata extends abstract.DocumentMetadata {
-            name: 'PlaylistSound';
-            collection: 'sounds';
-            label: 'DOCUMENT.PlaylistSound';
+            name: "PlaylistSound";
+            collection: "sounds";
+            label: "DOCUMENT.PlaylistSound";
             isEmbedded: true;
         }
     }

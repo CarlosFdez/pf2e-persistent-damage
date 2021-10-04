@@ -1,5 +1,5 @@
-import { Size } from '@module/data';
-import { Bulk } from './bulk';
+import { Size } from "@module/data";
+import { Bulk } from "./bulk";
 /**
  * @category Other
  */
@@ -22,4 +22,10 @@ export declare class InventoryWeight {
  * @param combinedBulk
  * @param actorSize
  */
-export declare function calculateEncumbrance(strengthModifier: number, bonusBulkEncumbrance: number, bonusBulkLimit: number, combinedBulk: Bulk, _actorSize?: Size): InventoryWeight;
+export declare function calculateEncumbrance(
+    strengthModifier: number,
+    bonusBulkEncumbrance: number,
+    bonusBulkLimit: number,
+    combinedBulk: Bulk,
+    _actorSize?: Size,
+): InventoryWeight;

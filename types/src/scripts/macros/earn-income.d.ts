@@ -1,11 +1,11 @@
 /**
  * Implementation of Earn Income rules on https://2e.aonprd.com/Skills.aspx?ID=2&General=true
  */
-import { ProficiencyRank } from '@item/data';
-import { Coins } from '../../module/item/treasure/helpers';
-import { DCOptions } from '../../module/dc';
-import { DegreeOfSuccess, DieRoll } from '../../module/degree-of-success';
-declare type TrainedProficiencies = Exclude<ProficiencyRank, 'untrained'>;
+import { ProficiencyRank } from "@item/data";
+import { Coins } from "../../module/item/treasure/helpers";
+import { DCOptions } from "../../module/dc";
+import { DegreeOfSuccess, DieRoll } from "../../module/degree-of-success";
+declare type TrainedProficiencies = Exclude<ProficiencyRank, "untrained">;
 export interface EarnIncomeResult {
     rewards: {
         perDay: Partial<Coins>;
@@ -33,5 +33,12 @@ export declare function multiplyIncome(income: Partial<Coins>, factor: number): 
  * @param earnIncomeOptions feats or items that affect earn income
  * @param dcOptions if dc by level is active
  */
-export declare function earnIncome(level: number, days: number, roll: DieRoll, proficiency: TrainedProficiencies, earnIncomeOptions: EarnIncomeOptions, dcOptions: DCOptions): EarnIncomeResult;
+export declare function earnIncome(
+    level: number,
+    days: number,
+    roll: DieRoll,
+    proficiency: TrainedProficiencies,
+    earnIncomeOptions: EarnIncomeOptions,
+    dcOptions: DCOptions,
+): EarnIncomeResult;
 export {};

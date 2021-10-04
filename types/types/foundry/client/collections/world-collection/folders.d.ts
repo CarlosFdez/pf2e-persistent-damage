@@ -9,7 +9,7 @@ declare class Folders extends WorldCollection<Folder> {
     _expanded: Record<string, boolean>;
 
     /** @override */
-    static documentName: 'Folder';
+    static documentName: "Folder";
 
     /** @override */
     render(force: boolean, options?: RenderOptions): void;

@@ -5,9 +5,9 @@
  *
  * See https://www.youtube.com/watch?v=MJ7gUq9InBk for interpretations
  */
-import { PhysicalItemData } from './data';
-import { DCOptions } from '../dc';
-import { PhysicalItemPF2e } from './physical';
+import { PhysicalItemData } from "./data";
+import { DCOptions } from "../dc";
+import { PhysicalItemPF2e } from "./physical";
 export declare class IdentifyMagicDCs {
     arc: number;
     nat: number;
@@ -27,6 +27,9 @@ export declare function isMagical(itemData: PhysicalItemData): boolean;
 interface IdentifyItemOptions extends DCOptions {
     notMatchingTraditionModifier: number;
 }
-export declare function identifyItem(item: PhysicalItemPF2e, { proficiencyWithoutLevel, notMatchingTraditionModifier }: IdentifyItemOptions): GenericIdentifyDCs | IdentifyMagicDCs | IdentifyAlchemyDCs;
+export declare function identifyItem(
+    item: PhysicalItemPF2e,
+    { proficiencyWithoutLevel, notMatchingTraditionModifier }: IdentifyItemOptions,
+): GenericIdentifyDCs | IdentifyMagicDCs | IdentifyAlchemyDCs;
 export declare function getUnidentifiedPlaceholderImage(itemData: PhysicalItemData): string;
 export {};

@@ -146,8 +146,8 @@
                 "Content": "Spend a resolve point and regain stamina?",
                 "BadArgs": "This action must be performed with exactly one character or NPC.",
                 "StaminaNotEnabled": "The Stamina variant is not enabled.",
-                "NoStamina":"{name} is tired and needs to go to bed! No resolve points remaining.",
-                "RecoverStamina":"{name} has {ratio} SP and spends a resolve point, recovering half their maximum Stamina."
+                "NoStamina": "{name} is tired and needs to go to bed! No resolve points remaining.",
+                "RecoverStamina": "{name} has {ratio} SP and spends a resolve point, recovering half their maximum Stamina."
             },
             "Swim": "Swim",
             "Trip": "Trip",
@@ -347,7 +347,7 @@
             "Friendly": "Friendly",
             "Helpful": "Helpful"
         },
-        "AutomaticBonusProgression":{
+        "AutomaticBonusProgression": {
             "attackPotency": "Attack Potency",
             "defensePotency": "Defense Potency",
             "devastatingAttacks": "Devastating Attacks",
@@ -447,7 +447,7 @@
                 "bestiaries/campaign": "Campaign",
                 "bestiaries/rulebook": "Rulebook",
                 "bestiaries/pfs": "Pathfinder Society",
-                "bestiaries/other":  "Other",
+                "bestiaries/other": "Other",
                 "character-building": "Character Building",
                 "character-building/feats": "Feats",
                 "effects": "Effects",

@@ -1,5 +1,5 @@
-import { ItemPF2e } from '../base';
-import { EffectData } from './data';
+import { ItemPF2e } from "../base";
+import { EffectData } from "./data";
 export declare class EffectPF2e extends ItemPF2e {
     static get schema(): typeof EffectData;
     static readonly DURATION_UNITS: Record<string, number>;

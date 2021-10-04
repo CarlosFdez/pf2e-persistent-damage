@@ -8,7 +8,7 @@ declare class FateDie extends DiceTerm {
     faces: 3;
 
     /** @override */
-    static DENOMINATION: 'f';
+    static DENOMINATION: "f";
 
     /** @override */
     roll({ minimize, maximize }?: { minimize?: boolean; maximize?: boolean }): DiceTermResult;
@@ -16,5 +16,5 @@ declare class FateDie extends DiceTerm {
     /** @inheritdoc */
     getResultLabel<T extends DiceTermResult>(
         result: DiceTermResult,
-    ): T['result'] extends -1 ? '-' : T extends 0 ? '&nbsp;' : T extends 1 ? '+' : never;
+    ): T["result"] extends -1 ? "-" : T extends 0 ? "&nbsp;" : T extends 1 ? "+" : never;
 }

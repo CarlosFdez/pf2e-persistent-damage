@@ -1,8 +1,8 @@
-import { PhysicalItemData, TraitChatData } from '@item/data';
-import { Rarity } from '@module/data';
-import { ItemPF2e } from '@item/index';
-import type { ContainerPF2e } from '@item/index';
-import { IdentificationStatus, MystifiedData } from './data';
+import { PhysicalItemData, TraitChatData } from "@item/data";
+import { Rarity } from "@module/data";
+import { ItemPF2e } from "@item/index";
+import type { ContainerPF2e } from "@item/index";
+import { IdentificationStatus, MystifiedData } from "./data";
 export declare abstract class PhysicalItemPF2e extends ItemPF2e {
     private _container;
     get level(): number;
@@ -25,9 +25,7 @@ export declare abstract class PhysicalItemPF2e extends ItemPF2e {
     isStackableWith(item: PhysicalItemPF2e): boolean;
     getMystifiedData(status: IdentificationStatus): MystifiedData;
     setIdentificationStatus(status: IdentificationStatus): Promise<void>;
-    generateUnidentifiedName({ typeOnly }?: {
-        typeOnly?: boolean;
-    }): string;
+    generateUnidentifiedName({ typeOnly }?: { typeOnly?: boolean }): string;
     /** Include mystification-related rendering instructions for views that will display this data. */
     protected traitChatData(dictionary: Record<string, string>): TraitChatData[];
 }

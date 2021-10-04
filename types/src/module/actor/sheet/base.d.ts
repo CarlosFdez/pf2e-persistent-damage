@@ -1,14 +1,14 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { ItemPF2e } from '@item/base';
-import { ItemSourcePF2e } from '@item/data';
-import { MagicSchool, SpellData, SpellSystemData } from '@item/spell/data';
-import { Coins } from '@item/treasure/helpers';
-import { BasicSelectorOptions, TagSelectorType } from '@system/trait-selector';
-import type { ActorPF2e } from '../base';
-import { ActorSheetDataPF2e, CoinageSummary } from './data-types';
-import { ActorDataPF2e } from '@actor/data';
-import { DropCanvasDataPF2e } from '@scripts/system/dragstart-handler';
+import { ItemPF2e } from "@item/base";
+import { ItemSourcePF2e } from "@item/data";
+import { MagicSchool, SpellData, SpellSystemData } from "@item/spell/data";
+import { Coins } from "@item/treasure/helpers";
+import { BasicSelectorOptions, TagSelectorType } from "@system/trait-selector";
+import type { ActorPF2e } from "../base";
+import { ActorSheetDataPF2e, CoinageSummary } from "./data-types";
+import { ActorDataPF2e } from "@actor/data";
+import { DropCanvasDataPF2e } from "@scripts/system/dragstart-handler";
 interface SpellSheetData extends SpellData {
     spellInfo?: unknown;
     data: SpellSystemData & {
@@ -23,7 +23,10 @@ interface SpellSheetData extends SpellData {
  * This sheet is an Abstract layer which is not used.
  * @category Actor
  */
-export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends ActorSheet<TActor, ItemPF2e> {
+export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends ActorSheet<
+    TActor,
+    ItemPF2e
+> {
     static get defaultOptions(): ActorSheetOptions & {
         classes: string[];
         submitOnClose: boolean;
@@ -33,9 +36,7 @@ export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends A
     /** Can non-owning users loot items from this sheet? */
     get isLootSheet(): boolean;
     getData(): ActorSheetDataPF2e<TActor>;
-    protected abstract prepareItems(sheetData: {
-        actor: ActorDataPF2e;
-    }): void;
+    protected abstract prepareItems(sheetData: { actor: ActorDataPF2e }): void;
     protected findActiveList(): JQuery<HTMLElement>;
     protected static coinsToSheetData(coins: Coins): CoinageSummary;
     protected prepareTraits(traits: any): void;
@@ -45,7 +46,11 @@ export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends A
      * @param spellbook    The spellbook data being prepared
      * @param spellData        The spell data being prepared
      */
-    protected prepareSpell(actorData: ActorDataPF2e, spellbook: any, spellData: SpellSheetData): void;
+    protected prepareSpell(
+        actorData: ActorDataPF2e,
+        spellbook: any,
+        spellData: SpellSheetData,
+    ): void;
     /**
      * Insert prepared spells into the spellbook object when rendering the character sheet
      * @param spellcastingEntry    The spellcasting entry data being prepared
@@ -76,9 +81,7 @@ export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends A
      */
     private setExpendedPreparedSpellSlot;
     /** Save any open tinyMCE editor before closing */
-    close(options?: {
-        force?: boolean;
-    }): Promise<void>;
+    close(options?: { force?: boolean }): Promise<void>;
     activateListeners(html: JQuery): void;
     onClickDeleteItem(event: JQuery.ClickEvent | JQuery.ContextMenuEvent): Promise<void>;
     protected _canDragStart(selector: string): boolean;
@@ -90,7 +93,10 @@ export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends A
     protected _onDropItemCreate(itemData: ItemSourcePF2e): Promise<ItemPF2e[]>;
     onDropItem(data: DropCanvasDataPF2e<ItemSourcePF2e>): Promise<ItemPF2e[]>;
     /** Extend the base _onDrop method to handle dragging spells onto spell slots. */
-    protected _onDropItem(event: ElementDragEvent, data: DropCanvasDataPF2e<ItemSourcePF2e>): Promise<ItemPF2e[]>;
+    protected _onDropItem(
+        event: ElementDragEvent,
+        data: DropCanvasDataPF2e<ItemSourcePF2e>,
+    ): Promise<ItemPF2e[]>;
     /**
      * Moves an item between two actors' inventories.
      * @param event         Event that fired this method.
@@ -98,7 +104,14 @@ export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends A
      * @param targetActorId ID of the actor where the item will be stored.
      * @param itemId           ID of the item to move between the two actors.
      */
-    moveItemBetweenActors(event: ElementDragEvent, sourceActorId: string, sourceTokenId: string, targetActorId: string, targetTokenId: string, itemId: string): Promise<void>;
+    moveItemBetweenActors(
+        event: ElementDragEvent,
+        sourceActorId: string,
+        sourceTokenId: string,
+        targetActorId: string,
+        targetTokenId: string,
+        itemId: string,
+    ): Promise<void>;
     private moveSpell;
     /**
      * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
@@ -113,9 +126,12 @@ export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends A
      * Triggers toggling the visibility of an item summary element,
      * delegating the populating of the item summary to renderItemSummary()
      */
-    toggleItemSummary(li: JQuery, options?: {
-        instant?: boolean;
-    }): void;
+    toggleItemSummary(
+        li: JQuery,
+        options?: {
+            instant?: boolean;
+        },
+    ): void;
     /**
      * Called when an item summary is expanded and needs to be filled out.
      */
@@ -135,11 +151,17 @@ export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends A
     private onSellAllTreasure;
     protected onTraitSelector(event: JQuery.ClickEvent): void;
     /** Construct and render a tag selection menu */
-    protected tagSelector(selectorType: Exclude<TagSelectorType, 'basic'>, options?: FormApplicationOptions): void;
-    protected tagSelector(selectorType: 'basic', options: BasicSelectorOptions): void;
+    protected tagSelector(
+        selectorType: Exclude<TagSelectorType, "basic">,
+        options?: FormApplicationOptions,
+    ): void;
+    protected tagSelector(selectorType: "basic", options: BasicSelectorOptions): void;
     /** Prevent `ActorSheet#_getSubmitData` from preventing the submission of updates to overridden values */
     protected _getSubmitData(updateData?: Record<string, unknown>): Record<string, unknown>;
-    protected _onSubmit(event: Event, options?: OnSubmitFormOptions): Promise<Record<string, unknown>>;
+    protected _onSubmit(
+        event: Event,
+        options?: OnSubmitFormOptions,
+    ): Promise<Record<string, unknown>>;
     /**
      * A user edits numeric values on actor sheets that are frequently modified by data preparation: we should be able
      * to infer the intended change by adding the difference between their update and the prepared value to the
@@ -149,6 +171,9 @@ export declare abstract class ActorSheetPF2e<TActor extends ActorPF2e> extends A
     /** Hide the sheet-config button unless there is more than one sheet option. */
     protected _getHeaderButtons(): ApplicationHeaderButton[];
     /** Override of inner render function to maintain item summary state */
-    protected _renderInner(data: Record<string, unknown>, options: RenderOptions): Promise<JQuery<HTMLElement>>;
+    protected _renderInner(
+        data: Record<string, unknown>,
+        options: RenderOptions,
+    ): Promise<JQuery<HTMLElement>>;
 }
 export {};

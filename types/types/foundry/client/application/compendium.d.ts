@@ -32,7 +32,12 @@ declare class Compendium<TDocument extends CompendiumDocument> extends Applicati
      */
     protected _onClickEntry(event: MouseEvent): void;
 
-    protected _onSearchFilter(event: KeyboardEvent, query: string, rgx: RegExp, html: HTMLElement): void;
+    protected _onSearchFilter(
+        event: KeyboardEvent,
+        query: string,
+        rgx: RegExp,
+        html: HTMLElement,
+    ): void;
 
     protected _canDragStart(selector: string): boolean;
 

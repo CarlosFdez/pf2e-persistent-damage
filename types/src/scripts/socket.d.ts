@@ -5,6 +5,6 @@ export declare type SocketEventCallback = [
             [key: string]: any;
         };
     },
-    userId: string
+    userId: string,
 ];
 export declare function activateSocketListener(): void;

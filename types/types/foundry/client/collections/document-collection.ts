@@ -2,7 +2,9 @@
  * A Collection of Document objects within the Foundry Virtual Tabletop framework.
  * @param data An array of data objects from which to create document instances
  */
-declare abstract class DocumentCollection<TDocument extends foundry.abstract.Document> extends Collection<TDocument> {
+declare abstract class DocumentCollection<
+    TDocument extends foundry.abstract.Document,
+> extends Collection<TDocument> {
     /** @override */
     constructor();
 
@@ -45,7 +47,9 @@ declare abstract class DocumentCollection<TDocument extends foundry.abstract.Doc
      * @return An array of updated data once the operation is complete
      */
     updateAll(
-        transformation: DocumentUpdateData<TDocument> | ((document: TDocument) => DocumentUpdateData<TDocument>),
+        transformation:
+            | DocumentUpdateData<TDocument>
+            | ((document: TDocument) => DocumentUpdateData<TDocument>),
         condition?: ((document: TDocument) => boolean) | null,
         options?: DocumentModificationContext,
     ): Promise<TDocument[]>;
@@ -57,7 +61,7 @@ declare abstract class DocumentCollection<TDocument extends foundry.abstract.Doc
      * @param userId  The ID of the User who triggered the operation
      */
     _preCreateDocuments(
-        result: TDocument['data']['_source'][],
+        result: TDocument["data"]["_source"][],
         options: DocumentModificationContext,
         userId: string,
     ): void;
@@ -71,7 +75,7 @@ declare abstract class DocumentCollection<TDocument extends foundry.abstract.Doc
      */
     _onCreateDocuments(
         documents: TDocument[],
-        result: TDocument['data']['_source'][],
+        result: TDocument["data"]["_source"][],
         options: DocumentModificationContext,
         userId: string,
     ): void;
@@ -83,7 +87,7 @@ declare abstract class DocumentCollection<TDocument extends foundry.abstract.Doc
      * @param userId  The ID of the User who triggered the operation
      */
     _preUpdateDocuments(
-        result: TDocument['data']['_source'][],
+        result: TDocument["data"]["_source"][],
         options: DocumentModificationContext,
         userId: string,
     ): void;
@@ -97,7 +101,7 @@ declare abstract class DocumentCollection<TDocument extends foundry.abstract.Doc
      */
     _onUpdateDocuments(
         documents: TDocument[],
-        result: TDocument['data']['_source'][],
+        result: TDocument["data"]["_source"][],
         options: DocumentModificationContext,
         userId: string,
     ): void;
@@ -109,7 +113,7 @@ declare abstract class DocumentCollection<TDocument extends foundry.abstract.Doc
      * @param userId  The ID of the User who triggered the operation
      */
     _preDeleteDocuments(
-        result: TDocument['data']['_source'][],
+        result: TDocument["data"]["_source"][],
         options: DocumentModificationContext,
         userId: string,
     ): void;
@@ -123,7 +127,7 @@ declare abstract class DocumentCollection<TDocument extends foundry.abstract.Doc
      */
     _onDeleteDocuments(
         documents: TDocument[],
-        result: TDocument['data']['_source'][],
+        result: TDocument["data"]["_source"][],
         options: DocumentModificationContext,
         userId: string,
     ): void;

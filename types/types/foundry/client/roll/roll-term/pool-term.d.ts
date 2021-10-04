@@ -30,14 +30,14 @@ declare global {
 
         /** Define the modifiers that can be used for this particular DiceTerm type. */
         static MODIFIERS: {
-            k: 'keep';
-            kh: 'keep';
-            kl: 'keep';
-            d: 'drop';
-            dh: 'drop';
-            dl: 'drop';
-            cs: 'countSuccess';
-            cf: 'countFailures';
+            k: "keep";
+            kh: "keep";
+            kl: "keep";
+            d: "drop";
+            dh: "drop";
+            dl: "drop";
+            cs: "countSuccess";
+            cf: "countFailures";
         };
 
         /**The regular expression pattern used to identify the opening of a dice pool expression. */
@@ -47,7 +47,7 @@ declare global {
         static CLOSE_REGEXP: RegExp;
 
         /** @override */
-        static SERIALIZE_ATTRIBUTES: ['terms', 'modifiers', 'rolls', 'results'];
+        static SERIALIZE_ATTRIBUTES: ["terms", "modifiers", "rolls", "results"];
 
         /* -------------------------------------------- */
         /*  Dice Pool Attributes                        */
@@ -75,7 +75,13 @@ declare global {
         alter(...args: unknown[]): this[];
 
         /** @override */
-        protected _evaluateSync({ minimize, maximize }?: { minimize?: boolean; maximize?: boolean }): Evaluated<this>;
+        protected _evaluateSync({
+            minimize,
+            maximize,
+        }?: {
+            minimize?: boolean;
+            maximize?: boolean;
+        }): Evaluated<this>;
 
         /** @override */
         protected _evaluate({
@@ -103,7 +109,10 @@ declare global {
         /* -------------------------------------------- */
 
         /** @override */
-        protected static _fromData<D extends PoolTermData, T extends RollTerm<D>>(this: ConstructorOf<T>, data: D): T;
+        protected static _fromData<D extends PoolTermData, T extends RollTerm<D>>(
+            this: ConstructorOf<T>,
+            data: D,
+        ): T;
 
         /**
          * Given a string formula, create and return an evaluated PoolTerm object

@@ -12,7 +12,7 @@ declare class Wall extends PlaceableObject<WallDocument> {
     /** A reference to an overhead Tile that is a roof, interior to which this wall is contained */
     roof: Tile;
 
-    static embeddedName: 'Wall';
+    static embeddedName: "Wall";
 
     /* -------------------------------------------- */
     /*  Properties                                  */
@@ -104,9 +104,17 @@ declare class Wall extends PlaceableObject<WallDocument> {
     /*  Socket Listeners and Handlers               */
     /* -------------------------------------------- */
 
-    protected _onCreate(data: foundry.data.WallSource, options: DocumentModificationContext, userId: string): void;
+    protected _onCreate(
+        data: foundry.data.WallSource,
+        options: DocumentModificationContext,
+        userId: string,
+    ): void;
 
-    protected _onUpdate(changed: DocumentUpdateData, options: DocumentModificationContext, userId: string): void;
+    protected _onUpdate(
+        changed: DocumentUpdateData,
+        options: DocumentModificationContext,
+        userId: string,
+    ): void;
 
     protected _onDelete(options: DocumentModificationContext, userId: string): void;
 
@@ -122,7 +130,10 @@ declare class Wall extends PlaceableObject<WallDocument> {
 
     protected _canControl(user: User, event: Event): boolean;
 
-    protected _onHoverIn(event: PIXI.InteractionEvent, options?: { hoverOutOthers?: boolean }): boolean;
+    protected _onHoverIn(
+        event: PIXI.InteractionEvent,
+        options?: { hoverOutOthers?: boolean },
+    ): boolean;
 
     protected _onHoverOut(event: PIXI.InteractionEvent): boolean;
 
@@ -139,5 +150,5 @@ declare class Wall extends PlaceableObject<WallDocument> {
 
     protected _onDragLeftMove(event: PIXI.InteractionEvent): void;
 
-    protected _onDragLeftDrop(event: PIXI.InteractionEvent): Promise<this['document'][]>;
+    protected _onDragLeftDrop(event: PIXI.InteractionEvent): Promise<this["document"][]>;
 }

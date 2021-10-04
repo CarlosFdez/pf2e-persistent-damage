@@ -1,4 +1,4 @@
-import { ChatMessageConstructor } from './constructors';
+import { ChatMessageConstructor } from "./constructors";
 
 declare global {
     /**
@@ -60,7 +60,10 @@ declare global {
             chatData: foundry.data.ChatMessageSource,
             rollMode: RollMode,
         ): foundry.data.ChatMessageSource;
-        static applyRollMode(chatData: foundry.data.ChatMessageData, rollMode: RollMode): foundry.data.ChatMessageData;
+        static applyRollMode(
+            chatData: foundry.data.ChatMessageData,
+            rollMode: RollMode,
+        ): foundry.data.ChatMessageData;
         static applyRollMode(
             chatData: foundry.data.ChatMessageSource | foundry.data.ChatMessageData,
             rollMode: RollMode,
@@ -140,7 +143,9 @@ declare global {
          * Obtain an Actor instance which represents the speaker of this message (if any)
          * @param speaker The speaker data object
          */
-        static getSpeakerActor(speaker: foundry.data.ChatSpeakerSource | foundry.data.ChatSpeakerData): Actor | null;
+        static getSpeakerActor(
+            speaker: foundry.data.ChatSpeakerSource | foundry.data.ChatSpeakerData,
+        ): Actor | null;
 
         /** Obtain a data object used to evaluate any dice rolls associated with this particular chat message */
         getRollData(): object;
@@ -168,7 +173,7 @@ declare global {
         ): void;
 
         protected override _onUpdate(
-            changed: DeepPartial<this['data']['_source']>,
+            changed: DeepPartial<this["data"]["_source"]>,
             options: DocumentModificationContext,
             userId: string,
         ): void;
@@ -187,17 +192,17 @@ declare global {
     namespace ChatMessage {
         function create<T extends ChatMessage>(
             this: ConstructorOf<T>,
-            data: PreCreate<T['data']['_source']>[],
+            data: PreCreate<T["data"]["_source"]>[],
             context?: ChatMessageModificationContext,
         ): Promise<T[]>;
         function create<T extends ChatMessage>(
             this: ConstructorOf<T>,
-            data: PreCreate<T['data']['_source']>,
+            data: PreCreate<T["data"]["_source"]>,
             context?: ChatMessageModificationContext,
         ): Promise<T | undefined>;
         function create<T extends ChatMessage>(
             this: ConstructorOf<T>,
-            data: PreCreate<T['data']['_source']>[] | PreCreate<T['data']['_source']>,
+            data: PreCreate<T["data"]["_source"]>[] | PreCreate<T["data"]["_source"]>,
             context?: ChatMessageModificationContext,
         ): Promise<T[] | T | undefined>;
     }

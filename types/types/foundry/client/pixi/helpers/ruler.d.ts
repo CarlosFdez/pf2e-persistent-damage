@@ -84,7 +84,12 @@ declare class Ruler extends PIXI.Container {
      * @return {string}
      * @private
      */
-    public _getSegmentLabel(ray: Ray, segmentDistance: number, totalDistance: number, isTotal: boolean): string;
+    public _getSegmentLabel(
+        ray: Ray,
+        segmentDistance: number,
+        totalDistance: number,
+        isTotal: boolean,
+    ): string;
 
     /**
      * Highlight the measurement required to complete the move in the minimum number of discrete spaces

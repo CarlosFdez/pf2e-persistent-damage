@@ -11,7 +11,14 @@ import { ConditionManager } from "@pf2e/module/conditions";
 import { FolderPF2e } from "@pf2e/module/folder";
 import { ItemPF2e } from "@pf2e/module/item";
 import { MacroPF2e } from "@pf2e/module/macro";
-import { AbilityModifier, CheckModifier, ModifierPF2e, MODIFIER_TYPE, ProficiencyModifier, StatisticModifier } from "@pf2e/module/modifiers";
+import {
+    AbilityModifier,
+    CheckModifier,
+    ModifierPF2e,
+    MODIFIER_TYPE,
+    ProficiencyModifier,
+    StatisticModifier,
+} from "@pf2e/module/modifiers";
 import { RuleElementPF2e, RuleElements } from "@pf2e/module/rules/rules";
 import { ScenePF2e } from "@pf2e/module/scene";
 import { HomebrewSettingsKey, HomebrewTag } from "@pf2e/module/settings/homebrew";
@@ -75,7 +82,7 @@ declare global {
             ScenePF2e,
             TokenDocumentPF2e
         > {
-        debug: Config['debug'] & {
+        debug: Config["debug"] & {
             ruleElement: boolean;
         };
 
@@ -94,7 +101,7 @@ declare global {
             MacroPF2e,
             ScenePF2e,
             TokenDocumentPF2e
-        >['ui'] & {
+        >["ui"] & {
             combat: typeof CombatTrackerPF2e;
             compendium: typeof CompendiumDirectoryPF2e;
         };
@@ -104,7 +111,15 @@ declare global {
     const canvas: CanvasPF2e;
     namespace globalThis {
         // eslint-disable-next-line no-var
-        var game: Game<ActorPF2e, ChatMessagePF2e, CombatPF2e, ItemPF2e, MacroPF2e, ScenePF2e, UserPF2e>;
+        var game: Game<
+            ActorPF2e,
+            ChatMessagePF2e,
+            CombatPF2e,
+            ItemPF2e,
+            MacroPF2e,
+            ScenePF2e,
+            UserPF2e
+        >;
     }
 
     interface Window {
@@ -121,31 +136,34 @@ declare global {
     }
 
     interface ClientSettings {
-        get(module: 'pf2e', setting: 'ancestryParagonVariant'): boolean;
-        get(module: 'pf2e', setting: 'automation.rulesBasedVision'): boolean;
-        get(module: 'pf2e', setting: 'automation.effectExpiration'): boolean;
-        get(module: 'pf2e', setting: 'automation.lootableNPCs'): boolean;
-        get(module: 'pf2e', setting: 'defaultTokenSettings'): boolean;
-        get(module: 'pf2e', setting: 'defaultTokenSettingsBar'): number;
-        get(module: 'pf2e', setting: 'defaultTokenSettingsName'): string;
-        get(module: 'pf2e', setting: 'enabledRulesUI'): boolean;
-        get(module: 'pf2e', setting: 'freeArchetypeVariant'): boolean;
-        get(module: 'pf2e', setting: 'ignoreCoinBulk'): boolean;
-        get(module: 'pf2e', setting: 'pfsSheetTab'): boolean;
-        get(module: 'pf2e', setting: 'staminaVariant'): 0 | 1;
-        get(module: 'pf2e', setting: 'statusEffectType'): StatusEffectIconType;
-        get(module: 'pf2e', setting: 'worldSchemaVersion'): number;
-        get(module: 'pf2e', setting: 'drawCritFumble'): boolean;
-        get(module: 'pf2e', setting: 'critFumbleButtons'): boolean;
-        get(module: 'pf2e', setting: 'homebrew.weaponCategories'): HomebrewTag<'weaponCategories'>[];
-        get(module: 'pf2e', setting: HomebrewSettingsKey): HomebrewTag[];
-        get(module: 'pf2e', setting: 'identifyMagicNotMatchingTraditionModifier'): 0 | 2 | 5 | 10;
+        get(module: "pf2e", setting: "ancestryParagonVariant"): boolean;
+        get(module: "pf2e", setting: "automation.rulesBasedVision"): boolean;
+        get(module: "pf2e", setting: "automation.effectExpiration"): boolean;
+        get(module: "pf2e", setting: "automation.lootableNPCs"): boolean;
+        get(module: "pf2e", setting: "defaultTokenSettings"): boolean;
+        get(module: "pf2e", setting: "defaultTokenSettingsBar"): number;
+        get(module: "pf2e", setting: "defaultTokenSettingsName"): string;
+        get(module: "pf2e", setting: "enabledRulesUI"): boolean;
+        get(module: "pf2e", setting: "freeArchetypeVariant"): boolean;
+        get(module: "pf2e", setting: "ignoreCoinBulk"): boolean;
+        get(module: "pf2e", setting: "pfsSheetTab"): boolean;
+        get(module: "pf2e", setting: "staminaVariant"): 0 | 1;
+        get(module: "pf2e", setting: "statusEffectType"): StatusEffectIconType;
+        get(module: "pf2e", setting: "worldSchemaVersion"): number;
+        get(module: "pf2e", setting: "drawCritFumble"): boolean;
+        get(module: "pf2e", setting: "critFumbleButtons"): boolean;
+        get(
+            module: "pf2e",
+            setting: "homebrew.weaponCategories",
+        ): HomebrewTag<"weaponCategories">[];
+        get(module: "pf2e", setting: HomebrewSettingsKey): HomebrewTag[];
+        get(module: "pf2e", setting: "identifyMagicNotMatchingTraditionModifier"): 0 | 2 | 5 | 10;
     }
 
     interface WorldSettingsStorage {
-        get(setting: 'pf2e.worldSchemaVersion'): string | undefined;
-        getItem(setting: 'pf2e.worldSchemaVersion'): string | null;
+        get(setting: "pf2e.worldSchemaVersion"): string | undefined;
+        getItem(setting: "pf2e.worldSchemaVersion"): string | null;
     }
 
-    const BUILD_MODE: 'development' | 'production';
+    const BUILD_MODE: "development" | "production";
 }

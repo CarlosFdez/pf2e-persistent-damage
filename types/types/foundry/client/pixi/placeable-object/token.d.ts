@@ -1,7 +1,9 @@
 /**
  * A Token is an implementation of PlaceableObject that represents an Actor within a viewed Scene on the game canvas.
  */
-declare class Token<TDocument extends TokenDocument = TokenDocument> extends PlaceableObject<TDocument> {
+declare class Token<
+    TDocument extends TokenDocument = TokenDocument,
+> extends PlaceableObject<TDocument> {
     constructor(tokenData: foundry.data.TokenData, scene: Scene);
 
     /** A Ray which represents the Token's current movement path */
@@ -25,7 +27,7 @@ declare class Token<TDocument extends TokenDocument = TokenDocument> extends Pla
     /** A reference to the PointSource object which defines this light source area of effect */
     light: PointSource<this>;
 
-    static embeddedName: 'Token';
+    static embeddedName: "Token";
 
     /**
      * Establish an initial velocity of the token based on it's direction of facing.
@@ -38,7 +40,7 @@ declare class Token<TDocument extends TokenDocument = TokenDocument> extends Pla
     /* -------------------------------------------- */
 
     /** A convenient reference to the Actor object associated with the Token embedded document. */
-    get actor(): TDocument['actor'] | null;
+    get actor(): TDocument["actor"] | null;
 
     /** A convenient reference for whether the current User has full control over the Token document. */
     get isOwner(): boolean;
@@ -77,7 +79,7 @@ declare class Token<TDocument extends TokenDocument = TokenDocument> extends Pla
     get inCombat(): boolean;
 
     /** Return a reference to a Combatant that represents this Token, if one is present in the current encounter. */
-    get combatant(): TDocument['combatant'];
+    get combatant(): TDocument["combatant"];
 
     /** An indicator for whether the Token is currently targeted by the active game User */
     get isTargeted(): boolean;
@@ -124,7 +126,15 @@ declare class Token<TDocument extends TokenDocument = TokenDocument> extends Pla
      * @param [deleted]     Indicate that this light source has been deleted.
      * @param [noUpdateFog] Never update the Fog exploration progress for this update.
      */
-    updateSource({ defer, deleted, noUpdateFog }?: { defer?: boolean; deleted?: boolean; noUpdateFog?: boolean }): void;
+    updateSource({
+        defer,
+        deleted,
+        noUpdateFog,
+    }?: {
+        defer?: boolean;
+        deleted?: boolean;
+        noUpdateFog?: boolean;
+    }): void;
 
     /** Test whether this Token is a viable vision source for the current User */
     protected _isVisionSource(): boolean;
@@ -191,7 +201,13 @@ declare class Token<TDocument extends TokenDocument = TokenDocument> extends Pla
     protected _drawOverlay({ src, tint }?: { src?: string; tint?: number }): Promise<void>;
 
     /** Draw a status effect icon */
-    protected _drawEffect(src: ImagePath, i: number, bg: PIXI.Container, w: number, tint: number): Promise<void>;
+    protected _drawEffect(
+        src: ImagePath,
+        i: number,
+        bg: PIXI.Container,
+        w: number,
+        tint: number,
+    ): Promise<void>;
 
     /**
      * Helper method to determine whether a token attribute is viewable under a certain mode
@@ -207,7 +223,11 @@ declare class Token<TDocument extends TokenDocument = TokenDocument> extends Pla
     animateMovement(ray: Ray): Promise<void>;
 
     /** Animate the continual revealing of Token vision during a movement animation */
-    protected _onMovementFrame(dt: number, anim: TokenAnimationAttribute<this>[], config: TokenAnimationConfig): void;
+    protected _onMovementFrame(
+        dt: number,
+        anim: TokenAnimationAttribute<this>[],
+        config: TokenAnimationConfig,
+    ): void;
 
     /** Update perception each frame depending on the animation configuration */
     protected _animatePerceptionFrame({
@@ -306,13 +326,16 @@ declare class Token<TDocument extends TokenDocument = TokenDocument> extends Pla
 
     /** A helper function to toggle the overlay status icon on the Token
      */
-    protected _toggleOverlayEffect(texture: ImagePath, { active }: { active: boolean }): Promise<this>;
+    protected _toggleOverlayEffect(
+        texture: ImagePath,
+        { active }: { active: boolean },
+    ): Promise<this>;
 
     /**
      * Toggle the visibility state of any Tokens in the currently selected set
      * @return A Promise which resolves to the updated Token documents
      */
-    toggleVisibility(): Promise<this['document'][]>;
+    toggleVisibility(): Promise<this["document"][]>;
 
     /** Return the token's sight origin, tailored for the direction of their movement velocity to break ties with walls */
     getSightOrigin(): Point;
@@ -331,13 +354,13 @@ declare class Token<TDocument extends TokenDocument = TokenDocument> extends Pla
     override rotate(angle: number, snap: number): void;
 
     protected override _onCreate(
-        data: this['document']['data']['_source'],
+        data: this["document"]["data"]["_source"],
         options: DocumentModificationContext,
         userId: string,
     ): void;
 
     protected override _onUpdate(
-        changed: DeepPartial<this['document']['data']['_source']>,
+        changed: DeepPartial<this["document"]["data"]["_source"]>,
         options: DocumentModificationContext,
         userId: string,
     ): void;
@@ -374,7 +397,7 @@ declare class Token<TDocument extends TokenDocument = TokenDocument> extends Pla
 
     protected override _onClickRight2(event: PIXI.InteractionEvent): void;
 
-    protected override _onDragLeftDrop(event: PIXI.InteractionEvent): Promise<this['document'][]>;
+    protected override _onDragLeftDrop(event: PIXI.InteractionEvent): Promise<this["document"][]>;
 
     protected override _onDragLeftMove(event: PIXI.InteractionEvent): void;
 }
@@ -386,7 +409,8 @@ interface Token {
     };
 }
 
-declare type TokenDisplayMode = typeof CONST.TOKEN_DISPLAY_MODES[keyof typeof CONST.TOKEN_DISPLAY_MODES];
+declare type TokenDisplayMode =
+    typeof CONST.TOKEN_DISPLAY_MODES[keyof typeof CONST.TOKEN_DISPLAY_MODES];
 
 declare interface TokenVelocity {
     dx: number;

@@ -1,8 +1,8 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { ActorPF2e } from '@actor/index';
-import { TraitSelectorBase } from './base';
-import { SelectableTagField } from './index';
+import { ActorPF2e } from "@actor/index";
+import { TraitSelectorBase } from "./base";
+import { SelectableTagField } from "./index";
 export declare class TraitSelectorResistances extends TraitSelectorBase<ActorPF2e> {
     objectProperty: string;
     static get defaultOptions(): FormApplicationOptions & {

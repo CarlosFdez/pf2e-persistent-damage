@@ -1,5 +1,5 @@
-import { PhysicalItemPF2e } from '../physical';
-import { ArmorCategory, ArmorData, ArmorGroup, BaseArmorType } from './data';
+import { PhysicalItemPF2e } from "../physical";
+import { ArmorCategory, ArmorData, ArmorGroup, BaseArmorType } from "./data";
 export declare class ArmorPF2e extends PhysicalItemPF2e {
     static get schema(): typeof ArmorData;
     isStackableWith(item: PhysicalItemPF2e): boolean;
@@ -21,7 +21,10 @@ export declare class ArmorPF2e extends PhysicalItemPF2e {
     get brokenThreshold(): number;
     get isBroken(): boolean;
     prepareBaseData(): void;
-    getChatData(this: Embedded<ArmorPF2e>, htmlOptions?: EnrichHTMLOptions): {
+    getChatData(
+        this: Embedded<ArmorPF2e>,
+        htmlOptions?: EnrichHTMLOptions,
+    ): {
         properties: (string | null)[];
         traits: import("../data").TraitChatData[];
         armor: {
@@ -30,7 +33,21 @@ export declare class ArmorPF2e extends PhysicalItemPF2e {
         armorType: {
             value: "medium" | "light" | "unarmored" | "heavy" | "shield";
         };
-        baseItem: "explorers-clothing" | "padded-armor" | "leather-armor" | "studded-leather-armor" | "chain-shirt" | "hide-armor" | "scale-mail" | "chain-mail" | "breastplate" | "splint-mail" | "half-plate" | "full-plate" | "hellknight-plate" | null;
+        baseItem:
+            | "explorers-clothing"
+            | "padded-armor"
+            | "leather-armor"
+            | "studded-leather-armor"
+            | "chain-shirt"
+            | "hide-armor"
+            | "scale-mail"
+            | "chain-mail"
+            | "breastplate"
+            | "splint-mail"
+            | "half-plate"
+            | "full-plate"
+            | "hellknight-plate"
+            | null;
         group: {
             value: "composite" | "chain" | "cloth" | "leather" | "plate" | null;
         };
@@ -130,9 +147,11 @@ export declare class ArmorPF2e extends PhysicalItemPF2e {
         source: {
             value: string;
         };
-        options?: {
-            value: string[];
-        } | undefined;
+        options?:
+            | {
+                  value: string[];
+              }
+            | undefined;
         usage: {
             value: string;
         };
@@ -142,9 +161,7 @@ export declare class ArmorPF2e extends PhysicalItemPF2e {
             value: number;
         };
     };
-    generateUnidentifiedName({ typeOnly }?: {
-        typeOnly?: boolean;
-    }): string;
+    generateUnidentifiedName({ typeOnly }?: { typeOnly?: boolean }): string;
 }
 export interface ArmorPF2e {
     readonly data: ArmorData;

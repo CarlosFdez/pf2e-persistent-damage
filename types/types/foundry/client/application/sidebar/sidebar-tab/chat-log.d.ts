@@ -36,8 +36,8 @@ declare class ChatLog extends SidebarTab {
     constructor(options?: {});
 
     /** @override */
-    static get defaultOptions(): typeof SidebarTab['defaultOptions'] & {
-        id: 'chat';
+    static get defaultOptions(): typeof SidebarTab["defaultOptions"] & {
+        id: "chat";
         template: string;
         title: string;
         scrollContainer: null;
@@ -47,7 +47,7 @@ declare class ChatLog extends SidebarTab {
     /**
      * A reference to the Messages collection that the chat log displays
      */
-    get collection(): Game['messages'];
+    get collection(): Game["messages"];
 
     /* -------------------------------------------- */
     /*  Application Rendering                       */

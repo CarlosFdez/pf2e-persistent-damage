@@ -1,8 +1,8 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { NPCPF2e } from '@actor/index';
-import { ActorSheetPF2e } from '@actor/sheet/base';
-import { ActorDataPF2e } from '@actor/data';
+import { NPCPF2e } from "@actor/index";
+import { ActorSheetPF2e } from "@actor/sheet/base";
+import { ActorDataPF2e } from "@actor/data";
 export declare class ActorSheetPF2eDataEntryNPC extends ActorSheetPF2e<NPCPF2e> {
     private readonly CUSTOM_TRAIT_SEPARATOR;
     private readonly CREATURE_TRAITS;
@@ -14,9 +14,7 @@ export declare class ActorSheetPF2eDataEntryNPC extends ActorSheetPF2e<NPCPF2e> 
         classes: string[];
     };
     get template(): string;
-    protected prepareItems(_sheetData: {
-        actor: ActorDataPF2e;
-    }): void;
+    protected prepareItems(_sheetData: { actor: ActorDataPF2e }): void;
     getData(): {
         app: {
             id: `actor-${string}` | `actor-${string}-${string}`;
@@ -69,7 +67,7 @@ export declare class ActorSheetPF2eDataEntryNPC extends ActorSheetPF2e<NPCPF2e> 
                     boggard: string;
                     caligni: string;
                     celestial: string;
-                    'charau-ka': string;
+                    "charau-ka": string;
                     clockwork: string;
                     cold: string;
                     couatl: string;
@@ -138,7 +136,7 @@ export declare class ActorSheetPF2eDataEntryNPC extends ActorSheetPF2e<NPCPF2e> 
                     ratfolk: string;
                     sahkil: string;
                     samsaran: string;
-                    'sea devil': string;
+                    "sea devil": string;
                     serpentfolk: string;
                     shabti: string;
                     shadow: string;
@@ -190,9 +188,9 @@ export declare class ActorSheetPF2eDataEntryNPC extends ActorSheetPF2e<NPCPF2e> 
                     geniekin: string;
                     gnome: string;
                     goblin: string;
-                    'half-elf': string;
+                    "half-elf": string;
                     halfling: string;
-                    'half-orc': string;
+                    "half-orc": string;
                     human: string;
                     hobgoblin: string;
                     kitsune: string;
@@ -217,7 +215,9 @@ export declare class ActorSheetPF2eDataEntryNPC extends ActorSheetPF2e<NPCPF2e> 
         data: any;
         items: any;
         cssClass: "locked" | "editable";
-        effects: RawObject<foundry.data.ActiveEffectData<import("../../active-effect").ActiveEffectPF2e>>[];
+        effects: RawObject<
+            foundry.data.ActiveEffectData<import("../../active-effect").ActiveEffectPF2e>
+        >[];
         limited: boolean;
         options: ActorSheetOptions;
         editable: boolean;

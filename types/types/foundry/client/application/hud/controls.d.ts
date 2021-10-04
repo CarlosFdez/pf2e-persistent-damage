@@ -53,5 +53,13 @@ declare class SceneControls extends Application {
      * @param control An optional control set to set as active
      * @param layer   An optional layer name to target as the active control
      */
-    initialize({ control, layer, tool }?: { control?: string; layer?: string; tool?: string }): void;
+    initialize({
+        control,
+        layer,
+        tool,
+    }?: {
+        control?: string;
+        layer?: string;
+        tool?: string;
+    }): void;
 }

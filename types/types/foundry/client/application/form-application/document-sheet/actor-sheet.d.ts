@@ -9,8 +9,8 @@ declare global {
         actor: any;
         data: any;
         items: any;
-        cssClass: 'editable' | 'locked';
-        effects: RawObject<A['data']>['effects'];
+        cssClass: "editable" | "locked";
+        effects: RawObject<A["data"]>["effects"];
         limited: boolean;
         options: ActorSheetOptions;
     }
@@ -38,7 +38,7 @@ declare global {
         get actor(): TActor;
 
         /** If this Actor Sheet represents a synthetic Token actor, reference the active Token */
-        get token(): TActor['parent'];
+        get token(): TActor["parent"];
 
         /* -------------------------------------------- */
         /*  Methods                                     */
@@ -50,7 +50,9 @@ declare global {
 
         protected override _getHeaderButtons(): ApplicationHeaderButton[];
 
-        protected override _getSubmitData(updateData?: DocumentUpdateData<TActor>): Record<string, unknown>;
+        protected override _getSubmitData(
+            updateData?: DocumentUpdateData<TActor>,
+        ): Record<string, unknown>;
 
         /* -------------------------------------------- */
         /*  Event Listeners                             */
@@ -102,7 +104,7 @@ declare global {
          */
         protected _onDropActor(
             event: ElementDragEvent,
-            data: DropCanvasData<TActor['data']['_source']>,
+            data: DropCanvasData<TActor["data"]["_source"]>,
         ): Promise<false | void>;
 
         /**
@@ -113,7 +115,7 @@ declare global {
          */
         protected _onDropItem(
             event: ElementDragEvent,
-            data: DropCanvasData<TItem['data']['_source']>,
+            data: DropCanvasData<TItem["data"]["_source"]>,
         ): Promise<TItem[]>;
 
         /**
@@ -133,13 +135,16 @@ declare global {
          * This method is factored out to allow downstream classes the opportunity to override item creation behavior.
          * @param itemData The item data requested for creation
          */
-        protected _onDropItemCreate(itemData: TItem['data']['_source']): Promise<TItem[]>;
+        protected _onDropItemCreate(itemData: TItem["data"]["_source"]): Promise<TItem[]>;
 
         /**
          * Handle a drop event for an existing embedded Item to sort that Item relative to its siblings
          * @param  event
          * @param itemData
          */
-        protected _onSortItem(event: ElementDragEvent, itemData: TItem['data']['_source']): Promise<TItem[]>;
+        protected _onSortItem(
+            event: ElementDragEvent,
+            itemData: TItem["data"]["_source"],
+        ): Promise<TItem[]>;
     }
 }

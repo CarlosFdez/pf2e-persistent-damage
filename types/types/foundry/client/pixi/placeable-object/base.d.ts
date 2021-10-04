@@ -2,17 +2,19 @@
  * An Abstract Base Class which defines a Placeable Object which represents an Entity placed on the Canvas
  * @param document The Document instance which is represented by this object
  */
-declare abstract class PlaceableObject<TDocument extends CanvasDocument = CanvasDocument> extends PIXI.Container {
+declare abstract class PlaceableObject<
+    TDocument extends CanvasDocument = CanvasDocument,
+> extends PIXI.Container {
     constructor(document: TDocument);
 
     /** Retain a reference to the Scene within which this Placeable Object resides */
-    scene: TDocument['parent'];
+    scene: TDocument["parent"];
 
     /** A reference to the Scene embedded Document instance which this object represents */
     document: TDocument;
 
     /** The underlying data object which provides the basis for this placeable object */
-    data: TDocument['data'];
+    data: TDocument["data"];
 
     /**
      * Track the field of vision for the placeable object.
@@ -69,7 +71,7 @@ declare abstract class PlaceableObject<TDocument extends CanvasDocument = Canvas
      * A Form Application which is used to configure the properties of this Placeable Object or the EmbeddedEntity
      * it represents.
      */
-    get sheet(): TDocument['sheet'];
+    get sheet(): TDocument["sheet"];
 
     /* -------------------------------------------- */
     /*  Permission Controls                         */
@@ -147,14 +149,14 @@ declare abstract class PlaceableObject<TDocument extends CanvasDocument = Canvas
 
     /** Register pending canvas operations which should occur after a new PlaceableObject of this type is created */
     protected _onCreate(
-        data: this['document']['data']['_source'],
+        data: this["document"]["data"]["_source"],
         options: DocumentModificationContext,
         userId: string,
     ): void;
 
     /** Define additional steps taken when an existing placeable object of this type is updated with new data */
     protected _onUpdate(
-        changed: DocumentUpdateData<this['document']>,
+        changed: DocumentUpdateData<this["document"]>,
         options: DocumentModificationContext,
         userId: string,
     ): void;
@@ -207,7 +209,15 @@ declare abstract class PlaceableObject<TDocument extends CanvasDocument = Canvas
      * @param snap  A precision (in degrees) to which the resulting angle should snap. Default is 0.
      * @return      The new rotation angle for the object
      */
-    protected _updateRotation({ angle, delta, snap }?: { angle?: number; delta?: number; snap?: number }): number;
+    protected _updateRotation({
+        angle,
+        delta,
+        snap,
+    }?: {
+        angle?: number;
+        delta?: number;
+        snap?: number;
+    }): number;
 
     /**
      * Obtain the shifted position for the Object
@@ -228,7 +238,10 @@ declare abstract class PlaceableObject<TDocument extends CanvasDocument = Canvas
     protected _createInteractionManager(): MouseInteractionManager;
 
     /** Actions that should be taken for this Placeable Object when a mouseover event occurs */
-    protected _onHoverIn(event: PIXI.InteractionEvent, { hoverOutOthers }?: { hoverOutOthers?: boolean }): boolean;
+    protected _onHoverIn(
+        event: PIXI.InteractionEvent,
+        { hoverOutOthers }?: { hoverOutOthers?: boolean },
+    ): boolean;
 
     /** Actions that should be taken for this Placeable Object when a mouseout event occurs */
     protected _onHoverOut(event: PIXI.InteractionEvent): boolean;
@@ -252,7 +265,7 @@ declare abstract class PlaceableObject<TDocument extends CanvasDocument = Canvas
     protected _onDragLeftMove(event: PIXI.InteractionEvent): void;
 
     /** Callback actions which occur on a mouse-move operation. */
-    protected _onDragLeftDrop(event: PIXI.InteractionEvent): Promise<this['document'][]>;
+    protected _onDragLeftDrop(event: PIXI.InteractionEvent): Promise<this["document"][]>;
 
     /** Callback actions which occur on a mouse-move operation. */
     protected _onDragLeftCancel(event: PIXI.InteractionEvent): void;

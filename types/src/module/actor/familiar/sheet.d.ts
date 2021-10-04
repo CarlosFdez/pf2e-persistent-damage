@@ -1,7 +1,7 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { FamiliarPF2e } from '@actor/familiar';
-import type { ItemPF2e } from '@item/base';
+import { FamiliarPF2e } from "@actor/familiar";
+import type { ItemPF2e } from "@item/base";
 /**
  * @category Actor
  */

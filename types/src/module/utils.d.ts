@@ -24,7 +24,11 @@ export declare function padArray<T>(array: T[], requiredLength: number, padWith:
  * are passed into this function to return the result
  * @return
  */
-export declare function combineObjects<V>(first: Record<RecordKey, V>, second: Record<RecordKey, V>, mergeFunction: (first: V, second: V) => V): Record<RecordKey, V>;
+export declare function combineObjects<V>(
+    first: Record<RecordKey, V>,
+    second: Record<RecordKey, V>,
+    mergeFunction: (first: V, second: V) => V,
+): Record<RecordKey, V>;
 declare type RecordKey = string | number;
 /**
  * Similar to combineObjects, just for maps
@@ -32,12 +36,16 @@ declare type RecordKey = string | number;
  * @param second
  * @param mergeFunction
  */
-export declare function combineMaps<K, V>(first: Map<K, V>, second: Map<K, V>, mergeFunction: (first: V, second: V) => V): Map<K, V>;
+export declare function combineMaps<K, V>(
+    first: Map<K, V>,
+    second: Map<K, V>,
+    mergeFunction: (first: V, second: V) => V,
+): Map<K, V>;
 export declare type Optional<T> = T | null | undefined;
 /**
  * Returns true if the string is null, undefined or only consists of 1..n spaces
  */
-export declare function isBlank(text: Optional<string>): text is null | undefined | '';
+export declare function isBlank(text: Optional<string>): text is null | undefined | "";
 /**
  * Parses a string, number, null or undefined into a Number
  * @param value
@@ -86,7 +94,10 @@ export declare function objectHasKey<O>(obj: O, key: keyof any): key is keyof O;
 /**
  * Check if a value is present in the provided array. Especially useful for checking against literal tuples
  */
-export declare function tupleHasValue<A extends readonly unknown[]>(array: A, value: unknown): value is A[number];
+export declare function tupleHasValue<A extends readonly unknown[]>(
+    array: A,
+    value: unknown,
+): value is A[number];
 /**
  * The system's sluggification algorithm of entity names
  * @param name The name of the entity (or other object as needed)

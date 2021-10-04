@@ -1,6 +1,6 @@
-import { ConsumableData, ConsumableType } from './data';
-import { PhysicalItemPF2e, SpellPF2e } from '@item';
-import { TrickMagicItemCastData } from '@item/data';
+import { ConsumableData, ConsumableType } from "./data";
+import { PhysicalItemPF2e, SpellPF2e } from "@item";
+import { TrickMagicItemCastData } from "@item/data";
 export declare class ConsumablePF2e extends PhysicalItemPF2e {
     static get schema(): typeof ConsumableData;
     get consumableType(): ConsumableType;
@@ -9,7 +9,10 @@ export declare class ConsumablePF2e extends PhysicalItemPF2e {
         max: number;
     };
     get embeddedSpell(): Embedded<SpellPF2e> | null;
-    getChatData(this: Embedded<ConsumablePF2e>, htmlOptions?: EnrichHTMLOptions): {
+    getChatData(
+        this: Embedded<ConsumablePF2e>,
+        htmlOptions?: EnrichHTMLOptions,
+    ): {
         traits: import("@item/data").TraitChatData[];
         properties: string[];
         usesCharges: boolean;
@@ -109,9 +112,11 @@ export declare class ConsumablePF2e extends PhysicalItemPF2e {
         source: {
             value: string;
         };
-        options?: {
-            value: string[];
-        } | undefined;
+        options?:
+            | {
+                  value: string[];
+              }
+            | undefined;
         usage: {
             value: string;
         };
@@ -140,12 +145,13 @@ export declare class ConsumablePF2e extends PhysicalItemPF2e {
             units: any;
         };
     };
-    generateUnidentifiedName({ typeOnly }?: {
-        typeOnly?: boolean;
-    }): string;
+    generateUnidentifiedName({ typeOnly }?: { typeOnly?: boolean }): string;
     /** Use a consumable item, sending the result to chat */
     consume(this: Embedded<ConsumablePF2e>): Promise<void>;
-    castEmbeddedSpell(this: Embedded<ConsumablePF2e>, trickMagicItemData?: TrickMagicItemCastData): Promise<void>;
+    castEmbeddedSpell(
+        this: Embedded<ConsumablePF2e>,
+        trickMagicItemData?: TrickMagicItemCastData,
+    ): Promise<void>;
 }
 export interface ConsumablePF2e {
     readonly data: ConsumableData;

@@ -1,10 +1,10 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { ActorSheetPF2e } from '../sheet/base';
-import { LootPF2e } from '@actor/loot';
-import { ItemSourcePF2e } from '@item/data';
-import { LootSheetDataPF2e } from '../sheet/data-types';
-import { ItemPF2e } from '@item';
+import { ActorSheetPF2e } from "../sheet/base";
+import { LootPF2e } from "@actor/loot";
+import { ItemSourcePF2e } from "@item/data";
+import { LootSheetDataPF2e } from "../sheet/data-types";
+import { ItemPF2e } from "@item";
 export declare class LootSheetPF2e extends ActorSheetPF2e<LootPF2e> {
     static get defaultOptions(): ActorSheetOptions & {
         classes: string[];
@@ -28,5 +28,8 @@ export declare class LootSheetPF2e extends ActorSheetPF2e<LootPF2e> {
     prepareItems(sheetData: any): void;
     private distributeCoins;
     private lootNPCs;
-    protected _onDropItem(event: ElementDragEvent, data: DropCanvasData<ItemSourcePF2e>): Promise<ItemPF2e[]>;
+    protected _onDropItem(
+        event: ElementDragEvent,
+        data: DropCanvasData<ItemSourcePF2e>,
+    ): Promise<ItemPF2e[]>;
 }

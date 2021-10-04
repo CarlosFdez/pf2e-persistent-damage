@@ -46,7 +46,7 @@ declare global {
         static REGEXP: RegExp;
 
         /** @override */
-        static SERIALIZE_ATTRIBUTES: ['number', 'faces', 'modifiers', 'results'];
+        static SERIALIZE_ATTRIBUTES: ["number", "faces", "modifiers", "results"];
 
         /* -------------------------------------------- */
         /*  Dice Term Attributes                        */
@@ -74,7 +74,13 @@ declare global {
         alter(multiply: number, add: number): this;
 
         /** @override */
-        protected _evaluateSync({ minimize, maximize }?: { minimize?: boolean; maximize?: boolean }): Evaluated<this>;
+        protected _evaluateSync({
+            minimize,
+            maximize,
+        }?: {
+            minimize?: boolean;
+            maximize?: boolean;
+        }): Evaluated<this>;
 
         /**
          * Roll the DiceTerm by mapping a random uniform draw against the faces of the dice term.
@@ -139,7 +145,11 @@ declare global {
          * @param target     The target value
          * @return Is the comparison true?
          */
-        static compareResult(result: number, comparison: ComparisonOperator, target?: number): boolean;
+        static compareResult(
+            result: number,
+            comparison: ComparisonOperator,
+            target?: number,
+        ): boolean;
 
         /**
          * A helper method to modify the results array of a dice term by flagging certain results are kept or dropped.
@@ -183,7 +193,10 @@ declare global {
          * @param [options={}] Additional options which customize the match
          * @param [options.imputeNumber=true] Allow the number of dice to be optional, i.e. "d6"
          */
-        static matchTerm(expression: string, { imputeNumber }?: { imputeNumber: boolean }): RegExpMatchArray | null;
+        static matchTerm(
+            expression: string,
+            { imputeNumber }?: { imputeNumber: boolean },
+        ): RegExpMatchArray | null;
 
         /**
          * Construct a term of this type given a matched regular expression array.
@@ -222,5 +235,5 @@ declare global {
         results?: DiceTermResult[];
     }
 
-    type ComparisonOperator = '=' | '<' | '<=' | '>' | '>=';
+    type ComparisonOperator = "=" | "<" | "<=" | ">" | ">=";
 }

@@ -1,5 +1,5 @@
-import { MigrationRunnerBase } from '@module/migration/runner/base';
-import { MigrationBase } from '@module/migration/base';
+import { MigrationRunnerBase } from "@module/migration/runner/base";
+import { MigrationBase } from "@module/migration/base";
 export declare class MigrationRunner extends MigrationRunnerBase {
     needsMigration(): boolean;
     private migrateWorldItem;

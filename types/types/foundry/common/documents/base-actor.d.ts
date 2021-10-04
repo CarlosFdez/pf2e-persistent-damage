@@ -6,17 +6,19 @@ declare module foundry {
          * @property data The constructed data object for the document.
          */
         class BaseActor extends abstract.Document {
-            static override get schema(): ConstructorOf<data.ActorData<BaseActor, BaseActiveEffect, BaseItem>>;
+            static override get schema(): ConstructorOf<
+                data.ActorData<BaseActor, BaseActiveEffect, BaseItem>
+            >;
 
             static override get metadata(): ActorMetadata;
 
             /**
              * A reference to the Collection of embedded ActiveEffect instances in the Actor document, indexed by _id.
              */
-            get effects(): this['data']['effects'];
+            get effects(): this["data"]["effects"];
 
             /** A reference to the Collection of embedded Item instances in the Actor document, indexed by _id. */
-            get items(): this['data']['items'];
+            get items(): this["data"]["items"];
 
             /**
              * Migrate the system data object to conform to data model defined by the current system version.
@@ -35,10 +37,10 @@ declare module foundry {
                 insertKeys?: boolean;
                 insertValues?: boolean;
                 enforceTypes?: boolean;
-            }): this['data']['data'];
+            }): this["data"]["data"];
 
             protected override _preCreate(
-                data: PreDocumentId<this['data']['_source']>,
+                data: PreDocumentId<this["data"]["_source"]>,
                 options: DocumentModificationContext,
                 user: BaseUser,
             ): Promise<void>;
@@ -57,9 +59,9 @@ declare module foundry {
         }
 
         interface ActorMetadata extends abstract.DocumentMetadata {
-            name: 'Actor';
-            collection: 'actors';
-            label: 'DOCUMENT.Actor';
+            name: "Actor";
+            collection: "actors";
+            label: "DOCUMENT.Actor";
             embedded: {
                 ActiveEffect: typeof BaseActiveEffect;
                 Item: typeof BaseItem;
@@ -67,9 +69,9 @@ declare module foundry {
             isPrimary: true;
             hasSystemData: true;
             permissions: {
-                create: 'ACTOR_CREATE';
-                update: 'ASSISTANT';
-                delete: 'ASSISTANT';
+                create: "ACTOR_CREATE";
+                update: "ASSISTANT";
+                delete: "ASSISTANT";
             };
             types: string[];
         }

@@ -1,6 +1,6 @@
-import { Bulk, BulkConfig, BulkItem } from '../physical/bulk';
-import { PhysicalItemData } from '../data';
-import { Size } from '@module/data';
+import { Bulk, BulkConfig, BulkItem } from "../physical/bulk";
+import { PhysicalItemData } from "../data";
+import { Size } from "@module/data";
 /**
  * Datatype that holds container information for *every* item, even non containers
  * @category Other
@@ -15,7 +15,17 @@ declare class ContainerData {
     formattedNegateBulk: string;
     formattedCapacity: string;
     capacity: Bulk;
-    constructor({ item, heldItems, negateBulk, capacity, heldItemBulk, isInContainer, formattedNegateBulk, formattedHeldItemBulk, formattedCapacity, }: {
+    constructor({
+        item,
+        heldItems,
+        negateBulk,
+        capacity,
+        heldItemBulk,
+        isInContainer,
+        formattedNegateBulk,
+        formattedHeldItemBulk,
+        formattedCapacity,
+    }: {
         item: PhysicalItemData;
         heldItems: PhysicalItemData[];
         negateBulk: Bulk;
@@ -41,7 +51,11 @@ declare class ContainerData {
  * @param items
  * @returns
  */
-export declare function isCycle(itemId: string, containerId: string, items: PhysicalItemData[]): boolean;
+export declare function isCycle(
+    itemId: string,
+    containerId: string,
+    items: PhysicalItemData[],
+): boolean;
 /**
  * Returns a map where the key is an item id and the value is the container data.
  * Every item has container data, even if it's not a container. The relevant
@@ -53,7 +67,12 @@ export declare function isCycle(itemId: string, containerId: string, items: Phys
  * @param actorSize
  * @return
  */
-export declare function getContainerMap({ items, bulkItemsById, bulkConfig, actorSize, }?: {
+export declare function getContainerMap({
+    items,
+    bulkItemsById,
+    bulkConfig,
+    actorSize,
+}?: {
     items?: PhysicalItemData[];
     bulkItemsById?: Map<string, BulkItem>;
     bulkConfig?: BulkConfig;

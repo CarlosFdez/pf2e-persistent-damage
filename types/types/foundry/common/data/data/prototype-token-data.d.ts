@@ -66,7 +66,7 @@ declare namespace foundry {
 
             protected override _initialize(): void;
 
-            override toJSON(): this['_source'];
+            override toJSON(): this["_source"];
 
             lightAnimation: AnimationData<TDocument>;
 
@@ -75,7 +75,8 @@ declare namespace foundry {
             bar2: TokenBarData<TDocument>;
         }
 
-        interface PrototypeTokenData extends Omit<PrototypeTokenSource, 'lightAnimation' | 'bar1' | 'bar2'> {
+        interface PrototypeTokenData
+            extends Omit<PrototypeTokenSource, "lightAnimation" | "bar1" | "bar2"> {
             readonly _source: PrototypeTokenSource;
         }
     }

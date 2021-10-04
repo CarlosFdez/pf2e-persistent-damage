@@ -159,7 +159,7 @@ declare global {
                     required: true;
                     nullable: false;
                     clean: (v: unknown) => string;
-                    default: '';
+                    default: "";
                 };
 
                 /** A field used for integer sorting of a Document relative to its siblings */
@@ -175,7 +175,7 @@ declare global {
                 const TIMESTAMP_FIELD: {
                     type: typeof Number;
                     required: false;
-                    default: typeof Date['now'];
+                    default: typeof Date["now"];
                     nullable: false;
                 };
 
@@ -215,7 +215,9 @@ declare global {
                  * @param perms The provided permissions object
                  * @returns Is the object valid?
                  */
-                function _validatePermissions(perms: Record<string, unknown>): perms is Record<string, PermissionLevel>;
+                function _validatePermissions(
+                    perms: Record<string, unknown>,
+                ): perms is Record<string, PermissionLevel>;
 
                 /* ---------------------------------------- */
                 /*  Dynamic Fields                          */
@@ -233,7 +235,10 @@ declare global {
                  */
                 function embeddedCollectionField(
                     document: ConstructorOf<foundry.abstract.Document>,
-                    options?: { required?: boolean; default?: ConstructorOf<foundry.abstract.Document> },
+                    options?: {
+                        required?: boolean;
+                        default?: ConstructorOf<foundry.abstract.Document>;
+                    },
                 ): foundry.abstract.DocumentField;
 
                 /** Return a document field which is a modification of a static field type */
@@ -247,10 +252,12 @@ declare global {
                     TOptions extends ForeignDocumentFieldOptions = ForeignDocumentFieldOptions,
                 > {
                     type: typeof String;
-                    required: TOptions['required'] extends true ? true : false;
-                    nullable: TOptions['nullable'] extends false ? false : true;
-                    default: TOptions['default'] extends abstract.Document ? TOptions['default'] : null;
-                    clean: <T extends any>(d: T) => T extends TOptions['type'] ? T : null;
+                    required: TOptions["required"] extends true ? true : false;
+                    nullable: TOptions["nullable"] extends false ? false : true;
+                    default: TOptions["default"] extends abstract.Document
+                        ? TOptions["default"]
+                        : null;
+                    clean: <T extends any>(d: T) => T extends TOptions["type"] ? T : null;
                     validate: typeof _validateId;
                     validationError: '`{name} {field} "{value}" is not a valid ${options.type.documentName} id`';
                 }

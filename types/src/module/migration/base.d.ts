@@ -1,5 +1,5 @@
-import { ActorSourcePF2e } from '@actor/data';
-import { ItemSourcePF2e } from '@item/data';
+import { ActorSourcePF2e } from "@actor/data";
+import { ItemSourcePF2e } from "@item/data";
 /**
  * This is the base class for a migration.
  * If you make a change to the database schema (i.e. anything in template.json or data-definitions.ts),

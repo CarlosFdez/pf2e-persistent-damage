@@ -8,7 +8,7 @@ declare class AmbientLight extends PlaceableObject {
     source: PointSource;
 
     /** @override */
-    static get embeddedName(): 'AmbientLight';
+    static get embeddedName(): "AmbientLight";
 
     /** Test whether a specific AmbientLight source provides global illumination */
     get global(): boolean;

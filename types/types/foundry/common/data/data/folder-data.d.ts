@@ -22,7 +22,7 @@ declare module foundry {
             type: FolderDocumentType;
             description: string;
             parent: string | null;
-            sorting: 'a' | 'm';
+            sorting: "a" | "m";
             sort: number;
             color: HexColorString;
             flags: Record<string, unknown>;
@@ -33,7 +33,7 @@ declare module foundry {
         > extends abstract.DocumentData<TDocument> {
             static override defineSchema(): abstract.DocumentSchema;
 
-            static SORTING_MODES: ['a', 'm'];
+            static SORTING_MODES: ["a", "m"];
         }
 
         interface FolderData extends FolderSource {

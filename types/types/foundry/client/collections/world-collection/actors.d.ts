@@ -8,7 +8,7 @@
  * let actor = game.actors.get(actorId);
  */
 declare class Actors<TActor extends Actor> extends WorldCollection<TActor> {
-    get documentName(): 'Actor';
+    get documentName(): "Actor";
 
     /**
      * A mapping of synthetic Token Actors which are currently active within the viewed Scene.

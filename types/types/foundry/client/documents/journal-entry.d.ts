@@ -1,4 +1,4 @@
-import { JournalEntryConstructor } from './constructors';
+import { JournalEntryConstructor } from "./constructors";
 
 declare global {
     /**
@@ -52,7 +52,7 @@ declare global {
         /* -------------------------------------------- */
 
         override _onUpdate(
-            changed: DeepPartial<this['data']['_source']>,
+            changed: DeepPartial<this["data"]["_source"]>,
             options: DocumentModificationContext,
             userId: string,
         ): void;

@@ -3,7 +3,7 @@ declare module foundry {
         interface MacroSource extends abstract.DocumentSource {
             _id: string;
             name: string;
-            type: 'chat' | 'script';
+            type: "chat" | "script";
             img: string;
             actorIds: string[];
             author: string;

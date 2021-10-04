@@ -1,6 +1,6 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { NPCLegacyEditSheetPF2e } from './legacy-edit-sheet';
+import { NPCLegacyEditSheetPF2e } from "./legacy-edit-sheet";
 export declare class NPCLegacySheetPF2e extends NPCLegacyEditSheetPF2e {
     get template(): string;
     static get defaultOptions(): ActorSheetOptions & {

@@ -52,4 +52,5 @@ declare module foundry {
     }
 }
 
-declare type MeasuredTemplateType = typeof CONST.MEASURED_TEMPLATE_TYPES[keyof typeof CONST.MEASURED_TEMPLATE_TYPES];
+declare type MeasuredTemplateType =
+    typeof CONST.MEASURED_TEMPLATE_TYPES[keyof typeof CONST.MEASURED_TEMPLATE_TYPES];

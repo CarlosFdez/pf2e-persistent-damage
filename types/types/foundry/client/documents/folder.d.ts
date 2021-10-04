@@ -1,4 +1,4 @@
-import { FolderConstructor } from './constructors';
+import { FolderConstructor } from "./constructors";
 
 declare global {
     /**
@@ -11,7 +11,9 @@ declare global {
      *
      ent
     */
-    class Folder<TDocument extends EnfolderableDocument = EnfolderableDocument> extends FolderConstructor {
+    class Folder<
+        TDocument extends EnfolderableDocument = EnfolderableDocument,
+    > extends FolderConstructor {
         /**
          * Create a new Folder by rendering a dialog window to provide basic creation details
          * @param data Initial data with which to populate the creation form

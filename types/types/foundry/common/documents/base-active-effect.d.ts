@@ -30,9 +30,9 @@ declare module foundry {
         }
 
         interface ActiveEffectMetadata extends abstract.DocumentMetadata {
-            name: 'ActiveEffect';
-            collection: 'effects';
-            label: 'DOCUMENT.ActiveEffect';
+            name: "ActiveEffect";
+            collection: "effects";
+            label: "DOCUMENT.ActiveEffect";
             isEmbedded: true;
         }
     }

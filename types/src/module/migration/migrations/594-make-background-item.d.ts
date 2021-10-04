@@ -1,4 +1,4 @@
-import { MigrationBase } from '../base';
+import { MigrationBase } from "../base";
 export declare class Migration594AddBackgroundItem extends MigrationBase {
     static version: number;
     requiresFlush: boolean;

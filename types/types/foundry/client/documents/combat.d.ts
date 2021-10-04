@@ -1,9 +1,12 @@
-import { CombatConstructor } from './constructors';
+import { CombatConstructor } from "./constructors";
 
 declare global {
     class Combat<TCombatant extends Combatant = Combatant> extends CombatConstructor {
         /** @override */
-        constructor(data: PreCreate<foundry.data.CombatSource>, context?: DocumentConstructionContext<Combat>);
+        constructor(
+            data: PreCreate<foundry.data.CombatSource>,
+            context?: DocumentConstructionContext<Combat>,
+        );
 
         /** Track the sorted turn order of this combat encounter */
         turns: TCombatant[];
@@ -28,7 +31,7 @@ declare global {
         protected _soundPlaying: boolean;
 
         /** The configuration setting used to record Combat preferences */
-        static CONFIG_SETTING: 'combatTrackerConfig';
+        static CONFIG_SETTING: "combatTrackerConfig";
 
         /* -------------------------------------------- */
         /*  Properties                                  */
@@ -142,13 +145,13 @@ declare global {
         /* -------------------------------------------- */
 
         protected override _onCreate(
-            data: this['data']['_source'],
+            data: this["data"]["_source"],
             options: DocumentModificationContext,
             userId: string,
         ): void;
 
         protected override _onUpdate(
-            changed: DeepPartial<this['data']['_source']>,
+            changed: DeepPartial<this["data"]["_source"]>,
             options: DocumentModificationContext,
             userId: string,
         ): void;
@@ -156,25 +159,25 @@ declare global {
         protected override _onDelete(options: DocumentModificationContext, userId: string): void;
 
         protected override _onCreateEmbeddedDocuments(
-            type: 'Combatant',
+            type: "Combatant",
             documents: TCombatant[],
-            result: TCombatant['data']['_source'][],
+            result: TCombatant["data"]["_source"][],
             options: DocumentModificationContext,
             userId: string,
         ): void;
 
         protected override _onUpdateEmbeddedDocuments(
-            embeddedName: 'Combatant',
+            embeddedName: "Combatant",
             documents: TCombatant[],
-            result: TCombatant['data']['_source'][],
+            result: TCombatant["data"]["_source"][],
             options: DocumentModificationContext,
             userId: string,
         ): void;
 
         protected override _onDeleteEmbeddedDocuments(
-            embeddedName: 'Combatant',
+            embeddedName: "Combatant",
             documents: TCombatant[],
-            result: TCombatant['data']['_source'][],
+            result: TCombatant["data"]["_source"][],
             options: DocumentModificationContext,
             userId: string,
         ): void;
@@ -184,8 +187,8 @@ declare global {
         readonly data: foundry.data.CombatData<this, TCombatant>;
 
         createEmbeddedDocuments(
-            embeddedName: 'Combatant',
-            data: PreCreate<TCombatant['data']['_source']>[],
+            embeddedName: "Combatant",
+            data: PreCreate<TCombatant["data"]["_source"]>[],
             context?: DocumentModificationContext,
         ): Promise<TCombatant[]>;
     }

@@ -18,7 +18,12 @@ declare global {
                 type: object;
                 required: boolean;
                 nullable?: boolean;
-                default?: ((value: any) => string | number | object | null) | string | number | object | null;
+                default?:
+                    | ((value: any) => string | number | object | null)
+                    | string
+                    | number
+                    | object
+                    | null;
                 clean?: (data: unknown) => void;
                 validate?: (data: any) => boolean;
                 validationError?: string;
@@ -35,7 +40,9 @@ declare global {
              * @param [data={}]  Initial data used to construct the data object
              * @param [document] The document to which this data object belongs
              */
-            abstract class DocumentData<TDocument extends abstract.Document | null = abstract.Document | null> {
+            abstract class DocumentData<
+                TDocument extends abstract.Document | null = abstract.Document | null,
+            > {
                 constructor(data?: DocumentSource, document?: TDocument | null);
 
                 /** An immutable reverse-reference to the Document to which this data belongs, possibly null. */
@@ -76,7 +83,10 @@ declare global {
                  * @param data The provided data object
                  * @returns The default value for the field
                  */
-                protected static _getFieldDefaultValue(field: DocumentField, data: unknown): unknown;
+                protected static _getFieldDefaultValue(
+                    field: DocumentField,
+                    data: unknown,
+                ): unknown;
 
                 /** Initialize the instance by copying data from the source object to instance attributes. */
                 protected _initialize(): void;
@@ -141,15 +151,17 @@ declare global {
                  * @param [source=true] Draw values from the underlying data source rather than transformed values
                  * @returns The extracted primitive object
                  */
-                toObject<D extends DocumentData, B extends true>(this: D, source?: B): D['_source'];
+                toObject<D extends DocumentData, B extends true>(this: D, source?: B): D["_source"];
                 toObject<D extends DocumentData, B extends false>(this: D, source: B): RawObject<D>;
-                toObject<D extends DocumentData, B extends boolean>(source?: B): D['_source'] | RawObject<D>;
+                toObject<D extends DocumentData, B extends boolean>(
+                    source?: B,
+                ): D["_source"] | RawObject<D>;
 
                 /**
                  * Extract the source data for the DocumentData into a simple object format that can be serialized.
                  * @returns The document source data expressed as a plain object
                  */
-                toJSON(): this['_source'];
+                toJSON(): this["_source"];
 
                 /**
                  * Create a DocumentData instance using a provided serialized JSON string.
@@ -162,8 +174,8 @@ declare global {
     }
 
     type RawObject<T extends foundry.abstract.DocumentData> = {
-        [P in keyof T['_source']]: T[P] extends foundry.abstract.EmbeddedCollection<infer U>
-            ? RawObject<U['data']>[]
+        [P in keyof T["_source"]]: T[P] extends foundry.abstract.EmbeddedCollection<infer U>
+            ? RawObject<U["data"]>[]
             : T[P] extends foundry.abstract.DocumentData
             ? RawObject<T[P]>
             : T[P] extends foundry.abstract.DocumentData[]

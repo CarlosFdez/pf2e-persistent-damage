@@ -1,6 +1,6 @@
 declare class Tile extends PlaceableObject<TileDocument> {
     /** @override */
-    static get embeddedName(): 'Tile';
+    static get embeddedName(): "Tile";
 
     /** @override */
     get layer(): TilesLayer;

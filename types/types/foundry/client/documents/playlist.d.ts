@@ -1,4 +1,4 @@
-import { PlaylistConstructor } from './constructors';
+import { PlaylistConstructor } from "./constructors";
 
 declare global {
     /**
@@ -11,7 +11,10 @@ declare global {
      */
     class Playlist extends PlaylistConstructor {
         /** @override */
-        constructor(data: PreCreate<foundry.data.PlaylistSource>, context?: DocumentConstructionContext<Playlist>);
+        constructor(
+            data: PreCreate<foundry.data.PlaylistSource>,
+            context?: DocumentConstructionContext<Playlist>,
+        );
 
         /**
          * Each sound which is played within the Playlist has a created Howl instance.
@@ -100,7 +103,7 @@ declare global {
         ): Promise<void>;
 
         protected override _onUpdate(
-            changed: DeepPartial<this['data']['_source']>,
+            changed: DeepPartial<this["data"]["_source"]>,
             options: DocumentModificationContext,
             userId: string,
         ): void;
@@ -108,7 +111,7 @@ declare global {
         protected override _onDelete(options: DocumentModificationContext, userId: string): void;
 
         protected override _onCreateEmbeddedDocuments(
-            embeddedName: 'PlaylistSound',
+            embeddedName: "PlaylistSound",
             documents: PlaylistSound[],
             result: foundry.data.PlaylistSoundSource[],
             options: DocumentModificationContext,
@@ -116,7 +119,7 @@ declare global {
         ): void;
 
         protected override _onUpdateEmbeddedDocuments(
-            embeddedName: 'PlaylistSound',
+            embeddedName: "PlaylistSound",
             documents: PlaylistSound[],
             result: foundry.data.PlaylistSoundSource[],
             options: DocumentModificationContext,
@@ -124,7 +127,7 @@ declare global {
         ): void;
 
         protected override _onDeleteEmbeddedDocuments(
-            embeddedName: 'PlaylistSound',
+            embeddedName: "PlaylistSound",
             documents: ClientDocument[],
             result: PlaylistSound[],
             options: DocumentModificationContext,

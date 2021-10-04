@@ -1,9 +1,9 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { ItemPF2e } from '@item/base';
-import { ItemSourcePF2e } from '@item/data';
-import { CharacterPF2e } from '.';
-import { CreatureSheetPF2e } from '../creature/sheet';
+import { ItemPF2e } from "@item/base";
+import { ItemSourcePF2e } from "@item/data";
+import { CharacterPF2e } from ".";
+import { CreatureSheetPF2e } from "../creature/sheet";
 export declare class CharacterSheetPF2e extends CreatureSheetPF2e<CharacterPF2e> {
     static get defaultOptions(): ActorSheetOptions & {
         classes: string[];
@@ -52,7 +52,10 @@ export declare class CharacterSheetPF2e extends CreatureSheetPF2e<CharacterPF2e>
     private onClickDyingWoundedDoomed;
     private getNearestSlotId;
     private onToggleSignatureSpell;
-    protected _onDropItem(event: ElementDragEvent, data: DropCanvasData<ItemSourcePF2e>): Promise<ItemPF2e[]>;
+    protected _onDropItem(
+        event: ElementDragEvent,
+        data: DropCanvasData<ItemSourcePF2e>,
+    ): Promise<ItemPF2e[]>;
     /**
      * Handle a drop event for an existing Owned Item to sort that item
      * @param event

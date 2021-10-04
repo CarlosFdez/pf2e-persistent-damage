@@ -1,14 +1,14 @@
-import { ItemSystemData } from '@item/data/base';
-import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from '@item/data/non-physical';
-import { EffectPF2e } from '.';
-export declare type EffectSource = BaseNonPhysicalItemSource<'effect', EffectSystemData>;
+import { ItemSystemData } from "@item/data/base";
+import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from "@item/data/non-physical";
+import { EffectPF2e } from ".";
+export declare type EffectSource = BaseNonPhysicalItemSource<"effect", EffectSystemData>;
 export declare class EffectData extends BaseNonPhysicalItemData<EffectPF2e> {
     /** @override */
     static DEFAULT_ICON: ImagePath;
 }
-export interface EffectData extends Omit<EffectSource, '_id' | 'effects'> {
-    type: EffectSource['type'];
-    data: EffectSource['data'];
+export interface EffectData extends Omit<EffectSource, "_id" | "effects"> {
+    type: EffectSource["type"];
+    data: EffectSource["data"];
     readonly _source: EffectSource;
 }
 export interface EffectSystemData extends ItemSystemData {
@@ -21,7 +21,7 @@ export interface EffectSystemData extends ItemSystemData {
         value: number;
         unit: string;
         sustained: boolean;
-        expiry: 'turn-start' | 'turn-end';
+        expiry: "turn-start" | "turn-end";
     };
     start: {
         value: number;

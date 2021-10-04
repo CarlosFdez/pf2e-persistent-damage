@@ -4,7 +4,15 @@ declare global {
     class MathTerm<TFunctionName extends MathFunctionName = MathFunctionName> extends RollTerm<
         MathTermData<TFunctionName>
     > {
-        constructor({ fn, terms, options }: { fn: TFunctionName; terms: string[]; options?: MathTermData });
+        constructor({
+            fn,
+            terms,
+            options,
+        }: {
+            fn: TFunctionName;
+            terms: string[];
+            options?: MathTermData;
+        });
 
         /** The named function in the Math environment which should be applied to the term */
         fn: TFunctionName;
@@ -22,7 +30,7 @@ declare global {
         isIntermediate: true;
 
         /** @override */
-        static SERIALIZE_ATTRIBUTES: ['fn', 'terms'];
+        static SERIALIZE_ATTRIBUTES: ["fn", "terms"];
 
         /* -------------------------------------------- */
         /*  Math Term Attributes                        */
@@ -42,7 +50,13 @@ declare global {
         /* -------------------------------------------- */
 
         /** @override */
-        protected _evaluateSync({ minimize, maximize }?: { minimize?: boolean; maximize?: boolean }): Evaluated<this>;
+        protected _evaluateSync({
+            minimize,
+            maximize,
+        }?: {
+            minimize?: boolean;
+            maximize?: boolean;
+        }): Evaluated<this>;
 
         /** @override */
         protected _evaluate({
@@ -56,10 +70,11 @@ declare global {
 
     type MathFunctionName = Exclude<
         MathStringKey,
-        'E' | 'LN2' | 'LN10' | 'LOG2E' | 'LOG10E' | 'PI' | 'SQRT1_2' | 'SQRT2'
+        "E" | "LN2" | "LN10" | "LOG2E" | "LOG10E" | "PI" | "SQRT1_2" | "SQRT2"
     >;
 
-    interface MathTermData<TFunctionName extends MathFunctionName = MathFunctionName> extends RollTermData {
+    interface MathTermData<TFunctionName extends MathFunctionName = MathFunctionName>
+        extends RollTermData {
         fn?: TFunctionName;
         terms?: RollTerm[];
     }

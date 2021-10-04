@@ -21,7 +21,10 @@ declare class AbstractBaseShader extends PIXI.Shader {
     static defaultUniforms: DefaultShaderUniforms;
 
     /** A factory method for creating the shader using its defined default values */
-    static create<T extends AbstractBaseShader>(this: ConstructorOf<T>, defaultUniforms: DefaultShaderUniforms): T;
+    static create<T extends AbstractBaseShader>(
+        this: ConstructorOf<T>,
+        defaultUniforms: DefaultShaderUniforms,
+    ): T;
 
     /** Reset the shader uniforms back to their provided default values */
     reset(): void;

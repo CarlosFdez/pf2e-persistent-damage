@@ -1,5 +1,5 @@
-import type * as TinyMCE from 'tinymce';
-import * as PIXI from 'pixi.js';
+import type * as TinyMCE from "tinymce";
+import * as PIXI from "pixi.js";
 
 declare global {
     interface Config<
@@ -35,7 +35,10 @@ declare global {
         /** Configuration for the Actor document */
         Actor: {
             documentClass: {
-                new (data: PreCreate<TActor['data']['_source']>, options?: DocumentConstructionContext<TActor>): TActor;
+                new (
+                    data: PreCreate<TActor["data"]["_source"]>,
+                    options?: DocumentConstructionContext<TActor>,
+                ): TActor;
             };
             collection: Actors<TActor>;
             sheetClasses: Record<string, Record<string, typeof ActorSheet>>;
@@ -45,7 +48,7 @@ declare global {
         Folder: {
             documentClass: {
                 new (
-                    data: PreCreate<TFolder['data']['_source']>,
+                    data: PreCreate<TFolder["data"]["_source"]>,
                     options?: DocumentConstructionContext<TFolder>,
                 ): TFolder;
             };
@@ -58,7 +61,7 @@ declare global {
             collection: typeof Messages;
             documentClass: {
                 new (
-                    data: PreCreate<TChatMessage['data']['_source']>,
+                    data: PreCreate<TChatMessage["data"]["_source"]>,
                     context?: DocumentConstructionContext<TChatMessage>,
                 ): TChatMessage;
             };
@@ -69,7 +72,10 @@ declare global {
         /** Configuration for Item document */
         Item: {
             documentClass: {
-                new (data: PreCreate<TItem['data']['_source']>, context?: DocumentConstructionContext<TItem>): TItem;
+                new (
+                    data: PreCreate<TItem["data"]["_source"]>,
+                    context?: DocumentConstructionContext<TItem>,
+                ): TItem;
             };
             collection: typeof Items;
             sheetClasses: Record<string, Record<string, typeof ItemSheet>>;
@@ -79,7 +85,7 @@ declare global {
         Combat: {
             documentClass: {
                 new (
-                    data: PreCreate<TCombat['data']['_source']>,
+                    data: PreCreate<TCombat["data"]["_source"]>,
                     context?: DocumentConstructionContext<TCombat>,
                 ): TCombat;
             };
@@ -106,7 +112,10 @@ declare global {
         /** Configuration for the Macro document */
         Macro: {
             documentClass: {
-                new (data: PreCreate<TMacro['data']['_source']>, context?: DocumentConstructionContext<TMacro>): TMacro;
+                new (
+                    data: PreCreate<TMacro["data"]["_source"]>,
+                    context?: DocumentConstructionContext<TMacro>,
+                ): TMacro;
             };
             collection: typeof Macros;
             sheetClass: typeof MacroConfig;
@@ -116,11 +125,14 @@ declare global {
         /** Configuration for Scene document */
         Scene: {
             documentClass: {
-                new (data: PreCreate<TScene['data']['_source']>, context?: DocumentConstructionContext<TScene>): TScene;
+                new (
+                    data: PreCreate<TScene["data"]["_source"]>,
+                    context?: DocumentConstructionContext<TScene>,
+                ): TScene;
             };
 
             collection: typeof Scenes;
-            sheetClass: ConstructorOf<TScene['sheet']>;
+            sheetClass: ConstructorOf<TScene["sheet"]>;
             notesClass: any;
             sidebarIcon: string;
         };
@@ -156,7 +168,7 @@ declare global {
         ActiveEffect: {
             documentClass: {
                 new (
-                    data: PreCreate<TActiveEffect['data']['_source']>,
+                    data: PreCreate<TActiveEffect["data"]["_source"]>,
                     context?: DocumentConstructionContext<TActiveEffect>,
                 ): TActiveEffect;
             };
@@ -166,7 +178,7 @@ declare global {
         /** Configuration for the Combatant document */
         Combatant: {
             documentClass: new (
-                data: PreCreate<TCombatant['data']['_source']>,
+                data: PreCreate<TCombatant["data"]["_source"]>,
                 context?: DocumentConstructionContext<TCombatant>,
             ) => TCombatant;
             sheetClass: typeof CombatantConfig;
@@ -175,12 +187,12 @@ declare global {
         /** Configuration for the Token embedded document type and its representation on the game Canvas */
         Token: {
             documentClass: new (
-                data: PreCreate<TTokenDocument['data']['_source']>,
+                data: PreCreate<TTokenDocument["data"]["_source"]>,
                 context: DocumentConstructionContext<TTokenDocument>,
             ) => TTokenDocument;
-            objectClass: new (...args: any[]) => TTokenDocument['object'];
+            objectClass: new (...args: any[]) => TTokenDocument["object"];
             layerClass: typeof TokenLayer;
-            sheetClass: ConstructorOf<TTokenDocument['sheet']>;
+            sheetClass: ConstructorOf<TTokenDocument["sheet"]>;
         };
 
         /* -------------------------------------------- */
@@ -228,73 +240,73 @@ declare global {
             objectBorderThickness: number;
             lightAnimations: {
                 torch: {
-                    label: 'LIGHT.AnimationTorch';
-                    animation: PointSource['animateTorch'];
+                    label: "LIGHT.AnimationTorch";
+                    animation: PointSource["animateTorch"];
                     illuminationShader: typeof TorchIlluminationShader;
                     colorationShader: typeof TorchColorationShader;
                 };
                 pulse: {
-                    label: 'LIGHT.AnimationPulse';
-                    animation: PointSource['animatePulse'];
+                    label: "LIGHT.AnimationPulse";
+                    animation: PointSource["animatePulse"];
                     illuminationShader: typeof PulseIlluminationShader;
                     colorationShader: typeof PulseColorationShader;
                 };
                 chroma: {
-                    label: 'LIGHT.AnimationChroma';
-                    animation: PointSource['animateTime'];
+                    label: "LIGHT.AnimationChroma";
+                    animation: PointSource["animateTime"];
                     colorationShader: typeof PIXI.Shader;
                 };
                 wave: {
-                    label: 'LIGHT.AnimationWave';
-                    animation: PointSource['animateTime'];
+                    label: "LIGHT.AnimationWave";
+                    animation: PointSource["animateTime"];
                     illuminationShader: typeof PIXI.Shader;
                     colorationShader: typeof PIXI.Shader;
                 };
                 fog: {
-                    label: 'LIGHT.AnimationFog';
-                    animation: PointSource['animateTime'];
+                    label: "LIGHT.AnimationFog";
+                    animation: PointSource["animateTime"];
                     colorationShader: typeof PIXI.Shader;
                 };
                 sunburst: {
-                    label: 'LIGHT.AnimationSunburst';
-                    animation: PointSource['animateTime'];
+                    label: "LIGHT.AnimationSunburst";
+                    animation: PointSource["animateTime"];
                     illuminationShader: typeof PIXI.Shader;
                     colorationShader: typeof PIXI.Shader;
                 };
                 dome: {
-                    label: 'LIGHT.AnimationLightDome';
-                    animation: PointSource['animateTime'];
+                    label: "LIGHT.AnimationLightDome";
+                    animation: PointSource["animateTime"];
                     colorationShader: typeof PIXI.Shader;
                 };
                 emanation: {
-                    label: 'LIGHT.AnimationEmanation';
-                    animation: PointSource['animateTime'];
+                    label: "LIGHT.AnimationEmanation";
+                    animation: PointSource["animateTime"];
                     colorationShader: typeof PIXI.Shader;
                 };
                 hexa: {
-                    label: 'LIGHT.AnimationHexaDome';
-                    animation: PointSource['animateTime'];
+                    label: "LIGHT.AnimationHexaDome";
+                    animation: PointSource["animateTime"];
                     colorationShader: typeof PIXI.Shader;
                 };
                 ghost: {
-                    label: 'LIGHT.AnimationGhostLight';
-                    animation: PointSource['animateTime'];
+                    label: "LIGHT.AnimationGhostLight";
+                    animation: PointSource["animateTime"];
                     illuminationShader: typeof PIXI.Shader;
                     colorationShader: typeof PIXI.Shader;
                 };
                 energy: {
-                    label: 'LIGHT.AnimationEnergyField';
-                    animation: PointSource['animateTime'];
+                    label: "LIGHT.AnimationEnergyField";
+                    animation: PointSource["animateTime"];
                     colorationShader: typeof PIXI.Shader;
                 };
                 roiling: {
-                    label: 'LIGHT.AnimationRoilingMass';
-                    animation: PointSource['animateTime'];
+                    label: "LIGHT.AnimationRoilingMass";
+                    animation: PointSource["animateTime"];
                     illuminationShader: typeof PIXI.Shader;
                 };
                 hole: {
-                    label: 'LIGHT.AnimationBlackHole';
-                    animation: PointSource['animateTime'];
+                    label: "LIGHT.AnimationBlackHole";
+                    animation: PointSource["animateTime"];
                     illuminationShader: typeof PIXI.Shader;
                 };
             };
@@ -377,9 +389,9 @@ declare global {
 
         /** Default configuration options for TinyMCE editors */
         // See https://www.tiny.cloud/docs/configure/content-appearance/
-        TinyMCE: Omit<TinyMCE.EditorSettings, 'content_css' | 'style_formats'> & {
+        TinyMCE: Omit<TinyMCE.EditorSettings, "content_css" | "style_formats"> & {
             content_css: string[];
-            style_formats: NonNullable<TinyMCE.EditorSettings['style_formats']>;
+            style_formats: NonNullable<TinyMCE.EditorSettings["style_formats"]>;
         };
 
         ui: {

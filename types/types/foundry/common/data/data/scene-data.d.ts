@@ -98,17 +98,17 @@ declare module foundry {
         interface SceneData
             extends Omit<
                 SceneSource,
-                | 'drawings'
-                | 'tokens'
-                | 'lights'
-                | 'notes'
-                | 'sounds'
-                | 'templates'
-                | 'tiles'
-                | 'walls'
-                | 'playlist'
-                | 'playlistSound'
-                | 'journal'
+                | "drawings"
+                | "tokens"
+                | "lights"
+                | "notes"
+                | "sounds"
+                | "templates"
+                | "tiles"
+                | "walls"
+                | "playlist"
+                | "playlistSound"
+                | "journal"
             > {
             _source: SceneSource;
         }

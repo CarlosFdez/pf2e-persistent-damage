@@ -1,2 +1,1 @@
-export declare class CombatTrackerPF2e extends CombatTracker {
-}
+export declare class CombatTrackerPF2e extends CombatTracker {}

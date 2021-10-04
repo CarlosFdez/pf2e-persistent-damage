@@ -7,7 +7,11 @@ declare module foundry {
             static override get metadata(): NoteMetadata;
 
             /** Is a user able to update an existing Note? */
-            protected static _canUpdate(user: BaseUser, doc: BaseNote, data: data.NoteData): boolean;
+            protected static _canUpdate(
+                user: BaseUser,
+                doc: BaseNote,
+                data: data.NoteData,
+            ): boolean;
         }
 
         interface BaseNote {
@@ -17,12 +21,12 @@ declare module foundry {
         }
 
         interface NoteMetadata extends abstract.DocumentMetadata {
-            name: 'Note';
-            collection: 'notess';
-            label: 'DOCUMENT.Note';
+            name: "Note";
+            collection: "notess";
+            label: "DOCUMENT.Note";
             isEmbedded: true;
-            permissions: Omit<abstract.DocumentMetadata['permissions'], 'update'> & {
-                update: typeof foundry.documents.BaseNote['_canUpdate'];
+            permissions: Omit<abstract.DocumentMetadata["permissions"], "update"> & {
+                update: typeof foundry.documents.BaseNote["_canUpdate"];
             };
         }
     }

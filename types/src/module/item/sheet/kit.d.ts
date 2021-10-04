@@ -1,7 +1,7 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { KitPF2e } from '@item/kit';
-import { ItemSheetPF2e } from './base';
+import { KitPF2e } from "@item/kit";
+import { ItemSheetPF2e } from "./base";
 /**
  * @category Other
  */

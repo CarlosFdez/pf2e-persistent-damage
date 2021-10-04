@@ -1,6 +1,6 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { ActorPF2e } from '@actor/base';
+import { ActorPF2e } from "@actor/base";
 interface MoveLootOptions extends FormApplicationOptions {
     maxQuantity: number;
 }

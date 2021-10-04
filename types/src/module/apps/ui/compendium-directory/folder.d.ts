@@ -1,4 +1,4 @@
-import { EnfolderedSummaryData } from './index';
+import { EnfolderedSummaryData } from "./index";
 interface DataParameters {
     id: string;
     name: string;
@@ -18,7 +18,10 @@ export declare class PackFolderPF2e extends Array<EnfolderedSummaryData> {
     parent: PackFolderPF2e | null;
     /** Subfolders of this folder */
     subfolders: PackFolderPF2e[];
-    constructor(items: EnfolderedSummaryData[] | undefined, { id, name, type, parent, expanded }: DataParameters);
+    constructor(
+        items: EnfolderedSummaryData[] | undefined,
+        { id, name, type, parent, expanded }: DataParameters,
+    );
     /** Is the folder visible to non-GMs? */
     get private(): boolean;
     /** Is the folder visible to the current user? */

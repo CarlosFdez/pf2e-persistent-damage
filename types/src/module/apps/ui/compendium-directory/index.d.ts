@@ -1,15 +1,16 @@
 /// <reference types="jquery" />
 /// <reference types="tooltipster" />
-import { LocalizePF2e } from '@module/system/localize';
-import { PackFolderPF2e } from './folder';
+import { LocalizePF2e } from "@module/system/localize";
+import { PackFolderPF2e } from "./folder";
 declare type FolderName = keyof typeof LocalizePF2e.translations.PF2E.CompendiumDirectory.Folders;
-interface PackMetadataPF2e<T extends CompendiumDocument = CompendiumDocument> extends CompendiumMetadata<T> {
+interface PackMetadataPF2e<T extends CompendiumDocument = CompendiumDocument>
+    extends CompendiumMetadata<T> {
     folder?: FolderName;
 }
 interface PackSummaryDataPF2e extends PackSummaryData {
     metadata: PackMetadataPF2e;
 }
-export declare type EnfolderedSummaryData = Omit<PackSummaryDataPF2e, 'metadata'> & {
+export declare type EnfolderedSummaryData = Omit<PackSummaryDataPF2e, "metadata"> & {
     metadata: Required<PackMetadataPF2e>;
 };
 interface PackSummaryPF2e extends PackSummary {

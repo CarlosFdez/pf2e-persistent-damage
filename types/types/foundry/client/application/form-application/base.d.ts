@@ -1,4 +1,4 @@
-import { Editor as MCEEditor } from 'tinymce';
+import { Editor as MCEEditor } from "tinymce";
 
 declare global {
     class FormDataExtended extends FormData {

@@ -92,7 +92,7 @@ declare module foundry {
 
             bar2: TokenBarData<TDocument>;
         }
-        interface TokenData extends Omit<TokenSource, 'lightAnimation' | 'bar1' | 'bar2'> {
+        interface TokenData extends Omit<TokenSource, "lightAnimation" | "bar1" | "bar2"> {
             readonly _source: TokenSource;
         }
     }

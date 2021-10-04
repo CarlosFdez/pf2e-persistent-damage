@@ -1,4 +1,5 @@
-declare type ChatMessageType = typeof CONST.CHAT_MESSAGE_TYPES[keyof typeof CONST.CHAT_MESSAGE_TYPES];
+declare type ChatMessageType =
+    typeof CONST.CHAT_MESSAGE_TYPES[keyof typeof CONST.CHAT_MESSAGE_TYPES];
 
 declare module foundry {
     module data {

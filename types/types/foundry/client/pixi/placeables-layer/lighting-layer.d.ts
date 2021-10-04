@@ -60,7 +60,7 @@ declare class LightingLayer extends PlaceablesLayer {
     /** A mapping of different light level channels */
     channels: LightChannels;
 
-    static override get layerOptions(): typeof PlaceablesLayer['layerOptions'] & {
+    static override get layerOptions(): typeof PlaceablesLayer["layerOptions"] & {
         rotatableObjects: true;
         objectClass: AmbientLight;
         quadtree: true;

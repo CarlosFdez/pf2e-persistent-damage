@@ -1,13 +1,104 @@
-import { Alignment } from '@actor/creature/data';
-import { Living } from './living';
-declare const damageTypes: Set<"mental" | "chaotic" | "evil" | "good" | "lawful" | "fire" | "acid" | "cold" | "electricity" | "force" | "positive" | "sonic" | "negative" | "poison" | "bludgeoning" | "piercing" | "slashing" | "bleed">;
-export declare type SetElement<SetType extends Set<unknown>> = SetType extends Set<infer ElementType> ? ElementType : never;
+import { Alignment } from "@actor/creature/data";
+import { Living } from "./living";
+declare const damageTypes: Set<
+    | "mental"
+    | "chaotic"
+    | "evil"
+    | "good"
+    | "lawful"
+    | "fire"
+    | "acid"
+    | "cold"
+    | "electricity"
+    | "force"
+    | "positive"
+    | "sonic"
+    | "negative"
+    | "poison"
+    | "bludgeoning"
+    | "piercing"
+    | "slashing"
+    | "bleed"
+>;
+export declare type SetElement<SetType extends Set<unknown>> = SetType extends Set<
+    infer ElementType
+>
+    ? ElementType
+    : never;
 export declare type DamageType = SetElement<typeof damageTypes>;
 export declare function isDamageType(value: string): value is DamageType;
-declare const attackTraits: Set<"unarmed" | "light" | "magical" | "air" | "earth" | "fire" | "water" | "adamantine" | "coldiron" | "ghostTouch" | "silver" | "area-damage" | "darkwood" | "mithral" | "orichalcum" | "salt" | "salt water" | "vorpal" | "warpglass" | "nonlethal attacks" | "persistent-damage">;
+declare const attackTraits: Set<
+    | "unarmed"
+    | "light"
+    | "magical"
+    | "air"
+    | "earth"
+    | "fire"
+    | "water"
+    | "adamantine"
+    | "coldiron"
+    | "ghostTouch"
+    | "silver"
+    | "area-damage"
+    | "darkwood"
+    | "mithral"
+    | "orichalcum"
+    | "salt"
+    | "salt water"
+    | "vorpal"
+    | "warpglass"
+    | "nonlethal attacks"
+    | "persistent-damage"
+>;
 export declare type AttackTrait = SetElement<typeof attackTraits>;
 export declare function isAttackTrait(trait: string): trait is AttackTrait;
-declare const combinedTraits: Set<"all" | "physical" | "energy" | "unarmed" | "light" | "mental" | "magical" | "chaotic" | "evil" | "good" | "lawful" | "air" | "earth" | "fire" | "water" | "acid" | "cold" | "electricity" | "force" | "positive" | "sonic" | "negative" | "poison" | "adamantine" | "coldiron" | "ghostTouch" | "silver" | "bludgeoning" | "piercing" | "slashing" | "bleed" | "critical-hits" | "precision" | "area-damage" | "darkwood" | "mithral" | "orichalcum" | "salt" | "salt water" | "splash-damage" | "vorpal" | "warpglass" | "nonlethal attacks" | "persistent-damage" | "non-magical">;
+declare const combinedTraits: Set<
+    | "all"
+    | "physical"
+    | "energy"
+    | "unarmed"
+    | "light"
+    | "mental"
+    | "magical"
+    | "chaotic"
+    | "evil"
+    | "good"
+    | "lawful"
+    | "air"
+    | "earth"
+    | "fire"
+    | "water"
+    | "acid"
+    | "cold"
+    | "electricity"
+    | "force"
+    | "positive"
+    | "sonic"
+    | "negative"
+    | "poison"
+    | "adamantine"
+    | "coldiron"
+    | "ghostTouch"
+    | "silver"
+    | "bludgeoning"
+    | "piercing"
+    | "slashing"
+    | "bleed"
+    | "critical-hits"
+    | "precision"
+    | "area-damage"
+    | "darkwood"
+    | "mithral"
+    | "orichalcum"
+    | "salt"
+    | "salt water"
+    | "splash-damage"
+    | "vorpal"
+    | "warpglass"
+    | "nonlethal attacks"
+    | "persistent-damage"
+    | "non-magical"
+>;
 export declare type CombinedTrait = SetElement<typeof combinedTraits>;
 export declare function isCombinedTrait(trait: string): trait is CombinedTrait;
 export declare class DamageValues {
@@ -17,7 +108,14 @@ export declare class DamageValues {
     private readonly criticalPrecision;
     private readonly splash;
     private readonly traits;
-    constructor({ normal, precision, critical, criticalPrecision, splash, traits, }?: {
+    constructor({
+        normal,
+        precision,
+        critical,
+        criticalPrecision,
+        splash,
+        traits,
+    }?: {
         normal?: number;
         precision?: number;
         critical?: number;
@@ -29,12 +127,65 @@ export declare class DamageValues {
     totalPrecision(): number;
     totalCritical(): number;
     totalSplash(): number;
-    getTraits(): Set<"all" | "physical" | "energy" | "unarmed" | "light" | "mental" | "magical" | "chaotic" | "evil" | "good" | "lawful" | "air" | "earth" | "fire" | "water" | "acid" | "cold" | "electricity" | "force" | "positive" | "sonic" | "negative" | "poison" | "adamantine" | "coldiron" | "ghostTouch" | "silver" | "bludgeoning" | "piercing" | "slashing" | "bleed" | "critical-hits" | "precision" | "area-damage" | "darkwood" | "mithral" | "orichalcum" | "salt" | "salt water" | "splash-damage" | "vorpal" | "warpglass" | "nonlethal attacks" | "persistent-damage" | "non-magical">;
+    getTraits(): Set<
+        | "all"
+        | "physical"
+        | "energy"
+        | "unarmed"
+        | "light"
+        | "mental"
+        | "magical"
+        | "chaotic"
+        | "evil"
+        | "good"
+        | "lawful"
+        | "air"
+        | "earth"
+        | "fire"
+        | "water"
+        | "acid"
+        | "cold"
+        | "electricity"
+        | "force"
+        | "positive"
+        | "sonic"
+        | "negative"
+        | "poison"
+        | "adamantine"
+        | "coldiron"
+        | "ghostTouch"
+        | "silver"
+        | "bludgeoning"
+        | "piercing"
+        | "slashing"
+        | "bleed"
+        | "critical-hits"
+        | "precision"
+        | "area-damage"
+        | "darkwood"
+        | "mithral"
+        | "orichalcum"
+        | "salt"
+        | "salt water"
+        | "splash-damage"
+        | "vorpal"
+        | "warpglass"
+        | "nonlethal attacks"
+        | "persistent-damage"
+        | "non-magical"
+    >;
     withoutCritical(): DamageValues;
     withoutPrecision(): DamageValues;
     withoutSplash(): DamageValues;
     addDamage(value: number): DamageValues;
-    copy({ normal, precision, critical, criticalPrecision, splash, traits, }: {
+    copy({
+        normal,
+        precision,
+        critical,
+        criticalPrecision,
+        splash,
+        traits,
+    }: {
         normal?: number;
         precision?: number;
         critical?: number;
@@ -57,10 +208,7 @@ interface HasValue {
 declare class Modifier {
     protected exceptions: DamageExceptions;
     protected type: string;
-    constructor({ exceptions, type }: {
-        exceptions?: DamageExceptions;
-        type: string;
-    });
+    constructor({ exceptions, type }: { exceptions?: DamageExceptions; type: string });
     /**
      * A single trait or damage combination can disable all resistance/weaknesses/immunities.
      * @param damageTraits all traits applicable for the damage pool
@@ -70,14 +218,15 @@ declare class Modifier {
     getType(): string;
 }
 export declare class Immunity extends Modifier {
-    copy({ type, exceptions }: {
-        type?: string;
-        exceptions?: DamageExceptions;
-    }): Immunity;
+    copy({ type, exceptions }: { type?: string; exceptions?: DamageExceptions }): Immunity;
 }
 export declare class Weakness extends Modifier implements HasValue {
     private readonly value;
-    constructor({ type, value, exceptions }: {
+    constructor({
+        type,
+        value,
+        exceptions,
+    }: {
         type: string;
         value: number;
         exceptions?: DamageExceptions;
@@ -87,7 +236,12 @@ export declare class Weakness extends Modifier implements HasValue {
 export declare class Resistance extends Modifier implements HasValue {
     private readonly value;
     private readonly doubleResistanceVsNonMagical;
-    constructor({ type, value, doubleResistanceVsNonMagical, exceptions, }: {
+    constructor({
+        type,
+        value,
+        doubleResistanceVsNonMagical,
+        exceptions,
+    }: {
         type: string;
         value: number;
         doubleResistanceVsNonMagical?: boolean;
@@ -115,7 +269,15 @@ interface DamageOptions {
  * @param damageOptions.disregardTargetAlignment if true, will remove the check for the target alignment and always deal alignment damage
  * @return the final calculated damage
  */
-export declare function calculateDamage({ damage, immunities, resistances, weaknesses, living, alignment, damageOptions, }: {
+export declare function calculateDamage({
+    damage,
+    immunities,
+    resistances,
+    weaknesses,
+    living,
+    alignment,
+    damageOptions,
+}: {
     damage: Damage;
     immunities?: Immunity[];
     resistances?: Resistance[];
@@ -161,7 +323,10 @@ export interface GolemMagicImmunity {
  * @param immunity golem immunity
  * @return
  */
-export declare function golemAntiMagic(damage: Damage, immunity: GolemMagicImmunity): GolemMagicImmunityResult;
+export declare function golemAntiMagic(
+    damage: Damage,
+    immunity: GolemMagicImmunity,
+): GolemMagicImmunityResult;
 export interface ParsedException {
     doubleResistanceVsNonMagical: boolean;
     except: DamageExceptions;
@@ -188,5 +353,8 @@ export declare function parseExceptions(exceptions: string | undefined | null): 
  * @param resistances all resistances
  * @param reductions map of resistance type to reduction value
  */
-export declare function reduceResistances(resistances: Resistance[], reductions: Map<string, number>): Resistance[];
+export declare function reduceResistances(
+    resistances: Resistance[],
+    reductions: Map<string, number>,
+): Resistance[];
 export {};

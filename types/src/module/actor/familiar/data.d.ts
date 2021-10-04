@@ -1,14 +1,19 @@
-import { BaseCreatureAttributes, BaseCreatureData, BaseCreatureSource, CreatureSystemData } from '@actor/creature/data';
-import { AbilityString, RawSkillData, Rollable } from '@actor/data/base';
-import { LabeledValue } from '@module/data';
-import type { FamiliarPF2e } from '.';
-export declare type FamiliarSource = BaseCreatureSource<'familiar', FamiliarSystemData>;
+import {
+    BaseCreatureAttributes,
+    BaseCreatureData,
+    BaseCreatureSource,
+    CreatureSystemData,
+} from "@actor/creature/data";
+import { AbilityString, RawSkillData, Rollable } from "@actor/data/base";
+import { LabeledValue } from "@module/data";
+import type { FamiliarPF2e } from ".";
+export declare type FamiliarSource = BaseCreatureSource<"familiar", FamiliarSystemData>;
 export declare class FamiliarData extends BaseCreatureData<FamiliarPF2e, FamiliarSystemData> {
     static DEFAULT_ICON: ImagePath;
 }
-export interface FamiliarData extends Omit<FamiliarSource, 'effects' | 'items' | 'token'> {
-    readonly type: FamiliarSource['type'];
-    data: FamiliarSource['data'];
+export interface FamiliarData extends Omit<FamiliarSource, "effects" | "items" | "token"> {
+    readonly type: FamiliarSource["type"];
+    data: FamiliarSource["data"];
     readonly _source: FamiliarSource;
 }
 interface FamiliarAttributes extends BaseCreatureAttributes {
@@ -19,7 +24,8 @@ interface FamiliarAttributes extends BaseCreatureAttributes {
     };
     perception: {
         value: number;
-    } & Partial<RawSkillData> & Rollable;
+    } & Partial<RawSkillData> &
+        Rollable;
     /** The movement speeds that this Familiar has. */
     speed: {
         /** The land speed for this actor. */

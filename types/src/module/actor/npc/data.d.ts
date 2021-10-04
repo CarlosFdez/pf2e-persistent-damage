@@ -1,15 +1,30 @@
-import { Abilities, Alignment, BaseCreatureAttributes, BaseCreatureData, BaseCreatureSource, CreatureSystemData, SaveData } from '@actor/creature/data';
-import { ArmorClassData, DexterityModifierCapData, PerceptionData, RawInitiativeData, Rollable, StrikeData } from '@actor/data/base';
-import { StatisticModifier } from '@module/modifiers';
-import { LabeledValue } from '@module/data';
-import type { NPCPF2e } from '.';
-export declare type NPCSource = BaseCreatureSource<'npc', NPCSystemData>;
+import {
+    Abilities,
+    Alignment,
+    BaseCreatureAttributes,
+    BaseCreatureData,
+    BaseCreatureSource,
+    CreatureSystemData,
+    SaveData,
+} from "@actor/creature/data";
+import {
+    ArmorClassData,
+    DexterityModifierCapData,
+    PerceptionData,
+    RawInitiativeData,
+    Rollable,
+    StrikeData,
+} from "@actor/data/base";
+import { StatisticModifier } from "@module/modifiers";
+import { LabeledValue } from "@module/data";
+import type { NPCPF2e } from ".";
+export declare type NPCSource = BaseCreatureSource<"npc", NPCSystemData>;
 export declare class NPCData extends BaseCreatureData<NPCPF2e, NPCSystemData> {
     static DEFAULT_ICON: ImagePath;
 }
-export interface NPCData extends Omit<NPCSource, 'effects' | 'items' | 'token'> {
-    readonly type: NPCSource['type'];
-    data: NPCSource['data'];
+export interface NPCData extends Omit<NPCSource, "effects" | "items" | "token"> {
+    readonly type: NPCSource["type"];
+    data: NPCSource["data"];
     readonly _source: NPCSource;
 }
 /** The raw information contained within the actor data object for NPCs. */

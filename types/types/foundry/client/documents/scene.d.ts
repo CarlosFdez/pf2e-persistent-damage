@@ -1,4 +1,4 @@
-import { SceneConstructor } from './constructors';
+import { SceneConstructor } from "./constructors";
 
 declare global {
     /**
@@ -8,7 +8,10 @@ declare global {
      */
     class Scene<TTokenDocument extends TokenDocument = TokenDocument> extends SceneConstructor {
         /** @override */
-        constructor(data: PreCreate<foundry.data.SceneSource>, context?: DocumentConstructionContext<Scene>);
+        constructor(
+            data: PreCreate<foundry.data.SceneSource>,
+            context?: DocumentConstructionContext<Scene>,
+        );
 
         /** Track whether the scene is the active view */
         protected _view: boolean;
@@ -84,12 +87,15 @@ declare global {
         ): Promise<void>;
 
         protected override _onUpdate(
-            changed: DeepPartial<this['data']['_source']>,
+            changed: DeepPartial<this["data"]["_source"]>,
             options: DocumentModificationContext,
             userId: string,
         ): void;
 
-        protected override _preDelete(options: DocumentModificationContext, user: User): Promise<void>;
+        protected override _preDelete(
+            options: DocumentModificationContext,
+            user: User,
+        ): Promise<void>;
 
         protected override _onDelete(options: DocumentModificationContext, userId: string): void;
 
@@ -100,14 +106,14 @@ declare global {
         protected _onActivate(active: boolean): Promise<this>;
 
         protected override _preCreateEmbeddedDocuments(
-            embeddedName: 'Token',
+            embeddedName: "Token",
             result: foundry.data.TokenSource[],
             options: SceneEmbeddedModificationContext,
             userId: string,
         ): void;
 
         protected override _onCreateEmbeddedDocuments(
-            embeddedName: 'Token',
+            embeddedName: "Token",
             documents: TTokenDocument[],
             result: foundry.data.TokenSource[],
             options: SceneEmbeddedModificationContext,
@@ -115,36 +121,36 @@ declare global {
         ): void;
 
         protected override _preUpdateEmbeddedDocuments(
-            embeddedName: 'Token',
+            embeddedName: "Token",
             result: foundry.data.TokenSource[],
             options: SceneEmbeddedModificationContext,
             userId: string,
         ): void;
 
         protected override _onUpdateEmbeddedDocuments(
-            embeddedName: 'Token',
+            embeddedName: "Token",
             documents: TTokenDocument[],
-            result: TTokenDocument['data']['_source'][],
+            result: TTokenDocument["data"]["_source"][],
             options: SceneEmbeddedModificationContext,
             userId: string,
         ): void;
 
         protected override _preDeleteEmbeddedDocuments(
-            embeddedName: 'Token',
-            result: TTokenDocument['data']['_source'][],
+            embeddedName: "Token",
+            result: TTokenDocument["data"]["_source"][],
             options: SceneEmbeddedModificationContext,
             userId: string,
         ): void;
 
         protected override _onDeleteEmbeddedDocuments(
-            embeddedName: 'Token',
+            embeddedName: "Token",
             documents: TokenDocument[],
             result: foundry.data.TokenSource[],
             options: SceneEmbeddedModificationContext,
             userId: string,
         ): void;
 
-        override toCompendium(pack: CompendiumCollection<this>): this['data']['_source'];
+        override toCompendium(pack: CompendiumCollection<this>): this["data"]["_source"];
 
         /**
          * Create a 300px by 100px thumbnail image for this scene background
@@ -180,12 +186,12 @@ declare global {
 
         _sheet: SceneConfig<Scene>;
 
-        getEmbeddedCollection(embeddedName: 'Token'): this['data']['tokens'];
+        getEmbeddedCollection(embeddedName: "Token"): this["data"]["tokens"];
 
         updateEmbeddedDocuments(
-            embeddedName: 'Token',
+            embeddedName: "Token",
             updateData: EmbeddedDocumentUpdateData<TTokenDocument>[],
             options?: SceneEmbeddedModificationContext,
-        ): Promise<CollectionValue<this['data']['tokens']>[]>;
+        ): Promise<CollectionValue<this["data"]["tokens"]>[]>;
     }
 }

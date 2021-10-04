@@ -1,8 +1,11 @@
-import { PhysicalItemPF2e } from '@item/physical';
-import { TreasureData } from './data';
+import { PhysicalItemPF2e } from "@item/physical";
+import { TreasureData } from "./data";
 export declare class TreasurePF2e extends PhysicalItemPF2e {
     static get schema(): typeof TreasureData;
-    getChatData(this: Embedded<TreasurePF2e>, htmlOptions?: EnrichHTMLOptions): {
+    getChatData(
+        this: Embedded<TreasurePF2e>,
+        htmlOptions?: EnrichHTMLOptions,
+    ): {
         traits: import("../data").TraitChatData[];
         denomination: {
             value: "cp" | "gp" | "pp" | "sp";
@@ -66,9 +69,11 @@ export declare class TreasurePF2e extends PhysicalItemPF2e {
         size: {
             value: "med" | "tiny" | "sm" | "lg" | "huge" | "grg";
         };
-        invested?: {
-            value: boolean | null;
-        } | undefined;
+        invested?:
+            | {
+                  value: boolean | null;
+              }
+            | undefined;
         description: {
             value: string;
             chat: string;
@@ -77,9 +82,11 @@ export declare class TreasurePF2e extends PhysicalItemPF2e {
         source: {
             value: string;
         };
-        options?: {
-            value: string[];
-        } | undefined;
+        options?:
+            | {
+                  value: string[];
+              }
+            | undefined;
         usage: {
             value: string;
         };
