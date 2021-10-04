@@ -111,7 +111,11 @@ declare global {
          */
         get isEditable(): boolean;
 
-        getData(options?: TOptions): FormApplicationData<TObject>;
+        getData(options?: TOptions): FormApplicationData<TObject> | Promise<FormApplicationData<TObject>>;
+
+        protected override _render(force?: boolean, options?: RenderOptions): Promise<void>;
+
+        protected override _renderInner(data: FormApplicationData<TObject>, options: RenderOptions): Promise<JQuery>;
 
         /* -------------------------------------------- */
         /*  Event Listeners and Handlers                */

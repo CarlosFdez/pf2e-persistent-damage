@@ -9,8 +9,8 @@
     ) as unknown as typeof ItemSheet;
 
     const original = baseSheet.prototype.getData;
-    baseSheet.prototype.getData = function (...args) {
-        const data = original.bind(this)(...args);
+    baseSheet.prototype.getData = async function (...args) {
+        const data = await original.bind(this)(...args);
         const { item } = data;
 
         if (item.flags.persistent) {

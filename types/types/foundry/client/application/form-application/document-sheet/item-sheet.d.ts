@@ -33,7 +33,7 @@ declare class ItemSheet<ItemType extends Item = Item> extends DocumentSheet<Item
     get actor(): ItemType["parent"];
 
     /** @override */
-    getData(option?: this["options"]): ItemSheetData<ItemType>;
+    getData(option?: this["options"]): ItemSheetData<ItemType> | Promise<ItemSheetData<ItemType>>;
 
     /**
      * Activate listeners which provide interactivity for item sheet events

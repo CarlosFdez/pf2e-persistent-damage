@@ -11,7 +11,7 @@ export interface ItemSheetDataPF2e<TItem extends ItemPF2e> extends ItemSheetData
 }
 export declare class ItemSheetPF2e<TItem extends ItemPF2e> extends ItemSheet<TItem> {
     static get defaultOptions(): DocumentSheetOptions;
-    getData(): any;
+    getData(): Promise<any>;
     /** An alternative to super.getData() for subclasses that don't need this class's `getData` */
     protected getBaseData(): ItemSheetDataPF2e<TItem>;
     protected getActiveEffectsData(): AESheetData;
