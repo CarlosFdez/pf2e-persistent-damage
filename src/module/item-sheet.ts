@@ -1,3 +1,4 @@
+
 /**
  * Overrides the item sheet so that all sheets for persistent damage effects
  * will have editable details.
@@ -8,9 +9,7 @@
         (s: any) => s.name === "ItemSheetPF2e",
     ) as unknown as typeof ItemSheet;
 
-    const original = baseSheet.prototype.getData;
-    baseSheet.prototype.getData = async function (...args) {
-        const data = await original.bind(this)(...args);
+    function setDetailsIfPersistent(data: any) {
         const { item } = data;
 
         if (item.flags.persistent) {
@@ -20,6 +19,17 @@
         }
 
         return data;
+    }
+
+    const original = baseSheet.prototype.getData;
+    baseSheet.prototype.getData = function (...args) {
+        // NOTE: As of this writing, getData() is becoming async. We need to be backwards compatible for a while though
+        const data = original.bind(this)(...args);
+        if (data instanceof Promise) {
+            return data.then((data) => setDetailsIfPersistent(data));
+        } else {
+            return setDetailsIfPersistent(data);
+        }
     };
 
     console.log("PF2E Persistent | Registered Item Sheet Modification");
