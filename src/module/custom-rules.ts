@@ -18,7 +18,7 @@ interface HealingRuleData extends RuleElementData {
 function createHealingRuleElement() {
     const VALID_SELECTORS = ["fast-healing", "regeneration"] as const;
     return class HealingRuleElement extends game.pf2e.RuleElement {
-        onBeforePrepareData(actorData: ExtendedData<ActorDataPF2e>) {
+        onBeforePrepareData() {
             const ruleData: HealingRuleData = this.data;
             const selector = ruleData.selector as typeof VALID_SELECTORS[number];
             if (!VALID_SELECTORS.includes(selector)) {
@@ -27,6 +27,7 @@ function createHealingRuleElement() {
                 return;
             }
 
+            const actorData: ExtendedData<ActorDataPF2e> = this.actor.data;
             const value = super.resolveValue(ruleData.value, ruleData, this.item, actorData);
             const attributes = actorData.data.attributes;
             if (!attributes.healing) {
@@ -41,9 +42,10 @@ function createHealingRuleElement() {
             }
         }
 
-        onAfterPrepareData(actorData: ExtendedData<ActorDataPF2e>) {
+        onAfterPrepareData() {
             const ruleData: HealingRuleData = this.data;
             if (ruleData.selector === "regeneration") {
+                const actorData: ExtendedData<ActorDataPF2e> = this.actor.data;
                 const regeneration = actorData.data.attributes.healing?.regeneration;
                 if (regeneration) {
                     regeneration.suppressed = true;

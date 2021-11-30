@@ -1,5 +1,6 @@
 import type { ActorDataPF2e, CreatureData } from "@actor/data";
 import type { ItemDataPF2e } from "@item/data";
+import { ActorPF2e } from "../actor";
 import { ItemPF2e } from "../item";
 import { RuleElementData, RuleElementSyntheticsPF2e } from "./rules-data-definitions";
 export interface Bracket {
@@ -39,6 +40,10 @@ export declare abstract class RuleElementPF2e {
      * @param item where the rule is persisted on
      */
     constructor(data: RuleElementData, item: Embedded<ItemPF2e>);
+    get actor(): ActorPF2e;
+    get label(): string;
+    /** The place in order of application (ascending), among an actor's list of rule elements */
+    get priority(): number;
     /**
      * Globally ignore this rule element.
      */
