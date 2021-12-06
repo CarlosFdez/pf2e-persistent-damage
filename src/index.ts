@@ -87,7 +87,7 @@ Hooks.on("pf2e.endTurn", (combatant: CombatantPF2e, _combat, userId: string) => 
  */
 Hooks.on("renderTokenHUD", (_app, html: JQuery, tokenData: foundry.data.TokenData) => {
     setTimeout(() => {
-        html.find("div.status-effects img[data-effect=persistentDamage]")
+        html.find("div.status-effects img[data-effect=persistent-damage]")
             .off()
             .on("click", (evt) => {
                 if (evt.button !== 0 || !canvas.ready) {
