@@ -13,6 +13,7 @@ export function setupCustomRules() {
 interface HealingRuleData extends RuleElementData {
     notes?: string;
     damageTypes?: string[];
+    suppressed?: boolean;
 }
 
 function createHealingRuleElement() {
@@ -38,13 +39,13 @@ function createHealingRuleElement() {
                 const notes = ruleData.notes && String(ruleData.notes);
                 const suppressedBy =
                     selector === "regeneration" ? ruleData.damageTypes : undefined;
-                attributes.healing[selector] = { value, notes, suppressedBy };
+                attributes.healing[selector] = { value, notes, suppressedBy, suppressed: false };
             }
         }
 
         onAfterPrepareData() {
             const ruleData: HealingRuleData = this.data;
-            if (ruleData.selector === "regeneration") {
+            if (ruleData.selector === "regeneration" && ruleData.suppressed) {
                 const actorData: ExtendedData<ActorDataPF2e> = this.actor.data;
                 const regeneration = actorData.data.attributes.healing?.regeneration;
                 if (regeneration) {
