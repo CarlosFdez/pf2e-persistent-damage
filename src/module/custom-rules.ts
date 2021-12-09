@@ -5,9 +5,11 @@ import { RuleElementData } from "@pf2e/module/rules/rules-data-definitions";
  * Extends built in rule elements with any new rule elements used by this module.
  */
 export function setupCustomRules() {
-    const custom = game.pf2e.RuleElements.custom;
-    const HealingRuleElement = createHealingRuleElement();
-    custom["PF2E.RuleElement.Healing"] = HealingRuleElement;
+    if (!("Healing" in game.pf2e.RuleElements.builtin)) {
+        const custom = game.pf2e.RuleElements.custom;
+        const HealingRuleElement = createHealingRuleElement();
+        custom["PF2E.RuleElement.Healing"] = HealingRuleElement;
+    }
 }
 
 interface HealingRuleData extends RuleElementData {
