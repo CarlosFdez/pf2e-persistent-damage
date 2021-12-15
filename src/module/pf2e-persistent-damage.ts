@@ -208,7 +208,7 @@ export class PersistentDamagePF2e {
         const data = effect?.data.flags.persistent as PersistentData;
         if (!data) return;
 
-        const roll = new Roll("1d20").evaluate();
+        const roll = await new Roll("1d20").evaluate({ async: true });
         const success = roll.total >= data.dc;
         const typeName = game.i18n.localize(CONFIG.PF2E.damageTypes[data.damageType]);
         const templatePath = "modules/pf2e-persistent-damage/templates/chat/recover-persistent-card.html";
@@ -255,7 +255,7 @@ export class PersistentDamagePF2e {
                 const data = getPersistentData(effect.data);
                 const { damageType, value, dc } = data;
                 const typeName = game.i18n.localize(CONFIG.PF2E.damageTypes[damageType]);
-                const roll = new Roll(value, { item: effect.data }).evaluate({ async: false });
+                const roll = await new Roll(value, { item: effect.data }).evaluate({ async: true });
 
                 const inlineCheck = autoCheck && TextEditor.enrichHTML("[[1d20]]");
                 const success = autoCheck && Number($(inlineCheck).text()) >= dc;
@@ -337,7 +337,7 @@ export class PersistentDamagePF2e {
             if (formulas.length > 0) {
                 const rollMode = actor.hasPlayerOwner ? "roll" : game.settings.get('core', 'rollMode');
                 const flavor = game.i18n.format("PF2E-PD.HealingProcess", { sources: sources.join(", ")});
-                const roll = new Roll(formulas.join(" + ")).evaluate({ async: false });
+                const roll = await new Roll(formulas.join(" + ")).evaluate({ async: true });
                 const ChatMessage = CONFIG.ChatMessage.documentClass as typeof ChatMessagePF2e;
                 const message = await ChatMessage.create({
                     speaker: ChatMessage.getSpeaker({ actor, token }),

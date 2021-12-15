@@ -1,11 +1,11 @@
 {
     "name": "pf2e-persistent-damage",
-    "title": "PF2E Persistent Damage",
+    "title": "pf2e Persistent Damage",
     "description": "Macros that create effects to handle persistent damage",
     "author": "Supe",
-    "version": "0.8.2",
-    "compatibleCoreVersion": "0.8.9",
-    "minimumCoreVersion": "0.8.9",
+    "version": "0.8.3",
+    "compatibleCoreVersion": "9",
+    "minimumCoreVersion": "9",
     "minimumSystemVersion": "2.20.0",
     "type": "module",
     "systems": ["pf2e"],
@@ -24,7 +24,7 @@
             "label": "PF2E Persistent Damage Macros",
             "system": "pf2e",
             "path": "packs/pf2e-pd-macros.db",
-            "entity": "Macro",
+            "type": "Macro",
             "module": "pf2e-persistent-damage"
         },
         {
@@ -32,11 +32,11 @@
             "label": "PF2E Persistent Damage Effects",
             "system": "pf2e",
             "path": "packs/pf2e-pd-effects.db",
-            "entity": "Item",
+            "type": "Item",
             "module": "pf2e-persistent-damage"
         }
     ],
     "url": "https://github.com/CarlosFdez/pf2e-persistent-damage",
     "manifest": "https://github.com/CarlosFdez/pf2e-persistent-damage/releases/latest/download/module.json",
-    "download": "https://github.com/CarlosFdez/pf2e-persistent-damage/releases/download/v0.8.2/module.zip"
+    "download": "https://github.com/CarlosFdez/pf2e-persistent-damage/releases/download/v0.8.3/module.zip"
 }
