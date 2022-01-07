@@ -19,7 +19,7 @@
             {
                 "key": "PF2E.RuleElement.Healing",
                 "selector": "regeneration",
-                "value": "3*@item.level.value"
+                "value": "3*@item.level"
             }
         ],
         "schema": {

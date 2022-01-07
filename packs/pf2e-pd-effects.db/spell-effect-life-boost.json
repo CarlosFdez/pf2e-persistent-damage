@@ -19,7 +19,7 @@
             {
                 "key": "PF2E.RuleElement.Healing",
                 "selector": "fast-healing",
-                "value": "@item.level.value * 2"
+                "value": "@item.level * 2"
             }
         ],
         "start": {
