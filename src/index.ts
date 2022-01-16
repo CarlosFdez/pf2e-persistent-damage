@@ -142,29 +142,34 @@ TextEditor.enrichHTML = function (...args) {
 /** Pulls  */
 function parseInlineRollHTML(rollElement: HTMLElement) {
     // Check if the roll formula already is marked as persistent
-    const roll = new Roll(rollElement.dataset.formula);
-    if (roll.terms.length === 1 && "flavor" in roll.terms[0].options && roll.terms[0].options.flavor) {
-        const term = roll.terms[0];
-        const flavor = term.options.flavor as string;
-        const types = new Set(flavor.split(",").map((t) => t.trim().toLowerCase()));
-        if (term instanceof PoolTerm && types.has("persistent")) {
-            const formula = term.terms[0].toString();
-            const damageType = [...types.values()].find((type) => type in typeImages);
-            if (damageType) {
-                return { formula, damageType };
+    const formula = rollElement.dataset.formula;
+    try {
+        const roll = new Roll(formula);
+        if (roll.terms.length === 1 && "flavor" in roll.terms[0].options && roll.terms[0].options.flavor) {
+            const term = roll.terms[0];
+            const flavor = term.options.flavor as string;
+            const types = new Set(flavor.split(",").map((t) => t.trim().toLowerCase()));
+            if (term instanceof PoolTerm && types.has("persistent")) {
+                const formula = term.terms[0].toString();
+                const damageType = [...types.values()].find((type) => type in typeImages);
+                if (damageType) {
+                    return { formula, damageType };
+                }
             }
         }
-    }
 
-    // Fallback to the old message, parse the flavor text
-    const flavor = rollElement.dataset.flavor;
-    if (!flavor) return;
-    const match = flavor.match(/^persistent ([A-Za-z]+)/i);
-    if (!match) return;
-    const damageType = match[1]?.toLowerCase();
-    if (damageType in typeImages) {
-        const formula = rollElement.dataset.formula;
-        return { formula, damageType };
+        // Fallback to the old message, parse the flavor text
+        const flavor = rollElement.dataset.flavor;
+        if (!flavor) return;
+        const match = flavor.match(/^persistent ([A-Za-z]+)/i);
+        if (!match) return;
+        const damageType = match[1]?.toLowerCase();
+        if (damageType in typeImages) {
+            const formula = rollElement.dataset.formula;
+            return { formula, damageType };
+        }
+    } catch (ex) {
+        console.error(`PF2E Persistent | Error parsing formula in inline formula ${formula}`, ex);
     }
 }
 
