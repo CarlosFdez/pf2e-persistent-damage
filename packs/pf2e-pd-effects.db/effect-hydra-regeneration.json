@@ -17,8 +17,8 @@
         },
         "rules": [
             {
-                "key": "PF2E.RuleElement.Healing",
-                "selector": "regeneration",
+                "key": "FastHealing",
+                "type": "regeneration",
                 "value": "3*@item.level"
             }
         ],

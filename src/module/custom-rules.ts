@@ -1,8 +1,6 @@
-import type { ActorDataPF2e } from "@pf2e/module/actor/data";
-import { RuleElementData } from "@pf2e/module/rules/rules-data-definitions";
-
 /**
  * Extends built in rule elements with any new rule elements used by this module.
+ * No longer exists, only there to create a warning
  */
 export function setupCustomRules() {
     if (!("Healing" in game.pf2e.RuleElements.builtin)) {
@@ -12,48 +10,13 @@ export function setupCustomRules() {
     }
 }
 
-interface HealingRuleData extends RuleElementData {
-    notes?: string;
-    damageTypes?: string[];
-    suppressed?: boolean;
-}
-
 function createHealingRuleElement() {
-    const VALID_SELECTORS = ["fast-healing", "regeneration"] as const;
     return class HealingRuleElement extends game.pf2e.RuleElement {
         onBeforePrepareData() {
-            const ruleData: HealingRuleData = this.data;
-            const selector = ruleData.selector as typeof VALID_SELECTORS[number];
-            if (!VALID_SELECTORS.includes(selector)) {
-                const valid = VALID_SELECTORS.join(", ");
-                console.warn(`PF2E (Persistent Damage) | Healing selector can only be one of ${valid}`);
-                return;
-            }
-
-            const actorData: ExtendedData<ActorDataPF2e> = this.actor.data;
-            const value = super.resolveValue(ruleData.value, ruleData, this.item, actorData);
-            const attributes = actorData.data.attributes;
-            if (!attributes.healing) {
-                attributes.healing = {};
-            }
-
-            if (value > (attributes.healing[selector] ?? 0)) {
-                const notes = ruleData.notes && String(ruleData.notes);
-                const suppressedBy =
-                    selector === "regeneration" ? ruleData.damageTypes : undefined;
-                attributes.healing[selector] = { value, notes, suppressedBy, suppressed: false };
-            }
-        }
-
-        onAfterPrepareData() {
-            const ruleData: HealingRuleData = this.data;
-            if (ruleData.selector === "regeneration" && ruleData.suppressed) {
-                const actorData: ExtendedData<ActorDataPF2e> = this.actor.data;
-                const regeneration = actorData.data.attributes.healing?.regeneration;
-                if (regeneration) {
-                    regeneration.suppressed = true;
-                }
-            }
+            console.warn(
+                "Persistent Damage Healing Rule Element is no longer supported, replace with the core system implementation. " +
+                `Item ${this.item?.name} on Actor ${this.actor?.name}`
+            );
         }
     }
 }

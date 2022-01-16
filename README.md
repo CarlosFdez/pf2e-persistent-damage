@@ -35,7 +35,7 @@ Any inline roll with `persistent damageType` flavor text such as [[/r 1d6 #persi
 https://user-images.githubusercontent.com/1286721/122157689-4ae65980-ce39-11eb-85b5-dbf789dfbd29.mp4
 
 ## Fast Healing
-There is some rudimentary fast healing and regeneration support, but its not complete. There is a new rule element added by the module, `PF2E.RuleElement.Healing`, with two examples in the compendium: Life Boost and Troll Regeneration. If you have an ideas on things I can do to improve tracking fast healing and troll regen, or if you want to add more items to the compendium, please let me know and we can work it out.
+There is some rudimentary fast healing and regeneration support, but its not complete. There is a new rule element added by the module, `FastHealing`, with two examples in the compendium: Life Boost and Troll Regeneration. If you have an ideas on things I can do to improve tracking fast healing and troll regen, or if you want to add more items to the compendium, please let me know and we can work it out.
 
 Beginning of turn healing is handled either by progressing the combat tracking (if auto processing is enabled) or by using the `Process Healing` macro from the compendium. Fast healing can be removed by right clicking in the Effect Panel just like persistent damage can.
 

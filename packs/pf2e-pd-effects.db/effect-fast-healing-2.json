@@ -17,8 +17,8 @@
         },
         "rules": [
             {
-                "key": "PF2E.RuleElement.Healing",
-                "selector": "fast-healing",
+                "key": "FastHealing",
+                "type": "fast-healing",
                 "value": 2
             }
         ],

@@ -17,10 +17,10 @@
         },
         "rules": [
             {
-                "key": "PF2E.RuleElement.Healing",
-                "selector": "regeneration",
+                "key": "FastHealing",
+                "type": "regeneration",
                 "value": 20,
-                "suppressedBy": [
+                "deactivatedBy": [
                     "fire",
                     "acid"
                 ]
