@@ -152,7 +152,7 @@ export declare abstract class RuleElementPF2e {
      *
      * @param valueData can be one of 3 different formats:
      * * {value: 5}: returns 5
-     * * {value: "4 + @details.level.value"}: uses foundry's built in roll syntax to evaluate it
+     * * {value: "4 + @actor.level"}: uses foundry's built in roll syntax to evaluate it
      * * {
      *      field: "item|data.level.value",
      *      brackets: [
