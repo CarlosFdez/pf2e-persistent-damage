@@ -3,10 +3,10 @@
     "title": "pf2e Persistent Damage",
     "description": "Macros that create effects to handle persistent damage",
     "author": "Supe",
-    "version": "0.8.3",
+    "version": "0.9.0",
     "compatibleCoreVersion": "9",
     "minimumCoreVersion": "9",
-    "minimumSystemVersion": "2.20.0",
+    "minimumSystemVersion": "3.1.0",
     "type": "module",
     "systems": ["pf2e"],
     "esmodules": ["./index.js"],
@@ -38,5 +38,5 @@
     ],
     "url": "https://github.com/CarlosFdez/pf2e-persistent-damage",
     "manifest": "https://github.com/CarlosFdez/pf2e-persistent-damage/releases/latest/download/module.json",
-    "download": "https://github.com/CarlosFdez/pf2e-persistent-damage/releases/download/v0.8.3/module.zip"
+    "download": "https://github.com/CarlosFdez/pf2e-persistent-damage/releases/download/v0.9.0/module.zip"
 }
