@@ -63,16 +63,6 @@ Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElem
 });
 
 /**
- * Start of turn event.
- * Use to handle fast-healing and regeneration
- */
-Hooks.on("pf2e.startTurn", (combatant: CombatantPF2e, _combat, userId: string) => {
-    if (game.settings.get(MODULE_NAME, "auto-roll") && game.user.isGM) {
-        window.PF2EPersistentDamage.processHealing(combatant.token ?? combatant.actor);
-    }
-});
-
-/**
  * End of turn event.
  * Use to handle apply damage on turn end
  */

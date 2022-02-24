@@ -279,7 +279,7 @@ export class PersistentDamagePF2e {
                 });
 
                 const rollMode = rollHideMode === RollHideMode.Never
-                    ? "roll"
+                    ? "publicroll"
                     : rollHideMode === RollHideMode.Always
                     ? "blindroll"
                     : game.settings.get('core', 'rollMode');
@@ -299,53 +299,6 @@ export class PersistentDamagePF2e {
                 if (autoCheck && autoResolve && success) {
                     actor.deleteEmbeddedDocuments("Item", [effect.id]);
                 }
-
-                messages.push(message);
-            }
-        }
-
-        return messages;
-    }
-
-    async processHealing(tokensOrActors: TokenOrActorInput): Promise<ChatMessage[]> {
-        const messages = [];
-        for (const { actor, token } of resolveActors(tokensOrActors)) {
-            const healing = actor.data.data.attributes.healing;
-            if (!healing) {
-                continue;
-            }
-
-            const sources = [];
-            const formulas = [];
-
-            // Handle fast healing
-            if (healing['fast-healing']?.value) {
-                sources.push("Fast Healing");
-                formulas.push(healing["fast-healing"].value);
-            }
-
-            // Handle regeneration
-            if (healing.regeneration?.value) {
-                if (healing.regeneration.suppressed) {
-                    // Create message of suppression
-                } else {
-                    sources.push("Regeneration");
-                    formulas.push(healing.regeneration.value);
-                }
-            }
-
-            if (formulas.length > 0) {
-                const rollMode = actor.hasPlayerOwner ? "roll" : game.settings.get('core', 'rollMode');
-                const flavor = game.i18n.format("PF2E-PD.HealingProcess", { sources: sources.join(", ")});
-                const roll = await new Roll(formulas.join(" + ")).evaluate({ async: true });
-                const ChatMessage = CONFIG.ChatMessage.documentClass as typeof ChatMessagePF2e;
-                const message = await ChatMessage.create({
-                    speaker: ChatMessage.getSpeaker({ actor, token }),
-                    flavor,
-                    type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-                    roll,
-                    sound: CONFIG.sounds.dice,
-                }, { rollMode });
 
                 messages.push(message);
             }

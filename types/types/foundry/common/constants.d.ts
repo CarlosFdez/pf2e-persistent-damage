@@ -59,7 +59,7 @@ declare const CONST: {
      * The supported dice roll visibility modes
      */
     DICE_ROLL_MODES: {
-        PUBLIC: "roll";
+        PUBLIC: "publicroll";
         PRIVATE: "gmroll";
         BLIND: "blindroll";
         SELF: "selfroll";
