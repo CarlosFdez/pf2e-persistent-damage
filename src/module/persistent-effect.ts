@@ -87,7 +87,8 @@ export function createPersistentTitle(data: PersistentData) {
     const { damageType, value, dc } = data;
     const typeName = game.i18n.localize(CONFIG.PF2E.damageTypes[damageType]);
     const dcStr = dc === 15 ? "" : ` DC${String(dc)}`;
-    return `Persistent Damage [${typeName} ${String(value)}${dcStr}]`;
+    const conditionName = game.i18n.localize("PF2E.condition.persistent-damage.name");
+    return `${conditionName} [${typeName} ${String(value)}${dcStr}]`;
 }
 
 /**
