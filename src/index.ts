@@ -1,6 +1,5 @@
 import { PersistentDamagePF2e } from "./module/pf2e-persistent-damage";
 import { MODULE_NAME, registerSettings } from "./module/settings";
-import { setupCustomRules } from "./module/custom-rules";
 import { overrideItemSheet } from "./module/item-sheet";
 import { createPersistentTitle, typeImages } from "./module/persistent-effect";
 import type { CombatantPF2e } from "@pf2e/module/combatant";
@@ -13,10 +12,6 @@ Hooks.on("init", () => {
     registerSettings();
     loadTemplates(["modules/pf2e-persistent-damage/templates/persistent-details.html"]);
     window.PF2EPersistentDamage = new PersistentDamagePF2e();
-});
-
-Hooks.on("setup", () => {
-    setupCustomRules();
 });
 
 Hooks.on("ready", () => {
