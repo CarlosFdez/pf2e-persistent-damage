@@ -68,7 +68,7 @@ export function getPersistentData(itemData: {
 Hooks.on("preUpdateItem", (item: ItemPF2e, update: Partial<ItemDataPF2e>) => {
     if (update?.flags?.persistent) {
         // Merge the persistent flags. This also "migrates" the flags.
-        const previous = item.data.flags?.persistent as PersistentData;
+        const previous = item.flags?.persistent as PersistentData;
         const persistent = getPersistentData({
             flags: {
                 persistent: mergeObject({ ...previous }, update.flags.persistent),
@@ -101,7 +101,7 @@ export function createPersistentEffect(persistent: PersistentData): DeepPartial<
     return {
         type: "effect",
         name: createPersistentTitle(persistent),
-        data: {
+        system: {
             slug: `persistent-damage-${persistent.damageType}`,
             description: {
                 value: "Persistent Damage from some source. Deals damage at the end of each turn and needs a check to remove.",
@@ -114,8 +114,8 @@ export function createPersistentEffect(persistent: PersistentData): DeepPartial<
             },
             rules: [],
             tokenIcon: {
-                show: true
-            }
+                show: true,
+            },
         },
         flags: { persistent },
         img: typeImages[persistent.damageType],

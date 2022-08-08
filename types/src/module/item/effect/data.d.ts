@@ -9,6 +9,7 @@ export declare class EffectData extends BaseNonPhysicalItemData<EffectPF2e> {
 export interface EffectData extends Omit<EffectSource, "_id" | "effects"> {
     type: EffectSource["type"];
     data: EffectSource["data"];
+    system: EffectSource["data"]; // v10 shim, later this will be removed when the types are replaced
     readonly _source: EffectSource;
 }
 export interface EffectSystemData extends ItemSystemData {

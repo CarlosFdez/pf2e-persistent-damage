@@ -4,7 +4,7 @@
     "author": "j8qxwRz5RJ4kkzp9",
     "command": "PF2EPersistentDamage.processPersistentDamage(canvas.tokens.controlled);",
     "flags": {},
-    "img": "systems/pf2e/icons/conditions/persistentDamage.webp",
+    "img": "systems/pf2e/icons/conditions/persistent-damage.webp",
     "name": "Process Persistent Damage",
     "permission": {
         "default": 1

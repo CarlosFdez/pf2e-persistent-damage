@@ -6,7 +6,7 @@
  export function overrideItemSheet() {
     // unfortunately....pf2e does not override the item default sheet
     const baseSheet = Items.registeredSheets.find(
-        (s: any) => s.name === "ItemSheetPF2e",
+        (s: any) => s.name === "EffectSheetPF2e",
     ) as unknown as typeof ItemSheet;
 
     function setDetailsIfPersistent(data: any) {
@@ -23,13 +23,8 @@
 
     const original = baseSheet.prototype.getData;
     baseSheet.prototype.getData = function (...args) {
-        // NOTE: As of this writing, getData() is becoming async. We need to be backwards compatible for a while though
         const data = original.bind(this)(...args);
-        if (data instanceof Promise) {
-            return data.then((data) => setDetailsIfPersistent(data));
-        } else {
-            return setDetailsIfPersistent(data);
-        }
+        return data.then((data) => setDetailsIfPersistent(data));
     };
 
     console.log("PF2E Persistent | Registered Item Sheet Modification");

@@ -131,6 +131,7 @@ export declare class ItemPF2e extends Item<ActorPF2e> {
 }
 export interface ItemPF2e {
     readonly data: ItemDataPF2e;
+    flags: ItemDataPF2e["flags"]; // v10 shim, will be replaced when types update
     readonly parent: ActorPF2e | null;
     readonly _sheet: ItemSheetPF2e<this>;
 }
