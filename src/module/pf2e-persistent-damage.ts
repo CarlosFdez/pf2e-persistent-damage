@@ -2,13 +2,7 @@ import type { ActorPF2e } from "@pf2e/module/actor/index";
 import type { TokenPF2e } from "@pf2e/module/canvas/token";
 import type { ChatMessagePF2e } from "@pf2e/module/chat-message/index";
 import type { ItemPF2e } from "@pf2e/module/item/index";
-import {
-    createPersistentEffect,
-    DamageType,
-    getPersistentData,
-    PersistentData,
-    typeImages,
-} from "./persistent-effect";
+import { createPersistentEffect, DamageType, getPersistentData, PersistentData, typeImages } from "./persistent-effect";
 import { AutoRecoverMode, MODULE_NAME, RollHideMode } from "./settings";
 import { calculateRoll } from "./utils";
 
@@ -31,16 +25,18 @@ type TokenOrActorInput = TokenPF2e | ExtendedActor<ActorPF2e> | Array<TokenPF2e 
  */
 function resolveActors(documents: TokenOrActorInput): { token?: TokenPF2e, actor: ExtendedActor<ActorPF2e> }[] {
     const arr = Array.isArray(documents) ? documents : [documents];
-    return arr.map((document) => {
-        if (document instanceof Actor) {
-            return { actor: document, token: document.token?.object };
-        } else if (document?.data?.actorId && !document.actor) {
-            ui.notifications.warn("TOKEN.WarningNoActor", { localize: true });
-            return null;
-        } else {
-            return { actor: document.actor, token: document };
-        }
-    }).filter(arr => arr);
+    return arr
+        .map((document) => {
+            if (document instanceof Actor) {
+                return { actor: document, token: document.token?.object };
+            } else if (document?.data?.actorId && !document.actor) {
+                ui.notifications.warn("TOKEN.WarningNoActor", { localize: true });
+                return null;
+            } else {
+                return { actor: document.actor, token: document };
+            }
+        })
+        .filter((arr) => arr);
 }
 
 /**
@@ -67,9 +63,7 @@ export class PersistentDamagePF2e {
             return false;
         };
 
-        const yesMessage = game.i18n.localize(
-            actor ? "PF2E-PD.Dialog.Apply" : "PF2E-PD.Dialog.Add",
-        );
+        const yesMessage = game.i18n.localize(actor ? "PF2E-PD.Dialog.Apply" : "PF2E-PD.Dialog.Add");
         const types = Object.keys(typeImages).map(getTypeData);
 
         const dialog = new Dialog(
@@ -125,12 +119,7 @@ export class PersistentDamagePF2e {
      * @param dc DC for the flat check to remove it
      * @returns
      */
-    async addPersistentDamage(
-        actor: ActorPF2e | ActorPF2e[],
-        damageType: DamageType,
-        formula: string,
-        dc = 15,
-    ) {
+    async addPersistentDamage(actor: ActorPF2e | ActorPF2e[], damageType: DamageType, formula: string, dc = 15) {
         // Test for invalid parameters
         const errors = [];
         if (!damageType) errors.push("Missing damage type");
@@ -157,9 +146,7 @@ export class PersistentDamagePF2e {
         const effect = createPersistentEffect({ damageType, value: formula, dc });
         for (const actor of actors) {
             const existing = PF2EPersistentDamage.getPersistentDamage(actor, damageType);
-            const { average: existingAverage } = calculateRoll(
-                existing?.data.flags.persistent?.value,
-            );
+            const { average: existingAverage } = calculateRoll(existing?.data.flags.persistent?.value);
             const { average: newAverage } = calculateRoll(formula);
             if (!existing || newAverage >= existingAverage) {
                 // Overwrite if greater or equal
@@ -187,7 +174,10 @@ export class PersistentDamagePF2e {
      */
     async removePersistentDamage(actor: ActorPF2e, type: DamageType) {
         const effects = actor.items.filter((i) => i.data.flags.persistent?.damageType === type);
-        await actor?.deleteEmbeddedDocuments("Item", effects.map((i) => i.id));
+        await actor?.deleteEmbeddedDocuments(
+            "Item",
+            effects.map((i) => i.id),
+        );
     }
 
     getPersistentDamage(actor: ActorPF2e, type: DamageType) {
@@ -202,9 +192,7 @@ export class PersistentDamagePF2e {
      */
     async rollRecoveryCheck(actor: ActorPF2e, damageType: DamageType | Embedded<ItemPF2e>) {
         const effect =
-            damageType instanceof Item
-                ? damageType
-                : PF2EPersistentDamage.getPersistentDamage(actor, damageType);
+            damageType instanceof Item ? damageType : PF2EPersistentDamage.getPersistentDamage(actor, damageType);
         const data = effect?.data.flags.persistent as PersistentData;
         if (!data) return;
 
@@ -248,8 +236,7 @@ export class PersistentDamagePF2e {
 
             const isPlayer = actor.hasPlayerOwner;
             const autoCheck =
-                autoRecover === AutoRecoverMode.Always ||
-                (autoRecover === AutoRecoverMode.NPCOnly && !isPlayer);
+                autoRecover === AutoRecoverMode.Always || (autoRecover === AutoRecoverMode.NPCOnly && !isPlayer);
 
             for (const effect of persistentDamageElements) {
                 const data = getPersistentData(effect.data);
@@ -257,11 +244,10 @@ export class PersistentDamagePF2e {
                 const typeName = game.i18n.localize(CONFIG.PF2E.damageTypes[damageType]);
                 const roll = await new Roll(value, { item: effect.data }).evaluate({ async: true });
 
-                const inlineCheck = autoCheck && TextEditor.enrichHTML("[[1d20]]");
+                const inlineCheck = autoCheck && (await TextEditor.enrichHTML("[[1d20]]", { async: true }));
                 const success = autoCheck && Number($(inlineCheck).text()) >= dc;
 
-                const templateName =
-                    "modules/pf2e-persistent-damage/templates/chat/persistent-card.html";
+                const templateName = "modules/pf2e-persistent-damage/templates/chat/persistent-card.html";
 
                 const ChatMessage = CONFIG.ChatMessage.documentClass as typeof ChatMessagePF2e;
                 const speaker = ChatMessage.getSpeaker({ actor, token });
@@ -278,22 +264,26 @@ export class PersistentDamagePF2e {
                     tokenId,
                 });
 
-                const rollMode = rollHideMode === RollHideMode.Never
-                    ? "publicroll"
-                    : rollHideMode === RollHideMode.Always
-                    ? "blindroll"
-                    : game.settings.get('core', 'rollMode');
+                const rollMode =
+                    rollHideMode === RollHideMode.Never
+                        ? "publicroll"
+                        : rollHideMode === RollHideMode.Always
+                        ? "blindroll"
+                        : game.settings.get("core", "rollMode");
 
-                const message = await ChatMessage.create({
-                    speaker,
-                    flavor,
-                    flags: {
-                        persistent: data,
+                const message = await ChatMessage.create(
+                    {
+                        speaker,
+                        flavor,
+                        flags: {
+                            persistent: data,
+                        },
+                        type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+                        roll,
+                        sound: CONFIG.sounds.dice,
                     },
-                    type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-                    roll,
-                    sound: CONFIG.sounds.dice,
-                }, { rollMode });
+                    { rollMode },
+                );
 
                 // Auto-remove the condition if enabled and it passes the DC
                 if (autoCheck && autoResolve && success) {
@@ -318,9 +308,7 @@ export class PersistentDamagePF2e {
         const dc = Number(target.dataset.dc) || 15;
         const effect = createPersistentEffect({ value, damageType, dc });
 
-        dataTransfer.setData('text/plain', JSON.stringify({
-            type: "Item",
-            data: effect
-        }));
+        const transferData = JSON.stringify({ type: "Item", data: effect });
+        dataTransfer.setData("text/plain", transferData);
     }
 }

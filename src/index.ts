@@ -94,35 +94,40 @@ Hooks.on("renderTokenHUD", (_app, html: JQuery, tokenData: foundry.data.TokenDat
 const persistentConditionId = "lDVqvLKA6eF3Df60";
 const originalEnrichHTML = TextEditor.enrichHTML;
 TextEditor.enrichHTML = function (...args) {
-    const content = originalEnrichHTML.call(this, ...args);
+    const result = originalEnrichHTML.call(this, ...args) as Promise<string> | string;
 
-    const html = document.createElement("div");
-    html.innerHTML = String(content);
+    function transformResult(result: string) {
+        const html = document.createElement("div");
+        html.innerHTML = String(result);
 
-    html.querySelectorAll<HTMLElement>(".inline-roll:not(.inline-result)").forEach(rollElement => {
-        // Attempt to pull persistent damage from the roll first
-        const result = parseInlineRollHTML(rollElement);
-        if (!result) return;
+        html.querySelectorAll<HTMLElement>(".inline-roll:not(.inline-result)").forEach((rollElement) => {
+            // Attempt to pull persistent damage from the roll first
+            const result = parseInlineRollHTML(rollElement);
+            if (!result) return;
 
-        const { formula, damageType } = result;
+            const { formula, damageType } = result;
 
-        // Remove the persistent effect condition image first
-        const compendiumLink = $(rollElement).next();
-        if (compendiumLink.hasClass("entity-link") && compendiumLink.attr("data-id") === persistentConditionId) {
-            compendiumLink.remove();
-        }
+            // Remove the persistent effect condition image first
+            const compendiumLink = rollElement.nextElementSibling as HTMLElement;
+            const compendiumLinkIsEntityLink = compendiumLink?.classList.contains("entity-link");
+            if (compendiumLinkIsEntityLink && compendiumLink?.dataset.id === persistentConditionId) {
+                compendiumLink.remove();
+            }
 
-        const newTitle = createPersistentTitle({ damageType, value: formula, dc: 15 });
-        rollElement.classList.add("persistent-link");
-        rollElement.draggable = true;
-        rollElement.dataset.value = formula;
-        rollElement.dataset.damageType = damageType;
-        rollElement.innerHTML = `<i class="fas fa-suitcase"></i> ${newTitle}`;
-        rollElement.setAttribute("ondragstart", "PF2EPersistentDamage._startDrag(event)");
-    });
+            const newTitle = createPersistentTitle({ damageType, value: formula, dc: 15 });
+            rollElement.classList.add("persistent-link");
+            rollElement.draggable = true;
+            rollElement.dataset.value = formula;
+            rollElement.dataset.damageType = damageType;
+            rollElement.innerHTML = `<i class="fas fa-suitcase"></i> ${newTitle}`;
+            rollElement.setAttribute("ondragstart", "PF2EPersistentDamage._startDrag(event)");
+        });
 
-    return html.innerHTML;
-}
+        return html.innerHTML;
+    }
+
+    return result instanceof Promise ? result.then(transformResult) : result;
+};
 
 /** Pulls  */
 function parseInlineRollHTML(rollElement: HTMLElement) {

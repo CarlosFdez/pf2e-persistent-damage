@@ -4,6 +4,7 @@ declare interface EnrichHTMLOptions {
     links?: boolean;
     rolls?: boolean;
     rollData?: boolean;
+    async?: boolean;
 }
 
 /**
@@ -30,8 +31,8 @@ declare class TextEditor {
      */
     static enrichHTML(
         content: string,
-        { secrets, entities, links, rolls, rollData }?: EnrichHTMLOptions,
-    ): string;
+        { secrets, entities, links, rolls, rollData, async }?: EnrichHTMLOptions,
+    ): Promise<string> | string;
 
     /**
      * Preview an HTML fragment by constructing a substring of a given length from its inner text.
