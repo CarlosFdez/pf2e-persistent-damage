@@ -1,7 +1,7 @@
 # PF2E Persistent Damage
 ![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FCarlosFdez%2Fpf2e-persistent-damage%2Fmaster%2Fsrc%2Fmodule.json&label=Foundry%20Version&query=$.compatibleCoreVersion&colorB=orange)
 
-Small module to keep track of persistent damage for pathfinder 2E using the effects system. Accessed via macros in the compendium, and if certain settings are enabled, they will be automatically calculated and/or removed when the actor's turn has finished.
+Small module to keep track of persistent damage for pathfinder 2E using the effects system. Accessed via macros in the compendium, dragging and dropping certain inline rolls, and the condition hud. If certain settings are enabled, they will be automatically calculated and/or removed when the actor's turn has finished.
 
 Derived from the condition setter macro from mothringer. If you're feeling generous, you can send something through [Paypal](https://paypal.me/carlosfernandez1779?locale.x=en_US) if you want.
 
@@ -35,9 +35,7 @@ Any inline roll with `persistent damageType` flavor text such as [[/r 1d6 #persi
 https://user-images.githubusercontent.com/1286721/122157689-4ae65980-ce39-11eb-85b5-dbf789dfbd29.mp4
 
 ## Fast Healing
-There is some rudimentary fast healing and regeneration support, but its not complete. There is a new rule element added by the module, `FastHealing`, with two examples in the compendium: Life Boost and Troll Regeneration. If you have an ideas on things I can do to improve tracking fast healing and troll regen, or if you want to add more items to the compendium, please let me know and we can work it out.
-
-Beginning of turn healing is handled either by progressing the combat tracking (if auto processing is enabled) or by using the `Process Healing` macro from the compendium. Fast healing can be removed by right clicking in the Effect Panel just like persistent damage can.
+There are some sample fast healing effects in the compendium, but fast healing itself is supported in the core pf2e system, and this module is no longer required to perform fast healing.
 
 ## Incompatibilities
 Modules known to cause issues running alongside this one.

@@ -109,7 +109,7 @@ TextEditor.enrichHTML = function (...args) {
 
             // Remove the persistent effect condition image first
             const compendiumLink = rollElement.nextElementSibling as HTMLElement;
-            const compendiumLinkIsEntityLink = compendiumLink?.classList.contains("entity-link");
+            const compendiumLinkIsEntityLink = compendiumLink?.classList.contains("content-link");
             if (compendiumLinkIsEntityLink && compendiumLink?.dataset.id === persistentConditionId) {
                 compendiumLink.remove();
             }
@@ -165,6 +165,5 @@ function parseInlineRollHTML(rollElement: HTMLElement) {
 
 // Rendered chat messages strip out javascript events...so we need to add it back in
 Hooks.on("renderChatMessage", (_message, html) => {
-    html.find(".persistent-link:not([ondragstart])")
-        .attr("ondragstart", "PF2EPersistentDamage._startDrag(event)");
-})
+    html.find(".persistent-link:not([ondragstart])").attr("ondragstart", "PF2EPersistentDamage._startDrag(event)");
+});
