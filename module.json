@@ -1,16 +1,17 @@
 {
     "id": "pf2e-persistent-damage",
+    "name": "pf2e-persistent-damage",
     "title": "pf2e Persistent Damage",
     "description": "Macros that create effects to handle persistent damage",
     "author": "Supe",
     "version": "0.10.2",
     "compatibleCoreVersion": "10",
     "minimumCoreVersion": "10",
+    "minimumSystemVersion": "3.1.0",
     "compatibility": {
         "minimum": "10",
-        "maximum": "10"
+        "verified": "10.279"
     },
-    "minimumSystemVersion": "3.1.0",
     "type": "module",
     "system": ["pf2e"],
     "esmodules": ["./index.js"],
