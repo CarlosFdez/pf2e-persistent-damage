@@ -3,7 +3,7 @@ export const MODULE_NAME = "pf2e-persistent-damage";
 function getVersion(): string {
     const module = game.modules.get(MODULE_NAME);
     if (module.active) {
-        return (module as any).data.version;
+        return (module as any).version;
     }
 }
 

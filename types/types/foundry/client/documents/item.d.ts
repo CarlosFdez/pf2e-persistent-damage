@@ -27,6 +27,9 @@ declare global {
         /** A convenience reference to the item type (data.type) of this Item */
         get type(): string;
 
+        /** conversion to v10 data structure until the new typings are in */
+        get system(): this["data"]["data"];
+
         /** Prepare a data object which defines the data schema used by dice roll commands against this Item */
         getRollData(): object;
 

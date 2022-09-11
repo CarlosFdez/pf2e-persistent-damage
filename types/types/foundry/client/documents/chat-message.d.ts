@@ -48,6 +48,8 @@ declare global {
         /** The User who created the chat message. */
         get user(): User<TActor> | undefined;
 
+        get flags(): Record<string, unknown>;
+
         override prepareData(): void;
 
         /**
@@ -93,7 +95,7 @@ declare global {
         }?: {
             scene?: Scene | null;
             actor?: Actor | null;
-            token?: Token | null;
+            token?: TokenDocument | null;
             alias?: string;
         }): foundry.data.ChatSpeakerSource;
 

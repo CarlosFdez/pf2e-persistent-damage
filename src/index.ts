@@ -6,7 +6,7 @@ import type { CombatantPF2e } from "@pf2e/module/combatant";
 import type { ActorPF2e } from "@pf2e/module/actor/index";
 
 // will be extracted by webpack
-import './styles/styles.scss';
+import "./styles/styles.scss";
 
 Hooks.on("init", () => {
     registerSettings();
@@ -19,7 +19,7 @@ Hooks.on("ready", () => {
 });
 
 Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElement>) => {
-    if (message.data.flags.persistent) {
+    if (message.flags.persistent) {
         html.find("button[data-action=check][data-check=flat]")
             .off()
             .on("click", (evt) => {
@@ -36,25 +36,13 @@ Hooks.on("renderChatMessage", async (message: ChatMessage, html: JQuery<HTMLElem
                     const scene = game.scenes.get(sceneId);
                     const token = scene?.data.tokens.get(tokenId);
                     if (!token) return;
-                    actor = (token.actor as unknown) as ActorPF2e;
+                    actor = token.actor as unknown as ActorPF2e;
                 } else actor = game.actors.get(card.attr("data-actor-id"));
 
                 const effect = actor?.items.get(effectId);
                 PF2EPersistentDamage.rollRecoveryCheck(actor, effect);
             });
     }
-
-    // Enable the bullseye button
-    html.find(".token-link").on("click", (evt) => {
-        const target = evt.target.closest(".token-link") as HTMLElement;
-        const tokenId = target?.dataset.tokenId;
-        if (!tokenId) return;
-
-        if (canvas.ready) {
-            const token = canvas.tokens.get(tokenId);
-            token?.control({ releaseOthers: true });
-        }
-    });
 });
 
 /**
@@ -70,9 +58,10 @@ Hooks.on("pf2e.endTurn", (combatant: CombatantPF2e, _combat, userId: string) => 
 /**
  * If persistent damage is clicked, use this module instead.
  */
-Hooks.on("renderTokenHUD", (_app, html: JQuery, tokenData: foundry.data.TokenData) => {
+Hooks.on("renderTokenHUD", (_app, $html: JQuery, tokenData: foundry.data.TokenData) => {
     setTimeout(() => {
-        html.find("div.status-effects img[data-effect=persistent-damage]")
+        $html
+            .find("div.status-effects [data-status-id='persistent-damage'] img")
             .off()
             .on("click", (evt) => {
                 if (evt.button !== 0 || !canvas.ready) {

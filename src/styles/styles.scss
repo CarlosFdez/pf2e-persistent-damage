@@ -140,18 +140,6 @@
         text-shadow: 0 0 10px red;
     }
 
-    button.token-link {
-        left: auto;
-        width: 24px;
-        height: 24px;
-        font-size: 13px;
-        line-height: 1px;
-        padding: 0;
-        i {
-            margin: 0;
-        }
-    }
-
     .card-content, .persistent-header {
         display: flex;
         flex-direction: row;

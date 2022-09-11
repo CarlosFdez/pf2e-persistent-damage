@@ -45,10 +45,8 @@ interface PersistentDataOld extends PersistentData {
  * Retrieves persistent data values from item data if exists.
  * Also handles "migrations" in a way.
  */
-export function getPersistentData(itemData: {
-    flags: { persistent?: PersistentDataOld };
-}): PersistentData {
-    const data = itemData.flags.persistent;
+export function getPersistentData(flags: { persistent?: PersistentDataOld }): PersistentData {
+    const data = flags.persistent;
     if (data) {
         // Ensure damage type is suitable for the latest version
         let damageType = data.damageType ?? data.type?.toLowerCase();
@@ -70,16 +68,14 @@ Hooks.on("preUpdateItem", (item: ItemPF2e, update: Partial<ItemDataPF2e>) => {
         // Merge the persistent flags. This also "migrates" the flags.
         const previous = item.flags?.persistent as PersistentData;
         const persistent = getPersistentData({
-            flags: {
-                persistent: mergeObject({ ...previous }, update.flags.persistent),
-            },
+            persistent: mergeObject({ ...previous }, update.flags.persistent),
         });
 
         update.flags.persistent = persistent;
         update.name = createPersistentTitle(persistent);
 
         const slug = `persistent-damage-${persistent.damageType}`;
-        mergeObject(update, { data: { slug } });
+        mergeObject(update, { system: { slug } });
     }
 });
 

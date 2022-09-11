@@ -1,7 +1,8 @@
 import type { ActorPF2e } from "@pf2e/module/actor/index";
-import type { TokenPF2e } from "@pf2e/module/canvas/token";
+import type { TokenPF2e } from "@pf2e/module/canvas";
 import type { ChatMessagePF2e } from "@pf2e/module/chat-message/index";
 import type { ItemPF2e } from "@pf2e/module/item/index";
+import type { TokenDocumentPF2e } from "@pf2e/module/token-document";
 import { createPersistentEffect, DamageType, getPersistentData, PersistentData, typeImages } from "./persistent-effect";
 import { AutoRecoverMode, MODULE_NAME, RollHideMode } from "./settings";
 import { calculateRoll } from "./utils";
@@ -14,7 +15,8 @@ function getTypeData(damageType: DamageType) {
     };
 }
 
-type TokenOrActorInput = TokenPF2e | ExtendedActor<ActorPF2e> | Array<TokenPF2e | ExtendedActor<ActorPF2e>>;
+type TokenOrActor = TokenDocumentPF2e | TokenPF2e | ExtendedActor<ActorPF2e>;
+type TokenOrActorInput = TokenOrActor | TokenOrActor[];
 
 /**
  * Converts a single token/actor or list of tokens and/or actors into a list of actors.
@@ -23,17 +25,18 @@ type TokenOrActorInput = TokenPF2e | ExtendedActor<ActorPF2e> | Array<TokenPF2e 
  * @param documents
  * @returns
  */
-function resolveActors(documents: TokenOrActorInput): { token?: TokenPF2e, actor: ExtendedActor<ActorPF2e> }[] {
+function resolveActors(documents: TokenOrActorInput): { token?: TokenDocumentPF2e; actor: ExtendedActor<ActorPF2e> }[] {
     const arr = Array.isArray(documents) ? documents : [documents];
     return arr
         .map((document) => {
             if (document instanceof Actor) {
-                return { actor: document, token: document.token?.object };
-            } else if (document?.data?.actorId && !document.actor) {
+                return { actor: document, token: document.token };
+            } else if (!document.actor) {
                 ui.notifications.warn("TOKEN.WarningNoActor", { localize: true });
                 return null;
             } else {
-                return { actor: document.actor, token: document };
+                const token = "document" in document ? document.document : document;
+                return { actor: token.actor, token };
             }
         })
         .filter((arr) => arr);
@@ -146,7 +149,7 @@ export class PersistentDamagePF2e {
         const effect = createPersistentEffect({ damageType, value: formula, dc });
         for (const actor of actors) {
             const existing = PF2EPersistentDamage.getPersistentDamage(actor, damageType);
-            const { average: existingAverage } = calculateRoll(existing?.data.flags.persistent?.value);
+            const { average: existingAverage } = calculateRoll(existing?.flags.persistent?.value);
             const { average: newAverage } = calculateRoll(formula);
             if (!existing || newAverage >= existingAverage) {
                 // Overwrite if greater or equal
@@ -173,7 +176,7 @@ export class PersistentDamagePF2e {
      * @returns
      */
     async removePersistentDamage(actor: ActorPF2e, type: DamageType) {
-        const effects = actor.items.filter((i) => i.data.flags.persistent?.damageType === type);
+        const effects = actor.items.filter((i) => i.flags.persistent?.damageType === type);
         await actor?.deleteEmbeddedDocuments(
             "Item",
             effects.map((i) => i.id),
@@ -181,7 +184,7 @@ export class PersistentDamagePF2e {
     }
 
     getPersistentDamage(actor: ActorPF2e, type: DamageType) {
-        return actor.items.find((i) => i.data.flags.persistent?.damageType === type);
+        return actor.items.find((i) => i.flags.persistent?.damageType === type);
     }
 
     /**
@@ -193,7 +196,7 @@ export class PersistentDamagePF2e {
     async rollRecoveryCheck(actor: ActorPF2e, damageType: DamageType | Embedded<ItemPF2e>) {
         const effect =
             damageType instanceof Item ? damageType : PF2EPersistentDamage.getPersistentDamage(actor, damageType);
-        const data = effect?.data.flags.persistent as PersistentData;
+        const data = effect?.flags.persistent as PersistentData;
         if (!data) return;
 
         const roll = await new Roll("1d20").evaluate({ async: true });
@@ -226,9 +229,7 @@ export class PersistentDamagePF2e {
         const messages = [];
         for (const { actor, token } of resolveActors(tokensOrActors)) {
             const persistentDamageElements = actor.itemTypes.effect.filter(
-                (i) =>
-                    i.data.data.rules.some((r) => r.key === "PF2E.RuleElement.PersistentDamage") ||
-                    i.data.flags.persistent,
+                (i) => i.system.rules.some((r) => r.key === "PF2E.RuleElement.PersistentDamage") || i.flags.persistent,
             );
             if (!persistentDamageElements) {
                 continue;
@@ -239,10 +240,10 @@ export class PersistentDamagePF2e {
                 autoRecover === AutoRecoverMode.Always || (autoRecover === AutoRecoverMode.NPCOnly && !isPlayer);
 
             for (const effect of persistentDamageElements) {
-                const data = getPersistentData(effect.data);
+                const data = getPersistentData(effect.flags);
                 const { damageType, value, dc } = data;
                 const typeName = game.i18n.localize(CONFIG.PF2E.damageTypes[damageType]);
-                const roll = await new Roll(value, { item: effect.data }).evaluate({ async: true });
+                const roll = await new Roll(value, effect.getRollData()).evaluate({ async: true });
 
                 const inlineCheck = autoCheck && (await TextEditor.enrichHTML("[[1d20]]", { async: true }));
                 const success = autoCheck && Number($(inlineCheck).text()) >= dc;
@@ -251,17 +252,14 @@ export class PersistentDamagePF2e {
 
                 const ChatMessage = CONFIG.ChatMessage.documentClass as typeof ChatMessagePF2e;
                 const speaker = ChatMessage.getSpeaker({ actor, token });
-                const tokenId = token ? `${token.scene.id}.${token.id}` : undefined;
                 const flavor = await renderTemplate(templateName, {
                     actor,
-                    token,
                     effect,
                     data,
                     inlineCheck,
                     typeName,
                     autoCheck,
                     success,
-                    tokenId,
                 });
 
                 const rollMode =
