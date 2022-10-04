@@ -60,22 +60,24 @@ Hooks.on("pf2e.endTurn", (combatant: CombatantPF2e, _combat, userId: string) => 
  */
 Hooks.on("renderTokenHUD", (_app, $html: JQuery, tokenData: foundry.data.TokenData) => {
     setTimeout(() => {
-        $html
-            .find("div.status-effects [data-status-id='persistent-damage'] img")
-            .off()
-            .on("click", (evt) => {
-                if (evt.button !== 0 || !canvas.ready) {
+        const persistentEffect = $html.find("div.status-effects [data-status-id='persistent-damage']").get(0);
+        persistentEffect.addEventListener(
+            "click",
+            (event) => {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                if (event.button !== 0 || !canvas.ready) {
                     return;
                 }
-
-                evt.preventDefault();
-                evt.stopPropagation();
 
                 const token = canvas.tokens.get(tokenData._id);
                 if (token) {
                     PF2EPersistentDamage.showDialog({ actor: token.actor });
                 }
-            });
+            },
+            { capture: true },
+        );
     }, 0);
 });
 
