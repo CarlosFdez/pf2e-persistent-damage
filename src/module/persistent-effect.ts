@@ -2,24 +2,24 @@ import { ItemPF2e } from "@pf2e/module/item";
 import { EffectData, ItemDataPF2e } from "@pf2e/module/item/data";
 
 export const typeImages: Record<string, ImagePath> = {
-    bleed: "systems/pf2e/icons/spells/blade-barrier.webp",
-    piercing: "systems/pf2e/icons/equipment/weapons/throwing-knife.webp",
-    bludgeoning: "systems/pf2e/icons/equipment/weapons/bola.webp",
-    slashing: "systems/pf2e/icons/equipment/weapons/scimitar.webp",
-    fire: "systems/pf2e/icons/spells/flaming-sphere.webp",
     acid: "systems/pf2e/icons/spells/blister.webp",
+    bleed: "systems/pf2e/icons/spells/blade-barrier.webp",
+    bludgeoning: "systems/pf2e/icons/equipment/weapons/bola.webp",
+    chaotic: "systems/pf2e/icons/spells/dinosaur-form.webp",
     cold: "systems/pf2e/icons/spells/chilling-spray.webp",
     electricity: "systems/pf2e/icons/spells/chain-lightning.webp",
-    sonic: "systems/pf2e/icons/spells/cry-of-destruction.webp",
-    force: "systems/pf2e/icons/spells/magic-missile.webp",
-    mental: "systems/pf2e/icons/spells/modify-memory.webp",
-    poison: "systems/pf2e/icons/spells/acidic-burst.webp",
-    lawful: "systems/pf2e/icons/equipment/adventuring-gear/merchant-scale.webp",
-    chaotic: "systems/pf2e/icons/spells/dinosaur-form.webp",
-    good: "systems/pf2e/icons/spells/angelic-wings.webp",
     evil: "systems/pf2e/icons/spells/daemonic-pact.webp",
-    positive: "systems/pf2e/icons/spells/moment-of-renewal.webp",
+    fire: "systems/pf2e/icons/spells/flaming-sphere.webp",
+    force: "systems/pf2e/icons/spells/magic-missile.webp",
+    good: "systems/pf2e/icons/spells/angelic-wings.webp",
+    lawful: "systems/pf2e/icons/equipment/adventuring-gear/merchant-scale.webp",
+    mental: "systems/pf2e/icons/spells/modify-memory.webp",
     negative: "systems/pf2e/icons/spells/grim-tendrils.webp",
+    piercing: "systems/pf2e/icons/equipment/weapons/throwing-knife.webp",
+    poison: "systems/pf2e/icons/spells/acidic-burst.webp",
+    positive: "systems/pf2e/icons/spells/moment-of-renewal.webp",
+    slashing: "systems/pf2e/icons/equipment/weapons/scimitar.webp",
+    sonic: "systems/pf2e/icons/spells/cry-of-destruction.webp",
 };
 
 export type DamageType = keyof typeof typeImages;
