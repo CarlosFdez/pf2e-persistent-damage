@@ -12,6 +12,7 @@ Hooks.on("init", () => {
     registerSettings();
     loadTemplates(["modules/pf2e-persistent-damage/templates/persistent-details.html"]);
     window.PF2EPersistentDamage = new PersistentDamagePF2e();
+    overrideEnricher();
 });
 
 Hooks.on("ready", () => {
@@ -82,43 +83,46 @@ Hooks.on("renderTokenHUD", (_app, $html: JQuery, tokenData: foundry.data.TokenDa
 });
 
 // Override the enrichHTML method to create persistent effect links from inline rolls
-const persistentConditionId = "lDVqvLKA6eF3Df60";
-const originalEnrichHTML = TextEditor.enrichHTML;
-TextEditor.enrichHTML = function (...args) {
-    const result = originalEnrichHTML.call(this, ...args) as Promise<string> | string;
+function overrideEnricher() {
+    const persistentConditionId = "lDVqvLKA6eF3Df60";
+    const originalEnrichHTML = game.pf2e.TextEditor.enrichHTML;
+    game.pf2e.TextEditor.enrichHTML = function (...args) {
+        const result = originalEnrichHTML.call(this, ...args) as Promise<string> | string;
 
-    function transformResult(result: string) {
-        const html = document.createElement("div");
-        html.innerHTML = String(result);
+        function transformResult(result: string) {
+            const html = document.createElement("div");
+            html.innerHTML = String(result);
 
-        html.querySelectorAll<HTMLElement>(".inline-roll:not(.inline-result)").forEach((rollElement) => {
-            // Attempt to pull persistent damage from the roll first
-            const result = parseInlineRollHTML(rollElement);
-            if (!result) return;
+            html.querySelectorAll<HTMLElement>(".inline-roll:not(.inline-result)").forEach((rollElement) => {
+                // Attempt to pull persistent damage from the roll first
+                const result = parseInlineRollHTML(rollElement);
+                if (!result) return;
 
-            const { formula, damageType } = result;
+                const { formula, damageType } = result;
 
-            // Remove the persistent effect condition image first
-            const compendiumLink = rollElement.nextElementSibling as HTMLElement;
-            const compendiumLinkIsEntityLink = compendiumLink?.classList.contains("content-link");
-            if (compendiumLinkIsEntityLink && compendiumLink?.dataset.id === persistentConditionId) {
-                compendiumLink.remove();
-            }
+                // Remove the persistent effect condition image first
+                const compendiumLink = rollElement.nextElementSibling as HTMLElement;
+                const compendiumLinkIsEntityLink = compendiumLink?.classList.contains("content-link");
+                if (compendiumLinkIsEntityLink && compendiumLink?.dataset.id === persistentConditionId) {
+                    compendiumLink.remove();
+                }
 
-            const newTitle = createPersistentTitle({ damageType, value: formula, dc: 15 });
-            rollElement.classList.add("persistent-link");
-            rollElement.draggable = true;
-            rollElement.dataset.value = formula;
-            rollElement.dataset.damageType = damageType;
-            rollElement.innerHTML = `<i class="fas fa-suitcase"></i> ${newTitle}`;
-            rollElement.setAttribute("ondragstart", "PF2EPersistentDamage._startDrag(event)");
-        });
+                const newTitle = createPersistentTitle({ damageType, value: formula, dc: 15 });
+                rollElement.classList.add("persistent-link");
+                rollElement.draggable = true;
+                rollElement.dataset.value = formula;
+                rollElement.dataset.damageType = damageType;
+                rollElement.innerHTML = `<i class="fas fa-suitcase"></i> ${newTitle}`;
+                rollElement.setAttribute("ondragstart", "PF2EPersistentDamage._startDrag(event)");
+            });
 
-        return html.innerHTML;
-    }
+            return html.innerHTML;
+        }
 
-    return result instanceof Promise ? result.then(transformResult) : result;
-};
+        return result instanceof Promise ? result.then(transformResult) : transformResult(result);
+    };
+}
+
 
 /** Pulls  */
 function parseInlineRollHTML(rollElement: HTMLElement) {

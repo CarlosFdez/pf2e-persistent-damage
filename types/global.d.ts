@@ -66,6 +66,7 @@ declare global {
             Check: typeof CheckPF2e;
             RuleElements: typeof RuleElements;
             RuleElement: typeof RuleElementPF2e;
+            TextEditor: typeof TextEditor;
         };
     }
 
