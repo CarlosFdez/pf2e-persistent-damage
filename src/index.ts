@@ -85,8 +85,8 @@ Hooks.on("renderTokenHUD", (_app, $html: JQuery, tokenData: foundry.data.TokenDa
 // Override the enrichHTML method to create persistent effect links from inline rolls
 function overrideEnricher() {
     const persistentConditionId = "lDVqvLKA6eF3Df60";
-    const originalEnrichHTML = game.pf2e.TextEditor.enrichHTML;
-    game.pf2e.TextEditor.enrichHTML = function (...args) {
+    const originalEnrichHTML = TextEditor.enrichHTML;
+    TextEditor.enrichHTML = game.pf2e.TextEditor.enrichHTML = function (...args) {
         const result = originalEnrichHTML.call(this, ...args) as Promise<string> | string;
 
         function transformResult(result: string) {
