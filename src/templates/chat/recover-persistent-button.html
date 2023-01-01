@@ -1,12 +1,12 @@
 <div class="pf2e-pd-card">
     <hr/>
     {{#if autoCheck}}
-    <div>
+    <div class="result degree-of-success">
         DC {{data.dc}} {{{inlineCheck}}} -
         {{#if success}}
-            <span class="flat-check-success">Success</span>
+            <span class="flat-check-success success">Success</span>
         {{else}}
-            <span class="flat-check-failure">Failure</span>
+            <span class="flat-check-failure failure">Failure</span>
         {{/if}}
     </div>
     {{else}}

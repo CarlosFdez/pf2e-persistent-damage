@@ -1,4 +1,3 @@
-import { ConditionSource } from "@item/data";
 import { ChatMessagePF2e } from "@module/chat-message";
 import { DamageType } from "@module/system/damage";
 import { PersistentDamagePF2e } from "./module/pf2e-persistent-damage";
@@ -41,26 +40,9 @@ Hooks.on("renderChatMessage", async (message: ChatMessagePF2e, $html: JQuery<HTM
 
         $html.find(".pf2e-pd-card button").on("click", (evt) => {
             evt.preventDefault();
+            const conditions = PF2EPersistentDamage.getPersistentDamageFromMessage(message);
+
             const tokens = canvas.tokens.controlled.filter((token) => token.actor);
-            const instances = roll.instances.filter((i) => i.persistent);
-            const conditions = instances.map((instance): DeepPartial<ConditionSource> => {
-                const damageType = instance.type;
-                const formula = instance.head.expression;
-                const dc = 15; // from a message, the dc is always 15
-
-                return {
-                    type: "condition",
-                    name: "Persistent Damage",
-                    system: {
-                        slug: "persistent-damage",
-                        removable: true,
-                        persistent: {
-                            damageType, formula, dc
-                        }
-                    }
-                }
-            });
-
             for (const token of tokens) {
                 token.actor?.createEmbeddedDocuments("Item", conditions);
             }

@@ -1,5 +1,7 @@
 import type { ActorPF2e } from "@actor";
+import { ConditionSource } from "@item/data";
 import { TokenPF2e } from "@module/canvas";
+import { ChatMessagePF2e } from "@module/chat-message";
 import { TokenDocumentPF2e } from "@module/scene";
 import { DamageType } from "@module/system/damage";
 import { MODULE_NAME } from "./settings";
@@ -50,6 +52,29 @@ export class PersistentDamagePF2e {
     async showDialog({ actor }: { actor?: ActorPF2e } = {}) {
         const actors = actor ? [actor] : canvas.tokens.controlled?.map((t) => t.actor);
         await game.pf2e.gm.editPersistent({ actors });
+    }
+
+    /** Returns all conditions the message should apply involving persistent damage */
+    getPersistentDamageFromMessage(message: ChatMessagePF2e): DeepPartial<ConditionSource>[] {
+        const roll: any = message.rolls[0];
+        const instances = roll.instances.filter((i) => i.persistent);
+        return instances.map((instance) => {
+            const damageType = instance.type;
+            const formula = instance.head.expression;
+            const dc = 15; // from a message, the dc is always 15
+
+            return {
+                type: "condition",
+                name: "Persistent Damage",
+                system: {
+                    slug: "persistent-damage",
+                    removable: true,
+                    persistent: {
+                        damageType, formula, dc
+                    }
+                }
+            }
+        });
     }
 
     /**
