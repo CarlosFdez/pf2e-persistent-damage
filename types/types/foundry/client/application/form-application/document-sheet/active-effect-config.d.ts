@@ -12,7 +12,7 @@ declare global {
                 navSelector: ".tabs";
                 contentSelector: "form";
                 initial: "details";
-            },
+            }
         ];
     }
 
@@ -25,9 +25,7 @@ declare global {
         modes: Record<number, string>;
     }
 
-    class ActiveEffectConfig<
-        TDocument extends ActiveEffect = ActiveEffect,
-    > extends DocumentSheet<TDocument> {
+    class ActiveEffectConfig<TDocument extends ActiveEffect = ActiveEffect> extends DocumentSheet<TDocument> {
         /** @override */
         static get defaultOptions(): ActiveEffectConfigOptions;
 
@@ -50,7 +48,7 @@ declare global {
         /** @override */
         protected _updateObject(
             event: Event,
-            formData: Record<string, unknown> & { changes?: foundry.data.EffectChangeData[] },
+            formData: Record<string, unknown> & { changes?: foundry.data.EffectChangeData[] }
         ): Promise<void>;
     }
 }

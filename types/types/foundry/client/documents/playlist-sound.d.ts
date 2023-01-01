@@ -14,7 +14,7 @@ declare global {
         /** @override */
         constructor(
             data: PreCreate<foundry.data.PlaylistSoundSource>,
-            context?: DocumentConstructionContext<PlaylistSound>,
+            context?: DocumentConstructionContext<PlaylistSound>
         );
 
         /** The Sound which manages playback for this playlist sound */

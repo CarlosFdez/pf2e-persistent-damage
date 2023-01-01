@@ -2,31 +2,30 @@ export {};
 
 declare global {
     /** The base PlaceablesLayer subclass of CanvasLayer */
-    abstract class PlaceablesLayer<
-        TPlaceableObject extends PlaceableObject = PlaceableObject,
-    > extends CanvasLayer {
+    abstract class PlaceablesLayer<TObject extends PlaceableObject = PlaceableObject> extends CanvasLayer {
         constructor();
 
-        /** Placeable Layer Objects */
-        objects: TPlaceableObject[];
+        objects: PIXI.Application;
 
         /** Preview Object Placement */
         preview: PIXI.Container;
 
         /** Keep track of history so that CTRL+Z can undo changes */
-        history: unknown[];
+        history: CanvasHistory<TObject>[];
 
         /** Track the PlaceableObject on this layer which is currently being hovered upon */
-        protected _hover: this;
+        protected hover: TObject | null;
 
         /** Track the set of PlaceableObjects on this layer which are currently controlled by their id */
-        protected _controlled: Record<string, TPlaceableObject>;
+        protected _controlled: Record<string, TObject>;
 
         /** Keep track of an object copied with CTRL+C which can be pasted later */
-        protected _copy: TPlaceableObject[];
+        protected _copy: TObject[];
 
         /** PlaceableObject layer options */
         options: PlaceablesLayerOptions;
+
+        static documentName: string;
 
         /** Customize behaviors of this PlaceablesLayer by modifying some behaviors at a class level */
         static override get layerOptions(): PlaceablesLayerOptions;
@@ -50,21 +49,24 @@ declare global {
         get gridPrecision(): number;
 
         /** If objects on this PlaceableLayer have a HUD UI, provide a reference to its instance */
-        get hud(): BasePlaceableHUD<TPlaceableObject> | null;
+        get hud(): BasePlaceableHUD<TObject> | null;
 
         /**
          * A convenience method for accessing the placeable object instances contained in this layer
          */
-        get placeables(): TPlaceableObject[];
+        get placeables(): TObject[];
 
         /**
          * An Array of placeable objects in this layer which have the _controlled attribute
          */
-        get controlled(): TPlaceableObject[];
+        get controlled(): TObject[];
 
         /* -------------------------------------------- */
         /*  Rendering                                   */
         /* -------------------------------------------- */
+
+        /** Obtain an iterable of objects which should be added to this PlaceableLayer */
+        getDocuments(): TObject["document"][];
 
         /**
          * Draw the PlaceablesLayer.
@@ -73,7 +75,7 @@ declare global {
         override draw(): Promise<this>;
 
         /** Draw a single placeable object */
-        createObject(data: PreCreate<TPlaceableObject["data"]["_source"]>): TPlaceableObject;
+        createObject(data: PreCreate<TObject["document"]["_source"]>): TObject;
 
         override tearDown(): Promise<void>;
 
@@ -81,23 +83,23 @@ declare global {
         /*  Methods                                     */
         /* -------------------------------------------- */
 
-        override activate(): void;
+        override activate(): this;
 
-        override deactivate(): void;
+        override deactivate(): this;
 
         /**
          * Get a PlaceableObject contained in this layer by it's ID
          * @param objectId  The ID of the contained object to retrieve
          * @return          The object instance, or undefined
          */
-        get(objectId: number | string): TPlaceableObject | undefined;
+        get(objectId: number | string): TObject | undefined;
 
         /**
          * Acquire control over all PlaceableObject instances which are visible and controllable within the layer.
          * @param options Options passed to the control method of each object
          * @return An array of objects that were controlled
          */
-        controlAll(options?: Record<string, unknown>): TPlaceableObject[];
+        controlAll(options?: Record<string, unknown>): TObject[];
 
         /**
          * Release all controlled PlaceableObject instance from this layer.
@@ -186,7 +188,7 @@ declare global {
          * A helper method to prompt for deletion of all PlaceableObject instances within the Scene
          * Renders a confirmation dialogue to confirm with the requester that all objects will be deleted
          */
-        deleteAll(): Promise<TPlaceableObject["document"][] | void>;
+        deleteAll(): Promise<TObject["document"][] | void>;
 
         /**
          * Record a new CRUD event in the history log so that it can be undone later
@@ -199,7 +201,7 @@ declare global {
          * Copy currently controlled PlaceableObjects to a temporary Array, ready to paste back into the scene later
          * @returns The Array of copied Objects
          */
-        copyObjects(): TPlaceableObject[];
+        copyObjects(): TObject[];
 
         /**
          * Paste currently copied PlaceableObjects back to the layer by creating new copies
@@ -207,19 +209,19 @@ declare global {
          */
         pasteObjects(
             position: { x: number; y: number },
-            { hidden }?: { hidden?: boolean },
-        ): Promise<TPlaceableObject["document"][]>;
+            { hidden }?: { hidden?: boolean }
+        ): Promise<TObject["document"][]>;
 
         /**
          * Select all PlaceableObject instances which fall within a coordinate rectangle.
          *
-         * @param x                 The top-left x-coordinate of the selection rectangle
-         * @param y                 The top-left y-coordinate of the selection rectangle
-         * @param width             The width of the selection rectangle
-         * @param height            The height of the selection rectangle
-         * @param releaseOptions    Optional arguments provided to any called release() method
-         * @param controlOptions    Optional arguments provided to any called control() method
-         * @return                  The number of PlaceableObject instances which were controlled.
+         * @param x              The top-left x-coordinate of the selection rectangle
+         * @param y              The top-left y-coordinate of the selection rectangle
+         * @param width          The width of the selection rectangle
+         * @param height         The height of the selection rectangle
+         * @param releaseOptions Optional arguments provided to any called release() method
+         * @param controlOptions Optional arguments provided to any called control() method
+         * @return The number of PlaceableObject instances which were controlled.
          */
         selectObjects({
             x,
@@ -233,8 +235,8 @@ declare global {
             y: number;
             width: number;
             height: number;
-            releaseOptions?: any;
-            controlOptions?: any;
+            releaseOptions?: object;
+            controlOptions?: object;
         }): number;
 
         /**
@@ -247,13 +249,11 @@ declare global {
          */
         updateAll(
             transformation: (
-                document: TPlaceableObject,
-            ) =>
-                | DocumentUpdateData<TPlaceableObject["document"]>
-                | DocumentUpdateData<TPlaceableObject["document"]>,
+                document: TObject
+            ) => DocumentUpdateData<TObject["document"]> | DocumentUpdateData<TObject["document"]>,
             condition?: Function | null,
-            options?: DocumentModificationContext,
-        ): Promise<TPlaceableObject["document"][]>;
+            options?: DocumentModificationContext
+        ): Promise<TObject["document"][]>;
 
         /* -------------------------------------------- */
         /*  Event Listeners and Handlers                */
@@ -275,19 +275,19 @@ declare global {
          * Start a left-click drag workflow originating from the Canvas stage.
          * @see {Canvas#_onDragLeftStart}
          */
-        protected _onDragLeftStart(event: PIXI.InteractionEvent): Promise<void>;
+        protected _onDragLeftStart(event: PlaceablesLayerEvent<TObject>): Promise<TObject | void>;
 
         /**
          * Continue a left-click drag workflow originating from the Canvas stage.
          * @see {Canvas#_onDragLeftMove}
          */
-        protected _onDragLeftMove(event: PIXI.InteractionEvent): Promise<void>;
+        protected _onDragLeftMove(event: PlaceablesLayerEvent<TObject>): void;
 
         /**
          * Conclude a left-click drag workflow originating from the Canvas stage.
          * @see {Canvas#_onDragLeftDrop}
          */
-        protected _onDragLeftDrop(event: ElementDragEvent): Promise<void>;
+        protected _onDragLeftDrop(event: PIXI.InteractionEvent): Promise<void>;
 
         /**
          * Cancel a left-click drag workflow originating from the Canvas stage.
@@ -304,9 +304,9 @@ declare global {
         /**
          * Handle mouse-wheel events at the PlaceableObjects layer level to rotate multiple objects at once.
          * This handler will rotate all controlled objects by some incremental angle.
-         * @param event   The mousewheel event which originated the request
+         * @param event The mousewheel event which originated the request
          */
-        protected _onMouseWheel(event: PIXI.InteractionEvent): void;
+        protected _onMouseWheel(event: WheelEvent): unknown;
 
         /**
          * Handle a DELETE keypress while a placeable object is hovered
@@ -324,4 +324,27 @@ declare global {
         quadtree: boolean;
         sheetClass: ConstructorOf<FormApplication>;
     }
+
+    interface PlaceablesLayerEvent<TObject extends PlaceableObject> extends PIXI.InteractionEvent {
+        data: PlaceableInteractionData<TObject>;
+    }
+
+    interface CanvasHistory<TObject extends PlaceableObject> {
+        /** The type of operation stored as history */
+        type: "create" | "update" | "delete";
+        /** The data corresponding to the action which may later be un-done */
+        data: TObject["document"]["_source"][];
+    }
 }
+
+interface PlaceableInteractionData<TObject extends PlaceableObject> extends PIXI.InteractionData {
+    originalEvent: PlaceablesPointerEvent;
+    preview?: TObject | null;
+    createState?: number;
+    origin: Point;
+    destination: Point;
+}
+
+type PlaceablesPointerEvent = PIXI.InteractivePointerEvent & {
+    isShift: boolean;
+};

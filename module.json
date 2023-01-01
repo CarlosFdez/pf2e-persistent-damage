@@ -1,22 +1,25 @@
 {
     "id": "pf2e-persistent-damage",
     "title": "pf2e Persistent Damage",
-    "description": "Macros that create effects to handle persistent damage",
+    "description": "Automation for persistent damage",
     "authors": [
         {
             "name": "Supe"
         }
     ],
-    "version": "0.10.6",
+    "version": "0.11.0",
     "compatibility": {
         "minimum": "10",
-        "verified": "10.290"
+        "verified": "10.291"
     },
     "type": "module",
     "relationships": {
         "systems": [
             {
-                "id": "pf2e"
+                "id": "pf2e",
+                "compatibility": {
+                    "minimum": "4.6.0"
+                }
             }
         ]
     },
@@ -49,5 +52,5 @@
     ],
     "url": "https://github.com/CarlosFdez/pf2e-persistent-damage",
     "manifest": "https://github.com/CarlosFdez/pf2e-persistent-damage/releases/latest/download/module.json",
-    "download": "https://github.com/CarlosFdez/pf2e-persistent-damage/releases/download/v0.10.6/module.zip"
+    "download": "https://github.com/CarlosFdez/pf2e-persistent-damage/releases/download/v0.11.0/module.zip"
 }

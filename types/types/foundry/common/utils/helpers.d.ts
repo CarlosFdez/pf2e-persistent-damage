@@ -4,15 +4,25 @@ declare global {
     module foundry {
         module utils {
             /**
+             * Wrap a callback in a debounced timeout.
+             * Delay execution of the callback function until the function has not been called for delay milliseconds
+             * @param callback A function to execute once the debounced threshold has been passed
+             * @param delay An amount of time in milliseconds to delay
+             * @return A wrapped function which can be called to debounce execution
+             */
+            function debounce<T extends unknown[]>(
+                callback: (...args: T) => unknown,
+                delay: number
+            ): (...args: T) => void;
+
+            /**
              * Quickly clone a simple piece of data, returning a copy which can be mutated safely.
              * This method DOES support recursive data structures containing inner objects or arrays.
              * This method DOES NOT support advanced object types like Set, Map, or other specialized classes.
              * @param original Some sort of data
              * @return The clone of that data
              */
-            function deepClone<T>(
-                original: T,
-            ): T extends Set<any> | Map<any, any> | foundry.utils.Collection<any> ? never : T;
+            function deepClone<T>(original: T): T;
 
             /**
              * A cheap data duplication trick which is relatively robust.
@@ -35,6 +45,7 @@ declare global {
              * @param [options.recursive=true]      Control whether to merge inner-objects recursively (if true), or whether to simply replace inner objects with a provided new value.
              * @param [options.inplace=true]        Control whether to apply updates to the original object in-place (if true), otherwise the original object is duplicated and the copy is merged.
              * @param [options.enforceTypes=false]  Control whether strict type checking requires that the value of a key in the other object must match the data type in the original data to be merged.
+             * @param [options.performDeletions=false]  Control whether to perform deletions on the original object if deletion keys are present in the other object.
              * @param [_d=0]         A privately used parameter to track recursion depth.
              * @returns The original source object including updated, inserted, or overwritten records.
              *
@@ -55,11 +66,11 @@ declare global {
              * @example <caption>Deleting an existing object key</caption>
              * mergeObject({k1: "v1", k2: "v2"}, {"-=k1": null});   // {k2: "v2"}
              */
-            function mergeObject<T, U = T>(
+            function mergeObject<T extends object, U extends object = T>(
                 original: T,
                 other?: U,
-                { insertKeys, insertValues, overwrite, inplace, enforceTypes }?: MergeObjectOptions,
-                _d?: number,
+                { insertKeys, insertValues, overwrite, inplace, enforceTypes, performDeletions }?: MergeObjectOptions,
+                _d?: number
             ): T & U;
 
             /**
@@ -67,7 +78,7 @@ declare global {
              * @param token Some passed token
              * @return      The named type of the token
              */
-            function getType(token: any): string;
+            function getType(token: unknown): string;
 
             /**
              * A temporary shim to invert an object, flipping keys and values
@@ -95,7 +106,7 @@ declare global {
                 source: object,
                 template: object,
                 keepSpecial?: boolean,
-                templateValues?: boolean,
+                templateValues?: boolean
             ): object;
 
             /**
@@ -114,7 +125,7 @@ declare global {
              * @param _d   Recursion depth, to prevent overflow
              * @return     An expanded object
              */
-            function expandObject(obj: object, _d?: number): object;
+            function expandObject<T extends object>(obj: object, _d?: number): T;
 
             /**
              * A simple function to test whether or not an Object is empty
@@ -129,7 +140,10 @@ declare global {
              * @param other
              * @return
              */
-            function diffObject(original: object, other: object): Record<string, unknown>;
+            function diffObject<T extends Record<string, unknown> = Record<string, unknown>>(
+                original: object,
+                other: object
+            ): T;
 
             /**
              * A helper function which tests whether an object has a property or nested property given a string key.
@@ -149,7 +163,7 @@ declare global {
              *
              * @return         The value of the found property
              */
-            function getProperty(object: object, key: string): any;
+            function getProperty(object: object, key: string): unknown;
 
             /**
              * A helper function which searches through an object to assign a value using a string key
@@ -159,9 +173,9 @@ declare global {
              * @param key      The string key
              * @param value    The value to be assigned
              *
-             * @return {Boolean}        A flag for whether or not the object was updated
+             * @return A flag for whether or not the object was updated
              */
-            function setProperty(object: object, key: string, value: any): boolean;
+            function setProperty(object: object, key: string, value: unknown): boolean;
 
             /**
              * Encode a url-like string by replacing any characters which need encoding
@@ -188,7 +202,7 @@ declare global {
              * @param  b       The blue color value
              * @return         The HSV representation
              */
-            function rgbToHsv(r: number, g: number, b: number): Array<number>;
+            function rgbToHsv(r: number, g: number, b: number): number[];
 
             /**
              * Converts an HSV color value to RGB. Conversion formula
@@ -201,21 +215,21 @@ declare global {
              * @param  v       The value
              * @return         The RGB representation
              */
-            function hsvToRgb(h: number, s: number, v: number): Array<number>;
+            function hsvToRgb(h: number, s: number, v: number): [number, number, number];
 
             /**
              * Converts a color as an [R, G, B] array of normalized floats to a hexadecimal number.
              * @param rgb - Array of numbers where all values are normalized floats from 0.0 to 1.0.
              * @return      Number in hexadecimal.
              */
-            function rgbToHex(rgb: Array<number>): number;
+            function rgbToHex(rgb: [number, number, number]): number;
 
             /**
              * Convert a hex color code to an RGB array
              * @param hex    A hex color number
              * @return       An array of [r,g,b] colors normalized on the range of [0,1]
              */
-            function hexToRGB(hex: number): Array<number>;
+            function hexToRGB(hex: number): [number, number, number];
 
             /**
              * Convert a hex color code to an RGBA color string which can be used for CSS styling
@@ -239,7 +253,7 @@ declare global {
              * @param v1
              * @return
              */
-            function isNewerVersion(v1: number | string, v0: number | string): boolean;
+            function isNewerVersion(v1: number | string | null, v0: number | string): boolean;
 
             /**
              * Generate a random ID
@@ -253,11 +267,26 @@ declare global {
             function randomID(length?: number): string;
 
             /**
-             * Load a single texture and return a Promise which resolves once the texture is ready to use
-             * @param src       The requested texture source
-             * @param fallback  A fallback texture to use if the requested source is unavailable or invalid
+             * Log a compatibility warning which is filtered based on the client's defined compatibility settings.
+             * @param message              The original warning or error message
+             * @param [options={}]         Additional options which customize logging
+             * @param [options.mode]       A logging level in COMPATIBILITY_MODES which overrides the configured default
+             * @param [options.since]      A version identifier since which a change was made
+             * @param [options.until]      A version identifier until which a change remains supported
+             * @param [options.details]    Additional details to append to the logged message
+             * @param [options.stack=true] Include the message stack trace
+             * @throws An Error if the mode is ERROR
              */
-            function loadTexture(src: string, fallback?: string): Promise<PIXI.Texture>;
+            function logCompatibilityWarning(
+                message: string,
+                options?: {
+                    mode?: CompatibilityMode;
+                    since?: number | string;
+                    until?: number | string;
+                    details?: string;
+                    stack?: boolean;
+                }
+            ): void;
         }
     }
 
@@ -267,6 +296,7 @@ declare global {
         overwrite?: boolean;
         inplace?: boolean;
         enforceTypes?: boolean;
+        performDeletions?: boolean;
     }
 
     namespace globalThis {
@@ -283,5 +313,12 @@ declare global {
         var setProperty: typeof foundry.utils.setProperty;
         var randomID: typeof foundry.utils.randomID;
         /* eslint-enable no-var */
+
+        /**
+         * Load a single texture and return a Promise which resolves once the texture is ready to use
+         * @param src       The requested texture source
+         * @param fallback  A fallback texture to use if the requested source is unavailable or invalid
+         */
+        function loadTexture(src: string, { fallback }?: { fallback?: ImagePath }): Promise<PIXI.Texture>;
     }
 }

@@ -1,45 +1,66 @@
-import { AbilityString } from "@actor/data/base";
-import { TrickMagicItemCastData } from "@item/data";
-import { ItemLevelData, ItemSystemData, ItemTraits } from "@item/data/base";
-import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from "@item/data/non-physical";
-import { ValuesList, ZeroToTen } from "@module/data";
-import type { SpellPF2e } from ".";
-export declare type SpellSource = BaseNonPhysicalItemSource<"spell", SpellSystemData>;
-export declare class SpellData extends BaseNonPhysicalItemData<SpellPF2e> {
-    /** Prepared data */
-    isCantrip: boolean;
-    isFocusSpell: boolean;
-    isRitual: boolean;
-    /** @override */
-    static DEFAULT_ICON: ImagePath;
-}
-export interface SpellData extends Omit<SpellSource, "_id" | "effects"> {
-    type: SpellSource["type"];
-    data: SpellSource["data"];
-    readonly _source: SpellSource;
-}
-export declare type MagicSchool = keyof ConfigPF2e["PF2E"]["magicSchools"];
-export declare type SaveType = keyof ConfigPF2e["PF2E"]["saves"];
-export declare type SpellTrait = keyof ConfigPF2e["PF2E"]["spellTraits"];
+import { AbilityString, SaveType } from "@actor/types";
+import { BaseItemDataPF2e, BaseItemSourcePF2e, ItemLevelData, ItemSystemData, ItemSystemSource, ItemTraits } from "@item/data/base";
+import { OneToTen, ValueAndMax, ValuesList } from "@module/data";
+import { DamageType } from "@system/damage";
+import type { SpellPF2e } from "./document";
+import { MagicSchool, MagicTradition, SpellComponent, SpellTrait } from "./types";
+declare type SpellSource = BaseItemSourcePF2e<"spell", SpellSystemSource>;
+declare type SpellData = Omit<SpellSource, "system" | "effects" | "flags"> & BaseItemDataPF2e<SpellPF2e, "spell", SpellSystemData, SpellSource>;
 export declare type SpellTraits = ItemTraits<SpellTrait>;
-export interface SpellSystemData extends ItemSystemData, ItemLevelData {
+declare type SpellDamageCategory = keyof ConfigPF2e["PF2E"]["damageCategories"];
+export interface SpellDamageType {
+    value: DamageType;
+    subtype?: "persistent" | "splash";
+    categories: SpellDamageCategory[];
+}
+export interface SpellDamage {
+    value: string;
+    applyMod?: boolean;
+    type: SpellDamageType;
+}
+export interface SpellHeighteningInterval {
+    type: "interval";
+    interval: number;
+    damage: Record<string, string>;
+}
+export interface SpellHeighteningFixed {
+    type: "fixed";
+    levels: Record<OneToTen, Partial<SpellSystemSource>>;
+}
+export interface SpellHeightenLayer {
+    level: number;
+    system: Partial<SpellSystemData>;
+}
+interface SpellOverlayOverride {
+    _id: string;
+    system: Partial<SpellSystemSource>;
+    name?: string;
+    overlayType: "override";
+    sort: number;
+}
+/** Not implemented */
+interface SpellOverlayDamage {
+    overlayType: "damage";
+    choices: DamageType[];
+}
+declare type SpellOverlay = SpellOverlayOverride | SpellOverlayDamage;
+declare type SpellOverlayType = SpellOverlay["overlayType"];
+interface SpellSystemSource extends ItemSystemSource, ItemLevelData {
     traits: SpellTraits;
     level: {
-        value: ZeroToTen;
+        value: OneToTen;
     };
     spellType: {
-        value: string;
+        value: keyof ConfigPF2e["PF2E"]["spellTypes"];
     };
     category: {
         value: keyof ConfigPF2e["PF2E"]["spellCategories"];
     };
-    traditions: ValuesList<keyof ConfigPF2e["PF2E"]["spellTraditions"]>;
+    traditions: ValuesList<MagicTradition>;
     school: {
         value: MagicSchool;
     };
-    components: {
-        value: string;
-    };
+    components: Record<SpellComponent, boolean>;
     materials: {
         value: string;
     };
@@ -60,16 +81,10 @@ export interface SpellSystemData extends ItemSystemData, ItemLevelData {
         value: string;
     };
     damage: {
-        value: string;
-        applyMod: false;
+        value: Record<string, SpellDamage>;
     };
-    damageType: {
-        value: string;
-    };
-    scaling: {
-        mode: string;
-        formula: string;
-    };
+    heightening?: SpellHeighteningFixed | SpellHeighteningInterval;
+    overlays?: Record<string, SpellOverlay>;
     save: {
         basic: string;
         value: SaveType | "";
@@ -85,24 +100,20 @@ export interface SpellSystemData extends ItemSystemData, ItemLevelData {
     ability: {
         value: AbilityString;
     };
-    prepared: {
+    hasCounteractCheck: {
         value: boolean;
     };
     location: {
         value: string;
+        signature?: boolean;
+        heightenedLevel?: number;
+        /** The level to heighten this spell to if it's a cantrip or focus spell */
+        autoHeightenLevel?: OneToTen | null;
+        /** Number of uses if this is an innate spell */
+        uses?: ValueAndMax;
     };
-    heightenedLevel: {
-        value: number;
-    };
-    hasCounteractCheck: {
-        value: boolean;
-    };
-    isSave?: boolean;
-    damageLabel?: string;
-    isAttack?: boolean;
-    spellLvl?: string;
-    properties?: (number | string)[];
-    item?: string;
-    trickMagicItemData?: TrickMagicItemCastData;
-    isSignatureSpell?: boolean;
 }
+interface SpellSystemData extends SpellSystemSource, ItemSystemData {
+    traits: SpellTraits;
+}
+export { SpellData, SpellSource, SpellSystemData, SpellSystemSource, SpellOverlay, SpellOverlayOverride, SpellOverlayType, };

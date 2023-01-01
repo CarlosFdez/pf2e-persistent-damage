@@ -1,27 +1,21 @@
-import { ItemSystemData } from "@item/data/base";
-import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from "@item/data/non-physical";
+import { BaseItemDataPF2e, BaseItemSourcePF2e, ItemSystemSource } from "@item/data/base";
+import { PhysicalItemTraits, PartialPrice } from "@item/physical/data";
 import type { KitPF2e } from ".";
-export declare type KitSource = BaseNonPhysicalItemSource<"kit", KitSystemData>;
-export declare class KitData extends BaseNonPhysicalItemData<KitPF2e> {
-    /** @override */
-    static DEFAULT_ICON: ImagePath;
-}
-export interface KitData extends Omit<KitSource, "_id" | "effects"> {
-    type: KitSource["type"];
-    data: KitSource["data"];
-    readonly _source: KitSource;
-}
-export interface KitEntryData {
+declare type KitSource = BaseItemSourcePF2e<"kit", KitSystemSource>;
+declare type KitData = Omit<KitSource, "system" | "effects" | "flags"> & BaseItemDataPF2e<KitPF2e, "kit", KitSystemData, KitSource>;
+interface KitEntryData {
     pack?: string;
     id: string;
     img: ImagePath;
     quantity: number;
     name: string;
     isContainer: boolean;
-    items?: {
-        [key: number]: KitEntryData;
-    };
+    items?: Record<string, KitEntryData>;
 }
-export interface KitSystemData extends ItemSystemData {
+interface KitSystemSource extends ItemSystemSource {
+    traits: PhysicalItemTraits;
     items: Record<string, KitEntryData>;
+    price: PartialPrice;
 }
+declare type KitSystemData = KitSystemSource;
+export { KitData, KitEntryData, KitSource, KitSystemData, KitSystemSource };

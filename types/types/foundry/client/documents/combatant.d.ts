@@ -9,18 +9,17 @@ declare global {
      * @see {@link data.CombatantData} The Combatant data schema
      * @see {@link documents.Combat}   The Combat document which contains Combatant embedded documents
      */
-    class Combatant extends CombatantConstructor {
-        /** @override */
-        constructor(
-            data: PreCreate<foundry.data.CombatantSource>,
-            context?: DocumentConstructionContext<Combatant>,
-        );
+    class Combatant<
+        TParent extends Combat | null = Combat | null,
+        TActor extends Actor | null = Actor | null
+    > extends CombatantConstructor {
+        constructor(data: PreCreate<foundry.data.CombatantSource>, context?: DocumentConstructionContext<Combatant>);
 
         /** A cached reference to the Token which this Combatant represents, if any */
-        _token: NonNullable<NonNullable<this["actor"]>["parent"]> | null;
+        protected _token: NonNullable<TActor>["parent"];
 
         /** A cached reference to the Actor which this Combatant represents, if any */
-        _actor: Actor | null;
+        protected _actor: TActor;
 
         /** The current value of the special tracked resource which pertains to this Combatant */
         resource: { value: number } | null;
@@ -33,10 +32,7 @@ declare global {
          * Determine the image icon path that should be used to portray this Combatant in the combat tracker or
          * elsewhere
          */
-        get img(): string;
-
-        /** A convenience reference to the current initiative score of this Combatant */
-        get initiative(): number | null;
+        get img(): VideoPath;
 
         /**
          * This is treated as a non-player combatant if it has no associated actor and no player users who can control
@@ -49,26 +45,17 @@ declare global {
         /** Is this Combatant entry currently visible in the Combat Tracker? */
         get isVisible(): boolean;
 
-        /**
-         * Is this Combatant "hidden", either because they are explicitly marked as hidden or because their token is
-         * hidden
-         */
-        get hidden(): boolean;
-
-        /**
-         * The displayed name for the Combatant is based off its own configured data, or the data of its represented
-         * Token.
-         */
-        get name(): string;
-
         /** A reference to the Actor document which this Combatant represents, if any */
-        get actor(): this["_actor"];
+        get actor(): TActor;
 
         /** A reference to the Token document which this Combatant represents, if any */
-        get token(): this["_token"];
+        get token(): NonNullable<TActor>["parent"];
 
         /** An array of User documents who have ownership of this Document */
         get players(): User[];
+
+        /** Has this combatant been marked as defeated? */
+        get isDefeated(): boolean;
 
         /* -------------------------------------------- */
         /*  Methods                                     */
@@ -76,8 +63,8 @@ declare global {
 
         override testUserPermission(
             user: foundry.documents.BaseUser,
-            permission: DocumentPermission | UserAction,
-            { exact }?: { exact?: boolean },
+            permission: DocumentPermission | DocumentPermissionNumber,
+            { exact }?: { exact?: boolean }
         ): boolean;
 
         /**
@@ -107,8 +94,11 @@ declare global {
         _getInitiativeFormula(): string;
     }
 
-    interface Combatant {
-        readonly parent: Combat | null;
+    interface Combatant<TParent extends Combat | null = Combat | null, TActor extends Actor | null = Actor | null> {
+        readonly data: foundry.data.CombatantData<this>;
+
+        readonly parent: TParent;
+
         _sheet: CombatantConfig<this>;
     }
 }

@@ -11,7 +11,7 @@ const pf2eSystemPath = (() => {
 const outDir = pf2eSystemPath ?? path.join(__dirname, "dist/");
 
 function getFolders(dir: string) {
-    const results = [];
+    const results: string[] = [];
     const folders = fs.readdirSync(packsSource);
     for (const folder of folders) {
         const stat = fs.statSync(path.join(dir, folder));
@@ -28,7 +28,7 @@ fs.mkdirsSync(path.resolve(outDir, "packs"));
 const folders = getFolders(packsSource);
 for (const folder of folders) {
     const folderPath = path.join(packsSource, folder);
-    const lines = [];
+    const lines: string[] = [];
     for (const file of fs.readdirSync(folderPath)) {
         const filePath = path.join(folderPath, file);
         try {

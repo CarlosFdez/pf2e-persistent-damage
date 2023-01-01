@@ -6,8 +6,9 @@ declare global {
      * Each MeasuredTemplate document contains MeasuredTemplateData which defines its data schema.
      */
     class MeasuredTemplateDocument extends MeasuredTemplateDocumentConstructor {
-        /** A reference to the User who created the MeasuredTemplate document. */
-        get author(): User | undefined;
+        /* -------------------------------------------- */
+        /*  Properties                                  */
+        /* -------------------------------------------- */
 
         /** A flag for whether the current User has full ownership over the MeasuredTemplate document. */
         override get isOwner(): boolean;
@@ -16,6 +17,11 @@ declare global {
     interface MeasuredTemplateDocument {
         readonly parent: Scene | null;
 
-        _object: MeasuredTemplate;
+        _sheet: MeasuredTemplateConfig | null;
+
+        /** A reference to the User who created the MeasuredTemplate document. */
+        readonly author: User | undefined;
+
+        readonly _object: MeasuredTemplate<MeasuredTemplateDocument> | null;
     }
 }

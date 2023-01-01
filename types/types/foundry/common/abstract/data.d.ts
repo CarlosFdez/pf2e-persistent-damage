@@ -18,13 +18,8 @@ declare global {
                 type: object;
                 required: boolean;
                 nullable?: boolean;
-                default?:
-                    | ((value: any) => string | number | object | null)
-                    | string
-                    | number
-                    | object
-                    | null;
-                clean?: (data: unknown) => void;
+                default?: unknown;
+                clean?: Function;
                 validate?: (data: any) => boolean;
                 validationError?: string;
                 isCollection?: boolean;
@@ -40,9 +35,7 @@ declare global {
              * @param [data={}]  Initial data used to construct the data object
              * @param [document] The document to which this data object belongs
              */
-            abstract class DocumentData<
-                TDocument extends abstract.Document | null = abstract.Document | null,
-            > {
+            abstract class DocumentData<TDocument extends abstract.Document | null = abstract.Document | null> {
                 constructor(data?: DocumentSource, document?: TDocument | null);
 
                 /** An immutable reverse-reference to the Document to which this data belongs, possibly null. */
@@ -66,7 +59,7 @@ declare global {
                 /** Define the data schema for documents of this type. */
                 static get schema(): DocumentSchema;
 
-                _schema?: DocumentSchema;
+                static _schema?: DocumentSchema;
 
                 /**
                  * Define the data schema for this document instance.
@@ -74,8 +67,12 @@ declare global {
                  */
                 get schema(): DocumentSchema;
 
+                /* ---------------------------------------- */
+                /*  Data Initialization and Validation      */
+                /* ---------------------------------------- */
+
                 /** Initialize the source data object in-place */
-                protected _initializeSource(data: object): DocumentSource;
+                protected _initializeSource(data: object): this["_source"];
 
                 /**
                  * Get the default value for a schema field, conditional on the provided data
@@ -83,10 +80,7 @@ declare global {
                  * @param data The provided data object
                  * @returns The default value for the field
                  */
-                protected static _getFieldDefaultValue(
-                    field: DocumentField,
-                    data: unknown,
-                ): unknown;
+                protected static _getFieldDefaultValue(field: DocumentField, data: unknown): unknown;
 
                 /** Initialize the instance by copying data from the source object to instance attributes. */
                 protected _initialize(): void;
@@ -143,7 +137,7 @@ declare global {
                  * @param options Options which determine how the new data is merged
                  * @returns The changed keys and values which are different than the previous data
                  */
-                update(data?: DocumentUpdateData, options?: MergeObjectOptions): DocumentSource;
+                update(data?: DocumentUpdateData, options?: DocumentModificationContext): DeepPartial<this["_source"]>;
 
                 /**
                  * Copy and transform the DocumentData into a plain object.
@@ -151,11 +145,9 @@ declare global {
                  * @param [source=true] Draw values from the underlying data source rather than transformed values
                  * @returns The extracted primitive object
                  */
-                toObject<D extends DocumentData, B extends true>(this: D, source?: B): D["_source"];
-                toObject<D extends DocumentData, B extends false>(this: D, source: B): RawObject<D>;
-                toObject<D extends DocumentData, B extends boolean>(
-                    source?: B,
-                ): D["_source"] | RawObject<D>;
+                toObject<D extends DocumentData>(this: D, source?: true): D["_source"];
+                toObject<D extends DocumentData>(this: D, source: false): RawObject<D>;
+                toObject<D extends DocumentData>(source?: boolean): D["_source"] | RawObject<D>;
 
                 /**
                  * Extract the source data for the DocumentData into a simple object format that can be serialized.

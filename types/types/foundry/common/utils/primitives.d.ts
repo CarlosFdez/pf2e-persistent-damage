@@ -3,17 +3,14 @@ declare interface String {
 
     titleCase(): string;
 
-    /**
-     * Strip any <script> tags which were included within a provided string
-     * @returns {String|*}
-     */
+    /** Strip any <script> tags which were included within a provided string */
     stripScripts(): string;
 
     /**
      * Transform any string into a url-viable slug string
-     * @param {string} replacement    The replacement character to separate terms, default is '-'
-     * @param {boolean} strict        Replace all non-alphanumeric characters, or allow them? Default false
-     * @return {string}               The cleaned slug string
+     * @param replacement The replacement character to separate terms, default is '-'
+     * @param strict      Replace all non-alphanumeric characters, or allow them? Default false
+     * @return The cleaned slug string
      */
     slugify(replacement?: string, strict?: boolean): string;
 }
@@ -25,10 +22,10 @@ declare interface String {
 declare interface Math {
     /**
      * Bound a number between some minimum and maximum value, inclusively.
-     * @param num    The current value
-     * @param min    The minimum allowed value
-     * @param max    The maximum allowed value
-     * @return       The clamped number
+     * @param num The current value
+     * @param min The minimum allowed value
+     * @param max The maximum allowed value
+     * @return The clamped number
      */
     clamped(num: number, min: number, max: number): number;
 
@@ -57,10 +54,10 @@ declare interface Number {
      * Test whether a value is numeric
      * This is the highest performing algorithm currently available
      * https://jsperf.com/isnan-vs-typeof/5
-     * @param {*} n       A value to test
-     * @return {Boolean}  Is it a number?
+     * @param n A value to test
+     * @return Is it a number?
      */
-    isNumeric(n: number): boolean;
+    isNumeric(n: unknown): boolean;
 }
 
 /* -------------------------------------------- */
@@ -68,40 +65,40 @@ declare interface Number {
 /* -------------------------------------------- */
 
 declare interface Array<T> {
-    fromRange(n: number): Array<T>;
+    fromRange(n: number): T[];
 
-    deepFlatten(): Array<T>;
+    deepFlatten(): T[];
 
     /**
      * Test equality of the values of this array against the values of some other Array
-     * @param {Array} other
-     * @returns {boolean}
+     * @param other
      */
-    equals(other: Array<T>): boolean;
+    equals(other: T[]): boolean;
 
     /**
      * Partition an original array into two children array based on a logical test
      * Elements which test as false go into the first result while elements testing as true appear in the second
-     * @param rule {Function}
-     * @return {Array}    An Array of length two whose elements are the partitioned pieces of the original
+     * @param {Function}
+     * @return An Array of length two whose elements are the partitioned pieces of the original
      */
-    partition(rule: Function): Array<T>;
+    partition(rule: Function): [T, T];
 
     /**
      * Join an Array using a string separator, first filtering out any parts which return a false-y value
-     * @param {string} sep    The separator string
-     * @return {string}       The joined string, filtered of any false values
+     * @param sep The separator string
+     * @return The joined string, filtered of any false values
      */
     filterJoin(sep: string): string;
 
     /**
      * Find an element within the Array and remove it from the array
-     * @param {Function} find   A function to use as input to findIndex
-     * @return {*|null}         The removed item or null if none was found
+     * @param find      A function to use as input to findIndex
+     * @param [replace] A replacement for the spliced element
+     * @return The replacement element, the removed element, or null if no element was found.
      */
-    findSplice(find: Function): any | null;
+    findSplice(find: (element: T) => boolean, replace?: T): T | null;
 }
 
-declare interface RegExp {
+declare interface RegExpConstructor {
     escape(string: string): string;
 }

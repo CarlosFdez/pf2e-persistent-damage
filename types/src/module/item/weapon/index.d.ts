@@ -1,336 +1,83 @@
-import { PhysicalItemPF2e } from "../physical";
-import { BaseWeaponType, WeaponCategory, WeaponData, WeaponGroup } from "./data";
-export declare class WeaponPF2e extends PhysicalItemPF2e {
-    static get schema(): typeof WeaponData;
+import { ConsumablePF2e, MeleePF2e, PhysicalItemPF2e } from "@item";
+import { ItemSummaryData } from "@item/data";
+import { IdentificationStatus, MystifiedData } from "@item/physical/data";
+import { CoinsPF2e } from "@item/physical/helpers";
+import { MaterialGradeData } from "@item/physical/materials";
+import { RuneValuationData } from "../runes";
+import { WeaponDamage, WeaponData, WeaponMaterialData } from "./data";
+import { BaseWeaponType, OtherWeaponTag, WeaponCategory, WeaponGroup, WeaponRangeIncrement, WeaponReloadTime, WeaponTrait } from "./types";
+declare class WeaponPF2e extends PhysicalItemPF2e {
+    /** Given this weapon is an alternative usage, whether it is melee or thrown */
+    altUsageType: "melee" | "thrown" | null;
+    get isEquipped(): boolean;
     isStackableWith(item: PhysicalItemPF2e): boolean;
     get baseType(): BaseWeaponType | null;
     get group(): WeaponGroup | null;
-    get category(): WeaponCategory | null;
+    get category(): WeaponCategory;
+    get hands(): "0" | "1" | "1+" | "2";
+    /** The range increment of this weapon, or null if a melee weapon */
+    get rangeIncrement(): WeaponRangeIncrement | null;
+    /** The maximum range of this weapon: `null` if melee, and usually 6 * range increment if ranged */
+    get maxRange(): number | null;
+    get reload(): WeaponReloadTime | null;
+    get isSpecific(): boolean;
+    get isMelee(): boolean;
+    get isRanged(): boolean;
+    get isThrown(): boolean;
+    /** This weapon's damage before modification by creature abilities, effects, etc. */
+    get baseDamage(): WeaponDamage;
+    get material(): WeaponMaterialData;
+    /** Does this weapon require ammunition in order to make a strike? */
+    get requiresAmmo(): boolean;
+    get ammo(): Embedded<ConsumablePF2e> | null;
+    get otherTags(): Set<OtherWeaponTag>;
+    /** Generate a list of strings for use in predication */
+    getRollOptions(prefix?: string): string[];
     prepareBaseData(): void;
-    getChatData(
-        this: Embedded<WeaponPF2e>,
-        htmlOptions?: EnrichHTMLOptions,
-    ): {
-        traits: import("../data").TraitChatData[];
-        proficiency: {
-            type: string;
-            value: number;
-        };
-        properties: (string | null)[];
-        attackRoll: number;
-        canAttack: boolean;
-        isTwohanded: boolean;
-        wieldedTwoHands: boolean;
-        isFinesse: boolean;
-        map2: number;
-        map3: number;
-        weaponType: {
-            value: "advanced" | "martial" | "unarmed" | "simple" | null;
-        };
-        group: {
-            value:
-                | "bomb"
-                | "shield"
-                | "club"
-                | "dart"
-                | "flail"
-                | "pick"
-                | "sling"
-                | "spear"
-                | "knife"
-                | "brawling"
-                | "sword"
-                | "axe"
-                | "polearm"
-                | "hammer"
-                | "bow"
-                | null;
-        };
-        baseItem:
-            | "staff"
-            | "adze"
-            | "aklys"
-            | "alchemical-bomb"
-            | "alchemical-crossbow"
-            | "aldori-dueling-sword"
-            | "arrows"
-            | "bastard-sword"
-            | "battle-axe"
-            | "battle-lute"
-            | "bladed-diabolo"
-            | "bladed-hoop"
-            | "bladed-scarf"
-            | "blowgun-darts"
-            | "blowgun"
-            | "bo-staff"
-            | "boarding-axe"
-            | "boarding-pike"
-            | "bola"
-            | "bolts"
-            | "buugeng"
-            | "clan-dagger"
-            | "claw"
-            | "claw-blade"
-            | "club"
-            | "combat-grapnel"
-            | "composite-longbow"
-            | "composite-shortbow"
-            | "crossbow"
-            | "dagger"
-            | "daikyu"
-            | "dart"
-            | "dogslicer"
-            | "dwarven-war-axe"
-            | "elven-curve-blade"
-            | "exquisite-sword-cane-sheath"
-            | "exquisite-sword-cane"
-            | "falchion"
-            | "fangwire"
-            | "fauchard"
-            | "fighting-fan"
-            | "filchers-fork"
-            | "fire-poi"
-            | "fist"
-            | "flail"
-            | "gaff"
-            | "gauntlet"
-            | "gill-hook"
-            | "glaive"
-            | "gnome-flickmace"
-            | "gnome-hooked-hammer"
-            | "greataxe"
-            | "greatclub"
-            | "greatpick"
-            | "greatsword"
-            | "guisarme"
-            | "halberd"
-            | "halfling-sling-staff"
-            | "hand-adze"
-            | "hand-crossbow"
-            | "hatchet"
-            | "heavy-crossbow"
-            | "horsechopper"
-            | "javelin"
-            | "jaws"
-            | "juggling-club"
-            | "kama"
-            | "katana"
-            | "katar"
-            | "khakkara"
-            | "khopesh"
-            | "kukri"
-            | "lance"
-            | "light-hammer"
-            | "light-mace"
-            | "light-pick"
-            | "longbow"
-            | "longspear"
-            | "longsword"
-            | "mace"
-            | "machete"
-            | "main-gauche"
-            | "mambele"
-            | "maul"
-            | "meteor-hammer"
-            | "monkeys-fist"
-            | "morningstar"
-            | "naginata"
-            | "nightstick"
-            | "nine-ring-sword"
-            | "nunchaku"
-            | "ogre-hook"
-            | "orc-knuckle-dagger"
-            | "orc-necksplitter"
-            | "pick"
-            | "poi"
-            | "polytool"
-            | "ranseur"
-            | "rapier"
-            | "rhoka-sword"
-            | "rungu"
-            | "sai"
-            | "sap"
-            | "sawtooth-saber"
-            | "scimitar"
-            | "scorpion-whip"
-            | "scourge"
-            | "scythe"
-            | "shears"
-            | "shield-bash"
-            | "shield-boss"
-            | "shield-spikes"
-            | "shortbow"
-            | "shortsword"
-            | "shuriken"
-            | "sickle"
-            | "sling-bullets"
-            | "sling"
-            | "spear"
-            | "spiked-chain"
-            | "spiked-gauntlet"
-            | "starknife"
-            | "stiletto-pen"
-            | "sword-cane"
-            | "tamchal-chakram"
-            | "taw-launcher"
-            | "tekko-kagi"
-            | "temple-sword"
-            | "tengu-gale-blade"
-            | "throwing-knife"
-            | "thunder-sling"
-            | "tricky-pick"
-            | "trident"
-            | "urumi"
-            | "wakizashi"
-            | "war-flail"
-            | "war-razor"
-            | "warhammer"
-            | "whip-claw"
-            | "whip"
-            | "wish-blade"
-            | "wish-knife"
-            | "wooden-taws"
-            | null;
-        hands: {
-            value: boolean;
-        };
-        bonus: {
-            value: number;
-        };
-        damage: import("./data").WeaponDamage;
-        bonusDamage?:
-            | {
-                  value: string;
-              }
-            | undefined;
-        splashDamage?:
-            | {
-                  value: string;
-              }
-            | undefined;
-        range: {
-            value: string;
-        };
-        reload: {
-            value: string;
-        };
-        ability: {
-            value: "str" | "dex" | "con" | "int" | "wis" | "cha";
-        };
-        MAP: {
-            value: string;
-        };
-        potencyRune: {
-            value: import("../../data").ZeroToFour;
-        };
-        strikingRune: {
-            value: "" | import("./data").StrikingRuneType;
-        };
-        propertyRune1: {
-            value: string;
-        };
-        propertyRune2: {
-            value: string;
-        };
-        propertyRune3: {
-            value: string;
-        };
-        propertyRune4: {
-            value: string;
-        };
-        property1: {
-            value: string;
-            dice: number;
-            die: string;
-            damageType: string;
-            critDice: number;
-            critDie: string;
-            critDamage: string;
-            critDamageType: string;
-        };
-        selectedAmmoId?: string | undefined;
-        invested: {
-            value: boolean | null;
-        };
-        quantity: {
-            value: number;
-        };
-        hp: {
-            value: number;
-        };
-        maxHp: {
-            value: number;
-        };
-        hardness: {
-            value: number;
-        };
-        brokenThreshold: {
-            value: number;
-        };
-        weight: {
-            value: number;
-        };
-        equippedBulk: {
-            value: string;
-        };
-        unequippedBulk: {
-            value: string;
-        };
-        price: {
-            value: number;
-        };
-        equipped: {
-            value: boolean;
-        };
-        identification: import("../physical/data").IdentificationData;
-        stackGroup: {
-            value: string;
-        };
-        bulkCapacity: {
-            value: string;
-        };
-        negateBulk: {
-            value: string;
-        };
-        containerId: {
-            value: string | null;
-        };
-        preciousMaterial: {
-            value: string;
-        };
-        preciousMaterialGrade: {
-            value: string;
-        };
-        collapsed: {
-            value: boolean;
-        };
-        size: {
-            value: "med" | "tiny" | "sm" | "lg" | "huge" | "grg";
-        };
-        description: {
-            value: string;
-            chat: string;
-            unidentified: string;
-        };
-        source: {
-            value: string;
-        };
-        options?:
-            | {
-                  value: string[];
-              }
-            | undefined;
-        usage: {
-            value: string;
-        };
-        rules: import("../../rules/rules-data-definitions").RuleElementData[];
-        slug: string | null;
-        level: {
-            value: number;
-        };
-    };
-    generateUnidentifiedName({ typeOnly }?: { typeOnly?: boolean }): string;
+    prepareDerivedData(): void;
+    processMaterialAndRunes(): void;
+    computeAdjustedPrice(): CoinsPF2e | null;
+    getRunesData(): RuneValuationData[];
+    getMaterialData(): MaterialGradeData | null;
+    getChatData(this: Embedded<WeaponPF2e>, htmlOptions?: EnrichHTMLOptions): Promise<ItemSummaryData>;
+    /** Generate a weapon name base on precious-material composition and runes */
+    generateMagicName(): string;
+    getMystifiedData(status: IdentificationStatus, { source }?: {
+        source?: boolean | undefined;
+    }): MystifiedData;
+    generateUnidentifiedName({ typeOnly }?: {
+        typeOnly?: boolean;
+    }): string;
+    /**
+     * Get the "alternative usages" of a weapon: melee (in the case of combination weapons) and thrown (in the case
+     * of thrown melee weapons)
+     * @param [options.recurse=true] Whether to get the alternative usages of alternative usages
+     */
+    getAltUsages(options?: {
+        recurse?: boolean;
+    }): this[];
+    clone<T extends this>(data: DocumentUpdateData<this> | undefined, options: Omit<WeaponCloneOptions, "save"> & {
+        save: true;
+    }): Promise<T>;
+    clone<T extends this>(data?: DocumentUpdateData<this>, options?: Omit<WeaponCloneOptions, "save"> & {
+        save?: false;
+    }): T;
+    clone<T extends this>(data?: DocumentUpdateData<this>, options?: WeaponCloneOptions): T | Promise<T>;
+    /** Generate a clone of this thrown melee weapon with its thrown usage overlain, or `null` if not applicable */
+    private toThrownUsage;
+    /** Generate a clone of this combination weapon with its melee usage overlain, or `null` if not applicable */
+    private toMeleeUsage;
+    /** Generate a melee item from this weapon for use by NPCs */
+    toNPCAttacks(this: Embedded<WeaponPF2e>): Embedded<MeleePF2e>[];
 }
-export interface WeaponPF2e {
+interface WeaponPF2e {
     readonly data: WeaponData;
+    get traits(): Set<WeaponTrait>;
 }
+interface WeaponCloneOptions {
+    save?: boolean;
+    keepId?: boolean;
+    /** If this clone is an alternative usage, the type */
+    altUsage?: "melee" | "thrown";
+}
+export { WeaponPF2e };

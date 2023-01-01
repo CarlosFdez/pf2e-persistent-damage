@@ -5,7 +5,7 @@ declare class Compendium<TDocument extends CompendiumDocument> extends Applicati
     /** The CompendiumCollection instance which is represented in this Compendium interface. */
     collection: CompendiumCollection<TDocument>;
 
-    static get defaultOptions(): ApplicationOptions;
+    static get defaultOptions(): Required<ApplicationOptions>;
 
     get title(): string;
 
@@ -32,12 +32,7 @@ declare class Compendium<TDocument extends CompendiumDocument> extends Applicati
      */
     protected _onClickEntry(event: MouseEvent): void;
 
-    protected _onSearchFilter(
-        event: KeyboardEvent,
-        query: string,
-        rgx: RegExp,
-        html: HTMLElement,
-    ): void;
+    protected _onSearchFilter(event: KeyboardEvent, query: string, rgx: RegExp, html: HTMLElement): void;
 
     protected _canDragStart(selector: string): boolean;
 

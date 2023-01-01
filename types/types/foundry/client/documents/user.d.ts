@@ -9,11 +9,7 @@ declare global {
      * @see {@link applications.UserConfig}     The User configuration application
      */
     class User<TActor extends Actor = Actor> extends UserConstructor {
-        /** @override */
-        constructor(
-            data: PreCreate<foundry.data.UserSource>,
-            context?: DocumentConstructionContext<User>,
-        );
+        constructor(data: PreCreate<foundry.data.UserSource>, context?: DocumentConstructionContext<User>);
 
         /** Track whether the user is currently active in the game */
         active: boolean;
@@ -23,6 +19,11 @@ declare global {
 
         /** Track the ID of the Scene that is currently being viewed by the User */
         viewedScene: string | null;
+
+        // From PlayerConfig: Process user data by adding extra characteristics
+        charname?: string;
+        color?: HexColorString;
+        border?: HexColorString;
 
         /* ---------------------------------------- */
         /*  User Properties                         */
@@ -53,7 +54,7 @@ declare global {
         assignHotbarMacro(
             macro: Macro | null,
             slot?: number | string,
-            { fromSlot }?: { fromSlot: number },
+            { fromSlot }?: { fromSlot?: number | undefined }
         ): Promise<this>;
 
         /**
@@ -92,9 +93,9 @@ declare global {
         updateTokenTargets(targetIds?: string[]): void;
 
         protected override _onUpdate(
-            changed: DeepPartial<this["data"]["_source"]>,
+            changed: DeepPartial<this["_source"]>,
             options: DocumentModificationContext,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _onDelete(options: DocumentModificationContext, userId: string): void;
@@ -108,4 +109,10 @@ declare global {
         sceneId?: string;
         target?: string[];
     }
+
+    type Active<T extends User> = T & {
+        charname: string;
+        color: HexColorString;
+        border: HexColorString;
+    };
 }

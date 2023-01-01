@@ -2,7 +2,7 @@
     "_id": "pwyjwfc6dyf73p7f",
     "actorIds": [],
     "author": "j8qxwRz5RJ4kkzp9",
-    "command": "PF2EPersistentDamage.showDialog();",
+    "command": "game.pf2e.gm.editPersistent({ actors: [canvas.tokens.controlled?.map((t) => t.actor)] });",
     "flags": {},
     "img": "systems/pf2e/icons/features/classes/brutality.webp",
     "name": "Add Persistent Damage",

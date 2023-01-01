@@ -7,9 +7,8 @@ declare global {
      * @param metadata The compendium metadata, an object provided by game.data
      */
     abstract class CompendiumCollection<
-        TDocument extends CompendiumDocument = CompendiumDocument,
+        TDocument extends CompendiumDocument = CompendiumDocument
     > extends DocumentCollection<TDocument> {
-        /** @override */
         constructor(metadata: CompendiumMetadata<TDocument>, options?: ApplicationOptions);
 
         /** The compendium metadata which defines the compendium content and location */
@@ -18,7 +17,12 @@ declare global {
         /** A subsidiary collection which contains the more minimal index of the pack */
         index: CompendiumIndex;
 
+        /** A debounced function which will clear the contents of the Compendium pack if it is not accessed frequently. */
         protected _flush: () => unknown;
+
+        /** Has this Compendium pack been fully indexed? */
+        indexed: boolean;
+
         /**
          * The amount of time that Document instances within this CompendiumCollection are held in memory.
          * Accessing the contents of the Compendium pack extends the duration of this lifetime.
@@ -28,6 +32,9 @@ declare global {
         /** The named game setting which contains Compendium configurations. */
         static CONFIG_SETTING: "compendiumConfiguration";
 
+        /** The default index fields which should be retrieved for each Compendium document type */
+        static INDEX_FIELDS: Record<CompendiumDocumentType, string[]>;
+
         /**
          * Create a new Compendium Collection using provided metadata.
          * @param metadata The compendium metadata used to create the new pack
@@ -35,7 +42,7 @@ declare global {
          */
         static createCompendium<T extends CompendiumDocument>(
             metadata: CompendiumMetadata<T>,
-            options?: Record<string, unknown>,
+            options?: Record<string, unknown>
         ): Promise<CompendiumCollection<T>>;
 
         /** The canonical Compendium name - comprised of the originating package and the pack name */
@@ -44,8 +51,7 @@ declare global {
         /** Access the compendium configuration data for this pack */
         get config(): Record<string, unknown>;
 
-        /** @override */
-        get documentName(): string;
+        override get documentName(): TDocument["documentName"];
 
         /** Track whether the Compendium Collection is locked for editing */
         get locked(): boolean;
@@ -56,17 +62,14 @@ declare global {
         /** A convenience reference to the label which should be used as the title for the Compendium pack. */
         get title(): string;
 
-        /** @override */
-        get(key: string, options: Record<string, unknown>): TDocument | undefined;
+        override get(key: string, options?: Record<string, unknown>): TDocument | undefined;
 
-        /** @override */
-        set(id: string, document: TDocument): this;
+        override set(id: string, document: TDocument): this;
 
-        /** @override */
-        delete(id: string): boolean;
+        override delete(id: string): boolean;
 
         /** Load the Compendium index and cache it as the keys and values of the Collection. */
-        getIndex(): Promise<CompendiumIndex>;
+        getIndex(options?: { fields: string[] }): Promise<CompendiumIndex>;
 
         /**
          * Get a single Document from this Compendium by ID.
@@ -138,74 +141,77 @@ declare global {
         /** Request that a Compendium pack be migrated to the latest System data template */
         migrate(options?: Record<string, unknown>): Promise<this>;
 
-        /** @override */
-        _onCreateDocuments(
+        protected override _onCreateDocuments(
             documents: TDocument[],
-            result: TDocument["data"]["_source"][],
+            result: TDocument["_source"][],
             options: DocumentModificationContext,
-            userId: string,
+            userId: string
         ): void;
 
-        /** @override */
-        _onUpdateDocuments(
+        protected override _onUpdateDocuments(
             documents: TDocument[],
-            result: TDocument["data"]["_source"][],
+            result: TDocument["_source"][],
             options: DocumentModificationContext,
-            userId: string,
+            userId: string
         ): void;
 
-        /** @override */
-        _onDeleteDocuments(
+        protected override _onDeleteDocuments(
             documents: TDocument[],
-            result: TDocument["data"]["_source"][],
+            result: TDocument["_source"][],
             options: DocumentModificationContext,
-            userId: string,
+            userId: string
         ): void;
 
         /** Follow-up actions taken when Documents within this Compendium pack are modified */
-        protected _onModifyContents(
-            documents: TDocument[],
-            options: DocumentModificationContext,
-            userId: string,
-        ): void;
+        protected _onModifyContents(documents: TDocument[], options: DocumentModificationContext, userId: string): void;
     }
 
-    type CompendiumDocumentType = typeof CONST.COMPENDIUM_ENTITY_TYPES[number];
-    type CompendiumUUID = `${"Compendium" | CompendiumDocumentType}.${string}.${string}`;
-    function fromUuid(uuid: CompendiumUUID): Promise<CompendiumDocument | null>;
+    type CompendiumDocumentType = typeof CONST.COMPENDIUM_DOCUMENT_TYPES[number];
+    type CompendiumUUID = `Compendium.${string}.${string}`;
+    type DocumentUUID = WorldDocumentUUID | CompendiumUUID | TokenDocumentUUID;
+
+    function fromUuid<T extends CompendiumDocument = CompendiumDocument>(uuid: CompendiumUUID): Promise<T | null>;
+    function fromUuid<T extends ClientDocument = ClientDocument>(uuid: string): Promise<T | null>;
+
+    /**
+     * Retrieve a Document by its Universally Unique Identifier (uuid) synchronously. If the uuid resolves to a compendium
+     * document, that document's index entry will be returned instead.
+     * @param uuid The uuid of the Document to retrieve.
+     * @param {} [relative]  A document to resolve relative UUIDs against.
+     * @returns The Document or its index entry if it resides in a Compendium, otherwise null.
+     * @throws If the uuid resolves to a Document that cannot be retrieved synchronously.
+     */
+    function fromUuidSync(
+        uuid: WorldDocumentUUID,
+        relative?: ClientDocument | CompendiumIndexData | null
+    ): ClientDocument | null;
+    function fromUuidSync(
+        uuid: string,
+        relative?: ClientDocument | CompendiumIndexData | null
+    ): ClientDocument | CompendiumIndexData | null;
 
     interface CompendiumMetadata<T extends CompendiumDocument = CompendiumDocument> {
-        absPath: string;
-        readonly entity: T extends Actor
-            ? "Actor"
-            : T extends Item
-            ? "Item"
-            : T extends JournalEntry
-            ? "JournalEntry"
-            : T extends Macro
-            ? "Macro"
-            : T extends Playlist
-            ? "Playlist"
-            : T extends RollTable
-            ? "RollTable"
-            : T extends Scene
-            ? "Scene"
-            : CompendiumDocumentType;
-        label: string;
-        module: string;
+        readonly type: T["documentName"];
+        id: string;
         name: string;
-        package: string;
+        label: string;
         path: string;
+        private?: string;
+        module?: string;
+        package?: string;
         system: string;
-        private: string;
     }
 
-    type CompendiumIndex = Collection<{
+    interface CompendiumIndexData {
         _id: string;
         type: string;
         name: string;
-        img: string;
-    }>;
+        img: ImagePath;
+        pack?: string;
+        [key: string]: any;
+    }
 
-    type CompendiumDocument = Actor | Item | JournalEntry | Macro | Playlist | RollTable | Scene;
+    type CompendiumIndex = Collection<CompendiumIndexData>;
+
+    type CompendiumDocument = Exclude<WorldDocument, Combat | ChatMessage | Folder | User>;
 }

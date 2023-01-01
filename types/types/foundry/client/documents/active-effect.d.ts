@@ -7,10 +7,9 @@ declare global {
      * Each ActiveEffect contains a ActiveEffectData object which provides its source data.
      */
     class ActiveEffect extends ActiveEffectConstructor implements TemporaryEffect {
-        /** @override */
         constructor(
             data: PreCreate<foundry.data.ActiveEffectSource>,
-            context?: DocumentConstructionContext<ActiveEffect>,
+            context?: DocumentConstructionContext<ActiveEffect>
         );
 
         /** A cached reference to the source name to avoid recurring database lookups */
@@ -54,7 +53,7 @@ declare global {
          * An instance of the ActiveEffectConfig sheet to use for this ActiveEffect instance.
          * The reference to the sheet is cached so the same sheet instance is reused.
          */
-        override get sheet(): NonNullable<this["_sheet"]>;
+        override get sheet(): ActiveEffectConfig<this>;
 
         /* -------------------------------------------- */
         /*  Methods                                     */
@@ -126,28 +125,25 @@ declare global {
         /* -------------------------------------------- */
 
         protected override _preCreate(
-            data: PreDocumentId<this["data"]["_source"]>,
+            data: PreDocumentId<this["_source"]>,
             options: DocumentModificationContext,
-            user: User,
+            user: User
         ): Promise<void>;
     }
 
     interface ActiveEffect {
-        readonly data: foundry.data.ActiveEffectData<this>;
-        readonly parent: Actor | Item | null;
+        readonly parent: Actor | Item;
 
-        getFlag(scope: "core", key: "overlay"): string | undefined;
-        getFlag(scope: "core", key: "statusId"): string | undefined;
-        getFlag(scope: string, key: string): unknown;
+        disabled: boolean;
+        icon: ImagePath;
+        tint?: string;
     }
 
     interface TemporaryEffect {
+        disabled: boolean;
         isTemporary: boolean;
-        data: {
-            disabled: boolean;
-            icon: string;
-            tint: string;
-        };
+        icon: ImagePath;
+        tint?: string;
     }
 
     interface ApplicableChangeData<T extends ActiveEffect> extends foundry.data.EffectChangeSource {

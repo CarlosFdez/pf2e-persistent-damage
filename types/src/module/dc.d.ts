@@ -12,21 +12,16 @@ export declare function adjustDC(dc: number, adjustment?: DCAdjustment): number;
 export declare function adjustDCByRarity(dc: number, rarity?: Rarity): number;
 export interface DCOptions {
     proficiencyWithoutLevel?: boolean;
+    rarity?: Rarity;
 }
 /**
  * Normal Level Based DCs
  * @param level
  * @param proficiencyWithoutLevel
  */
-export declare function calculateDC(level: number, { proficiencyWithoutLevel }?: DCOptions): number;
-export declare function calculateSimpleDC(
-    rank: ProficiencyRank,
-    { proficiencyWithoutLevel }?: DCOptions,
-): number;
-export declare function calculateSpellDC(
-    spellLevel: number,
-    { proficiencyWithoutLevel }?: DCOptions,
-): number;
+export declare function calculateDC(level: number, { proficiencyWithoutLevel, rarity }?: DCOptions): number;
+export declare function calculateSimpleDC(rank: ProficiencyRank, { proficiencyWithoutLevel }?: DCOptions): number;
+export declare function calculateSpellDC(spellLevel: number, { proficiencyWithoutLevel }?: DCOptions): number;
 /**
  * Used to shift DCs around the adjustment table Rarity increases
  * the adjustment while Lores reduce it.
@@ -36,10 +31,7 @@ export declare function calculateSpellDC(
  * Important: this operation is not associative because
  * of the lower and upper bounds
  */
-export declare function combineDCAdjustments(
-    first: DCAdjustment,
-    second: DCAdjustment,
-): DCAdjustment;
+export declare function combineDCAdjustments(first: DCAdjustment, second: DCAdjustment): DCAdjustment;
 /**
  * Given a DC made starting at an adjustment create an array of
  * growing difficulties starting from the adjusted position in

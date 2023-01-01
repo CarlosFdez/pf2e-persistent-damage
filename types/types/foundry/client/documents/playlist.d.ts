@@ -11,10 +11,7 @@ declare global {
      */
     class Playlist extends PlaylistConstructor {
         /** @override */
-        constructor(
-            data: PreCreate<foundry.data.PlaylistSource>,
-            context?: DocumentConstructionContext<Playlist>,
-        );
+        constructor(data: PreCreate<foundry.data.PlaylistSource>, context?: DocumentConstructionContext<Playlist>);
 
         /**
          * Each sound which is played within the Playlist has a created Howl instance.
@@ -99,13 +96,13 @@ declare global {
         protected override _preUpdate(
             data: DocumentUpdateData<this>,
             options: DocumentModificationContext,
-            user: User,
+            user: User
         ): Promise<void>;
 
         protected override _onUpdate(
-            changed: DeepPartial<this["data"]["_source"]>,
+            changed: DeepPartial<this["_source"]>,
             options: DocumentModificationContext,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _onDelete(options: DocumentModificationContext, userId: string): void;
@@ -115,7 +112,7 @@ declare global {
             documents: PlaylistSound[],
             result: foundry.data.PlaylistSoundSource[],
             options: DocumentModificationContext,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _onUpdateEmbeddedDocuments(
@@ -123,7 +120,7 @@ declare global {
             documents: PlaylistSound[],
             result: foundry.data.PlaylistSoundSource[],
             options: DocumentModificationContext,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _onDeleteEmbeddedDocuments(
@@ -131,7 +128,7 @@ declare global {
             documents: ClientDocument[],
             result: PlaylistSound[],
             options: DocumentModificationContext,
-            userId: string,
+            userId: string
         ): void;
 
         /** Handle callback logic when an individual sound within the Playlist concludes playback naturally */

@@ -1,70 +1,38 @@
-import { CONDITION_TYPES } from "@actor/data/values";
-import { ItemSystemData } from "@item/data/base";
-import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from "@item/data/non-physical";
+import { CONDITION_SLUGS } from "@actor/values";
+import { BaseItemDataPF2e, BaseItemSourcePF2e, ItemSystemData, ItemSystemSource } from "@item/data/base";
 import { ConditionPF2e } from ".";
-export declare type ConditionSource = BaseNonPhysicalItemSource<"condition", ConditionSystemData>;
-export declare class ConditionData extends BaseNonPhysicalItemData<ConditionPF2e> {
-    /** @override */
-    static DEFAULT_ICON: ImagePath;
-}
-export interface ConditionData extends Omit<ConditionSource, "_id" | "effects"> {
-    type: ConditionSource["type"];
-    data: ConditionSource["data"];
-    readonly _source: ConditionSource;
-}
-export interface ConditionSystemData extends ItemSystemData {
-    slug: ConditionType;
+declare type ConditionSource = BaseItemSourcePF2e<"condition", ConditionSystemSource>;
+declare type ConditionData = Omit<ConditionSource, "system" | "effects" | "flags"> & BaseItemDataPF2e<ConditionPF2e, "condition", ConditionSystemData, ConditionSource>;
+interface ConditionSystemSource extends ItemSystemSource {
+    slug: ConditionSlug;
     active: boolean;
     removable: boolean;
     references: {
         parent?: {
             id: string;
-            type:
-                | "status"
-                | "condition"
-                | "feat"
-                | "weapon"
-                | "armor"
-                | "consumable"
-                | "equipment"
-                | "spell";
+            type: "status" | "condition" | "feat" | "weapon" | "armor" | "consumable" | "equipment" | "spell";
         };
-        children: [
-            {
-                id: string;
-                type: "condition";
-            },
-        ];
-        overriddenBy: [
-            {
-                id: string;
-                type: "condition";
-            },
-        ];
-        overrides: [
-            {
-                id: string;
-                type: "condition";
-            },
-        ];
+        children: {
+            id: string;
+            type: "condition";
+        }[];
+        overriddenBy: {
+            id: string;
+            type: "condition";
+        }[];
+        overrides: {
+            id: string;
+            type: "condition";
+        }[];
         /**
          * This status is immune, and thereby inactive, from the following list.
          */
-        immunityFrom: [
-            {
-                id: string;
-                type:
-                    | "status"
-                    | "condition"
-                    | "feat"
-                    | "weapon"
-                    | "armor"
-                    | "consumable"
-                    | "equipment"
-                    | "spell";
-            },
-        ];
+        immunityFrom: {
+            id: string;
+            type: "status" | "condition" | "feat" | "weapon" | "armor" | "consumable" | "equipment" | "spell";
+        }[];
     };
+    persistent?: PersistentSourceData;
     hud: {
         statusName: string;
         img: {
@@ -84,38 +52,58 @@ export interface ConditionSystemData extends ItemSystemData {
             name: string;
             group: string;
             value?: number;
-        },
+        }
     ];
-    base: string;
+    base: ConditionSlug;
     group: string;
-    value: {
-        isValued: boolean;
-        immutable: boolean;
-        value: number;
-        modifiers: [
-            {
-                value: number;
-                source: string;
-            },
-        ];
-    };
+    value: ConditionValueData;
     sources: {
         hud: boolean;
     };
     alsoApplies: {
         linked: [
             {
-                condition: string;
+                condition: ConditionSlug;
                 value?: number;
-            },
+            }
         ];
         unlinked: [
             {
-                condition: string;
+                condition: ConditionSlug;
                 value?: number;
-            },
+            }
         ];
     };
     overrides: string[];
+    traits?: never;
 }
-export declare type ConditionType = typeof CONDITION_TYPES[number];
+declare type ConditionSystemData = ItemSystemData & ConditionSystemSource;
+declare type ConditionValueData = {
+    isValued: true;
+    immutable: boolean;
+    value: number;
+    modifiers: [
+        {
+            value: number;
+            source: string;
+        }
+    ];
+} | {
+    isValued: false;
+    immutable: boolean;
+    value: null;
+    modifiers: [
+        {
+            value: number;
+            source: string;
+        }
+    ];
+};
+declare type ConditionSlug = SetElement<typeof CONDITION_SLUGS>;
+declare type Conditionkey = ConditionSlug | `persistent-damage-${string}`;
+interface PersistentSourceData {
+    formula: string;
+    damageType: DamageType;
+    dc: number;
+}
+export { ConditionData, ConditionKey, ConditionSource, ConditionSlug };

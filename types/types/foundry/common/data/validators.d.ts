@@ -5,10 +5,7 @@ declare module foundry {
             function isValidId(id: string): boolean;
 
             /** Test whether a file path has an extension in a list of provided extensions */
-            function _hasFileExtension(
-                path: string,
-                extensions: string[],
-            ): path is `${string}.${string}`;
+            function _hasFileExtension(path: string, extensions: string[]): path is `${string}.${string}`;
 
             /**
              * Test whether a file path has a valid image file extension or is base64 PNG data
@@ -22,7 +19,7 @@ declare module foundry {
              * @param data A base64 data string
              * @return Is it a base64 image?
              */
-            function isBase64Image(data: string): `data:image/${string}`;
+            function isBase64Image(data: string): data is `data:image/${string}`;
 
             /**
              * Test whether an input represents a valid 6-character color string
@@ -51,10 +48,7 @@ declare module foundry {
              * @param array The set of allowed options
              * @return Is the valid included?
              */
-            function valueInArray<T extends readonly unknown[]>(
-                val: unknown,
-                array: T,
-            ): val is T[number];
+            function valueInArray<T extends readonly unknown[]>(val: unknown, array: T): val is T[number];
 
             /**
              * Assert that the given value parses as a valid JSON string

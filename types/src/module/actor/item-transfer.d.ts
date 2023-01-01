@@ -18,12 +18,7 @@ export declare class ItemTransfer implements ItemTransferData {
     quantity: number;
     containerId?: string | undefined;
     private templatePaths;
-    constructor(
-        source: ItemTransferData["source"],
-        target: ItemTransferData["target"],
-        quantity: number,
-        containerId?: string | undefined,
-    );
+    constructor(source: ItemTransferData["source"], target: ItemTransferData["target"], quantity: number, containerId?: string | undefined);
     request(): Promise<void>;
     enact(requester: UserPF2e): Promise<void>;
     /** Retrieve the full actor from the source or target ID */

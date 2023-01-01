@@ -11,9 +11,7 @@ declare global {
      *
      ent
     */
-    class Folder<
-        TDocument extends EnfolderableDocument = EnfolderableDocument,
-    > extends FolderConstructor {
+    class Folder<TDocument extends EnfolderableDocument = EnfolderableDocument> extends FolderConstructor {
         /**
          * Create a new Folder by rendering a dialog window to provide basic creation details
          * @param data Initial data with which to populate the creation form
@@ -22,7 +20,7 @@ declare global {
          */
         static override createDialog(
             data?: { folder?: string },
-            options?: FormApplicationOptions,
+            options?: FormApplicationOptions
         ): Promise<Folder | undefined>;
 
         /** The depth of this folder in its sidebar tree */
@@ -58,7 +56,7 @@ declare global {
          */
         exportToCompendium(
             pack: CompendiumCollection<TDocument>,
-            { updateByName }?: { updateByName?: boolean },
+            { updateByName }?: { updateByName?: boolean }
         ): Promise<CompendiumCollection<TDocument>>;
 
         /**
@@ -79,5 +77,5 @@ declare global {
         protected override _onDelete(options: DocumentModificationContext, userId: string): void;
     }
 
-    type EnfolderableDocument = Actor | Item | Scene | JournalEntry | RollTable;
+    type EnfolderableDocument = Actor | Item | Macro | Scene | JournalEntry | RollTable;
 }

@@ -1,10 +1,11 @@
 export const MODULE_NAME = "pf2e-persistent-damage";
 
-function getVersion(): string {
+function getVersion(): string | null {
     const module = game.modules.get(MODULE_NAME);
-    if (module.active) {
+    if (module?.active) {
         return (module as any).version;
     }
+    return null;
 }
 
 export enum AutoRecoverMode {
@@ -42,15 +43,6 @@ export function registerSettings() {
         type: Object,
     });
 
-    game.settings.register(MODULE_NAME, "auto-roll", {
-        name: game.i18n.localize("PF2E-PD.SETTINGS.AutoProcess.name"),
-        hint: game.i18n.localize("PF2E-PD.SETTINGS.AutoProcess.hint"),
-        scope: "world",
-        config: true,
-        type: Boolean,
-        default: true,
-    });
-
     game.settings.register(MODULE_NAME, "auto-recover", {
         name: game.i18n.localize("PF2E-PD.SETTINGS.AutoRecover.name"),
         hint: game.i18n.localize("PF2E-PD.SETTINGS.AutoRecover.hint"),
@@ -73,30 +65,4 @@ export function registerSettings() {
         type: Boolean,
         default: true,
     });
-
-    game.settings.register(MODULE_NAME, "hide-rolls", {
-        name: game.i18n.localize("PF2E-PD.SETTINGS.HideRolls.name"),
-        hint: game.i18n.localize("PF2E-PD.SETTINGS.HideRolls.hint"),
-        scope: "world",
-        config: true,
-        type: Number,
-        choices: {
-            1: game.i18n.localize("PF2E-PD.SETTINGS.HideRolls.option1"),
-            2: game.i18n.localize("PF2E-PD.SETTINGS.HideRolls.option2"),
-            3: game.i18n.localize("PF2E-PD.SETTINGS.HideRolls.option3"),
-        },
-        default: 1,
-    });
-
-    /* NOT YET IMPLEMENTED
-    game.settings.register(MODULE_NAME, "auto-damage", {
-        name: "Auto apply damage?",
-        hint: "Automatically apply persistent damage at end of turn?",
-        scope: 'world',
-        config: true,
-        type: Boolean,
-        default: true,
-        onChange: value =>  location.reload()
-    });
-    */
 }

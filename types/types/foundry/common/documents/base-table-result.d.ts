@@ -7,16 +7,12 @@ declare module foundry {
             static override get metadata(): TableResultMetadata;
 
             /** Is a user able to update an existing TableResult? */
-            protected static _canUpdate(
-                user: BaseUser,
-                doc: BaseTableResult,
-                data: data.TableResultData,
-            ): boolean;
+            protected static _canUpdate(user: BaseUser, doc: BaseTableResult, data: data.TableResultData): boolean;
 
             override testUserPermission(
                 user: BaseUser,
-                permission: DocumentPermission | UserAction,
-                { exact }?: { exact?: boolean },
+                permission: DocumentPermission | DocumentPermissionNumber,
+                { exact }?: { exact?: boolean }
             ): boolean;
         }
 

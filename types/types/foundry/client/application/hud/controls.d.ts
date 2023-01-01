@@ -2,9 +2,11 @@ declare interface SceneControlTool {
     name: string;
     title: string;
     icon: string;
-    visible: string;
-    onClick?: () => void;
+    visible: boolean;
+    toggle?: boolean;
+    active?: boolean;
     button?: boolean;
+    onClick?: () => void;
 }
 
 declare interface SceneControl {
@@ -53,13 +55,5 @@ declare class SceneControls extends Application {
      * @param control An optional control set to set as active
      * @param layer   An optional layer name to target as the active control
      */
-    initialize({
-        control,
-        layer,
-        tool,
-    }?: {
-        control?: string;
-        layer?: string;
-        tool?: string;
-    }): void;
+    initialize({ control, layer, tool }?: { control?: string; layer?: string; tool?: string }): void;
 }

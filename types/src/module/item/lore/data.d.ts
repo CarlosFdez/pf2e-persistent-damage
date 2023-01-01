@@ -1,30 +1,19 @@
-import { ItemSystemData } from "@item/data/base";
-import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from "@item/data/non-physical";
+import { BaseItemDataPF2e, BaseItemSourcePF2e, ItemSystemSource } from "@item/data/base";
 import { ZeroToFour } from "@module/data";
 import type { LorePF2e } from ".";
-export declare type LoreSource = BaseNonPhysicalItemSource<"lore", LoreSystemData>;
-export declare class LoreData extends BaseNonPhysicalItemData<LorePF2e> {
-    /** @override */
-    static DEFAULT_ICON: ImagePath;
-}
-export interface LoreData extends Omit<LoreSource, "_id" | "effects"> {
-    type: LoreSource["type"];
-    data: LoreSource["data"];
-    readonly _source: LoreSource;
-}
-interface LoreSystemData extends ItemSystemData {
+declare type LoreSource = BaseItemSourcePF2e<"lore", LoreSystemSource>;
+declare type LoreData = Omit<LoreSource, "system" | "effects" | "flags"> & BaseItemDataPF2e<LorePF2e, "lore", LoreSystemData, LoreSource>;
+interface LoreSystemSource extends ItemSystemSource {
     mod: {
         value: number;
     };
     proficient: {
         value: ZeroToFour;
     };
-    variants?: Record<
-        string,
-        {
-            label: string;
-            options: string;
-        }
-    >;
+    variants?: Record<string, {
+        label: string;
+        options: string;
+    }>;
 }
-export {};
+declare type LoreSystemData = LoreSystemSource;
+export { LoreData, LoreSource };

@@ -1,6 +1,6 @@
 declare module foundry {
     module documents {
-        /**The Macro document model. */
+        /** The Macro document model. */
         class BaseMacro extends abstract.Document {
             static override get schema(): typeof data.MacroData;
 
@@ -9,15 +9,11 @@ declare module foundry {
             protected override _preCreate(
                 data: PreDocumentId<foundry.data.MacroSource>,
                 options: DocumentModificationContext,
-                user: BaseUser,
+                user: BaseUser
             ): Promise<void>;
 
             /** Is a user able to update an existing Macro document? */
-            protected static _canUpdate(
-                user: BaseUser,
-                doc: BaseMacro,
-                data: data.MacroData,
-            ): boolean;
+            protected static _canUpdate(user: BaseUser, doc: BaseMacro, data: data.MacroData): boolean;
 
             /** Is a user able to delete an existing Macro document? */
             protected static _canDelete(user: BaseUser, doc: BaseMacro): boolean;
@@ -27,6 +23,8 @@ declare module foundry {
             readonly data: data.MacroData<this>;
 
             readonly parent: null;
+
+            get documentName(): typeof BaseMacro["metadata"]["name"];
         }
 
         interface MacroMetadata extends abstract.DocumentMetadata {

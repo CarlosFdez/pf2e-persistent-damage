@@ -15,16 +15,16 @@ declare module foundry {
             avatar: ImagePath;
             img: ImagePath;
             character: string | null;
-            color: string;
+            color: HexColorString;
             hotbar: Record<number, string>;
             name: string;
             password: string;
             role: UserRole;
-            flags: Record<string, unknown>;
+            flags: Record<string, Record<string, unknown>>;
         }
 
         class UserData<
-            TDocument extends documents.BaseUser = documents.BaseUser,
+            TDocument extends documents.BaseUser = documents.BaseUser
         > extends abstract.DocumentData<TDocument> {
             static override defineSchema(): abstract.DocumentSchema;
 

@@ -16,14 +16,14 @@ declare module foundry {
             actorId: string;
             tokenId: string;
             img: VideoPath;
-            initiative: number;
+            initiative: number | null;
             hidden: boolean;
             defeated: boolean;
             flags: Record<string, unknown>;
         }
 
         class CombatantData<
-            TDocument extends documents.BaseCombatant = documents.BaseCombatant,
+            TDocument extends documents.BaseCombatant = documents.BaseCombatant
         > extends abstract.DocumentData<TDocument> {
             static override defineSchema(): abstract.DocumentSchema;
         }

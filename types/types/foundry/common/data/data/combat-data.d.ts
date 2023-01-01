@@ -16,15 +16,15 @@ declare module foundry {
             scene: string;
             combatants: CombatantSource[];
             active: boolean;
-            route: number;
+            round: number;
             turn: number;
             sort: number;
-            flags: Record<string, unknown>;
+            flags: Record<string, Record<string, unknown>>;
         }
 
         class CombatData<
             TDocument extends documents.BaseCombat = documents.BaseCombat,
-            TCombatant extends documents.BaseCombatant = documents.BaseCombatant,
+            TCombatant extends documents.BaseCombatant = documents.BaseCombatant
         > extends abstract.DocumentData<TDocument> {
             static override defineSchema(): abstract.DocumentSchema;
 

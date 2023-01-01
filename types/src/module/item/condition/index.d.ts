@@ -1,19 +1,36 @@
-import { ItemPF2e } from "../base";
-import { ConditionData } from "./data";
-export declare class ConditionPF2e extends ItemPF2e {
-    static get schema(): typeof ConditionData;
+import { AbstractEffectPF2e, EffectBadge } from "@item/abstract-effect";
+import { RuleElementOptions, RuleElementPF2e } from "@module/rules";
+import { UserPF2e } from "@module/user";
+import { ConditionData, ConditionSlug } from "./data";
+declare class ConditionPF2e extends AbstractEffectPF2e {
+    get badge(): EffectBadge | null;
     get value(): number | null;
     get duration(): number | null;
     /** Is the condition currently active? */
     get isActive(): boolean;
-    /** Is the condition from the pf2e system or a module? */
-    get fromSystem(): boolean;
+    /** Is this condition locked in place by another? */
+    get isLocked(): boolean;
     /** Is the condition found in the token HUD menu? */
     get isInHUD(): boolean;
+    get key(): string;
+    increase(): Promise<void>;
+    decrease(): Promise<void>;
+    onEndTurn(options?: { token: TokenDocumentPF2e });
+    /** Ensure value.isValued and value.value are in sync */
+    prepareBaseData(): void;
+    prepareSiblingData(): void;
+    /** Withhold all rule elements if this condition is inactive */
+    prepareRuleElements(options?: RuleElementOptions): RuleElementPF2e[];
+    protected _preUpdate(changed: DeepPartial<this["_source"]>, options: ConditionModificationContext<this>, user: UserPF2e): Promise<void>;
+    protected _onCreate(data: this["_source"], options: DocumentModificationContext<this>, userId: string): void;
+    protected _onUpdate(changed: DeepPartial<this["_source"]>, options: ConditionModificationContext<this>, userId: string): void;
+    protected _onDelete(options: DocumentModificationContext<this>, userId: string): void;
 }
-export interface ConditionPF2e {
+interface ConditionPF2e {
     readonly data: ConditionData;
-    getFlag(scope: string, key: string): unknown;
-    getFlag(scope: "core", key: "sourceId"): string | undefined;
-    getFlag(scope: "pf2e", key: "condition"): true | undefined;
+    get slug(): ConditionSlug;
 }
+interface ConditionModificationContext<T extends ConditionPF2e> extends DocumentModificationContext<T> {
+    conditionValue?: number | null;
+}
+export { ConditionPF2e, ConditionModificationContext };

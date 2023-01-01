@@ -1,23 +1,16 @@
-import {
-    BasePhysicalItemData,
-    BasePhysicalItemSource,
-    MagicItemSystemData,
-    PhysicalItemTraits,
-} from "@item/physical/data";
+import { BasePhysicalItemData, BasePhysicalItemSource, Investable, PhysicalItemTraits, PhysicalSystemData, PhysicalSystemSource } from "@item/physical/data";
 import type { EquipmentPF2e } from ".";
-export declare type EquipmentSource = BasePhysicalItemSource<"equipment", EquipmentSystemData>;
-export declare class EquipmentData extends BasePhysicalItemData<EquipmentPF2e> {
-    /** @override */
-    static DEFAULT_ICON: ImagePath;
+import { EquipmentTrait, OtherEquipmentTag } from "./types";
+declare type EquipmentSource = BasePhysicalItemSource<"equipment", EquipmentSystemSource>;
+declare type EquipmentData = Omit<EquipmentSource, "system" | "effects" | "flags"> & BasePhysicalItemData<EquipmentPF2e, "equipment", EquipmentSystemData, EquipmentSource>;
+interface EquipmentSystemSource extends Investable<PhysicalSystemSource> {
+    traits: EquipmentTraitsSource;
 }
-export interface EquipmentData extends Omit<EquipmentSource, "_id" | "effects"> {
-    type: EquipmentSource["type"];
-    data: EquipmentSource["data"];
-    readonly _source: EquipmentSource;
-}
-export declare type EquipmentTrait = keyof ConfigPF2e["PF2E"]["equipmentTraits"];
-declare type EquipmentTraits = PhysicalItemTraits<EquipmentTrait>;
-interface EquipmentSystemData extends MagicItemSystemData {
+interface EquipmentSystemData extends Omit<EquipmentSystemSource, "price" | "temporary" | "usage">, Investable<PhysicalSystemData> {
     traits: EquipmentTraits;
 }
-export {};
+interface EquipmentTraitsSource extends PhysicalItemTraits<EquipmentTrait> {
+    otherTags?: OtherEquipmentTag[];
+}
+declare type EquipmentTraits = Required<EquipmentTraitsSource>;
+export { EquipmentData, EquipmentSource, EquipmentSystemData, EquipmentSystemSource, EquipmentTrait };

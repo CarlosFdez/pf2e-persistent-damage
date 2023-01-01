@@ -5,7 +5,8 @@
  *
  * See https://www.youtube.com/watch?v=UtNS1vM7czM for interpretations
  */
-import { NPCSystemData } from "@actor/npc/data";
+import { NPCPF2e } from "@actor";
+import { SkillAbbreviation } from "@actor/creature/data";
 import { DCAdjustment, DCOptions } from "./dc";
 export interface RecallKnowledgeDC {
     dc: number;
@@ -16,11 +17,6 @@ export interface IdentifyCreatureData {
     skill: RecallKnowledgeDC;
     specificLoreDC: RecallKnowledgeDC;
     unspecificLoreDC: RecallKnowledgeDC;
-    skills: Set<string>;
+    skills: Set<SkillAbbreviation>;
 }
-export declare function identifyCreature(
-    creature: {
-        data: NPCSystemData;
-    },
-    { proficiencyWithoutLevel }?: DCOptions,
-): IdentifyCreatureData;
+export declare function identifyCreature(creature: NPCPF2e, { proficiencyWithoutLevel }?: DCOptions): IdentifyCreatureData;

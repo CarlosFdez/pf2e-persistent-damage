@@ -1,45 +1,22 @@
-import { AbilityString } from "@actor/data/base";
+import { AbilityString, SaveType } from "@actor/types";
 import { ABCSystemData } from "@item/abc/data";
-import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from "@item/data/non-physical";
+import { BaseItemDataPF2e, BaseItemSourcePF2e, ItemTraits } from "@item/data/base";
 import { ZeroToFour } from "@module/data";
 import type { ClassPF2e } from ".";
-export declare type ClassSource = BaseNonPhysicalItemSource<"class", ClassSystemData>;
-export declare class ClassData extends BaseNonPhysicalItemData<ClassPF2e> {
-    /** @override */
-    static DEFAULT_ICON: ImagePath;
-}
-export interface ClassData extends Omit<ClassSource, "_id" | "effects"> {
-    type: ClassSource["type"];
-    data: ClassSource["data"];
-    readonly _source: ClassSource;
-}
-interface ClassSystemData extends ABCSystemData {
+import { CLASS_TRAITS } from "./values";
+declare type ClassSource = BaseItemSourcePF2e<"class", ClassSystemSource>;
+declare type ClassData = Omit<ClassSource, "system" | "effects" | "flags"> & BaseItemDataPF2e<ClassPF2e, "class", ClassSystemData, ClassSource>;
+interface ClassSystemSource extends ABCSystemData {
+    traits: ItemTraits;
     keyAbility: {
         value: AbilityString[];
+        selected: AbilityString | null;
     };
     hp: number;
     perception: ZeroToFour;
-    savingThrows: {
-        fortitude: ZeroToFour;
-        reflex: ZeroToFour;
-        will: ZeroToFour;
-    };
-    attacks: {
-        simple: ZeroToFour;
-        martial: ZeroToFour;
-        advanced: ZeroToFour;
-        unarmed: ZeroToFour;
-        other: {
-            name: string;
-            rank: ZeroToFour;
-        };
-    };
-    defenses: {
-        unarmored: ZeroToFour;
-        light: ZeroToFour;
-        medium: ZeroToFour;
-        heavy: ZeroToFour;
-    };
+    savingThrows: Record<SaveType, ZeroToFour>;
+    attacks: ClassAttackProficiencies;
+    defenses: ClassDefenseProficiencies;
     trainedSkills: {
         value: string[];
         additional: number;
@@ -60,8 +37,23 @@ interface ClassSystemData extends ABCSystemData {
     skillIncreaseLevels: {
         value: number[];
     };
-    abilityBoostLevels: {
-        value: number[];
+}
+declare type ClassSystemData = ClassSystemSource;
+interface ClassAttackProficiencies {
+    simple: ZeroToFour;
+    martial: ZeroToFour;
+    advanced: ZeroToFour;
+    unarmed: ZeroToFour;
+    other: {
+        name: string;
+        rank: ZeroToFour;
     };
 }
-export {};
+interface ClassDefenseProficiencies {
+    unarmored: ZeroToFour;
+    light: ZeroToFour;
+    medium: ZeroToFour;
+    heavy: ZeroToFour;
+}
+declare type ClassTrait = SetElement<typeof CLASS_TRAITS>;
+export { ClassAttackProficiencies, ClassData, ClassDefenseProficiencies, ClassSource, ClassSystemData, ClassTrait };

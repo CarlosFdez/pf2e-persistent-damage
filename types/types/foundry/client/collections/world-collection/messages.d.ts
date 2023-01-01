@@ -4,9 +4,7 @@
  * @see {@link ChatMessage} The ChatMessage entity
  * @see {@link ChatLog} The ChatLog sidebar directory
  */
-declare class Messages<
-    TChatMessage extends ChatMessage = ChatMessage,
-> extends WorldCollection<TChatMessage> {
+declare class Messages<TChatMessage extends ChatMessage = ChatMessage> extends WorldCollection<TChatMessage> {
     /** @override */
     static documentName: "ChatMessage";
 

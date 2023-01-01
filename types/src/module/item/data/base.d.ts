@@ -1,57 +1,80 @@
 import { CreatureTrait } from "@actor/creature/data";
 import type { ItemPF2e } from "@item/base";
-import { FeatTrait } from "@item/feat/data";
-import { SpellTrait } from "@item/spell/data";
 import type { ActiveEffectPF2e } from "@module/active-effect";
-import { RuleElementData } from "@module/rules/rules-data-definitions";
-import { Rarity, ValuesList } from "@module/data";
+import { RuleElementSource } from "@module/rules";
+import { DocumentSchemaRecord, OneToThree, Rarity, ValuesList } from "@module/data";
 import { ItemType } from ".";
 import { PhysicalItemTrait } from "../physical/data";
-export interface BaseItemSourcePF2e<
-    TItemType extends ItemType = ItemType,
-    TSystemData extends ItemSystemData = ItemSystemData,
-> extends foundry.data.ItemSource {
-    type: TItemType;
-    data: TSystemData;
+import { NPCAttackTrait } from "@item/melee/data";
+import { ActionTrait } from "@item/action/data";
+interface BaseItemSourcePF2e<TType extends ItemType = ItemType, TSystemSource extends ItemSystemSource = ItemSystemSource> extends foundry.data.ItemSource<TType, TSystemSource> {
+    flags: ItemSourceFlagsPF2e;
 }
-export declare abstract class BaseItemDataPF2e<TItem extends ItemPF2e = ItemPF2e> extends foundry
-    .data.ItemData<TItem, ActiveEffectPF2e> {
-    /** Is this physical item data? */
-    abstract isPhysical: boolean;
+interface BaseItemDataPF2e<TItem extends ItemPF2e = ItemPF2e, TType extends ItemType = ItemType, TSystemData extends ItemSystemData = ItemSystemData, TSource extends BaseItemSourcePF2e<TType> = BaseItemSourcePF2e<TType>> extends Omit<BaseItemSourcePF2e<TType, ItemSystemSource>, "system" | "effects">, foundry.data.ItemData<TItem, ActiveEffectPF2e> {
+    readonly type: TType;
+    readonly system: TSystemData;
+    flags: ItemFlagsPF2e;
+    readonly _source: TSource;
 }
-export interface BaseItemDataPF2e extends Omit<BaseItemSourcePF2e, "effects"> {
-    type: BaseItemSourcePF2e["type"];
-    data: BaseItemSourcePF2e["data"];
-    readonly _source: BaseItemSourcePF2e;
+declare type ItemTrait = ActionTrait | CreatureTrait | PhysicalItemTrait | NPCAttackTrait;
+declare type ActionType = keyof ConfigPF2e["PF2E"]["actionTypes"];
+interface ActionCost {
+    type: ActionType;
+    value: OneToThree | null;
 }
-declare type ItemTrait = CreatureTrait | FeatTrait | PhysicalItemTrait | SpellTrait;
-export interface ItemTraits<T extends ItemTrait = ItemTrait> extends ValuesList<T> {
-    rarity: {
-        value: Rarity;
+interface ItemTraits<T extends ItemTrait = ItemTrait> extends ValuesList<T> {
+    rarity: Rarity;
+}
+interface ItemFlagsPF2e extends foundry.data.ItemFlags {
+    pf2e: {
+        rulesSelections: Record<string, string | number | object>;
+        itemGrants: ItemGrantData[];
+        grantedBy: ItemGrantData | null;
+        [key: string]: unknown;
     };
 }
-export interface ItemLevelData {
+interface ItemSourceFlagsPF2e extends DeepPartial<foundry.data.ItemFlags> {
+    pf2e?: {
+        rulesSelections?: Record<string, string | number | object>;
+        itemGrants?: ItemGrantSource[];
+        grantedBy?: ItemGrantSource | null;
+        [key: string]: unknown;
+    };
+}
+declare type ItemGrantData = Required<ItemGrantSource>;
+interface ItemGrantSource {
+    id: string;
+    onDelete?: ItemGrantDeleteAction;
+}
+declare type ItemGrantDeleteAction = "cascade" | "detach" | "restrict";
+interface ItemLevelData {
     level: {
         value: number;
     };
 }
-export interface ItemSystemData {
+interface ItemSystemSource {
     description: {
         value: string;
-        chat: string;
-        unidentified: string;
     };
     source: {
         value: string;
     };
-    traits: ItemTraits;
+    traits?: ItemTraits;
     options?: {
         value: string[];
     };
-    usage: {
-        value: string;
-    };
-    rules: RuleElementData[];
+    rules: RuleElementSource[];
     slug: string | null;
+    schema: DocumentSchemaRecord;
 }
-export {};
+declare type ItemSystemData = ItemSystemSource;
+interface FrequencySource {
+    value?: number;
+    max: number;
+    /** Gap between recharges as an ISO8601 duration, or "day" for daily prep. */
+    per: keyof ConfigPF2e["PF2E"]["frequencies"];
+}
+interface Frequency extends FrequencySource {
+    value: number;
+}
+export { ActionCost, ActionType, BaseItemDataPF2e, BaseItemSourcePF2e, Frequency, FrequencySource, ItemFlagsPF2e, ItemGrantData, ItemGrantDeleteAction, ItemGrantSource, ItemLevelData, ItemSystemData, ItemSystemSource, ItemTrait, ItemTraits, };

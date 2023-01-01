@@ -1,29 +1,20 @@
-import { ItemSystemData } from "@item/data/base";
-import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from "@item/data/non-physical";
-import { ActionPF2e } from ".";
-export declare type ActionType = keyof ConfigPF2e["PF2E"]["actionTypes"];
-export declare type ActionSource = BaseNonPhysicalItemSource<"action", ActionSystemData>;
-export declare class ActionData extends BaseNonPhysicalItemData<ActionPF2e> {
-    /** @override */
-    static DEFAULT_ICON: ImagePath;
-}
-export interface ActionData extends Omit<ActionSource, "_id" | "effects"> {
-    type: ActionSource["type"];
-    data: ActionSource["data"];
-    readonly _source: ActionSource;
-}
-interface ActionSystemData extends ItemSystemData {
+import { ActionType, BaseItemDataPF2e, BaseItemSourcePF2e, Frequency, FrequencySource, ItemSystemData, ItemSystemSource, ItemTraits } from "@item/data/base";
+import { ActionItemPF2e } from ".";
+import { OneToThree } from "@module/data";
+declare type ActionItemSource = BaseItemSourcePF2e<"action", ActionSystemSource>;
+declare type ActionItemData = Omit<ActionItemSource, "system" | "effects" | "flags"> & BaseItemDataPF2e<ActionItemPF2e, "action", ActionSystemData, ActionItemSource>;
+declare type ActionTrait = keyof ConfigPF2e["PF2E"]["actionTraits"];
+declare type ActionTraits = ItemTraits<ActionTrait>;
+interface ActionSystemSource extends ItemSystemSource {
+    traits: ActionTraits;
     actionType: {
         value: ActionType;
     };
     actionCategory: {
         value: string;
     };
-    weapon: {
-        value: string;
-    };
     actions: {
-        value: string;
+        value: OneToThree | null;
     };
     requirements: {
         value: string;
@@ -31,5 +22,10 @@ interface ActionSystemData extends ItemSystemData {
     trigger: {
         value: string;
     };
+    deathNote: boolean;
+    frequency?: FrequencySource;
 }
-export {};
+interface ActionSystemData extends ActionSystemSource, Omit<ItemSystemData, "traits"> {
+    frequency?: Frequency;
+}
+export { ActionItemSource, ActionItemData, ActionTrait, ActionTraits };

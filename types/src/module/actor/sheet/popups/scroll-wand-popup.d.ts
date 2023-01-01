@@ -1,24 +1,16 @@
 import { ActorPF2e } from "@actor/index";
-import { SpellSource } from "@item/spell/data";
-/**
- * @category Other
- */
+import { SpellPF2e } from "@item";
+import { OneToTen } from "@module/data";
 export declare class ScrollWandPopup extends FormApplication<ActorPF2e> {
-    onSubmitCallback: (a: number, b: string, spellData: SpellSource) => void;
-    spellData?: SpellSource;
-    constructor(
-        object: ActorPF2e,
-        options: FormApplicationOptions,
-        callback: (a: number, b: string, c: SpellSource) => void,
-        spellData: SpellSource,
-    );
+    onSubmitCallback: ScrollWandCallback;
+    spell?: SpellPF2e;
+    constructor(object: ActorPF2e, options: Partial<FormApplicationOptions>, callback: ScrollWandCallback, spell: SpellPF2e);
     static get defaultOptions(): FormApplicationOptions;
-    getData(): FormApplicationData<ActorPF2e>;
-    _updateObject(
-        _event: Event,
-        formData: {
-            itemType: string;
-            level: number;
-        },
-    ): Promise<void>;
+    getData(): Promise<FormApplicationData<ActorPF2e>>;
+    _updateObject(_event: Event, formData: {
+        itemType: string;
+        level: OneToTen;
+    }): Promise<void>;
 }
+declare type ScrollWandCallback = (level: OneToTen, itemType: string, spell: SpellPF2e) => Promise<void>;
+export {};

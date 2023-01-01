@@ -9,7 +9,9 @@ export declare class Progress {
     private steps;
     private counter;
     private label;
-    constructor({ steps }?: { steps?: number | undefined });
+    constructor({ steps }?: {
+        steps?: number | undefined;
+    });
     advance(label: string): void;
     close(label?: string): void;
     private updateUI;

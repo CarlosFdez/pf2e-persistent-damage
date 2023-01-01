@@ -33,7 +33,7 @@ declare global {
                 roll?: Roll | null;
                 messageData?: Partial<foundry.data.ChatMessageSource>;
                 messageOptions?: DocumentModificationContext;
-            },
+            }
         ): Promise<ChatMessage | undefined>;
 
         /**
@@ -77,12 +77,7 @@ declare global {
                 recursive,
                 displayChat,
                 rollMode,
-            }?: {
-                roll?: Roll | null;
-                recursive?: boolean;
-                displayChat?: boolean;
-                rollMode?: RollMode | null;
-            },
+            }?: { roll?: Roll | null; recursive?: boolean; displayChat?: boolean; rollMode?: RollMode | null }
         ): Promise<RollTableDraw>;
 
         /** Normalize the probabilities of rolling each item in the RollTable based on their assigned weights */
@@ -136,7 +131,7 @@ declare global {
             documents: TableResult[],
             result: foundry.data.TableResultSource[],
             options: DocumentModificationContext,
-            userId: string,
+            userId: string
         ): void;
 
         protected override _onDeleteEmbeddedDocuments(
@@ -144,7 +139,7 @@ declare global {
             documents: TableResult[],
             result: foundry.data.TableResultSource[],
             options: DocumentModificationContext,
-            userId: string,
+            userId: string
         ): void;
 
         /* -------------------------------------------- */
@@ -158,10 +153,7 @@ declare global {
          * @param folder  The Folder entity from which to create a roll table
          * @param options Additional options passed to the RollTable.create method
          */
-        static fromFolder(
-            folder: Folder,
-            options?: DocumentModificationContext,
-        ): Promise<RollTable | undefined>;
+        static fromFolder(folder: Folder, options?: DocumentModificationContext): Promise<RollTable | undefined>;
     }
 
     /**

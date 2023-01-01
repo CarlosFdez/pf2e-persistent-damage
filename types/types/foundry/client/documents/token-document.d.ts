@@ -4,11 +4,15 @@ type _Actor = Actor<TokenDocument<_Actor>>;
 
 declare global {
     class TokenDocument<TActor extends Actor = _Actor> extends TokenDocumentConstructor {
-        /** @override */
         constructor(
             data: PreCreate<foundry.data.TokenSource>,
-            context: TokenDocumentConstructionContext<TokenDocument>,
+            context?: TokenDocumentConstructionContext<TokenDocument>
         );
+
+        /** An array of detection modes which are available to this Token */
+        detectionModes: TokenDetectionMode[];
+
+        sort: number;
 
         /**
          * A cached reference to the Actor document that this Token modifies.
@@ -27,10 +31,10 @@ declare global {
         override get isOwner(): boolean;
 
         /** A convenient reference for whether this TokenDocument is linked to the Actor it represents, or is a synthetic copy */
-        get isLinked(): this["data"]["actorLink"];
+        get isLinked(): this["actorLink"];
 
         /** Return a reference to a Combatant that represents this Token, if one is present in the current encounter. */
-        get combatant(): Combatant | null;
+        get combatant(): Combatant<Combat> | null;
 
         /** An indicator for whether or not this Token is currently involved in the active combat encounter. */
         get inCombat(): boolean;
@@ -39,18 +43,26 @@ declare global {
         /*  Methods                                     */
         /* -------------------------------------------- */
 
+        override prepareBaseData(): void;
+
+        /**
+         * Prepare detection modes which are available to the Token.
+         * Ensure that every Token has the basic sight detection mode configured.
+         */
+        protected _prepareDetectionModes(): void;
+
         override clone(
-            data: PreCreate<foundry.data.TokenSource> | undefined,
-            options: { save?: false | undefined; keepId?: boolean },
-        ): this;
-        override clone(
-            data?: PreCreate<foundry.data.TokenSource>,
-            options?: { save: true; keepId?: boolean },
+            data: DeepPartial<foundry.data.TokenSource> | undefined,
+            options: { save: true; keepId?: boolean }
         ): Promise<this>;
         override clone(
-            data?: PreCreate<foundry.data.TokenSource>,
-            options?: { save?: boolean; keepId?: boolean },
+            data?: DeepPartial<foundry.data.TokenSource>,
+            options?: { save?: false; keepId?: boolean }
         ): this;
+        override clone(
+            data?: DeepPartial<foundry.data.TokenSource>,
+            options?: { save?: boolean; keepId?: boolean }
+        ): this | Promise<this>;
 
         /**
          * Create a synthetic Actor using a provided Token instance
@@ -65,10 +77,14 @@ declare global {
          * @param alternative An alternative attribute path to get instead of the default one
          * @return The attribute displayed on the Token bar, if any
          */
-        getBarAttribute(
-            barName: string,
-            { alternative }?: { alternative?: string },
-        ): { value: number } | null;
+        getBarAttribute(barName: string, { alternative }?: { alternative?: string }): TokenResourceData | null;
+
+        /**
+         * Test whether a Token has a specific status effect.
+         * @param statusId The status effect ID as defined in CONFIG.statusEffects
+         * @returns Does the Token have this status effect?
+         */
+        hasStatusEffect(statusId: string): boolean;
 
         /* -------------------------------------------- */
         /*  Actor Data Operations                       */
@@ -82,13 +98,10 @@ declare global {
          * @param options  Provided options which modify the update request
          * @returns The updated un-linked Actor instance
          */
-        modifyActorDocument(
-            update: Record<string, unknown>,
-            options: DocumentModificationContext,
-        ): Promise<TActor[]>;
+        modifyActorDocument(update: Record<string, unknown>, options: DocumentModificationContext): Promise<TActor[]>;
 
         override getEmbeddedCollection(
-            embeddedName: "Item" | "ActiveEffect",
+            embeddedName: "Item" | "ActiveEffect"
         ): ReturnType<TActor["getEmbeddedCollection"]>;
 
         /**
@@ -100,10 +113,8 @@ declare global {
          */
         createActorEmbeddedDocuments(
             embeddedName: "ActiveEffect" | "Item",
-            data:
-                | PreCreate<foundry.data.ActiveEffectSource>[]
-                | Partial<foundry.data.ActiveEffectSource>[],
-            options?: DocumentModificationContext,
+            data: PreCreate<foundry.data.ActiveEffectSource>[] | Partial<foundry.data.ActiveEffectSource>[],
+            options?: DocumentModificationContext
         ): ActiveEffect | Item[];
 
         /**
@@ -115,8 +126,8 @@ declare global {
          */
         updateActorEmbeddedDocuments(
             embeddedName: "ActiveEffect" | "Item",
-            updates: EmbeddedDocumentUpdateData<ActiveEffect | Item>,
-            options: DocumentModificationContext,
+            updates: EmbeddedDocumentUpdateData<ActiveEffect | Item>[],
+            options: DocumentModificationContext
         ): Promise<ActiveEffect[] | Item[]>;
 
         /**
@@ -129,7 +140,7 @@ declare global {
         deleteActorEmbeddedDocuments(
             embeddedName: "ActiveEffect" | "Item",
             ids: string[],
-            options: DocumentModificationContext,
+            options: DocumentModificationContext
         ): Promise<ActiveEffect[] | Item[]>;
 
         /* -------------------------------------------- */
@@ -138,38 +149,35 @@ declare global {
 
         protected override _preUpdate(
             data: DocumentUpdateData<this>,
-            options: DocumentModificationContext,
-            user: User,
+            options: DocumentModificationContext<this>,
+            user: User
         ): Promise<void>;
 
         /** When the Actor data overrides change for an un-linked Token Actor, simulate the pre-update process. */
         protected _preUpdateTokenActor(
             data: DocumentUpdateData<TActor>,
-            options: DocumentModificationContext,
-            userId: string,
+            options: TokenUpdateContext<this>,
+            userId: string
         ): Promise<void>;
 
         protected override _onUpdate(
-            changed: DeepPartial<this["data"]["_source"]>,
+            changed: DeepPartial<this["_source"]>,
             options: DocumentModificationContext,
-            userId: string,
+            userId: string
         ): void;
 
         /** When the base Actor for a TokenDocument changes, we may need to update its Actor instance */
-        protected _onUpdateBaseActor(update?: Record<string, unknown>): void;
+        _onUpdateBaseActor(update?: Record<string, unknown>, options?: DocumentModificationContext<Actor>): void;
 
         /** When the Actor data overrides change for an un-linked Token Actor, simulate the post-update process. */
         protected _onUpdateTokenActor(
-            data: Record<string, unknown>,
+            data: DeepPartial<this["_source"]["actorData"]>,
             options: DocumentModificationContext,
-            userId: string,
+            userId: string
         ): void;
 
         /** Get an Array of attribute choices which could be tracked for Actors in the Combat Tracker */
-        static getTrackedAttributes(
-            data: Record<string, unknown>,
-            _path: string[],
-        ): TokenAttributes;
+        static getTrackedAttributes(data?: Record<string, unknown>, _path?: string[]): TokenAttributes;
 
         /** Inspect the Actor data model and identify the set of attributes which could be used for a Token Bar */
         static getTrackedAttributeChoices(attributes: TokenAttributes): TokenAttributes;
@@ -180,23 +188,30 @@ declare global {
 
         readonly parent: Scene | null;
 
+        // V10 shim
+        readonly flags: this["data"]["flags"];
+
+        get uuid(): TokenDocumentUUID;
+
         _sheet: TokenConfig<TokenDocument> | null;
 
         readonly _object: Token<TokenDocument> | null;
     }
 
-    interface TokenDocumentConstructionContext<TTokenDocument extends TokenDocument>
-        extends DocumentConstructionContext<TTokenDocument> {
-        actor?: TTokenDocument["actor"];
+    interface TokenDocumentConstructionContext<T extends TokenDocument> extends DocumentConstructionContext<T> {
+        actor?: T["actor"];
+    }
+
+    interface TokenUpdateContext<T extends TokenDocument> extends DocumentModificationContext<T> {
+        action?: "create" | "update" | "delete";
+        embedded?: { embeddedName: string; hookData: { _id?: string }[] };
     }
 
     namespace TokenDocument {
-        function _canUpdate(
-            user: User,
-            doc: TokenDocument,
-            data: foundry.data.TokenData<TokenDocument>,
-        ): boolean;
+        function _canUpdate(user: User, doc: TokenDocument, data: foundry.data.TokenData<TokenDocument>): boolean;
     }
+
+    type TokenDocumentUUID = `Scene.${string}.Token.${string}`;
 
     interface TokenAttributes {
         bar: string[];

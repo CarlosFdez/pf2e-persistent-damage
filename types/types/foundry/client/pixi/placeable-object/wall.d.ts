@@ -3,8 +3,8 @@
  * Walls are used to restrict Token movement or visibility as well as to define the areas of effect for ambient lights
  * and sounds.
  */
-declare class Wall extends PlaceableObject<WallDocument> {
-    constructor(document?: WallDocument);
+declare class Wall<TDocument extends WallDocument = WallDocument> extends PlaceableObject<TDocument> {
+    constructor(document?: TDocument);
 
     /** An reference the Door Control icon associated with this Wall, if any */
     protected doorControl: DoorControl | null;
@@ -21,7 +21,7 @@ declare class Wall extends PlaceableObject<WallDocument> {
     /** A convenience reference to the coordinates Array for the Wall endpoints, [x0,y0,x1,y1]. */
     get coords(): number[];
 
-    get bounds(): NormalizedRectangle;
+    get bounds(): PIXI.Rectangle;
 
     /** Return the coordinates [x,y] at the midpoint of the wall segment */
     get midpoint(): number[];
@@ -44,7 +44,7 @@ declare class Wall extends PlaceableObject<WallDocument> {
      */
     toRay(): Ray;
 
-    draw(): Promise<this>;
+    protected _draw(): Promise<void>;
 
     protected _createInteractionManager(): MouseInteractionManager;
 
@@ -104,19 +104,19 @@ declare class Wall extends PlaceableObject<WallDocument> {
     /*  Socket Listeners and Handlers               */
     /* -------------------------------------------- */
 
-    protected _onCreate(
+    override _onCreate(
         data: foundry.data.WallSource,
-        options: DocumentModificationContext,
-        userId: string,
+        options: DocumentModificationContext<TDocument>,
+        userId: string
     ): void;
 
-    protected _onUpdate(
+    override _onUpdate(
         changed: DocumentUpdateData,
-        options: DocumentModificationContext,
-        userId: string,
+        options: DocumentModificationContext<TDocument>,
+        userId: string
     ): void;
 
-    protected _onDelete(options: DocumentModificationContext, userId: string): void;
+    override _onDelete(options: DocumentModificationContext<TDocument>, userId: string): void;
 
     /**
      * Callback actions when a wall that contains a door is moved or its state is changed
@@ -128,12 +128,9 @@ declare class Wall extends PlaceableObject<WallDocument> {
     /*  Interaction Event Callbacks                 */
     /* -------------------------------------------- */
 
-    protected _canControl(user: User, event: Event): boolean;
+    protected override _canControl(user: User, event?: PIXI.InteractionEvent): boolean;
 
-    protected _onHoverIn(
-        event: PIXI.InteractionEvent,
-        options?: { hoverOutOthers?: boolean },
-    ): boolean;
+    protected _onHoverIn(event: PIXI.InteractionEvent, options?: { hoverOutOthers?: boolean }): boolean;
 
     protected _onHoverOut(event: PIXI.InteractionEvent): boolean;
 
@@ -150,5 +147,9 @@ declare class Wall extends PlaceableObject<WallDocument> {
 
     protected _onDragLeftMove(event: PIXI.InteractionEvent): void;
 
-    protected _onDragLeftDrop(event: PIXI.InteractionEvent): Promise<this["document"][]>;
+    protected _onDragLeftDrop(event: PIXI.InteractionEvent): Promise<TDocument[]>;
+}
+
+declare interface Wall {
+    get layer(): WallsLayer<this>;
 }

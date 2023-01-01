@@ -4,19 +4,19 @@ declare module foundry {
             _id: string;
             name: string;
             type: "chat" | "script";
-            img: string;
+            img: ImagePath;
             actorIds: string[];
             author: string;
             command: string;
             scope: string;
             folder?: string | null;
             sort: number;
-            permission: Record<string, PermissionLevel>;
-            flags: Record<string, unknown>;
+            ownership: Record<string, PermissionLevel>;
+            flags: Record<string, Record<string, unknown>>;
         }
 
         class MacroData<
-            TDocument extends documents.BaseMacro = documents.BaseMacro,
+            TDocument extends documents.BaseMacro = documents.BaseMacro
         > extends abstract.DocumentData<TDocument> {
             static override defineSchema(): abstract.DocumentSchema;
         }

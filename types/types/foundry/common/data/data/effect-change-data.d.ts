@@ -15,7 +15,7 @@ declare module foundry {
         }
 
         class EffectChangeData<
-            TDocument extends documents.BaseActiveEffect = documents.BaseActiveEffect,
+            TDocument extends documents.BaseActiveEffect = documents.BaseActiveEffect
         > extends abstract.DocumentData<TDocument> {
             static override defineSchema(): abstract.DocumentSchema;
         }
@@ -26,5 +26,4 @@ declare module foundry {
     }
 }
 
-declare type ActiveEffectChangeMode =
-    typeof CONST.ACTIVE_EFFECT_MODES[keyof typeof CONST.ACTIVE_EFFECT_MODES];
+declare type ActiveEffectChangeMode = typeof CONST.ACTIVE_EFFECT_MODES[keyof typeof CONST.ACTIVE_EFFECT_MODES];

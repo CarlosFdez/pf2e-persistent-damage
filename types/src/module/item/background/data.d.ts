@@ -1,29 +1,20 @@
-import { AbilityString } from "@actor/data/base";
+import { SkillAbbreviation } from "@actor/creature/data";
+import { AbilityString } from "@actor/types";
 import { ABCSystemData } from "@item/abc/data";
-import { BaseNonPhysicalItemData, BaseNonPhysicalItemSource } from "@item/data/non-physical";
+import { BaseItemDataPF2e, BaseItemSourcePF2e, ItemTraits } from "@item/data/base";
 import { BackgroundPF2e } from ".";
-export declare type BackgroundSource = BaseNonPhysicalItemSource<
-    "background",
-    BackgroundSystemData
->;
-export declare class BackgroundData extends BaseNonPhysicalItemData<BackgroundPF2e> {
-    /** @override */
-    static DEFAULT_ICON: ImagePath;
-}
-export interface BackgroundData extends Omit<BackgroundSource, "_id" | "effects"> {
-    type: BackgroundSource["type"];
-    data: BackgroundSource["data"];
-    readonly _source: BackgroundSource;
-}
-interface BackgroundSystemData extends ABCSystemData {
-    boosts: {
-        [key: string]: {
-            value: AbilityString[];
-        };
-    };
+declare type BackgroundSource = BaseItemSourcePF2e<"background", BackgroundSystemSource>;
+declare type BackgroundData = Omit<BackgroundSource, "system" | "effects" | "flags"> & BaseItemDataPF2e<BackgroundPF2e, "background", BackgroundSystemData, BackgroundSource>;
+interface BackgroundSystemSource extends ABCSystemData {
+    traits: ItemTraits;
+    boosts: Record<number, {
+        value: AbilityString[];
+        selected: AbilityString | null;
+    }>;
     trainedLore: string;
     trainedSkills: {
-        value: string[];
+        value: SkillAbbreviation[];
     };
 }
-export {};
+declare type BackgroundSystemData = BackgroundSystemSource;
+export { BackgroundData, BackgroundSource };
