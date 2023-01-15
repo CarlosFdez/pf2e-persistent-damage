@@ -16,7 +16,7 @@ const pf2eSystemPath = (() => {
 })();
 const outDir = pf2eSystemPath ?? path.join(__dirname, "dist/");
 
-console.log(`Destination Folder set to ${outDir}`)
+console.log(`Destination Folder set to ${outDir}`);
 
 const config: Configuration = {
     context: __dirname,
@@ -68,16 +68,7 @@ const config: Configuration = {
             BUILD_MODE: JSON.stringify(buildMode),
         }),
         new copyWebpackPlugin({
-            patterns: [
-                { from: "README.md" },
-                { from: "module.json" },
-                { from: "src/lang", to: 'lang' },
-                { from: "src/templates", to: 'templates' },
-            ],
-        }),
-        new MiniCssExtractPlugin({
-            filename: "styles/styles.css",
-            insert: "head",
+            patterns: [{ from: "README.md" }, { from: "module.json" }],
         }),
         new WebpackBar({}),
     ],

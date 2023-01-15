@@ -1,9 +1,6 @@
 # PF2E Persistent Damage
-![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FCarlosFdez%2Fpf2e-persistent-damage%2Fmaster%2Fsrc%2Fmodule.json&label=Foundry%20Version&query=$.compatibleCoreVersion&colorB=orange)
 
-Small module to keep track of persistent damage for pathfinder 2E using the effects system. Accessed via macros in the compendium, dragging and dropping certain inline rolls, and the condition hud. If certain settings are enabled, they will be automatically calculated and/or removed when the actor's turn has finished.
-
-Derived from the condition setter macro from mothringer. If you're feeling generous, you can send something through [Paypal](https://paypal.me/carlosfernandez1779?locale.x=en_US) if you want.
+Small module that kept track of Persistent Damage before the feature was built into the core system. Unless you're running an older version of the Pathfinder system, this module can now be removed.
 
 ## How to Install
 
